@@ -42,6 +42,10 @@ class SpecialUploadWizard extends SpecialPage {
 		$this->setHeaders();
 		$this->outputHeader();
 
+		// TEMPORARY HACK: this is needed because the special page's name does not match the
+		// extension. Remove this line when the special page is renamed to MediaUploader.
+		$this->getOutput()->setPageTitle( $this->msg( 'mediauploader' )->text() );
+
 		$req = $this->getRequest();
 
 		$urlArgs = [ 'caption', 'description', 'lat', 'lon', 'alt' ];

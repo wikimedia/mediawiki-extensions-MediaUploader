@@ -33,8 +33,8 @@
 			"Yekrats"
 		]
 	},
-	"uploadwizard": "{{doc-special|UploadWizard}}\nUploadWizard is a wizard to upload multimedia files to a MediaWiki website.\nFor more information, see [[mw:UploadWizard]].",
-	"uploadwizard-desc": "{{desc|name=Upload Wizard|url=https://www.mediawiki.org/wiki/Extension:UploadWizard}}",
+	"mediauploader": "{{doc-special|UploadWizard}}\nUploadWizard is a wizard to upload multimedia files to a MediaWiki website.\nFor more information, see [[mw:UploadWizard]].",
+	"mediauploader-desc": "{{desc|name=Upload Wizard|url=https://www.mediawiki.org/wiki/Extension:UploadWizard}}",
 	"tag-uploadwizard": "Display name for 'uploadwizard' tag (= files uploaded with Upload Wizard)",
 	"tag-uploadwizard-description": "Description for 'uploadwizard' tag (= files uploaded with Upload Wizard)",
 	"tag-uploadwizard-flickr": "{{optional}}\nDisplay name for 'uploadwizard-flickr' tag (= Flickr files uploaded with Upload Wizard)",

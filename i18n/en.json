@@ -2,8 +2,8 @@
 	"@metadata": {
 		"authors": []
 	},
-	"uploadwizard": "Upload Wizard",
-	"uploadwizard-desc": "Upload Wizard, a user-friendly tool for uploading multimedia",
+	"mediauploader": "Media Uploader",
+	"mediauploader-desc": "Flexible, multi-file, step-by-step uploader.",
 	"tag-uploadwizard": "Upload Wizard",
 	"tag-uploadwizard-description": "Uploads made with Upload Wizard",
 	"tag-uploadwizard-flickr": "Flickr",

@@ -1,9 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Chrumps"
-		]
-	},
-	"apihelp-flickrblacklist-param-url": "Adres URL na Flickr do sprawdzenia.",
-	"apihelp-flickrblacklist-example-1": "Sprawdź adres URL pod kątem obecności na czarnej liście"
-}

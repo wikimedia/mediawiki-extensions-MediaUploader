@@ -1,6 +1,6 @@
 {
-	"name": "Upload Wizard",
-	"version": "1.5.0",
+	"name": "MediaUploader",
+	"version": "0.1.0",
 	"author": [
 		"Neil Kandalgaonkar",
 		"Jeroen De Dauw",
@@ -12,14 +12,15 @@
 		"Nischay Nahata",
 		"Yuvi Panda",
 		"Bartosz Dziewoński",
-		"Matthias Mullie"
+		"Matthias Mullie",
+		"Ostrzyciel"
 	],
-	"url": "https://www.mediawiki.org/wiki/Extension:UploadWizard",
-	"descriptionmsg": "uploadwizard-desc",
+	"url": "https://www.mediawiki.org/wiki/Extension:MediaUploader",
+	"descriptionmsg": "mediauploader-desc",
 	"license-name": "GPL-2.0-or-later",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.35.0"
+		"MediaWiki": ">= 1.36.0"
 	},
 	"DefaultUserOptions": {
 		"upwiz_deflicense": "default",
@@ -75,13 +76,13 @@
 		"allcampaigns": "ApiQueryAllCampaigns"
 	},
 	"MessagesDirs": {
-		"UploadWizard": [
+		"MediaUploader": [
 			"i18n",
 			"i18n/api"
 		]
 	},
 	"ExtensionMessagesFiles": {
-		"UploadWizardAlias": "UploadWizard.alias.php"
+		"MediaUploaderAlias": "MediaUploader.alias.php"
 	},
 	"AutoloadClasses": {
 		"UploadWizardHooks": "includes/UploadWizardHooks.php",
@@ -266,8 +267,8 @@
 				"resources/metadata/uw.MetadataPage.less"
 			],
 			"messages": [
-				"uploadwizard",
-				"uploadwizard-desc",
+				"mediauploader",
+				"mediauploader-desc",
 				"mwe-upwiz-step-tutorial",
 				"mwe-upwiz-step-file",
 				"mwe-upwiz-step-deeds",
@@ -624,11 +625,11 @@
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
-		"remoteExtPath": "UploadWizard"
+		"remoteExtPath": "MediaUploader"
 	},
 	"QUnitTestModule": {
 		"localBasePath": "tests/qunit",
-		"remoteExtPath": "UploadWizard/tests/qunit",
+		"remoteExtPath": "MediaUploader/tests/qunit",
 		"scripts": [
 			"controller/uw.controller.Deed.test.js",
 			"controller/uw.controller.Details.test.js",
