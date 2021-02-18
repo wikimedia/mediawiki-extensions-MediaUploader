@@ -15,16 +15,6 @@ class UploadWizardHooks {
 		$path = dirname( __DIR__ ) . '/sql/';
 
 		$updater->addExtensionTable( 'uw_campaigns', "$path/$type/tables-generated.sql" );
-		$updater->addExtensionIndex(
-			'uw_campaigns',
-			'uw_campaigns_name',
-			"$path/UW_IndexCampaignsName.sql"
-		);
-		$updater->addExtensionIndex(
-			'uw_campaigns',
-			'uw_campaigns_enabled',
-			"$path/UW_IndexCampaignsEnabled.sql"
-		);
 
 		return true;
 	}
