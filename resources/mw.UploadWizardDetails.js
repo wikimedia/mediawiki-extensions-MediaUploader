@@ -18,7 +18,6 @@
 
 		this.deedChooserDetails = new uw.DeedChooserDetailsWidget();
 		this.customDeedChooser = false;
-		this.captionSubmissionErrors = {};
 
 		this.$div = $( '<div>' ).addClass( 'mwe-upwiz-info-file ui-helper-clearfix filled' );
 	};
@@ -53,27 +52,6 @@
 				required: true
 			} );
 			this.mainFields.push( this.titleDetailsField );
-
-			this.captionsDetails = new uw.MultipleLanguageInputWidget( {
-				inputWidgetConstructor: OO.ui.TextInputWidget.bind( null, {
-					classes: [ 'mwe-upwiz-singleLanguageInputWidget-text' ]
-				} ),
-				required: false,
-				// Messages: mwe-upwiz-caption-add-0, mwe-upwiz-caption-add-n
-				label: mw.message( 'mwe-upwiz-caption-add' ),
-				error: mw.message( 'mwe-upwiz-error-bad-captions' ),
-				remove: mw.message( 'mwe-upwiz-remove-caption' ),
-				minLength: config.minCaptionLength,
-				maxLength: config.maxCaptionLength
-			} );
-			this.captionsDetailsField = new uw.FieldLayout( this.captionsDetails, {
-				required: false,
-				label: mw.message( 'mwe-upwiz-caption' ).text(),
-				help: mw.message( 'mwe-upwiz-tooltip-caption' ).text()
-			} );
-			if ( config.wikibase.enabled && config.wikibase.captions ) {
-				this.mainFields.push( this.captionsDetailsField );
-			}
 
 			// descriptions
 			// Description is not required if a campaign provides alternative wikitext fields,
@@ -143,7 +121,6 @@
 			this.$form = $( '<form id="mwe-upwiz-detailsform' + this.upload.index + '"></form>' ).addClass( 'detailsForm' );
 			this.$form.append(
 				this.titleDetailsField.$element,
-				config.wikibase.enabled && config.wikibase.captions ? this.captionsDetailsField.$element : null,
 				this.descriptionsDetailsField.$element,
 				this.deedChooserDetailsField.$element,
 				this.dateDetailsField.$element,
@@ -252,21 +229,6 @@
 			);
 
 			uri = new mw.Uri( location.href, { overrideKeys: true } );
-			if ( config.defaults.caption || uri.query.captionlang ) {
-				this.captionsDetails.setSerialized( {
-					inputs: [
-						{
-							text: config.defaults.caption || ''
-						}
-					]
-				} );
-				this.captionsDetails.getItems()[ 0 ].setLanguage(
-					uri.query.captionlang ?
-						this.captionsDetails.getItems()[ 0 ].getClosestAllowedLanguage( uri.query.captionlang ) :
-						this.captionsDetails.getItems()[ 0 ].getDefaultLanguage()
-				);
-			}
-
 			if ( config.defaults.description || uri.query.descriptionlang ) {
 				this.descriptionsDetails.setSerialized( {
 					inputs: [
@@ -410,12 +372,7 @@
 		 * @return {string}
 		 */
 		getThumbnailCaption: function () {
-			var captions = [];
-			if ( mw.UploadWizard.config.wikibase.enabled && mw.UploadWizard.config.wikibase.captions ) {
-				captions = this.captionsDetails.getSerialized().inputs;
-			} else {
-				captions = this.descriptionsDetails.getSerialized().inputs;
-			}
+			var captions = this.descriptionsDetails.getSerialized().inputs;
 
 			if ( captions.length > 0 ) {
 				return mw.Escaper.escapeForTemplate( captions[ 0 ].text.trim() );
@@ -677,7 +634,6 @@
 
 			return {
 				title: this.titleDetails.getSerialized(),
-				caption: this.captionsDetails.getSerialized(),
 				description: this.descriptionsDetails.getSerialized(),
 				date: this.dateDetails.getSerialized(),
 				categories: this.categoriesDetails.getSerialized(),
@@ -724,9 +680,6 @@
 
 			if ( serialized.title ) {
 				this.titleDetails.setSerialized( serialized.title );
-			}
-			if ( serialized.caption ) {
-				this.captionsDetails.setSerialized( serialized.caption );
 			}
 			if ( serialized.description ) {
 				this.descriptionsDetails.setSerialized( serialized.description );
@@ -848,7 +801,7 @@
 		 */
 		submit: function () {
 			var details = this,
-				wikitext, captions, promise, languageCodes, allLanguages, errorString;
+				wikitext, promise;
 
 			this.$containerDiv.find( 'form' ).trigger( 'submit' );
 
@@ -860,102 +813,9 @@
 			wikitext = this.getWikiText();
 			promise = this.submitWikiText( wikitext );
 
-			captions = this.captionsDetails.getValues();
-			if (
-				mw.UploadWizard.config.wikibase.enabled &&
-				mw.UploadWizard.config.wikibase.captions &&
-				Object.keys( captions ).length > 0
-			) {
-				promise = promise
-					.then( function () {
-						// just work out the mediainfo entity id from the page id
-						// @todo FIXME clean this up
-						var status = mw.message( 'mwe-upwiz-submitting-captions', Object.keys( captions ).length );
-						details.setStatus( status.text() );
-						return details.getMediaInfoEntityId(); // (T208545)
-					} )
-					// submit captions to wikibase
-					.then( this.submitCaptions.bind( this, captions ) );
-			}
-
 			return promise.then( function () {
-				if ( Object.keys( details.captionSubmissionErrors ).length > 0 ) {
-					languageCodes = Object.keys( captions );
-					allLanguages = mw.UploadWizard.config.uwLanguages;
-
-					errorString = '<strong>' + mw.message(
-						'mwe-upwiz-error-submit-captions',
-						languageCodes.length
-					).parse() + '</strong>';
-
-					Object.keys( details.captionSubmissionErrors ).forEach( function ( langCode ) {
-						var msgs = [],
-							error = details.captionSubmissionErrors[ langCode ];
-						error.result.errors.forEach( function ( errorObject ) {
-							var newMsg = '<p>' + errorObject.html + '</p>';
-							if ( msgs.indexOf( newMsg ) === -1 ) {
-								msgs.push( newMsg );
-								errorString += newMsg;
-							}
-						} );
-						errorString += '<dl>' +
-							'<dt>' + allLanguages[ langCode ] + '</dt>' +
-							'<dd>' + captions[ langCode ] + '</dd>' +
-							'</dl>';
-					} );
-
-					errorString += '<strong>' + mw.message(
-						'mwe-upwiz-error-submit-captions-remedy',
-						details.upload.imageinfo.canonicaltitle
-					).parse() + '</strong>';
-
-					details.upload.state = 'sdc-api-error';
-					details.showError(
-						'caption-fail',
-						errorString
-					);
-					// If there is a captions error, then details for how to deal with it are
-					// in the errorString above, no need to show anything else
-					// eslint-disable-next-line no-jquery/no-global-selector
-					$( '#mwe-upwiz-details-warning-count' ).hide();
-					// eslint-disable-next-line no-jquery/no-global-selector
-					$( '.mwe-upwiz-remove-upload' ).hide();
-					// Remove the beforeunload warning, as the image is now as uploaded
-					// as it's going to get
-					$( window ).off( 'beforeunload' );
-				} else {
-					details.showIndicator( 'success' );
-					details.setStatus( mw.message( 'mwe-upwiz-published' ).text() );
-				}
-			} );
-		},
-
-		/**
-		 * @return {jQuery.Promise}
-		 */
-		getMediaInfoEntityId: function () {
-			var self = this;
-
-			if ( this.mediaInfoEntityId !== undefined ) {
-				return $.Deferred().resolve( this.mediaInfoEntityId ).promise();
-			}
-
-			return this.upload.api.get( {
-				action: 'query',
-				prop: 'info',
-				titles: this.getTitle().getPrefixedDb()
-			} ).then( function ( result ) {
-				var message;
-
-				if ( result.query.pages[ 0 ].missing ) {
-					// page doesn't exist (yet)
-					message = mw.message( 'mwe-upwiz-error-pageprops-missing-page' ).parse();
-					return $.Deferred().reject( 'pageprops-missing-page', { errors: [ { html: message } ] } ).promise();
-				}
-
-				// FIXME: This just fetches the pageid and then hard-codes knowing that M+pageid is what we need
-				self.mediaInfoEntityId = 'M' + result.query.pages[ 0 ].pageid;
-				return self.mediaInfoEntityId;
+				details.showIndicator( 'success' );
+				details.setStatus( mw.message( 'mwe-upwiz-published' ).text() );
 			} );
 		},
 
@@ -1016,72 +876,6 @@
 			}
 
 			return this.submitWikiTextInternal( params );
-		},
-
-		/**
-		 * @param {Object} captions {<languagecode>: <caption text>} map
-		 * @param {string} entityId
-		 * @return {jQuery.Promise}
-		 */
-		submitCaptions: function ( captions, entityId ) {
-			var self = this,
-				languages = Object.keys( captions ),
-				promise = $.Deferred().resolve().promise(),
-				callable = function ( language, result ) {
-					var text = captions[ language ],
-						baseRevId = result && result.entity && result.entity.lastrevid || null;
-					return self.submitCaption( entityId, baseRevId, language, text );
-				},
-				i;
-
-			for ( i = 0; i < languages.length; i++ ) {
-				promise = promise.then( callable.bind( promise, languages[ i ] ) );
-			}
-
-			return promise;
-		},
-
-		/**
-		 * @param {string} id
-		 * @param {number|null} baseRevId
-		 * @param {string} language
-		 * @param {string} value
-		 * @return {jQuery.Promise}
-		 */
-		submitCaption: function ( id, baseRevId, language, value ) {
-			var self = this,
-				config = mw.UploadWizard.config,
-				params = {
-					action: 'wbsetlabel',
-					id: id,
-					language: language,
-					value: value,
-					// baserevid is intentionally left blank: captions can be submitted
-					// without baserevid just fine, it just won't prevent all edit conflicts
-					// (though it still somewhat prevent against it)
-					// if we were to set the correct baserevid, we might fail to submit
-					// some captions because of bots making edits immediately after upload
-					// (e.g. https://phabricator.wikimedia.org/T219677)
-					// this is a brand new upload, this is *supposed* to be the very
-					// first content, entered at time of upload; the only edit conflict
-					// that could happen would be caused by bots...
-					baserevid: undefined
-				},
-				ajaxOptions = { url: config.wikibase.api };
-
-			if ( !config.wikibase.enabled && config.wikibase.captions ) {
-				return $.Deferred().reject().promise();
-			}
-
-			return this.upload.api.postWithEditToken(
-				params, ajaxOptions
-			)
-				.catch( function ( code, result ) {
-					self.captionSubmissionErrors[ language ] = {
-						code: code,
-						result: result
-					};
-				} );
 		},
 
 		/**

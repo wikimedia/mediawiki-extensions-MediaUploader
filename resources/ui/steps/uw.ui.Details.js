@@ -72,20 +72,6 @@
 	uw.ui.Details.prototype.load = function ( uploads ) {
 		uw.ui.Step.prototype.load.call( this, uploads );
 
-		if ( mw.UploadWizard.config.wikibase.enabled && mw.UploadWizard.config.wikibase.captions ) {
-			this.$div.prepend(
-				$( '<div>' )
-					.addClass( 'mwe-upwiz-license-metadata ui-corner-all' )
-					.append(
-						$( '<h4>' ).text( mw.msg( 'mwe-upwiz-license-metadata-title' ) ),
-						$( '<p>' ).append( mw.message( 'mwe-upwiz-license-metadata-content' ).parseDom() )
-							// wikitext links in i18n messages don't support target=_blank, but we
-							// really don't want to take people away from their uploads...
-							.find( 'a' ).attr( 'target', '_blank' ).end()
-					)
-			);
-		}
-
 		if ( uploads.filter( this.needsPatentAgreement.bind( this ) ).length > 0 ) {
 			this.$div.prepend(
 				$( '<div>' )
