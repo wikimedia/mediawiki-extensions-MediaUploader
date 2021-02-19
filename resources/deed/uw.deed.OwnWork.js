@@ -32,7 +32,6 @@
 		uw.deed.Abstract.call( this, 'ownwork', config );
 
 		this.uploadCount = uploads.length;
-		this.threeDCount = uploads.filter( this.needsPatentAgreement.bind( this ) ).length;
 
 		if ( !prefAuthName ) {
 			prefAuthName = mw.config.get( 'wgUserName' );
@@ -65,26 +64,6 @@
 			this.licenseInput.$element.addClass( 'mwe-upwiz-deed-license' );
 			this.licenseInputField = new uw.FieldLayout( this.licenseInput );
 		}
-
-		// grant patent license
-		if ( this.threeDCount > 0 ) {
-			this.patentAuthorInput = new OO.ui.TextInputWidget( {
-				name: 'patent-author',
-				title: mw.message( 'mwe-upwiz-tooltip-sign' ).text(),
-				value: prefAuthName,
-				classes: [ 'mwe-upwiz-sign' ]
-			} );
-			// keep authors in sync!
-			this.patentAuthorInput.on( 'change', function () {
-				deed.authorInput.setValue( deed.patentAuthorInput.getValue() );
-				deed.fakeAuthorInput.setValue( deed.patentAuthorInput.getValue() );
-			} );
-			this.authorInput.on( 'change', function () {
-				deed.patentAuthorInput.setValue( deed.authorInput.getValue() );
-			} );
-
-			this.patentAgreementField = this.getPatentAgreementField( uploads );
-		}
 	};
 
 	OO.inheritClass( uw.deed.OwnWork, uw.deed.Abstract );
@@ -104,18 +83,13 @@
 		if ( this.showCustomDiv ) {
 			fields.push( this.licenseInputField );
 		}
-		if ( this.threeDCount > 0 ) {
-			fields.push( this.patentAuthorInputField );
-			fields.push( this.patentAgreementField );
-		}
 		return fields;
 	};
 
 	uw.deed.OwnWork.prototype.setFormFields = function ( $selector ) {
 		var $customDiv, $formFields, $toggler, crossfaderWidget, defaultLicense,
 			defaultLicenseURL, defaultLicenseMsg, defaultLicenseExplainMsg,
-			$defaultLicenseLink, $standardDiv, $crossfader, deed, languageCode,
-			patentMsg, $patentLink, $patentDiv, patentWidget;
+			$defaultLicenseLink, $standardDiv, $crossfader, deed, languageCode;
 
 		this.$selector = $selector;
 		deed = this;
@@ -188,36 +162,6 @@
 			$formFields.append( this.licenseInputField.$element.hide(), $toggler );
 		}
 
-		if ( this.threeDCount > 0 ) {
-			patentMsg = 'mwe-upwiz-patent';
-			$patentLink = $( '<a>' ).attr( { target: '_blank', href: this.config.patents.url.legalcode } );
-
-			$patentDiv = $( '<div>' ).addClass( 'mwe-upwiz-patent' ).append(
-				$( '<p>' ).msg(
-					patentMsg,
-					this.threeDCount,
-					this.patentAuthorInput.$element,
-					$patentLink,
-					mw.user
-				)
-			);
-
-			patentWidget = new OO.ui.Widget();
-			patentWidget.$element.append( $patentDiv );
-
-			// See uw.DetailsWidget
-			patentWidget.getErrors = this.getAuthorErrors.bind( this, this.patentAuthorInput );
-			patentWidget.getWarnings = this.getAuthorWarnings.bind( this, this.patentAuthorInput );
-
-			this.patentAuthorInputField = new uw.FieldLayout( patentWidget );
-			deed.patentAuthorInput.on( 'change', OO.ui.debounce( function () {
-				patentWidget.emit( 'change' );
-			}, 500 ) );
-
-			$formFields.append( this.patentAuthorInputField.$element );
-			$formFields.append( this.patentAgreementField.$element );
-		}
-
 		this.$form.append( $formFields ).appendTo( $selector );
 
 		// done after added to the DOM, so there are true heights
@@ -262,7 +206,7 @@
 	/**
 	 * @inheritdoc
 	 */
-	uw.deed.OwnWork.prototype.getLicenseWikiText = function ( upload ) {
+	uw.deed.OwnWork.prototype.getLicenseWikiText = function () {
 		var wikitext = '';
 
 		if ( this.showCustomDiv && this.licenseInput.getWikiText() !== '' ) {
@@ -273,10 +217,6 @@
 				'|' +
 				this.getDefaultLicense() +
 				'}}';
-		}
-
-		if ( this.needsPatentAgreement( upload ) ) {
-			wikitext += '\n{{' + this.config.patents.template + '|ownwork}}';
 		}
 
 		return wikitext;
@@ -292,10 +232,6 @@
 
 		if ( this.showCustomDiv ) {
 			serialized.license = this.licenseInput.getSerialized();
-		}
-
-		if ( this.threeDCount > 0 ) {
-			serialized.patentAuthor = this.patentAuthorInput.getValue();
 		}
 
 		return serialized;
@@ -318,10 +254,6 @@
 				this.customLicense();
 				this.licenseInput.setSerialized( serialized.license );
 			}
-		}
-
-		if ( this.threeDCount > 0 && serialized.patentAuthor ) {
-			this.patentAuthorInput.setValue( serialized.patentAuthor );
 		}
 	};
 
@@ -419,18 +351,4 @@
 		return $.Deferred().resolve( [] ).promise();
 	};
 
-	/**
-	 * @param {mw.UploadWizardUpload[]} uploads
-	 * @return {uw.PatentDialog}
-	 */
-	uw.deed.OwnWork.prototype.getPatentDialog = function ( uploads ) {
-		var config = { panels: [ 'warranty', 'license' ] };
-
-		// Only show filename list when in "details" step & we're showing the dialog for individual files
-		if ( uploads[ 0 ] && uploads[ 0 ].state === 'details' ) {
-			config.panels.unshift( 'filelist' );
-		}
-
-		return new uw.PatentDialog( config, this.config, uploads );
-	};
 }( mw.uploadWizard ) );

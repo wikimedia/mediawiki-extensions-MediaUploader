@@ -78,7 +78,6 @@
 	 *
 	 * @method
 	 * @abstract
-	 * @param {mw.UploadWizardUpload} upload
 	 * @return {string} wikitext of all applicable license templates.
 	 */
 	uw.deed.Abstract.prototype.getLicenseWikiText = null;
@@ -101,78 +100,4 @@
 		}
 	};
 
-	/**
-	 * @param {mw.UploadWizardUpload} upload
-	 * @return {boolean}
-	 */
-	uw.deed.Abstract.prototype.needsPatentAgreement = function ( upload ) {
-		var extensions = this.config.patents ? this.config.patents.extensions : [];
-
-		return extensions.indexOf( upload.title.getExtension().toLowerCase() ) !== -1;
-	};
-
-	/**
-	 * @param {mw.UploadWizardUpload[]} uploads
-	 * @return {uw.FieldLayout}
-	 */
-	uw.deed.Abstract.prototype.getPatentAgreementField = function ( uploads ) {
-		var field = new OO.ui.HiddenInputWidget();
-		field.getErrors = this.getPatentAgreementErrors.bind( this, field, uploads );
-		field.getWarnings = $.Deferred().resolve( [] ).promise.bind();
-
-		return new uw.FieldLayout( field );
-	};
-
-	/**
-	 * @param {mw.UploadWizardUpload[]} uploads
-	 * @return {uw.PatentDialog}
-	 */
-	uw.deed.Abstract.prototype.getPatentDialog = function ( uploads ) {
-		var config = { panels: [ 'warranty' ] };
-
-		// Only show filename list when in "details" step & we're showing the dialog for individual files
-		if ( uploads[ 0 ] && uploads[ 0 ].state === 'details' ) {
-			config.panels.unshift( 'filelist' );
-		}
-
-		return new uw.PatentDialog( config, this.config, uploads );
-	};
-
-	/**
-	 * @param {OO.ui.InputWidget} input
-	 * @param {mw.UploadWizardUpload[]} uploads
-	 * @param {boolean} thorough
-	 * @return {jQuery.Promise}
-	 */
-	uw.deed.Abstract.prototype.getPatentAgreementErrors = function ( input, uploads, thorough ) {
-		var deed = this,
-			windowManager, dialog, deferred;
-
-		// We only want to test this on submit
-		if ( !thorough ) {
-			return $.Deferred().resolve( [] ).promise();
-		}
-
-		if ( this.patentAgreed !== true ) {
-			deferred = $.Deferred();
-			windowManager = new OO.ui.WindowManager();
-			dialog = this.getPatentDialog( uploads );
-
-			$( document.body ).append( windowManager.$element );
-			windowManager.addWindows( [ dialog ] );
-			windowManager.openWindow( dialog );
-
-			dialog.on( 'disagree', function () {
-				deferred.resolve( [ mw.message( 'mwe-upwiz-error-patent-disagree' ) ] );
-			} );
-			dialog.on( 'agree', function () {
-				deed.patentAgreed = true;
-				deferred.resolve( [] );
-			} );
-
-			return deferred.promise();
-		} else {
-			return $.Deferred().resolve( [] ).promise();
-		}
-	};
 }( mw.uploadWizard ) );

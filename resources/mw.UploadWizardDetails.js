@@ -768,7 +768,7 @@
 
 			// add licensing information
 			wikiText += '\n=={{int:license-header}}==\n';
-			wikiText += deed.getLicenseWikiText( this.upload ) + '\n\n';
+			wikiText += deed.getLicenseWikiText() + '\n\n';
 
 			if ( mw.UploadWizard.config.autoAdd.wikitext !== undefined ) {
 				wikiText += mw.UploadWizard.config.autoAdd.wikitext + '\n';
