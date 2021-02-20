@@ -125,15 +125,6 @@ return [
 						]
 					]
 				],
-				"labelPickImage" => [
-					"type" => "string"
-				],
-				"noticeExistingImage" => [
-					"type" => "string"
-				],
-				"noticeUpdateDelay" => [
-					"type" => "string"
-				]
 			]
 		],
 		"licensing" => [

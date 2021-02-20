@@ -41,10 +41,6 @@
 			$( '<div>' ).attr( 'id', 'mwe-upwiz-thanks' )
 		);
 
-		if ( this.isObjectReferenceGiven() ) {
-			this.getDelayNotice().prependTo( this.$div );
-		}
-
 		$( '<p>' )
 			.addClass( 'mwe-upwiz-thanks-explain' )
 			.msg( 'mwe-upwiz-thanks-explain' )
@@ -72,14 +68,11 @@
 
 		// TODO: make the step order configurable by campaign definitions instead of using these hacks
 		beginButtonTarget = this.getButtonConfig( 'beginButton', 'target' );
-		if ( !beginButtonTarget || ( beginButtonTarget === 'dropObjref' && !this.isObjectReferenceGiven() ) ) {
+		if ( !beginButtonTarget ) {
 			this.beginButton.on( 'click', function () {
 				thanks.emit( 'next-step' );
 			} );
 		} else {
-			if ( beginButtonTarget === 'dropObjref' ) {
-				beginButtonTarget = this.dropParameterFromURL( location.href, 'updateList' );
-			}
 			this.beginButton.setHref( beginButtonTarget );
 		}
 		this.beginButton.on( 'click', function () {
@@ -319,38 +312,6 @@
 		}
 
 		return this.config.display[ buttonName ][ configField ];
-	};
-
-	/**
-	 * Drops a parameter from the given url
-	 *
-	 * @param {string} url URL from which to drop a parameter
-	 * @param {string} paramName parameter to be dropped
-	 * @return {string}
-	 * @private
-	 */
-	uw.ui.Thanks.prototype.dropParameterFromURL = function ( url, paramName ) {
-		var newUrl = new mw.Uri( url );
-		if ( newUrl.query ) {
-			delete newUrl.query[ paramName ];
-			delete newUrl.query[ paramName + '[]' ];
-		}
-		return newUrl.toString();
-	};
-
-	uw.ui.Thanks.prototype.getDelayNotice = function () {
-		var $delayNotice = $( '<p>' )
-			.addClass( 'mwe-upwiz-thanks-update-delay' )
-			.msg( 'mwe-upwiz-objref-notice-update-delay' );
-
-		if ( this.config.display && this.config.display.noticeUpdateDelay ) {
-			$delayNotice.html( this.config.display.noticeUpdateDelay );
-		}
-		return $delayNotice;
-	};
-
-	uw.ui.Thanks.prototype.isObjectReferenceGiven = function () {
-		return this.config.defaults && this.config.defaults.objref !== '';
 	};
 
 }( mw.uploadWizard ) );

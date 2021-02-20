@@ -774,14 +774,6 @@
 				wikiText += mw.UploadWizard.config.autoAdd.wikitext + '\n';
 			}
 
-			// add parameters for list callback bot
-			// this cue will be used to supplement a wiki page with an image thumbnail
-			if ( $( '#imgPicker' + this.upload.index ).prop( 'checked' ) ) {
-				wikiText += '\n<!-- WIKIPAGE_UPDATE_PARAMS ' +
-					mw.UploadWizard.config.defaults.objref +
-					' -->\n';
-			}
-
 			// categories
 			wikiText += '\n' + this.categoriesDetails.getWikiText();
 

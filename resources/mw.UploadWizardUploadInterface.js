@@ -52,15 +52,6 @@
 			ui.emit( 'upload-removed' );
 		} );
 
-		if ( mw.UploadWizard.config.defaults && mw.UploadWizard.config.defaults.objref !== '' ) {
-			this.$imagePicker = this.createImagePickerField(
-				this.upload.index,
-				mw.UploadWizard.config.defaults.updateList === ''
-			);
-			this.$visibleFilenameDiv.find( '.mwe-upwiz-file-status-line' )
-				.append( this.$imagePicker );
-		}
-
 		this.$visibleFilenameDiv.find( '.mwe-upwiz-file-status-line' )
 			.append( this.removeCtrl.$element );
 
@@ -237,71 +228,6 @@
 		if ( !this.isFilled ) {
 			this.isFilled = true;
 			this.$div.addClass( 'filled' );
-		}
-	};
-
-	/**
-	 * Create a checkbox to process the object reference parameter
-	 *
-	 * @param {number} index Number of the file for which the field is being created
-	 * @param {boolean} setDisabled Disable in case there already is an image in the referring list
-	 * @return {jQuery} A `div` containing a checkbox, label, and optional notice
-	 */
-	mw.UploadWizardUploadInterface.prototype.createImagePickerField = function ( index, setDisabled ) {
-		var $fieldContainer = $( '<div>' ).addClass( 'mwe-upwiz-objref-pick-image' ),
-			attributes = {
-				type: 'checkbox',
-				class: 'imgPicker',
-				id: 'imgPicker' + index,
-				disabled: false,
-				checked: false
-			};
-
-		if ( setDisabled ) {
-			attributes.disabled = 'disabled';
-		} else if ( index === 0 ) {
-			attributes.checked = 'checked';
-		}
-
-		$fieldContainer.append(
-			$( '<input>' ).attr( attributes ).on( 'click', function () {
-				$( this )
-					.prop( 'checked', true )
-					.closest( '.mwe-upwiz-file' )
-					.siblings()
-					.find( '.imgPicker' )
-					.prop( 'checked', false );
-			} ),
-
-			$( '<label>' ).attr( {
-				for: 'imgPicker' + index
-			} ).text( this.getPickImageLabel() )
-		);
-
-		if ( setDisabled ) {
-			$fieldContainer.append(
-				$( '<div>' )
-					.addClass( 'mwe-upwiz-objref-notice-existing-image' )
-					.text( this.getExistingImageNotice() )
-			);
-		}
-
-		return $fieldContainer;
-	};
-
-	mw.UploadWizardUploadInterface.prototype.getExistingImageNotice = function () {
-		if ( mw.UploadWizard.config && mw.UploadWizard.config.display && mw.UploadWizard.config.display.noticeExistingImage ) {
-			return mw.UploadWizard.config.display.noticeExistingImage;
-		} else {
-			return mw.message( 'mwe-upwiz-objref-notice-existing-image' ).text();
-		}
-	};
-
-	mw.UploadWizardUploadInterface.prototype.getPickImageLabel = function () {
-		if ( mw.UploadWizard.config && mw.UploadWizard.config.display && mw.UploadWizard.config.display.labelPickImage ) {
-			return mw.UploadWizard.config.display.labelPickImage;
-		} else {
-			return mw.message( 'mwe-upwiz-objref-pick-image' ).text();
 		}
 	};
 

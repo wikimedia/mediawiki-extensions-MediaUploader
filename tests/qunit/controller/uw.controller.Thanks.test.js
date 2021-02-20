@@ -80,15 +80,4 @@
 
 	} );
 
-	QUnit.test( 'Method drops the given parameter', function ( assert ) {
-		var uiThanks = new uw.ui.Thanks( {} ),
-			locationHref = 'https://commons.wikimedia.org/wiki/Special:UploadWizard?campaign=somecampaign&objref=testRef|MyPage|342&updateList=1&somevar=someval';
-
-		assert.strictEqual(
-			uiThanks.dropParameterFromURL( locationHref, 'updateList' ),
-			'https://commons.wikimedia.org/wiki/Special:UploadWizard?campaign=somecampaign&objref=testRef%7CMyPage%7C342&somevar=someval',
-			'The href of the begin button does not contain the updateList parameter.'
-		);
-	} );
-
 }( mw.uploadWizard ) );
