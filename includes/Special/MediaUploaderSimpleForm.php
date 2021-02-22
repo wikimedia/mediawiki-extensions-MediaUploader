@@ -1,20 +1,22 @@
 <?php
 /**
- * This upload form is used at Special:UploadWizard
- *
- * Special:UploadWizard is easy to use multi-file upload page.
+ * This upload form is used at Special:MediaUploader
  *
  * @file
  * @ingroup SpecialPage
  * @ingroup Upload
  */
 
+namespace MediaWiki\Extension\MediaUploader\Special;
+
+use UploadForm;
+
 /**
  * This is a hack on UploadForm, to make one that works from UploadWizard when JS is not available.
  *
  * @codeCoverageIgnore
  */
-class UploadWizardSimpleForm extends UploadForm {
+class MediaUploaderSimpleForm extends UploadForm {
 
 	/**
 	 * Normally, UploadForm adds its own Javascript.

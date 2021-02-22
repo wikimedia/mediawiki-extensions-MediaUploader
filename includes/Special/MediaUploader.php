@@ -1,6 +1,6 @@
 <?php
 /**
- * Special:UploadWizard
+ * Special:MediaUploader
  *
  * Easy to use multi-file upload page.
  *
@@ -9,7 +9,28 @@
  * @ingroup Upload
  */
 
-class SpecialUploadWizard extends SpecialPage {
+namespace MediaWiki\Extension\MediaUploader\Special;
+
+use BitmapHandler;
+use ChangeTags;
+use DerivativeContext;
+use Html;
+use LogicException;
+use MediaWiki\Widget\SpinnerWidget;
+use PermissionsError;
+use SpecialPage;
+use Title;
+use UploadBase;
+use UploadFromUrl;
+use UploadWizardCampaign;
+use UploadWizardConfig;
+use UploadWizardHooks;
+use UploadWizardTutorial;
+use User;
+use UserBlockedError;
+use WebRequest;
+
+class MediaUploader extends SpecialPage {
 	/**
 	 * The name of the upload wizard campaign, or null when none is specified.
 	 *
@@ -20,17 +41,17 @@ class SpecialUploadWizard extends SpecialPage {
 
 	/**
 	 * @param WebRequest|null $request the request (usually wgRequest)
-	 * @param string|null $par everything in the URL after Special:UploadWizard.
+	 * @param string|null $par everything in the URL after Special:MediaUploader.
 	 *   Not sure what we can use it for
 	 */
 	public function __construct( $request = null, $par = null ) {
-		parent::__construct( 'UploadWizard', 'upload' );
+		parent::__construct( 'MediaUploader', 'upload' );
 	}
 
 	/**
 	 * Replaces default execute method
 	 * Checks whether uploading enabled, user permissions okay,
-	 * @param string|null $subPage subpage, e.g. the "foo" in Special:UploadWizard/foo.
+	 * @param string|null $subPage subpage, e.g. the "foo" in Special:MediaUploader/foo.
 	 */
 	public function execute( $subPage ) {
 		// side effects: if we can't upload, will print error page to wgOut
@@ -41,10 +62,6 @@ class SpecialUploadWizard extends SpecialPage {
 
 		$this->setHeaders();
 		$this->outputHeader();
-
-		// TEMPORARY HACK: this is needed because the special page's name does not match the
-		// extension. Remove this line when the special page is renamed to MediaUploader.
-		$this->getOutput()->setPageTitle( $this->msg( 'mediauploader' )->text() );
 
 		$req = $this->getRequest();
 
@@ -98,7 +115,7 @@ class SpecialUploadWizard extends SpecialPage {
 		// but then we'll need to process non-JS uploads in the same way Special:Upload does.
 		$derivativeContext = new DerivativeContext( $this->getContext() );
 		$derivativeContext->setTitle( SpecialPage::getTitleFor( 'Upload' ) );
-		$simpleForm = new UploadWizardSimpleForm( [], $derivativeContext, $this->getLinkRenderer() );
+		$simpleForm = new MediaUploaderSimpleForm( [], $derivativeContext, $this->getLinkRenderer() );
 		$simpleForm->show();
 		$out->addHTML( '</div>' );
 
@@ -113,7 +130,7 @@ class SpecialUploadWizard extends SpecialPage {
 		$out->addModuleStyles( 'jquery.spinner.styles' );
 
 		// where the uploadwizard will go
-		// TODO import more from UploadWizard's createInterface call.
+		// TODO import more from MediaUploader's createInterface call.
 		$out->addHTML( $this->getWizardHtml() );
 	}
 
@@ -159,13 +176,13 @@ class SpecialUploadWizard extends SpecialPage {
 	}
 
 	/**
-	 * Adds some global variables for our use, as well as initializes the UploadWizard
+	 * Adds some global variables for our use, as well as initializes the MediaUploader
 	 *
 	 * TODO once bug https://bugzilla.wikimedia.org/show_bug.cgi?id=26901
 	 * is fixed we should package configuration with the upload wizard instead of
 	 * in uploadWizard output page.
 	 *
-	 * @param string $subPage subpage, e.g. the "foo" in Special:UploadWizard/foo
+	 * @param string $subPage subpage, e.g. the "foo" in Special:MediaUploader/foo
 	 */
 	public function addJsVars( $subPage ) {
 		$config = UploadWizardConfig::getConfig( $this->campaign );
@@ -362,7 +379,7 @@ class SpecialUploadWizard extends SpecialPage {
 				$tutorialHtml .
 			'</div>' .
 			'<div class="mwe-first-spinner">' .
-				new \MediaWiki\Widget\SpinnerWidget( [ 'size' => 'large' ] ) .
+				new SpinnerWidget( [ 'size' => 'large' ] ) .
 			'</div>' .
 		'</div>';
 		// @codingStandardsIgnoreEnd

@@ -9,109 +9,109 @@ $specialPageAliases = [];
 /** English (English) */
 $specialPageAliases['en'] = [
 	'Campaigns' => [ 'Campaigns' ],
-	'UploadWizard' => [ 'UploadWizard' ],
+	'MediaUploader' => [ 'MediaUploader', 'UploadWizard' ],
 ];
 
 /** Arabic (العربية) */
 $specialPageAliases['ar'] = [
 	'Campaigns' => [ 'حملات' ],
-	'UploadWizard' => [ 'ساحر_الرفع' ],
+	'MediaUploader' => [ 'ساحر_الرفع' ],
 ];
 
 /** Egyptian Arabic (مصرى) */
 $specialPageAliases['arz'] = [
 	'Campaigns' => [ 'حملات' ],
-	'UploadWizard' => [ 'ساحر_الرفع' ],
+	'MediaUploader' => [ 'ساحر_الرفع' ],
 ];
 
 /** Assamese (অসমীয়া) */
 $specialPageAliases['as'] = [
-	'UploadWizard' => [ 'আপল’ড_প্ৰক্ৰিয়া' ],
+	'MediaUploader' => [ 'আপল’ড_প্ৰক্ৰিয়া' ],
 ];
 
 /** Avaric (авар) */
 $specialPageAliases['av'] = [
-	'UploadWizard' => [ 'Мастер_загрузки' ],
+	'MediaUploader' => [ 'Мастер_загрузки' ],
 ];
 
 /** Bashkir (башҡортса) */
 $specialPageAliases['ba'] = [
-	'UploadWizard' => [ 'UploadWizard' ],
+	'MediaUploader' => [ 'MediaUploader' ],
 ];
 
 /** Western Balochi (بلوچی رخشانی) */
 $specialPageAliases['bgn'] = [
-	'UploadWizard' => [ 'جاوگرین_بُرز_کنۆک' ],
+	'MediaUploader' => [ 'جاوگرین_بُرز_کنۆک' ],
 ];
 
 /** Bengali (বাংলা) */
 $specialPageAliases['bn'] = [
 	'Campaigns' => [ 'ক্যাম্পেইন' ],
-	'UploadWizard' => [ 'আপলোড_উইজার্ড' ],
+	'MediaUploader' => [ 'আপলোড_উইজার্ড' ],
 ];
 
 /** буряад (буряад) */
 $specialPageAliases['bxr'] = [
-	'UploadWizard' => [ 'Ашаалха_Зэмсэг' ],
+	'MediaUploader' => [ 'Ашаалха_Зэмсэг' ],
 ];
 
 /** Chechen (нохчийн) */
 $specialPageAliases['ce'] = [
-	'UploadWizard' => [ 'Чуяхаран_говзанча' ],
+	'MediaUploader' => [ 'Чуяхаран_говзанча' ],
 ];
 
 /** Danish (dansk) */
 $specialPageAliases['da'] = [
-	'UploadWizard' => [ 'Vejviser_til_oplægning_af_filer' ],
+	'MediaUploader' => [ 'Vejviser_til_oplægning_af_filer' ],
 ];
 
 /** German (Deutsch) */
 $specialPageAliases['de'] = [
 	'Campaigns' => [ 'Kampagnen' ],
-	'UploadWizard' => [ 'Hochladeassistent' ],
+	'MediaUploader' => [ 'Hochladeassistent' ],
 ];
 
 /** Zazaki (Zazaki) */
 $specialPageAliases['diq'] = [
 	'Campaigns' => [ 'Holi' ],
-	'UploadWizard' => [ 'SihirbazêBarkerdışi' ],
+	'MediaUploader' => [ 'SihirbazêBarkerdışi' ],
 ];
 
 /** Greek (Ελληνικά) */
 $specialPageAliases['el'] = [
-	'UploadWizard' => [ 'ΟδηγόςΑνεβάσματος' ],
+	'MediaUploader' => [ 'ΟδηγόςΑνεβάσματος' ],
 ];
 
 /** Spanish (español) */
 $specialPageAliases['es'] = [
-	'UploadWizard' => [ 'AsistenteCarga' ],
+	'MediaUploader' => [ 'AsistenteCarga' ],
 ];
 
 /** Estonian (eesti) */
 $specialPageAliases['et'] = [
 	'Campaigns' => [ 'Kampaaniad' ],
-	'UploadWizard' => [ 'Üleslaadimisviisard' ],
+	'MediaUploader' => [ 'Üleslaadimisviisard' ],
 ];
 
 /** Persian (فارسی) */
 $specialPageAliases['fa'] = [
-	'UploadWizard' => [ 'جادوگر_بارگذاری' ],
+	'MediaUploader' => [ 'جادوگر_بارگذاری' ],
 ];
 
 /** Galician (galego) */
 $specialPageAliases['gl'] = [
-	'UploadWizard' => [ 'Asistente_de_subidas', 'Asistente_de_cargas' ],
+	'MediaUploader' => [ 'Asistente_de_subidas', 'Asistente_de_cargas' ],
 ];
 
 /** Swiss German (Alemannisch) */
 $specialPageAliases['gsw'] = [
-	'UploadWizard' => [ 'Uffelade-Assistent' ],
+	'MediaUploader' => [ 'Uffelade-Assistent' ],
 ];
 
 /** Hebrew (עברית) */
 $specialPageAliases['he'] = [
 	'Campaigns' => [ 'מבצעים' ],
-	'UploadWizard' => [ 'אשף_ההעלאה' ],
+	'MediaUploader' => [ 'אשף_ההעלאה' ],
 ];
 
 /** Upper Sorbian (hornjoserbsce) */
@@ -121,151 +121,151 @@ $specialPageAliases['hsb'] = [
 
 /** Haitian (Kreyòl ayisyen) */
 $specialPageAliases['ht'] = [
-	'UploadWizard' => [ 'AsistanChajman' ],
+	'MediaUploader' => [ 'AsistanChajman' ],
 ];
 
 /** Interlingua (interlingua) */
 $specialPageAliases['ia'] = [
-	'UploadWizard' => [ 'Assistente_de_incargamento' ],
+	'MediaUploader' => [ 'Assistente_de_incargamento' ],
 ];
 
 /** Indonesian (Bahasa Indonesia) */
 $specialPageAliases['id'] = [
-	'UploadWizard' => [ 'Wisaya_pengunggahan', 'WisayaPengunggahan' ],
+	'MediaUploader' => [ 'Wisaya_pengunggahan', 'WisayaPengunggahan' ],
 ];
 
 /** Italian (italiano) */
 $specialPageAliases['it'] = [
-	'UploadWizard' => [ 'CaricamentoGuidato' ],
+	'MediaUploader' => [ 'CaricamentoGuidato' ],
 ];
 
 /** Japanese (日本語) */
 $specialPageAliases['ja'] = [
-	'UploadWizard' => [ 'アップロードウィザード' ],
+	'MediaUploader' => [ 'アップロードウィザード' ],
 ];
 
 /** Korean (한국어) */
 $specialPageAliases['ko'] = [
 	'Campaigns' => [ '캠페인' ],
-	'UploadWizard' => [ '올리기마법사' ],
+	'MediaUploader' => [ '올리기마법사' ],
 ];
 
 /** Luxembourgish (Lëtzebuergesch) */
 $specialPageAliases['lb'] = [
-	'UploadWizard' => [ 'Assistent_fir_d\'Eroplueden' ],
+	'MediaUploader' => [ 'Assistent_fir_d\'Eroplueden' ],
 ];
 
 /** Macedonian (македонски) */
 $specialPageAliases['mk'] = [
 	'Campaigns' => [ 'Кампањи' ],
-	'UploadWizard' => [ 'ПомошникЗаПодигање' ],
+	'MediaUploader' => [ 'ПомошникЗаПодигање' ],
 ];
 
 /** Malayalam (മലയാളം) */
 $specialPageAliases['ml'] = [
 	'Campaigns' => [ 'മേളകൾ' ],
-	'UploadWizard' => [ 'അപ്‌ലോഡ്_സഹായി' ],
+	'MediaUploader' => [ 'അപ്‌ലോഡ്_സഹായി' ],
 ];
 
 /** Marathi (मराठी) */
 $specialPageAliases['mr'] = [
-	'UploadWizard' => [ 'चढवय्या_सुक्षमता-प्रणाली' ],
+	'MediaUploader' => [ 'चढवय्या_सुक्षमता-प्रणाली' ],
 ];
 
 /** Norwegian Bokmål (norsk bokmål) */
 $specialPageAliases['nb'] = [
-	'UploadWizard' => [ 'Opplastingsveiviser' ],
+	'MediaUploader' => [ 'Opplastingsveiviser' ],
 ];
 
 /** Low Saxon (Netherlands) (Nedersaksies) */
 $specialPageAliases['nds-nl'] = [
-	'UploadWizard' => [ 'Opstuurhulpe' ],
+	'MediaUploader' => [ 'Opstuurhulpe' ],
 ];
 
 /** Dutch (Nederlands) */
 $specialPageAliases['nl'] = [
 	'Campaigns' => [ 'Campagnes' ],
-	'UploadWizard' => [ 'WizardUploaden' ],
+	'MediaUploader' => [ 'WizardUploaden' ],
 ];
 
 /** Punjabi (ਪੰਜਾਬੀ) */
 $specialPageAliases['pa'] = [
-	'UploadWizard' => [ 'ਅੱਪਲੋਡ_ਵਿਜ਼ਾਰਡ' ],
+	'MediaUploader' => [ 'ਅੱਪਲੋਡ_ਵਿਜ਼ਾਰਡ' ],
 ];
 
 /** Polish (polski) */
 $specialPageAliases['pl'] = [
 	'Campaigns' => [ 'Inicjatywy' ],
-	'UploadWizard' => [ 'Kreator_przesyłania' ],
+	'MediaUploader' => [ 'Kreator_przesyłania' ],
 ];
 
 /** Russian (русский) */
 $specialPageAliases['ru'] = [
-	'UploadWizard' => [ 'Мастер_загрузки' ],
+	'MediaUploader' => [ 'Мастер_загрузки' ],
 ];
 
 /** Sicilian (sicilianu) */
 $specialPageAliases['scn'] = [
-	'UploadWizard' => [ 'CaricamentoGuidato' ],
+	'MediaUploader' => [ 'CaricamentoGuidato' ],
 ];
 
 /** Sinhala (සිංහල) */
 $specialPageAliases['si'] = [
-	'UploadWizard' => [ 'උඩුගත_කිරීමේ_මාය_අඳුන' ],
+	'MediaUploader' => [ 'උඩුගත_කිරීමේ_මාය_අඳුන' ],
 ];
 
 /** Serbian Cyrillic (српски (ћирилица)) */
 $specialPageAliases['sr-ec'] = [
 	'Campaigns' => [ 'Кампање' ],
-	'UploadWizard' => [ 'Чаробњак_за_отпремање' ],
+	'MediaUploader' => [ 'Чаробњак_за_отпремање' ],
 ];
 
 /** Serbian Latin (srpski (latinica)) */
 $specialPageAliases['sr-el'] = [
 	'Campaigns' => [ 'Kampanje' ],
-	'UploadWizard' => [ 'Čarobnjak_za_otpremanje' ],
+	'MediaUploader' => [ 'Čarobnjak_za_otpremanje' ],
 ];
 
 /** Swedish (svenska) */
 $specialPageAliases['sv'] = [
 	'Campaigns' => [ 'Kampanjer' ],
-	'UploadWizard' => [ 'Uppladdningsguide' ],
+	'MediaUploader' => [ 'Uppladdningsguide' ],
 ];
 
 /** Turkish (Türkçe) */
 $specialPageAliases['tr'] = [
-	'UploadWizard' => [ 'YüklemeSihirbazı' ],
+	'MediaUploader' => [ 'YüklemeSihirbazı' ],
 ];
 
 /** Tuvinian (тыва дыл) */
 $specialPageAliases['tyv'] = [
-	'UploadWizard' => [ 'Мерген_чүдүрүлге' ],
+	'MediaUploader' => [ 'Мерген_чүдүрүлге' ],
 ];
 
 /** Ukrainian (українська) */
 $specialPageAliases['uk'] = [
 	'Campaigns' => [ 'Кампанії' ],
-	'UploadWizard' => [ 'Майстер_завантаження', 'Мастер_загрузки' ],
+	'MediaUploader' => [ 'Майстер_завантаження', 'Мастер_загрузки' ],
 ];
 
 /** Vietnamese (Tiếng Việt) */
 $specialPageAliases['vi'] = [
 	'Campaigns' => [ 'Chiến_dịch' ],
-	'UploadWizard' => [ 'Thuật_sĩ_tải_lên' ],
+	'MediaUploader' => [ 'Thuật_sĩ_tải_lên' ],
 ];
 
 /** Cantonese (粵語) */
 $specialPageAliases['yue'] = [
-	'UploadWizard' => [ '上載精靈' ],
+	'MediaUploader' => [ '上載精靈' ],
 ];
 
 /** Simplified Chinese (中文（简体）‎) */
 $specialPageAliases['zh-hans'] = [
 	'Campaigns' => [ '活动' ],
-	'UploadWizard' => [ '上传向导', '上传精灵' ],
+	'MediaUploader' => [ '上传向导', '上传精灵' ],
 ];
 
 /** Traditional Chinese (中文（繁體）‎) */
 $specialPageAliases['zh-hant'] = [
-	'UploadWizard' => [ '上載精靈' ],
+	'MediaUploader' => [ '上載精靈' ],
 ];

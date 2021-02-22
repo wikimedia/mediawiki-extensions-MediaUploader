@@ -1,5 +1,14 @@
 <?php
 
+namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
+
+use ApiTestCase;
+use Http;
+use MockHttpTrait;
+use ReflectionClass;
+use UploadWizardConfig;
+use UploadWizardFlickrBlacklist;
+
 /**
  * Test the Flickr blacklist API.
  * Note that these tests trigger actual API requests to Flickr. The relevant settings need to

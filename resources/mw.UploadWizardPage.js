@@ -1,9 +1,9 @@
 /*
- * This script is run on [[Special:UploadWizard]].
+ * This script is run on [[Special:MediaUploader]].
  * Configures and creates an interface for uploading files in multiple steps, hence "wizard".
  *
- * Tries to transform Javascript globals dumped on us by the SpecialUploadWizard.php into a more
- * compact configuration, owned by the UploadWizard created.
+ * Tries to transform Javascript globals dumped on us by the PHP code into a more
+ * compact configuration, owned by the MediaUploader created.
  */
 
 // Create UploadWizard

@@ -1,6 +1,12 @@
 <?php
 
-class SpecialCampaigns extends SpecialPage {
+namespace MediaWiki\Extension\MediaUploader\Special;
+
+use Html;
+use SpecialPage;
+use UploadWizardCampaign;
+
+class Campaigns extends SpecialPage {
 
 	public function __construct() {
 		parent::__construct( "Campaigns" );
@@ -73,7 +79,7 @@ class SpecialCampaigns extends SpecialPage {
 			Html::rawElement( 'dt', [],
 				Html::rawElement( 'a', [ 'href' => $campaignURL ], $campaignTitle )
 			) .
-				Html::rawElement( 'dd', [], $campaignDescription );
+			Html::rawElement( 'dd', [], $campaignDescription );
 		return $returnHTML;
 	}
 

@@ -1,21 +1,26 @@
 <?php
 
+namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
+
 use MediaWiki\Block\DatabaseBlock;
+use MediaWiki\Extension\MediaUploader\Special\MediaUploader;
+use SpecialPageTestBase;
+use UserBlockedError;
 
 /**
  * @group Database
  */
-class SpecialUploadWizardTest extends SpecialPageTestBase {
+class MediaUploaderTest extends SpecialPageTestBase {
 
 	/**
 	 * @inheritDoc
 	 */
 	protected function newSpecialPage() {
-		return new SpecialUploadWizard();
+		return new MediaUploader();
 	}
 
 	/**
-	 * @covers SpecialUploadWizard::isUserUploadAllowed
+	 * @covers \MediaWiki\Extension\MediaUploader\Special\MediaUploader::isUserUploadAllowed
 	 * @dataProvider provideIsUserUploadAllowedForBlockedUser
 	 * @param bool $sitewide The block is a sitewide block
 	 * @param bool $expectException A UserBlockedError is expected

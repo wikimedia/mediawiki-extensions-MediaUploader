@@ -66,8 +66,8 @@
 		"Campaign": "CampaignContentHandler"
 	},
 	"SpecialPages": {
-		"UploadWizard": "SpecialUploadWizard",
-		"Campaigns": "SpecialCampaigns"
+		"MediaUploader": "MediaWiki\\Extension\\MediaUploader\\Special\\MediaUploader",
+		"Campaigns": "MediaWiki\\Extension\\MediaUploader\\Special\\Campaigns"
 	},
 	"APIModules": {
 		"flickrblacklist": "ApiFlickrBlacklist"
@@ -94,11 +94,14 @@
 		"CampaignContent": "includes/CampaignContent.php",
 		"CampaignPageFormatter": "includes/CampaignPageFormatter.php",
 		"CampaignHooks": "includes/CampaignHooks.php",
-		"SpecialUploadWizard": "includes/specials/SpecialUploadWizard.php",
-		"SpecialCampaigns": "includes/specials/SpecialCampaigns.php",
 		"ApiQueryAllCampaigns": "includes/ApiQueryAllCampaigns.php",
-		"ApiFlickrBlacklist": "includes/ApiFlickrBlacklist.php",
-		"UploadWizardSimpleForm": "includes/specials/UploadWizardSimpleForm.php"
+		"ApiFlickrBlacklist": "includes/ApiFlickrBlacklist.php"
+	},
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\MediaUploader\\": "includes/"
+	},
+	"TestAutoloadNamespaces": {
+		"MediaWiki\\Extension\\MediaUploader\\Tests\\": "tests/phpunit/"
 	},
 	"ResourceModules": {
 		"ext.uploadWizard.page": {
