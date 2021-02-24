@@ -3,6 +3,7 @@
 namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
 
 use MediaWiki\Block\DatabaseBlock;
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\Extension\MediaUploader\Special\MediaUploader;
 use SpecialPageTestBase;
 use UserBlockedError;
@@ -10,13 +11,16 @@ use UserBlockedError;
 /**
  * @group Database
  */
-class MediaUploaderTest extends SpecialPageTestBase {
+class SpecialMediaUploaderTest extends SpecialPageTestBase {
 
 	/**
 	 * @inheritDoc
 	 */
 	protected function newSpecialPage() {
-		return new MediaUploader();
+		return new MediaUploader(
+			MediaUploaderServices::getRawConfig(),
+			MediaUploaderServices::getConfigFactory()
+		);
 	}
 
 	/**

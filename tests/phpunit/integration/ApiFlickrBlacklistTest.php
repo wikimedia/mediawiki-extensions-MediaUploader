@@ -4,9 +4,9 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
 
 use ApiTestCase;
 use Http;
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MockHttpTrait;
 use ReflectionClass;
-use UploadWizardConfig;
 use UploadWizardFlickrBlacklist;
 
 /**
@@ -166,7 +166,7 @@ class ApiFlickrBlacklistTest extends ApiTestCase {
 		// Don't actually run HTTP requests in unit test runs
 		$this->installMockHttp( $this->makeFakeHttpRequest( '', 0 ) );
 
-		$config = UploadWizardConfig::getConfig();
+		$config = MediaUploaderServices::getGlobalParsedConfig()->getConfigArray();
 
 		if ( !isset( $config['flickrApiKey'] ) ) {
 			$this->markTestSkipped( 'This test needs a Flickr API key to work' );

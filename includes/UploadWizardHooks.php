@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
+
 class UploadWizardHooks {
 
 	/**
@@ -31,10 +34,10 @@ class UploadWizardHooks {
 	 * @return true
 	 */
 	public static function onGetPreferences( User $user, array &$preferences ) {
-		$config = UploadWizardConfig::getConfig();
+		$config = MediaUploaderServices::getRawConfig();
 
 		// User preference to skip the licensing tutorial, provided it's not globally disabled
-		if ( UploadWizardConfig::getSetting( 'tutorial' ) != [] ) {
+		if ( $config->getSetting( 'tutorial' ) ) {
 			$preferences['upwiz_skiptutorial'] = [
 				'type' => 'check',
 				'label-message' => 'mwe-upwiz-prefs-skiptutorial',
@@ -49,12 +52,12 @@ class UploadWizardHooks {
 			'section' => 'uploads/upwiz-licensing'
 		];
 
-		if ( UploadWizardConfig::getSetting( 'enableLicensePreference' ) ) {
-			$licenseConfig = UploadWizardConfig::getSetting( 'licenses' );
+		if ( $config->getSetting( 'enableLicensePreference' ) ) {
+			$licenseConfig = $config->getSetting( 'licenses' );
 
 			$licenses = [];
 
-			$licensingOptions = UploadWizardConfig::getSetting( 'licensing' );
+			$licensingOptions = $config->getSetting( 'licensing' );
 
 			$ownWork = $licensingOptions['ownWork'];
 			foreach ( $ownWork['licenses'] as $license ) {
@@ -65,7 +68,7 @@ class UploadWizardHooks {
 				$licenses[$licenseKey] = $licenseValue;
 			}
 
-			$thirdParty = UploadWizardConfig::getThirdPartyLicenses();
+			$thirdParty = $config->getThirdPartyLicenses();
 			$hasCustom = false;
 			foreach ( $thirdParty as $license ) {
 				if ( $license !== 'custom' ) {
@@ -113,9 +116,9 @@ class UploadWizardHooks {
 		}
 
 		// Setting for maximum number of simultaneous uploads (always lower than the server-side config)
-		if ( $config[ 'maxSimultaneousConnections' ] > 1 ) {
+		if ( ( $config->getSetting( 'maxSimultaneousConnections', 0 ) ) > 1 ) {
 			// Hack to make the key and value the same otherwise options are added wrongly.
-			$range = range( 0, $config[ 'maxSimultaneousConnections' ] );
+			$range = range( 0, $config->getSetting( 'maxSimultaneousConnections' ) );
 			$range[0] = 'default';
 
 			$preferences['upwiz_maxsimultaneous'] = [
@@ -143,7 +146,7 @@ class UploadWizardHooks {
 	public static function onIsUploadAllowedFromUrl( $url, &$allowed ) {
 		if ( $allowed ) {
 			$flickrBlacklist = new UploadWizardFlickrBlacklist(
-				UploadWizardConfig::getConfig(),
+				MediaUploaderServices::getGlobalParsedConfig()->getConfigArray(),
 				RequestContext::getMain()
 			);
 			if ( $flickrBlacklist->isBlacklisted( $url ) ) {

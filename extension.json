@@ -66,14 +66,22 @@
 		"Campaign": "CampaignContentHandler"
 	},
 	"SpecialPages": {
-		"MediaUploader": "MediaWiki\\Extension\\MediaUploader\\Special\\MediaUploader",
+		"MediaUploader": {
+			"class": "MediaWiki\\Extension\\MediaUploader\\Special\\MediaUploader",
+			"services": [
+				"MediaUploaderRawConfig",
+				"MediaUploaderConfigFactory"
+			]
+		},
 		"Campaigns": "MediaWiki\\Extension\\MediaUploader\\Special\\Campaigns"
 	},
 	"APIModules": {
 		"flickrblacklist": "ApiFlickrBlacklist"
 	},
 	"APIListModules": {
-		"allcampaigns": "ApiQueryAllCampaigns"
+		"allcampaigns": {
+			"class": "ApiQueryAllCampaigns"
+		}
 	},
 	"MessagesDirs": {
 		"MediaUploader": [
@@ -85,9 +93,11 @@
 		"MediaUploaderAlias": "MediaUploader.alias.php",
 		"MediaUploaderNamespaces": "MediaUploader.namespaces.php"
 	},
+	"ServiceWiringFiles": [
+		"includes/ServiceWiring.php"
+	],
 	"AutoloadClasses": {
 		"UploadWizardHooks": "includes/UploadWizardHooks.php",
-		"UploadWizardConfig": "includes/UploadWizardConfig.php",
 		"UploadWizardTutorial": "includes/UploadWizardTutorial.php",
 		"UploadWizardCampaign": "includes/UploadWizardCampaign.php",
 		"UploadWizardFlickrBlacklist": "includes/UploadWizardFlickrBlacklist.php",
@@ -101,8 +111,8 @@
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\MediaUploader\\": "includes/"
 	},
-	"TestAutoloadNamespaces": {
-		"MediaWiki\\Extension\\MediaUploader\\Tests\\": "tests/phpunit/"
+	"TestAutoloadClasses": {
+		"MediaWiki\\Extension\\MediaUploader\\Tests\\Unit\\Config\\ConfigUnitTestCase": "tests/phpunit/unit/Config/ConfigUnitTestCase.php"
 	},
 	"ResourceModules": {
 		"ext.uploadWizard.page": {
@@ -649,6 +659,9 @@
 		}
 	],
 	"config": {
+		"MediaUploaderConfig": {
+			"value": []
+		},
 		"UploadWizardConfig": {
 			"value": []
 		}

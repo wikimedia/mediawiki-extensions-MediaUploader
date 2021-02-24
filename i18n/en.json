@@ -259,7 +259,6 @@
 	"mwe-upwiz-license-cc-by-2.0": "Creative Commons Attribution 2.0 ([$2 legal code])",
 	"mwe-upwiz-license-cc-zero": "Creative Commons CC0 Waiver (release all rights, like public domain: [$2 legal code])",
 	"mwe-upwiz-license-custom": "The license is described by the following wikitext (must contain a valid [$2 copyright tag]):",
-	"mwe-upwiz-license-custom-url": "//commons.wikimedia.org/wiki/Commons:Copyright_tags",
 	"mwe-upwiz-license-fal": "Free Art License",
 	"mwe-upwiz-license-own-pd": "All rights waived with Creative Commons Zero license (like public domain)",
 	"mwe-upwiz-license-pd-old-100": "Author died more than 100 years ago",

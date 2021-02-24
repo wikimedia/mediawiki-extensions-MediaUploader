@@ -192,9 +192,9 @@
 		var languages, code;
 
 		languages = {};
-		for ( code in mw.UploadWizard.config.uwLanguages ) {
-			if ( Object.prototype.hasOwnProperty.call( mw.UploadWizard.config.uwLanguages, code ) ) {
-				languages[ code ] = mw.UploadWizard.config.uwLanguages[ code ];
+		for ( code in mw.UploadWizard.config.languages ) {
+			if ( Object.prototype.hasOwnProperty.call( mw.UploadWizard.config.languages, code ) ) {
+				languages[ code ] = mw.UploadWizard.config.languages[ code ];
 			}
 		}
 		return languages;

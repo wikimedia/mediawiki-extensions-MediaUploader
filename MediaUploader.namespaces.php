@@ -4,10 +4,7 @@
  * Translations of namespace names.
  */
 
-if ( !defined( 'NS_CAMPAIGN' ) ) {
-	define( 'NS_CAMPAIGN', 460 );
-	define( 'NS_CAMPAIGN_TALK', 461 );
-}
+require_once __DIR__ . '/defines.php';
 
 $namespaceNames = [];
 

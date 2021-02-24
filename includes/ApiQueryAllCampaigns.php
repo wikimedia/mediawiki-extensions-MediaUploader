@@ -28,7 +28,12 @@
  * @ingroup API
  */
 class ApiQueryAllCampaigns extends ApiQueryBase {
-	public function __construct( $query, $moduleName ) {
+
+	/**
+	 * @param ApiQuery $query
+	 * @param string $moduleName
+	 */
+	public function __construct( ApiQuery $query, string $moduleName ) {
 		parent::__construct( $query, $moduleName, 'uwc' );
 	}
 
@@ -69,13 +74,17 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 			}
 
 			$campaign = UploadWizardCampaign::newFromName( $row->campaign_name );
+			if ( $campaign === null ) {
+				// TODO: Shouldn't we report some error here?
+				continue;
+			}
 
 			$campaignPath = [ 'query', $this->getModuleName(), $row->campaign_id ];
 
 			$result->addValue(
 				$campaignPath,
 				'*',
-				json_encode( $campaign->getParsedConfig() )
+				json_encode( $campaign->getConfig()->getConfigArray() )
 			);
 			$result->addValue(
 				$campaignPath,
@@ -92,7 +101,7 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 				'totalUploads',
 				$campaign->getUploadedMediaCount()
 			);
-			if ( UploadWizardConfig::getSetting( 'campaignExpensiveStatsEnabled' ) === true ) {
+			if ( $campaign->getConfig()->getSetting( 'campaignExpensiveStatsEnabled' ) === true ) {
 				$result->addValue(
 					$campaignPath,
 					'totalContributors',

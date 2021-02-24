@@ -36,12 +36,10 @@ class CampaignPageFormatter {
 	}
 
 	public function generateReadHtml() {
-		$config = $this->campaign->getParsedConfig();
+		$config = $this->campaign->getConfig();
 
-		$campaignTitle = array_key_exists( 'title', $config ) ?
-			$config['title'] :
-			$this->campaign->getName();
-		$campaignDescription = array_key_exists( 'description', $config ) ? $config['description'] : '';
+		$campaignTitle = $config->getSetting( 'title', $this->campaign->getName() );
+		$campaignDescription = $config->getSetting( 'description', '' );
 		$campaignViewMoreLink = $this->campaign->getTrackingCategory()->getFullURL();
 
 		$gallery = ImageGalleryBase::factory( 'packed-hover' );
@@ -51,7 +49,7 @@ class CampaignPageFormatter {
 		$gallery->setShowBytes( false );
 
 		$this->context->getOutput()->setCdnMaxage(
-			UploadWizardConfig::getSetting( 'campaignSquidMaxAge' )
+			$config->getSetting( 'campaignSquidMaxAge' )
 		);
 		$this->context->getOutput()->setHTMLTitle( $this->context->msg( 'pagetitle', $campaignTitle ) );
 		$this->context->getOutput()->enableOOUI();
@@ -62,7 +60,7 @@ class CampaignPageFormatter {
 			$urlParams = [ 'returnto' => $this->campaign->getTitle()->getPrefixedText() ];
 
 			if ( $this->isCampaignExtensionEnabled() ) {
-				$campaignTemplate = UploadWizardConfig::getSetting( 'campaignCTACampaignTemplate' );
+				$campaignTemplate = $config->getSetting( 'campaignCTACampaignTemplate' );
 				$urlParams['campaign'] = str_replace( '$1', $this->campaign->getName(), $campaignTemplate );
 			}
 			$createAccountUrl = Skin::makeSpecialUrlSubpage( 'UserLogin', 'signup', $urlParams );
@@ -73,7 +71,7 @@ class CampaignPageFormatter {
 			] );
 		} else {
 			$uploadUrl = Skin::makeSpecialUrl(
-				'UploadWizard', [ 'campaign' => $this->campaign->getName() ]
+				'MediaUploader', [ 'campaign' => $this->campaign->getName() ]
 			);
 			$uploadLink = new OOUI\ButtonWidget( [
 				'label' => wfMessage( 'mwe-upwiz-campaign-upload-button' )->text(),
@@ -109,7 +107,7 @@ class CampaignPageFormatter {
 				);
 		}
 
-		if ( UploadWizardConfig::getSetting( 'campaignExpensiveStatsEnabled' ) === true ) {
+		if ( $config->getSetting( 'campaignExpensiveStatsEnabled' ) === true ) {
 			$uploaderCount = $this->campaign->getTotalContributorsCount();
 			$campaignExpensiveStats =
 				Html::rawElement( 'div', [ 'class' => 'mw-campaign-number-container' ],

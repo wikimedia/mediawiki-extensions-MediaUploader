@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
+
 return [
 	"type" => "object",
 	"id" => "#campaignnode",
@@ -141,14 +144,19 @@ return [
 					"properties" => [
 						"default" => [
 							"type" => "string",
-							"enum" => array_keys( UploadWizardConfig::getSetting( 'licenses' ) )
+							// TODO: Why. Please do it sanely somewhere else. Please.
+							"enum" => array_keys(
+								MediaUploaderServices::getRawConfig()->getSetting( 'licenses' )
+							)
 						],
 						"licenses" => [
 							"type" => "array",
 							"items" => [
 								[
 									"type" => "string",
-									"enum" => array_keys( UploadWizardConfig::getSetting( 'licenses' ) )
+									"enum" => array_keys(
+										MediaUploaderServices::getRawConfig()->getSetting( 'licenses' )
+									)
 								]
 							]
 
@@ -166,7 +174,9 @@ return [
 					"properties" => [
 						"defaults" => [
 							"type" => "string",
-							"enum" => array_keys( UploadWizardConfig::getSetting( 'licenses' ) )
+							"enum" => array_keys(
+								MediaUploaderServices::getRawConfig()->getSetting( 'licenses' )
+							)
 						],
 						"licenseGroups" => [
 							"type" => "array",
@@ -182,7 +192,11 @@ return [
 											"items" => [
 												[
 													"type" => "string",
-													"enum" => array_keys( UploadWizardConfig::getSetting( 'licenses' ) )
+													"enum" => array_keys(
+														MediaUploaderServices::getRawConfig()->getSetting(
+															'licenses'
+														)
+													)
 												]
 											]
 

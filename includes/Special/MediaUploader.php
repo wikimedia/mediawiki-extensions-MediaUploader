@@ -16,6 +16,9 @@ use ChangeTags;
 use DerivativeContext;
 use Html;
 use LogicException;
+use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
+use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
+use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use MediaWiki\Widget\SpinnerWidget;
 use PermissionsError;
 use SpecialPage;
@@ -23,29 +26,36 @@ use Title;
 use UploadBase;
 use UploadFromUrl;
 use UploadWizardCampaign;
-use UploadWizardConfig;
 use UploadWizardHooks;
 use UploadWizardTutorial;
 use User;
 use UserBlockedError;
-use WebRequest;
 
 class MediaUploader extends SpecialPage {
 	/**
 	 * The name of the upload wizard campaign, or null when none is specified.
 	 *
-	 * @since 1.2
 	 * @var string|null
 	 */
-	protected $campaign = null;
+	private $campaign = null;
 
-	/**
-	 * @param WebRequest|null $request the request (usually wgRequest)
-	 * @param string|null $par everything in the URL after Special:MediaUploader.
-	 *   Not sure what we can use it for
-	 */
-	public function __construct( $request = null, $par = null ) {
+	/** @var ParsedConfig|null */
+	private $loadedConfig = null;
+
+	/** @var ConfigFactory */
+	private $configFactory;
+
+	/** @var RawConfig */
+	private $rawConfig;
+
+	public function __construct(
+		RawConfig $rawConfig,
+		ConfigFactory $configFactory
+	) {
 		parent::__construct( 'MediaUploader', 'upload' );
+
+		$this->configFactory = $configFactory;
+		$this->rawConfig = $rawConfig;
 	}
 
 	/**
@@ -65,25 +75,22 @@ class MediaUploader extends SpecialPage {
 
 		$req = $this->getRequest();
 
+		$urlOverrides = [];
 		$urlArgs = [ 'description', 'lat', 'lon', 'alt' ];
 
-		$urlDefaults = [];
 		foreach ( $urlArgs as $arg ) {
 			$value = $req->getText( $arg );
 			if ( $value ) {
-				$urlDefaults[$arg] = $value;
+				$urlOverrides['defaults'][$arg] = $value;
 			}
 		}
 
 		$categories = $req->getText( 'categories' );
 		if ( $categories ) {
-			$urlDefaults['categories'] = explode( '|', $categories );
+			$urlOverrides['defaults']['categories'] = explode( '|', $categories );
 		}
 
-		UploadWizardConfig::setUrlSetting( 'defaults', $urlDefaults );
-
 		$fields = $req->getArray( 'fields' );
-		$fieldDefaults = [];
 
 		# Support id and id2 for field0 and field1
 		# Legacy support for old URL structure. They override fields[]
@@ -97,13 +104,11 @@ class MediaUploader extends SpecialPage {
 
 		if ( $fields ) {
 			foreach ( $fields as $index => $value ) {
-				$fieldDefaults[$index]['initialValue'] = $value;
+				$urlOverrides['fields'][$index]['initialValue'] = $value;
 			}
 		}
 
-		UploadWizardConfig::setUrlSetting( 'fields', $fieldDefaults );
-
-		$this->handleCampaign();
+		$this->loadConfig( $urlOverrides );
 
 		$out = $this->getOutput();
 
@@ -135,28 +140,40 @@ class MediaUploader extends SpecialPage {
 	}
 
 	/**
-	 * Handles the campaign parameter.
+	 * Handles the campaign parameter and loads the appropriate config.
 	 *
-	 * @since 1.2
+	 * @param array $urlOverrides
 	 */
-	protected function handleCampaign() {
+	protected function loadConfig( array $urlOverrides ) {
 		$campaignName = $this->getRequest()->getVal( 'campaign' );
 		if ( $campaignName === null ) {
-			$campaignName = UploadWizardConfig::getSetting( 'defaultCampaign' );
+			$campaignName = $this->rawConfig->getSetting( 'defaultCampaign' );
 		}
 
 		if ( $campaignName !== null && $campaignName !== '' ) {
-			$campaign = UploadWizardCampaign::newFromName( $campaignName );
+			$campaign = UploadWizardCampaign::newFromName(
+				$campaignName,
+				$urlOverrides
+			);
 
-			if ( $campaign === false ) {
+			if ( $campaign === null ) {
 				$this->displayError( $this->msg( 'mwe-upwiz-error-nosuchcampaign', $campaignName )->text() );
+			} elseif ( !$campaign->isEnabled() ) {
+				$this->displayError( $this->msg( 'mwe-upwiz-error-campaigndisabled', $campaignName )->text() );
 			} else {
-				if ( $campaign->getIsEnabled() ) {
-					$this->campaign = $campaignName;
-				} else {
-					$this->displayError( $this->msg( 'mwe-upwiz-error-campaigndisabled', $campaignName )->text() );
-				}
+				$this->campaign = $campaignName;
+				$this->loadedConfig = $campaign->getConfig();
 			}
+		}
+
+		// This is not a campaign or the campaign failed to load
+		// Either way, we fall back to the global config
+		if ( $this->loadedConfig === null ) {
+			$this->loadedConfig = $this->configFactory->newGlobalConfig(
+				$this->getUser(),
+				$this->getLanguage(),
+				$urlOverrides
+			);
 		}
 	}
 
@@ -178,14 +195,13 @@ class MediaUploader extends SpecialPage {
 	/**
 	 * Adds some global variables for our use, as well as initializes the MediaUploader
 	 *
-	 * TODO once bug https://bugzilla.wikimedia.org/show_bug.cgi?id=26901
-	 * is fixed we should package configuration with the upload wizard instead of
-	 * in uploadWizard output page.
+	 * TODO This should be factored out somewhere so that MediaUploader can be included
+	 *  dynamically.
 	 *
 	 * @param string $subPage subpage, e.g. the "foo" in Special:MediaUploader/foo
 	 */
 	public function addJsVars( $subPage ) {
-		$config = UploadWizardConfig::getConfig( $this->campaign );
+		$config = $this->loadedConfig->getConfigArray();
 
 		if ( array_key_exists( 'trackingCategory', $config ) ) {
 			if ( array_key_exists( 'campaign', $config['trackingCategory'] ) ) {
@@ -226,14 +242,14 @@ class MediaUploader extends SpecialPage {
 					break;
 				case "notown":
 					$defaultInAllowedLicenses = in_array(
-						$userDefaultLicense, UploadWizardConfig::getThirdPartyLicenses()
+						$userDefaultLicense, $this->loadedConfig->getThirdPartyLicenses()
 					);
 					break;
 				case "choice":
 					$defaultInAllowedLicenses = ( in_array(
 							$userDefaultLicense, $config['licensing']['ownWork']['licenses']
 						) ||
-						in_array( $userDefaultLicense, UploadWizardConfig::getThirdPartyLicenses() ) );
+						in_array( $userDefaultLicense, $this->loadedConfig->getThirdPartyLicenses() ) );
 					break;
 				default:
 					throw new LogicException( 'Bad ownWorkDefault config' );
@@ -268,6 +284,19 @@ class MediaUploader extends SpecialPage {
 				->inContentLanguage()->plain()
 		];
 
+		// maxUploads and maxFlickrUploads depend on the user's rights
+		$canMassUpload = $this->getUser()->isAllowed( 'mass-upload' );
+		$config['maxUploads'] = $this->getMaxUploads(
+			$config['maxUploads'],
+			$canMassUpload,
+			50
+		);
+		$config['maxFlickrUploads'] = $this->getMaxUploads(
+			$config['maxFlickrUploads'],
+			$canMassUpload,
+			4
+		);
+
 		$bitmapHandler = new BitmapHandler();
 		$this->getOutput()->addJsConfigVars(
 			[
@@ -275,6 +304,27 @@ class MediaUploader extends SpecialPage {
 				'wgFileCanRotate' => $bitmapHandler->canRotate(),
 			]
 		);
+	}
+
+	/**
+	 * Returns the value for maxUploads and maxFlickrUpload settings, based on
+	 * whether the user has the mass-upload user right.
+	 *
+	 * @param mixed $setting
+	 * @param bool $canMassUpload
+	 * @param int $default
+	 *
+	 * @return mixed
+	 */
+	private function getMaxUploads( $setting, bool $canMassUpload, int $default ) {
+		if ( is_array( $setting ) ) {
+			if ( $canMassUpload && in_array( 'mass_upload', $setting ) ) {
+				return $setting['mass-upload'];
+			} else {
+				return $setting['*'] ?? $default;
+			}
+		}
+		return $setting;
 	}
 
 	/**
@@ -333,7 +383,7 @@ class MediaUploader extends SpecialPage {
 	 *   it is wikitext, but all *label are used as html
 	 */
 	protected function getWizardHtml() {
-		$config = UploadWizardConfig::getConfig( $this->campaign );
+		$config = $this->loadedConfig->getConfigArray();
 
 		if ( array_key_exists(
 			'display', $config ) && array_key_exists( 'headerLabel', $config['display'] )

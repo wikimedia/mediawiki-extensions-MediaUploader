@@ -53,7 +53,9 @@ class Campaigns extends SpecialPage {
 				break;
 			} else {
 				$campaign = UploadWizardCampaign::newFromName( $row->campaign_name );
-				$this->getOutput()->addHTML( $this->getHtmlForCampaign( $campaign ) );
+				if ( $campaign !== null ) {
+					$this->getOutput()->addHTML( $this->getHtmlForCampaign( $campaign ) );
+				}
 			}
 		}
 		$this->getOutput()->addHTML( '</dl>' );
@@ -70,11 +72,13 @@ class Campaigns extends SpecialPage {
 	 * @return string
 	 */
 	private function getHtmlForCampaign( UploadWizardCampaign $campaign ) {
-		$config = $campaign->getParsedConfig();
+		$config = $campaign->getConfig();
 		$campaignURL = $campaign->getTitle()->getLocalURL();
-		$campaignTitle = array_key_exists( 'title', $config )
-			? $config['title'] : htmlspecialchars( $campaign->getName() );
-		$campaignDescription = array_key_exists( 'description', $config ) ? $config['description'] : '';
+		$campaignTitle = $config->getSetting(
+			'title',
+			htmlspecialchars( $campaign->getName() )
+		);
+		$campaignDescription = $config->getSetting( 'description', '' );
 		$returnHTML =
 			Html::rawElement( 'dt', [],
 				Html::rawElement( 'a', [ 'href' => $campaignURL ], $campaignTitle )

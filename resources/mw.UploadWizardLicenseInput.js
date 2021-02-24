@@ -135,7 +135,7 @@
 
 		/**
 		 * Gets the selected license(s). The returned value will be a license
-		 * key => license props map, as defined in UploadWizard.config.php.
+		 * key => license props map, as defined in MediaUploader.config.php.
 		 *
 		 * @return {Object}
 		 */

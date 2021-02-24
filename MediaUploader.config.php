@@ -1,91 +1,11 @@
 <?php
 /**
- * Upload Wizard Configuration
- * Do not modify this file, instead use localsettings.php and set:
- * $wgUploadWizardConfig[ 'name'] =  'value';
+ * MediaUploader configuration
+ * Do not modify this file, instead use LocalSettings.php and set:
+ * $wgMediaUploaderConfig['name'] = 'value';
  */
-global $wgFileExtensions, $wgServer, $wgScriptPath, $wgAPIModules, $wgLang,
-	$wgCheckFileExtensions, $wgWBRepoSettings;
-
-$userLangCode = $wgLang->getCode();
-// Commons only: ISO 646 code of Tagalog is 'tl', but language template is 'tgl'
-$uwDefaultLanguageFixups = [ 'tl' => 'tgl' ];
-
-$cache = \MediaWiki\MediaWikiServices::getInstance()->getMainWANObjectCache();
-$uwLanguages = $cache->getWithSetCallback(
-	// We need to get a list of languages for the description dropdown.
-	// Increase the 'version' number in the options below if this logic or format changes.
-	$cache->makeKey( 'uploadwizard-language-templates', $userLangCode ),
-	$cache::TTL_DAY,
-	function () use ( $userLangCode, $uwDefaultLanguageFixups ) {
-		global $wgUploadWizardConfig;
-
-		$uwLanguages = [];
-
-		// First, get a list of languages we support.
-		$baseLangs = Language::fetchLanguageNames( $userLangCode, 'all' );
-		// We need to take into account languageTemplateFixups
-		if (
-			is_array( $wgUploadWizardConfig ) &&
-			array_key_exists( 'languageTemplateFixups', $wgUploadWizardConfig )
-		) {
-			$languageFixups = $wgUploadWizardConfig['languageTemplateFixups'];
-			if ( !is_array( $languageFixups ) ) {
-				$languageFixups = [];
-			}
-		} else {
-			$languageFixups = $uwDefaultLanguageFixups;
-		}
-		// Use LinkBatch to make this a little bit more faster.
-		// It works because $title->exists (below) will use LinkCache.
-		$linkBatch = new LinkBatch();
-		foreach ( $baseLangs as $code => $name ) {
-			$fixedCode = array_key_exists( $code, $languageFixups ) ? $languageFixups[$code] : $code;
-			if ( is_string( $fixedCode ) && $fixedCode !== '' ) {
-				$title = Title::makeTitle( NS_TEMPLATE, Title::capitalize( $fixedCode, NS_TEMPLATE ) );
-				$linkBatch->addObj( $title );
-			}
-		}
-		$linkBatch->execute();
-
-		// Then, check that there's a template for each one.
-		foreach ( $baseLangs as $code => $name ) {
-			$fixedCode = array_key_exists( $code, $languageFixups ) ? $languageFixups[$code] : $code;
-			if ( is_string( $fixedCode ) && $fixedCode !== '' ) {
-				$title = Title::makeTitle( NS_TEMPLATE, Title::capitalize( $fixedCode, NS_TEMPLATE ) );
-				if ( $title->exists() ) {
-					// If there is, then it's in the final picks!
-					$uwLanguages[$code] = $name;
-				}
-			}
-		}
-
-		// Skip the duplicate deprecated language codes if the new one is okay to use.
-		foreach ( LanguageCode::getDeprecatedCodeMapping() as $oldKey => $newKey ) {
-			if ( isset( $uwLanguages[$newKey] ) && isset( $uwLanguages[$oldKey] ) ) {
-				unset( $uwLanguages[$oldKey] );
-			}
-		}
-
-		// Sort the list by the language name.
-		if ( class_exists( Collator::class ) ) {
-			// If a specific collation is not available for the user's language,
-			// this falls back to a generic 'root' one.
-			$collator = Collator::create( $userLangCode );
-			$collator->asort( $uwLanguages );
-		} else {
-			natcasesort( $uwLanguages );
-		}
-
-		return $uwLanguages;
-	},
-	[
-		'version' => 3,
-	]
-);
-
 return [
-	// Upload wizard has an internal debug flag
+	// MediaUploader has an internal debug flag
 	'debug' => false,
 
 	// The default campaign to use.
@@ -110,7 +30,9 @@ return [
 	'campaignCTACampaignTemplate' => 'uploadCampaign:$1',
 
 	// File extensions acceptable in this wiki
-	'fileExtensions' => $wgCheckFileExtensions ? $wgFileExtensions : null,
+	// The default is $wgFileExtensions if $wgCheckFileExtensions is enabled.
+	// Initialized in RawConfig.php
+	'fileExtensions' => null,
 
 	// Flickr details
 	// Flickr API is SSL-only as of June 27th, 2014:
@@ -236,9 +158,22 @@ return [
 		// @codingStandardsIgnoreEnd
 	],
 
-	// 'uwLanguages' is a list of languages and codes, for use in the description step.
-	// See the definition of $uwLanguages above. If empty we'll just set a default.
-	'uwLanguages' => empty( $uwLanguages ) ? [ 'en' => 'English' ] : $uwLanguages,
+	// 'languages' is a list of languages and codes, for use in the description step.
+	// By default initialized to a list of all available languages that have corresponding
+	// templates (in ISO 646 language codes). Additionally, the languageTemplateFixups
+	// setting is taken into account (see below).
+	// Initialized in RequestConfig.php
+	'languages' => [],
+
+	// @codingStandardsIgnoreStart
+	// The UploadWizard allows users to provide file descriptions in multiple languages. For each description, the user
+	// can choose the language. The UploadWizard wraps each description in a "language template". A language template is
+	// by default assumed to be a template with a name corresponding to the ISO 646 code of the language. For instance,
+	// Template:en for English, or Template:fr for French.
+	// If this is not the case for some or all or your wiki's language templates, this map can be used to define the
+	// template names to be used. Keys are ISO 646 language codes, values are template names.
+	// @codingStandardsIgnoreEnd
+	'languageTemplateFixups' => [],
 
 	// 'licenses' is a list of licenses you could possibly use elsewhere, for instance in
 	// licensesOwnWork or licensesThirdParty.
@@ -434,8 +369,7 @@ return [
 		],
 		'custom' => [
 			'msg' => 'mwe-upwiz-license-custom',
-			'templates' => [ 'subst:Custom license marker added by UW' ],
-			'url' => wfMessage( 'mwe-upwiz-license-custom-url' )->parse()
+			'templates' => [ 'subst:Custom license marker added by UW' ]
 		],
 		'generic' => [
 			'msg' => 'mwe-upwiz-license-generic',
@@ -557,20 +491,30 @@ return [
 	'maxSimultaneousConnections' => 3,
 
 	// Max number of uploads for a given form
-	// TODO replace this configuration array with a class that uses dependency injection
-	'maxUploads' => RequestContext::getMain()->getUser()->isAllowed( 'mass-upload' ) ? 500 : 50,
+	// Only '*' (everyone) and 'mass-upload' (users with this user right) keys are allowed
+	'maxUploads' => [
+		'*' => 50,
+		'mass-upload' => 500,
+	],
 
 	// Max number of files that can be imported from Flickr at one time (T236341)
 	// Note that these numbers should always be equal to or less than the maxUploads above.
-	// TODO replace this configuration array with a class that uses dependency injection
-	'maxFlickrUploads' => RequestContext::getMain()->getUser()->isAllowed( 'mass-upload' ) ? 500 : 4,
+	// Only '*' (everyone) and 'mass-upload' (users with this user right) keys are allowed
+	'maxFlickrUploads' => [
+		'*' => 4,
+		'mass-upload' => 500,
+	],
 
 	// Max file size that is allowed by PHP (may be higher/lower than MediaWiki file size limit).
 	// When using chunked uploading, these limits can be ignored.
-	'maxPhpUploadSize' => UploadBase::getMaxPhpUploadSize(),
+	// The default is UploadBase::getMaxPhpUploadSize()
+	// Initialized in RawConfig.php
+	'maxPhpUploadSize' => null,
 
 	// Max file size that is allowed by MediaWiki. This limit can never be ignored.
-	'maxMwUploadSize' => UploadBase::getMaxUploadSize( 'file' ),
+	// The default is UploadBase::getMaxUploadSize( 'file' )
+	// Initialized in RawConfig.php
+	'maxMwUploadSize' => null,
 
 	// Minimum length of custom wikitext for a license, if used.
 	// It is 6 because at minimum it needs four chars for opening and closing
@@ -584,33 +528,6 @@ return [
 	// This is the prefixed db key (e.g. Template:License_template_tag), or
 	// false to disable this check
 	'customLicenseTemplate' => false,
-
-	// @codingStandardsIgnoreStart
-	// The UploadWizard allows users to provide file descriptions in multiple languages. For each description, the user
-	// can choose the language. The UploadWizard wraps each description in a "language template". A language template is
-	// by default assumed to be a template with a name corresponding to the ISO 646 code of the language. For instance,
-	// Template:en for English, or Template:fr for French. This mechanism is used for instance at Wikimedia Commons.
-	// If this is not the case for some or all or your wiki's language templates, this map can be used to define the
-	// template names to be used. Keys are ISO 646 language codes, values are template names. The default defines the
-	// exceptions used at Wikimedia Commons: the language template for Tagalog (ISO 646 code 'tl') is not named 'tl'
-	// but 'tgl' for historical reasons.
-	// @codingStandardsIgnoreEnd
-	'languageTemplateFixups' => $uwDefaultLanguageFixups,
-
-		// @codingStandardsIgnoreStart
-		// XXX this is horribly confusing -- some file restrictions are client side, others are server side
-		// the filename prefix blacklist is at least server side -- all this should be replaced with PHP regex config
-		// or actually, in an ideal world, we'd have some way to reliably detect gibberish, rather than trying to
-		// figure out what is bad via individual regexes, we'd detect badness. Might not be too hard.
-		//
-		// we can export these to JS if we so want.
-		// filenamePrefixBlacklist: wgFilenamePrefixBlacklist,
-		//
-		// filenameRegexBlacklist: [
-		//	/^(test|image|img|bild|example?[\s_-]*)$/,  // test stuff
-		//	/^(\d{10}[\s_-][0-9a-f]{10}[\s_-][a-z])$/   // flickr
-		// ]
-		// @codingStandardsIgnoreEnd
 
 	// Link to page where users can leave feedback or bug reports.
 	// Defaults to UploadWizard's bug tracker.

@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
+
 /**
  * API module to fetch blacklisting details of a flickr image
  *
@@ -17,8 +19,10 @@ class ApiFlickrBlacklist extends ApiBase {
 		$params = $this->extractRequestParams();
 		$this->requireOnlyOneParameter( $params, 'url', 'list' );
 
-		$flickrBlacklist = new UploadWizardFlickrBlacklist( UploadWizardConfig::getConfig(),
-			$this->getContext() );
+		$flickrBlacklist = new UploadWizardFlickrBlacklist(
+			MediaUploaderServices::getRawConfig()->getConfigArray(),
+			$this->getContext()
+		);
 
 		if ( $params['list'] ) {
 			$list = $flickrBlacklist->getBlacklist();

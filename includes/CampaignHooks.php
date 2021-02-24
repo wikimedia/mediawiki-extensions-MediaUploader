@@ -80,9 +80,9 @@ class CampaignHooks {
 			__METHOD__
 		);
 
-		$campaign = new UploadWizardCampaign( $wikiPage->getTitle(), $content->getJsonData() );
+		$campaign = UploadWizardCampaign::newFromTitle( $wikiPage->getTitle(), [], $content );
 		$dbw->onTransactionPreCommitOrIdle( function () use ( $campaign ) {
-			$campaign->invalidateCache();
+			$campaign->getConfig()->invalidateCache();
 		}, __METHOD__ );
 
 		return $success;
@@ -102,8 +102,8 @@ class CampaignHooks {
 			return true;
 		}
 
-		$campaign = new UploadWizardCampaign( $linksupdate->getTitle() );
-		$campaign->invalidateCache();
+		$campaign = UploadWizardCampaign::newFromTitle( $linksupdate->getTitle() );
+		$campaign->getConfig()->invalidateCache();
 
 		return true;
 	}
@@ -176,6 +176,7 @@ class CampaignHooks {
 	/**
 	 * Declares JSON as the code editor language for Campaign: pages.
 	 * This hook only runs if the CodeEditor extension is enabled.
+	 *
 	 * @param Title $title
 	 * @param string &$lang Page language.
 	 * @return bool

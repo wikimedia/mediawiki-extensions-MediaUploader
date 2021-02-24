@@ -30,7 +30,11 @@ class CampaignContent extends JsonContent {
 			throw new JsonSchemaException( 'eventlogging-invalid-json' );
 		}
 
-		$schema = include __DIR__ . '/CampaignSchema.php';
+		// FIXME: CampaignContent MUST NOT rely on merging with the global config for verifying
+		//  its validity. Campaign schema should be restructured to represent the ACTUAL schema
+		//  of a campaign specification, not the schema of the specification merged with the
+		//  global config. Until that is fixed, campaign schema validation is commented out.
+		/* $schema = include __DIR__ . '/CampaignSchema.php';
 
 		// Only validate fields we care about
 		$campaignFields = array_keys( $schema['properties'] );
@@ -41,12 +45,13 @@ class CampaignContent extends JsonContent {
 
 		foreach ( $fullConfig as $key => $value ) {
 			if ( in_array( $key, $campaignFields ) ) {
-				$defaultCampaignConfig[ $key ] = $value;
+				$defaultCampaignConfig[$key] = $value;
 			}
 		}
 
 		$mergedConfig = UploadWizardConfig::arrayReplaceSanely( $defaultCampaignConfig, $campaign );
-		return EventLogging::schemaValidate( $mergedConfig, $schema );
+		return EventLogging::schemaValidate( $mergedConfig, $schema ); */
+		return true;
 	}
 
 	/**
@@ -73,7 +78,11 @@ class CampaignContent extends JsonContent {
 		ParserOptions $options = null, $generateHtml = true
 	) {
 		$po = new ParserOutput();
-		$campaign = new UploadWizardCampaign( $title, $this->getJsonData() );
+		$campaign = UploadWizardCampaign::newFromTitle(
+			$title,
+			[],
+			$this
+		);
 
 		if ( $generateHtml ) {
 			$po->setText( $this->generateHtml( $campaign ) );
@@ -81,7 +90,7 @@ class CampaignContent extends JsonContent {
 
 		// Register template usage
 		// FIXME: should we be registering other stuff??
-		foreach ( $campaign->getTemplates() as $ns => $templates ) {
+		foreach ( $campaign->getConfig()->getTemplates() as $ns => $templates ) {
 			foreach ( $templates as $dbk => $ids ) {
 				$title = Title::makeTitle( $ns, $dbk );
 				$po->addTemplate( $title, $ids[0], $ids[1] );
