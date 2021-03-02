@@ -82,7 +82,8 @@
 		]
 	},
 	"ExtensionMessagesFiles": {
-		"MediaUploaderAlias": "MediaUploader.alias.php"
+		"MediaUploaderAlias": "MediaUploader.alias.php",
+		"MediaUploaderNamespaces": "MediaUploader.namespaces.php"
 	},
 	"AutoloadClasses": {
 		"UploadWizardHooks": "includes/UploadWizardHooks.php",
