@@ -19,6 +19,7 @@ use LogicException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
+use MediaWiki\Extension\MediaUploader\Hooks\RegistrationHooks;
 use MediaWiki\Widget\SpinnerWidget;
 use PermissionsError;
 use SpecialPage;
@@ -26,7 +27,6 @@ use Title;
 use UploadBase;
 use UploadFromUrl;
 use UploadWizardCampaign;
-use UploadWizardHooks;
 use UploadWizardTutorial;
 use User;
 use UserBlockedError;
@@ -272,8 +272,10 @@ class MediaUploader extends SpecialPage {
 		}
 
 		// add an 'uploadwizard' tag, but only if it'll be allowed
-		UploadWizardHooks::onListDefinedTags( $tags );
-		$status = ChangeTags::canAddTagsAccompanyingChange( $tags, $this->getUser() );
+		$status = ChangeTags::canAddTagsAccompanyingChange(
+			RegistrationHooks::CHANGE_TAGS,
+			$this->getUser()
+		);
 		$config['CanAddTags'] = $status->isOK();
 
 		// Upload comment should be localized with respect to the wiki's language

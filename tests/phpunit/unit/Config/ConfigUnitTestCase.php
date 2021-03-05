@@ -2,6 +2,8 @@
 
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Config;
 
+use MediaWiki\Config\ServiceOptions;
+use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWikiUnitTestCase;
 
 // HACK: Extension-defined NS_* constants appear not to be loaded in unit tests,
@@ -42,5 +44,19 @@ abstract class ConfigUnitTestCase extends MediaWikiUnitTestCase {
 				);
 			}
 		}
+	}
+
+	/**
+	 * @param bool $noCache
+	 *
+	 * @return ServiceOptions
+	 */
+	final protected function getParsedConfigServiceOptions(
+		bool $noCache = false
+	) : ServiceOptions {
+		return new ServiceOptions(
+			ParsedConfig::CONSTRUCTOR_OPTIONS,
+			[ ParsedConfig::NO_CACHE => $noCache ]
+		);
 	}
 }

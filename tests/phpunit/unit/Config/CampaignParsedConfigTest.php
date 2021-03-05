@@ -5,6 +5,7 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Config;
 use CampaignContent;
 use Language;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
+use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParser;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParserFactory;
 use MediaWiki\Extension\MediaUploader\Config\RequestConfig;
@@ -25,13 +26,15 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 		$config = new CampaignParsedConfig(
 			$this->createNoOpMock( WANObjectCache::class ),
 			$this->createNoOpMock( UserOptionsLookup::class ),
+			$this->createNoOpMock( ConfigCacheInvalidator::class ),
 			$this->createNoOpMock( Language::class ),
 			$this->createNoOpMock( User::class ),
 			$this->createNoOpMock( ConfigParserFactory::class ),
 			$this->createNoOpMock( RequestConfig::class ),
 			[],
 			$this->createNoOpMock( CampaignContent::class ),
-			$linkTarget
+			$linkTarget,
+			$this->getParsedConfigServiceOptions()
 		);
 
 		$this->assertSame(
@@ -164,13 +167,15 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 	}
 
 	/**
+	 * The case where the config cache has expired and needs to be regenerated.
+	 *
 	 * @param array $parsedConfigValue
 	 * @param array $urlOverrides
 	 * @param array $expectedConfig
 	 *
 	 * @dataProvider provideInitialize
 	 */
-	public function testInitialize(
+	public function testInitialize_regenerate(
 		array $parsedConfigValue,
 		array $urlOverrides,
 		array $expectedConfig
@@ -218,18 +223,108 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 			->method( 'getJsonData' )
 			->willReturn( [ 'someKey' => 'v' ] );
 
+		$invalidator = $this->createMock( ConfigCacheInvalidator::class );
+		$invalidator->expects( $this->atLeastOnce() )
+			->method( 'makeInvalidateTimestampKey' )
+			->willReturn( 'dummyKey' );
+		$invalidator->expects( $this->never() )
+			->method( 'invalidate' );
+
 		$linkTarget = new TitleValue( NS_CAMPAIGN, 'Dummy' );
 
 		$gConfig = new CampaignParsedConfig(
 			WANObjectCache::newEmpty(),
 			$userOptionsLookup,
+			$invalidator,
 			$language,
 			$user,
 			$configParserFactory,
 			$requestConfig,
 			$urlOverrides,
 			$content,
-			$linkTarget
+			$linkTarget,
+			$this->getParsedConfigServiceOptions()
+		);
+
+		$this->assertArrayEquals(
+			$expectedConfig,
+			$gConfig->getConfigArray(),
+			false,
+			true,
+			'getConfig()'
+		);
+
+		$this->assertArrayEquals(
+			[ 'k' => 'templates' ],
+			$gConfig->getTemplates(),
+			false,
+			true,
+			'getTemplates()'
+		);
+	}
+
+	/**
+	 * The case where we bypass the config cache entirely.
+	 *
+	 * @param array $parsedConfigValue
+	 * @param array $urlOverrides
+	 * @param array $expectedConfig
+	 *
+	 * @dataProvider provideInitialize
+	 */
+	public function testInitialize_noCache(
+		array $parsedConfigValue,
+		array $urlOverrides,
+		array $expectedConfig
+	) {
+		$requestConfig = $this->createMock( RequestConfig::class );
+		$requestConfig->expects( $this->once() )
+			->method( 'getConfigArray' )
+			->willReturn( [ 'k' => 'rawConfig' ] );
+
+		$configParser = $this->createMock( ConfigParser::class );
+		$configParser->expects( $this->once() )
+			->method( 'getParsedConfig' )
+			->willReturn( $parsedConfigValue );
+		$configParser->expects( $this->once() )
+			->method( 'getTemplates' )
+			->willReturn( [ 'k' => 'templates' ] );
+
+		$user = $this->createNoOpMock( User::class );
+		$language = $this->createNoOpMock( Language::class );
+
+		$configParserFactory = $this->createMock( ConfigParserFactory::class );
+		$configParserFactory->expects( $this->once() )
+			->method( 'newConfigParser' )
+			->with(
+				[
+					'k' => 'rawConfig',
+					'someKey' => 'v',
+				],
+				$user,
+				$language
+			)
+			->willReturn( $configParser );
+
+		$content = $this->createMock( CampaignContent::class );
+		$content->expects( $this->once() )
+			->method( 'getJsonData' )
+			->willReturn( [ 'someKey' => 'v' ] );
+
+		$linkTarget = new TitleValue( NS_CAMPAIGN, 'Dummy' );
+
+		$gConfig = new CampaignParsedConfig(
+			$this->createNoOpMock( WANObjectCache::class ),
+			$this->createNoOpMock( UserOptionsLookup::class ),
+			$this->createNoOpMock( ConfigCacheInvalidator::class ),
+			$language,
+			$user,
+			$configParserFactory,
+			$requestConfig,
+			$urlOverrides,
+			$content,
+			$linkTarget,
+			$this->getParsedConfigServiceOptions( true )
 		);
 
 		$this->assertArrayEquals(

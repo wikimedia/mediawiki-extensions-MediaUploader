@@ -104,7 +104,6 @@
 		"CampaignContentHandler": "includes/CampaignContentHandler.php",
 		"CampaignContent": "includes/CampaignContent.php",
 		"CampaignPageFormatter": "includes/CampaignPageFormatter.php",
-		"CampaignHooks": "includes/CampaignHooks.php",
 		"ApiQueryAllCampaigns": "includes/ApiQueryAllCampaigns.php",
 		"ApiFlickrBlacklist": "includes/ApiFlickrBlacklist.php"
 	},
@@ -618,16 +617,37 @@
 		"LoadExtensionSchemaUpdates": "UploadWizardHooks::onSchemaUpdate",
 		"GetPreferences": "UploadWizardHooks::onGetPreferences",
 		"IsUploadAllowedFromUrl": "UploadWizardHooks::onIsUploadAllowedFromUrl",
-		"ListDefinedTags": "UploadWizardHooks::onListDefinedTags",
-		"ChangeTagsListActive": "UploadWizardHooks::onListDefinedTags",
-		"ChangeTagsAllowedAdd": "UploadWizardHooks::onListDefinedTags",
-		"ContentModelCanBeUsedOn": "CampaignHooks::onContentModelCanBeUsedOn",
-		"EditFilterMergedContent": "CampaignHooks::onEditFilterMergedContent",
-		"CodeEditorGetPageLanguage": "CampaignHooks::onCodeEditorGetPageLanguage",
-		"PageSaveComplete": "CampaignHooks::onPageSaveComplete",
-		"ArticleDeleteComplete": "CampaignHooks::onArticleDeleteComplete",
-		"PageMoveComplete": "CampaignHooks::onPageMoveComplete",
-		"LinksUpdateComplete": "CampaignHooks::onLinksUpdateComplete"
+		"ListDefinedTags": "registration",
+		"ChangeTagsListActive": "registration",
+		"ChangeTagsAllowedAdd": "registration",
+		"ContentModelCanBeUsedOn": "campaignContent",
+		"EditFilterMergedContent": "campaign",
+		"CodeEditorGetPageLanguage": "\\MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignContentHooks::onCodeEditorGetPageLanguage",
+		"PageSaveComplete": "campaign",
+		"ArticleDelete": "campaign",
+		"ArticleDeleteComplete": "campaign",
+		"MovePageIsValidMove": "campaign",
+		"PageMoveComplete": "campaign",
+		"LinksUpdateComplete": "campaign",
+		"UserGetReservedNames": "registration"
+	},
+	"HookHandlers": {
+		"campaign": {
+			"class": "MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignHooks",
+			"services": [
+				"DBLoadBalancer",
+				"MediaUploaderConfigCacheInvalidator"
+			]
+		},
+		"campaignContent": {
+			"class": "MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignContentHooks"
+		},
+		"registration": {
+			"class": "MediaWiki\\Extension\\MediaUploader\\Hooks\\RegistrationHooks"
+		}
+	},
+	"JobClasses": {
+		"globalConfigAnchorUpdate": "MediaWiki\\Extension\\MediaUploader\\Config\\GlobalConfigAnchorUpdateJob"
 	},
 	"attributes": {
 		"EventLogging": {
