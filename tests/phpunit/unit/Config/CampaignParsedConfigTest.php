@@ -20,6 +20,11 @@ use WANObjectCache;
  */
 class CampaignParsedConfigTest extends ConfigUnitTestCase {
 
+	/**
+	 * An hour in seconds.
+	 */
+	private const HOUR = 3600;
+
 	public function testGetName() {
 		$linkTarget = new TitleValue( NS_CAMPAIGN, 'Dummy campaign' );
 
@@ -91,10 +96,12 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 			],
 		];
 
-		$beforeNow = date( 'c', time() - 100 );
-		$beforeNow2 = date( 'c', time() - 70 );
-		$afterNow = date( 'c', time() + 100 );
-		$afterNow2 = date( 'c', time() + 130 );
+		// Set the time windows wide because significant time can pass between
+		// these cases being generated and actually executed.
+		$beforeNow = date( 'c', time() - 10 * self::HOUR );
+		$beforeNow2 = date( 'c', time() - 7 * self::HOUR );
+		$afterNow = date( 'c', time() + 8 * self::HOUR );
+		$afterNow2 = date( 'c', time() + 13 * self::HOUR );
 
 		yield 'whileActive, defined start and end' => [
 			[
