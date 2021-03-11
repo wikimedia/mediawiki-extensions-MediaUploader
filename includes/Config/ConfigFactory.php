@@ -3,8 +3,10 @@
 namespace MediaWiki\Extension\MediaUploader\Config;
 
 use CampaignContent;
+use JobQueueGroup;
 use Language;
 use MediaWiki\Cache\LinkBatchFactory;
+use MediaWiki\Config\ServiceOptions;
 use MediaWiki\Languages\LanguageNameUtils;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\User\UserOptionsLookup;
@@ -28,19 +30,27 @@ class ConfigFactory {
 	/** @var LinkBatchFactory */
 	private $linkBatchFactory;
 
+	/** @var JobQueueGroup */
+	private $jobQueueGroup;
+
 	/** @var RawConfig */
 	private $rawGlobalConfig;
 
 	/** @var ConfigParserFactory */
 	private $configParserFactory;
 
+	/** @var ConfigCacheInvalidator */
+	private $configCacheInvalidator;
+
 	/**
 	 * @param WANObjectCache $cache
 	 * @param UserOptionsLookup $userOptionsLookup
 	 * @param LanguageNameUtils $languageNameUtils
 	 * @param LinkBatchFactory $linkBatchFactory
+	 * @param JobQueueGroup $jobQueueGroup
 	 * @param RawConfig $rawGlobalConfig
 	 * @param ConfigParserFactory $configParserFactory
+	 * @param ConfigCacheInvalidator $cacheInvalidator
 	 *
 	 * @internal Only for use by ServiceWiring
 	 */
@@ -49,15 +59,19 @@ class ConfigFactory {
 		UserOptionsLookup $userOptionsLookup,
 		LanguageNameUtils $languageNameUtils,
 		LinkBatchFactory $linkBatchFactory,
+		JobQueueGroup $jobQueueGroup,
 		RawConfig $rawGlobalConfig,
-		ConfigParserFactory $configParserFactory
+		ConfigParserFactory $configParserFactory,
+		ConfigCacheInvalidator $cacheInvalidator
 	) {
 		$this->cache = $cache;
 		$this->userOptionsLookup = $userOptionsLookup;
 		$this->languageNameUtils = $languageNameUtils;
 		$this->linkBatchFactory = $linkBatchFactory;
+		$this->jobQueueGroup = $jobQueueGroup;
 		$this->rawGlobalConfig = $rawGlobalConfig;
 		$this->configParserFactory = $configParserFactory;
+		$this->configCacheInvalidator = $cacheInvalidator;
 	}
 
 	/**
@@ -83,22 +97,30 @@ class ConfigFactory {
 	 * @param array $urlOverrides URL parameter overrides in the form of an
 	 *   associative array. Use with caution and do not pass unvalidated user
 	 *   input.
+	 * @param bool $noCache Whether to ignore config cache
 	 *
 	 * @return GlobalParsedConfig
 	 */
 	public function newGlobalConfig(
 		User $user,
 		Language $language,
-		array $urlOverrides = []
+		array $urlOverrides = [],
+		bool $noCache = false
 	) : GlobalParsedConfig {
 		return new GlobalParsedConfig(
 			$this->cache,
 			$this->userOptionsLookup,
+			$this->configCacheInvalidator,
 			$language,
 			$user,
 			$this->configParserFactory,
 			$this->newRequestConfig( $language ),
-			$urlOverrides
+			$this->jobQueueGroup,
+			$urlOverrides,
+			new ServiceOptions(
+				ParsedConfig::CONSTRUCTOR_OPTIONS,
+				[ ParsedConfig::NO_CACHE => $noCache ]
+			)
 		);
 	}
 
@@ -112,6 +134,7 @@ class ConfigFactory {
 	 * @param array $urlOverrides URL parameter overrides in the form of an
 	 *   associative array. Use with caution and do not pass unvalidated user
 	 *   input.
+	 * @param bool $noCache Whether to ignore config cache
 	 *
 	 * @return CampaignParsedConfig
 	 */
@@ -120,18 +143,24 @@ class ConfigFactory {
 		Language $language,
 		CampaignContent $campaignContent,
 		LinkTarget $campaignLinkTarget,
-		array $urlOverrides = []
+		array $urlOverrides = [],
+		bool $noCache = false
 	) : CampaignParsedConfig {
 		return new CampaignParsedConfig(
 			$this->cache,
 			$this->userOptionsLookup,
+			$this->configCacheInvalidator,
 			$language,
 			$user,
 			$this->configParserFactory,
 			$this->newRequestConfig( $language ),
 			$urlOverrides,
 			$campaignContent,
-			$campaignLinkTarget
+			$campaignLinkTarget,
+			new ServiceOptions(
+				ParsedConfig::CONSTRUCTOR_OPTIONS,
+				[ ParsedConfig::NO_CACHE => $noCache ]
+			)
 		);
 	}
 }

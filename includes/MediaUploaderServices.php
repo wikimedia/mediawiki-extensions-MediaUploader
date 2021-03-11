@@ -2,6 +2,7 @@
 
 namespace MediaWiki\Extension\MediaUploader;
 
+use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParserFactory;
 use MediaWiki\Extension\MediaUploader\Config\GlobalParsedConfig;
@@ -30,6 +31,10 @@ class MediaUploaderServices {
 
 	public static function getConfigParserFactory( MediaWikiServices $services = null ) : ConfigParserFactory {
 		return self::getService( $services, 'ConfigParserFactory' );
+	}
+
+	public static function getConfigCacheInvalidator( MediaWikiServices $services = null ) : ConfigCacheInvalidator {
+		return self::getService( $services, 'ConfigCacheInvalidator' );
 	}
 
 	public static function getRawConfig( MediaWikiServices $services = null ) : RawConfig {

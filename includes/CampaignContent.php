@@ -9,13 +9,35 @@
  * @author Ori Livneh <ori@wikimedia.org>
  */
 
+use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
+use MediaWiki\Linker\LinkTarget;
+
 /**
  * Represents the configuration of an Upload Campaign
  */
 class CampaignContent extends JsonContent {
 
+	/**
+	 * DB key of the page where the global config is anchored.
+	 * The page is always in the Campaign: namespace.
+	 *
+	 * This page records the templates used by the global config, which allows
+	 * the config to be reparsed when any of the used templates change.
+	 */
+	public const GLOBAL_CONFIG_ANCHOR_DBKEY = '-';
+
+	/**
+	 * The name of this content model.
+	 */
+	public const MODEL_NAME = 'Campaign';
+
+	public static function getGlobalConfigAnchorLinkTarget() : LinkTarget {
+		return new TitleValue( NS_CAMPAIGN, self::GLOBAL_CONFIG_ANCHOR_DBKEY );
+	}
+
 	public function __construct( $text ) {
-		parent::__construct( $text, 'Campaign' );
+		parent::__construct( $text, self::MODEL_NAME );
 	}
 
 	/**
@@ -66,47 +88,89 @@ class CampaignContent extends JsonContent {
 	}
 
 	/**
-	 * Override getParserOutput, since we require $title to generate our output
+	 * Override to generate appropriate ParserOutput.
+	 *
 	 * @param Title $title
-	 * @param int|null $revId
-	 * @param ParserOptions|null $options
+	 * @param int $revId
+	 * @param ParserOptions $options
 	 * @param bool $generateHtml
-	 * @return ParserOutput
+	 * @param ParserOutput &$output
 	 */
-	public function getParserOutput( Title $title,
-		$revId = null,
-		ParserOptions $options = null, $generateHtml = true
+	protected function fillParserOutput(
+		Title $title,
+		$revId,
+		ParserOptions $options,
+		$generateHtml,
+		ParserOutput &$output
 	) {
-		$po = new ParserOutput();
+		if ( $title->getDBkey() === self::GLOBAL_CONFIG_ANCHOR_DBKEY ) {
+			// Handle the case of the global config anchor.
+			// We ignore config cache as this function may have been called by a
+			// recursive LinksUpdate, which means there are probably some templates
+			// that this config depends on that have changed. It's also possible
+			// that this was caused by a null edit by GlobalConfigAnchorUpdateJob,
+			// but then it still is safer to reparse the config than rely on cache
+			// that may be out of date.
+			$configFactory = MediaUploaderServices::getConfigFactory();
+			$config = $configFactory->newGlobalConfig(
+				$options->getUser(),
+				$options->getUserLangObj(),
+				[],
+				true
+			);
+
+			$this->registerTemplates( $config, $output );
+
+			if ( $generateHtml ) {
+				$output->setText(
+					wfMessage( 'mwe-upwiz-global-config-anchor' )->parseAsBlock()
+				);
+			}
+			return;
+		}
+
+		// Handle a regular campaign.
+		// Here we also ignore the cache, as there's no way to tell whether
+		// it's just someone viewing the page and parser cache has expired, or there
+		// was an actual edit or a LinksUpdate. We can't defer this until later
+		// (like PageSaveComplete or LinksUpdateComplete), because we can't modify
+		// ParserOutput at those points. We need an up-to-date list of templates here
+		// and now.
 		$campaign = UploadWizardCampaign::newFromTitle(
 			$title,
 			[],
-			$this
+			$this,
+			true
 		);
 
 		if ( $generateHtml ) {
-			$po->setText( $this->generateHtml( $campaign ) );
+			$formatter = new CampaignPageFormatter( $campaign );
+			$output->setText( $formatter->generateReadHtml() );
 		}
 
-		// Register template usage
-		// FIXME: should we be registering other stuff??
-		foreach ( $campaign->getConfig()->getTemplates() as $ns => $templates ) {
-			foreach ( $templates as $dbk => $ids ) {
-				$title = Title::makeTitle( $ns, $dbk );
-				$po->addTemplate( $title, $ids[0], $ids[1] );
-			}
-		}
+		$this->registerTemplates( $campaign->getConfig(), $output );
 
 		// Add some styles
-		$po->addModuleStyles( 'ext.uploadWizard.uploadCampaign.display' );
-
-		return $po;
+		$output->addModuleStyles( 'ext.uploadWizard.uploadCampaign.display' );
 	}
 
-	public function generateHtml( $campaign ) {
-		$formatter = new CampaignPageFormatter( $campaign );
-
-		return $formatter->generateReadHtml();
+	/**
+	 * Registers templates used in a ParsedConfig with a ParserOutput.
+	 *
+	 * @param ParsedConfig $parsedConfig
+	 * @param ParserOutput $parserOutput
+	 */
+	private function registerTemplates(
+		ParsedConfig $parsedConfig,
+		ParserOutput $parserOutput
+	) : void {
+		// FIXME: should we be registering other stuff??
+		foreach ( $parsedConfig->getTemplates() as $ns => $templates ) {
+			foreach ( $templates as $dbk => $ids ) {
+				$title = Title::makeTitle( $ns, $dbk );
+				$parserOutput->addTemplate( $title, $ids[0], $ids[1] );
+			}
+		}
 	}
 
 	/**

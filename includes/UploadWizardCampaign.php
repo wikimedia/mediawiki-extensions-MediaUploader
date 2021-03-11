@@ -56,13 +56,15 @@ class UploadWizardCampaign {
 	 * @param Title $title
 	 * @param array $urlOverrides
 	 * @param CampaignContent|null $content
+	 * @param bool $noConfigCache Whether to ignore config cache
 	 *
 	 * @return UploadWizardCampaign|null
 	 */
 	public static function newFromTitle(
 		Title $title,
 		array $urlOverrides = [],
-		CampaignContent $content = null
+		CampaignContent $content = null,
+		bool $noConfigCache = false
 	) : ?self {
 		if ( !$title->exists() ) {
 			return null;
@@ -77,7 +79,7 @@ class UploadWizardCampaign {
 			}
 		}
 
-		return new self( $title, $content, $urlOverrides );
+		return new self( $title, $content, $urlOverrides, $noConfigCache );
 	}
 
 	/**
@@ -86,11 +88,13 @@ class UploadWizardCampaign {
 	 * @param Title $title
 	 * @param CampaignContent $content
 	 * @param array $urlOverrides
+	 * @param bool $noConfigCache
 	 */
 	private function __construct(
 		Title $title,
 		CampaignContent $content,
-		array $urlOverrides
+		array $urlOverrides,
+		bool $noConfigCache
 	) {
 		$requestContext = RequestContext::getMain();
 		$configFactory = MediaUploaderServices::getConfigFactory();
@@ -100,7 +104,8 @@ class UploadWizardCampaign {
 			$requestContext->getLanguage(),
 			$content,
 			$title,
-			$urlOverrides
+			$urlOverrides,
+			$noConfigCache
 		);
 
 		$this->title = $title;

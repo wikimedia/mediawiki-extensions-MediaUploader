@@ -4,6 +4,7 @@ namespace MediaWiki\Extension\MediaUploader\Config;
 
 use CampaignContent;
 use Language;
+use MediaWiki\Config\ServiceOptions;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\User\UserOptionsLookup;
 use User;
@@ -34,6 +35,7 @@ class CampaignParsedConfig extends ParsedConfig {
 	/**
 	 * @param WANObjectCache $cache
 	 * @param UserOptionsLookup $userOptionsLookup
+	 * @param ConfigCacheInvalidator $cacheInvalidator
 	 * @param Language $language
 	 * @param User $user
 	 * @param ConfigParserFactory $configParserFactory
@@ -41,25 +43,30 @@ class CampaignParsedConfig extends ParsedConfig {
 	 * @param array $urlOverrides
 	 * @param CampaignContent $content
 	 * @param LinkTarget $campaignLinkTarget
+	 * @param ServiceOptions $options
 	 *
 	 * @internal Only for use by ConfigFactory
 	 */
 	public function __construct(
 		WANObjectCache $cache,
 		UserOptionsLookup $userOptionsLookup,
+		ConfigCacheInvalidator $cacheInvalidator,
 		Language $language,
 		User $user,
 		ConfigParserFactory $configParserFactory,
 		RequestConfig $requestConfig,
 		array $urlOverrides,
 		CampaignContent $content,
-		LinkTarget $campaignLinkTarget
+		LinkTarget $campaignLinkTarget,
+		ServiceOptions $options
 	) {
 		parent::__construct(
 			$cache,
 			$userOptionsLookup,
+			$cacheInvalidator,
 			$language,
-			$user
+			$user,
+			$options
 		);
 
 		$this->configParserFactory = $configParserFactory;
@@ -81,41 +88,58 @@ class CampaignParsedConfig extends ParsedConfig {
 	/**
 	 * @inheritDoc
 	 */
-	protected function initialize() : void {
-		$cacheKey = $this->makeCacheKey( [ $this->getName() ] );
-		$invalidateKey = $this->makeInvalidateTimestampKey( [ $this->getName() ] );
+	protected function initialize( bool $noCache ) : void {
+		if ( $noCache ) {
+			// Just parse the config
+			$configValue = $this->parseConfigForCache();
+		} else {
+			$cacheKey = $this->makeCacheKey( $this->getName() );
+			$invalidateKey = $this->invalidator->makeInvalidateTimestampKey( $this->getName() );
+			$opts = [ 'checkKeys' => [ $invalidateKey ] ];
 
-		$cachedValue = $this->cache->getWithSetCallback(
-			$cacheKey,
-			$this->cache::TTL_INDEFINITE,
-			function ( $oldValue, &$ttl, array &$setOpts ) {
-				$configParser = $this->configParserFactory->newConfigParser(
-					$this->arrayReplaceSanely(
-						$this->requestConfig->getConfigArray(),
-						$this->content->getJsonData() ?: []
-					),
-					$this->user,
-					$this->language,
-					$this->campaignLinkTarget
-				);
-
-				return [
-					'timestamp' => time(),
-					'config' => $configParser->getParsedConfig(),
-					'templates' => $configParser->getTemplates(),
-				];
-			},
-			[ 'checkKeys' => [ $invalidateKey ] ]
-		);
+			$configValue = $this->cache->getWithSetCallback(
+				$cacheKey,
+				// Set this to a week and not indefinite to allow for cache
+				// invalidation using 'checkKeys'.
+				$this->cache::TTL_WEEK,
+				function ( $oldValue, &$ttl, array &$setOpts ) {
+					return $this->parseConfigForCache();
+				},
+				$opts
+			);
+		}
 
 		// Apply config overrides from URL
 		$parsedConfig = array_replace_recursive(
-			$cachedValue['config'],
+			$configValue['config'],
 			$this->urlOverrides
 		);
 		$this->parsedConfig = $this->applyTimeBasedModifiers( $parsedConfig );
 
-		$this->usedTemplates = $cachedValue['templates'];
+		$this->usedTemplates = $configValue['templates'];
+	}
+
+	/**
+	 * Parses the config and returns an array to be saved in cache.
+	 *
+	 * @return array
+	 */
+	private function parseConfigForCache() : array {
+		$configParser = $this->configParserFactory->newConfigParser(
+			$this->arrayReplaceSanely(
+				$this->requestConfig->getConfigArray(),
+				$this->content->getJsonData() ?: []
+			),
+			$this->user,
+			$this->language,
+			$this->campaignLinkTarget
+		);
+
+		return [
+			'timestamp' => time(),
+			'config' => $configParser->getParsedConfig(),
+			'templates' => $configParser->getTemplates(),
+		];
 	}
 
 	/**
@@ -187,14 +211,5 @@ class CampaignParsedConfig extends ParsedConfig {
 		) ? strtotime( $configArray['start'] ) : null;
 
 		return ( $start === null || $start <= $now ) && !$this->isActive( $configArray );
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function invalidateCache() : void {
-		$this->cache->touchCheckKey(
-			$this->makeInvalidateTimestampKey( [ $this->getName() ] )
-		);
 	}
 }

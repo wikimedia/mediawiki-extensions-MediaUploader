@@ -15,7 +15,7 @@ class CampaignContentHandler extends JsonContentHandler {
 	/**
 	 * @param string $modelId
 	 */
-	public function __construct( $modelId = 'Campaign' ) {
+	public function __construct( $modelId = CampaignContent::MODEL_NAME ) {
 		parent::__construct( $modelId );
 	}
 

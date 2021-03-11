@@ -3,6 +3,7 @@
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Config;
 
 use Language;
+use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\User\UserOptionsLookup;
 use User;
@@ -60,8 +61,10 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 		$params = [
 			$cache,
 			$userOptionsLookup,
+			$this->createNoOpMock( ConfigCacheInvalidator::class ),
 			$language,
 			$dummyUser,
+			$this->getParsedConfigServiceOptions(),
 		];
 
 		$pConfig = new class( $params ) extends ParsedConfig {
@@ -69,75 +72,28 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 				parent::__construct( ...$params );
 			}
 
-			protected function initialize() : void {
+			protected function initialize( $noCache ) : void {
 			}
 
 			public function invalidateCache() : void {
 			}
 
-			public function testMakeCacheKey( $arg ) {
-				$this->makeCacheKey( $arg );
+			public function testMakeCacheKey( ...$args ) {
+				$this->makeCacheKey( ...$args );
 			}
 		};
 
-		$pConfig->testMakeCacheKey( $makeCacheKeyArg );
-	}
-
-	/**
-	 * @param array $makeInvalidateTimestampKeyArg the argument to ParsedConfig::makeCacheKey
-	 *
-	 * @dataProvider provideGetCacheKey
-	 */
-	public function testMakeInvalidateTimestampKey( array $makeInvalidateTimestampKeyArg ) {
-		$expectedCallParams = [
-			'mediauploader',
-			'parsed-config',
-			'invalidate',
-		];
-		if ( $makeInvalidateTimestampKeyArg ) {
-			array_push( $expectedCallParams, ...$makeInvalidateTimestampKeyArg );
-		}
-
-		$cache = $this->createMock( WANObjectCache::class );
-		$cache->expects( $this->once() )
-			->method( 'makeKey' )
-			->with( ...$expectedCallParams )
-			->willReturn( 'testKey' );
-
-		$params = [
-			$cache,
-			$this->createNoOpMock( UserOptionsLookup::class ),
-			$this->createNoOpMock( Language::class ),
-			$this->createNoOpMock( User::class ),
-		];
-
-		$pConfig = new class( $params ) extends ParsedConfig {
-			public function __construct( $params ) {
-				parent::__construct( ...$params );
-			}
-
-			protected function initialize() : void {
-			}
-
-			public function invalidateCache() : void {
-			}
-
-			public function testInvalidateTimestampKey( $arg ) {
-				$this->makeInvalidateTimestampKey( $arg );
-			}
-		};
-
-		$pConfig->testInvalidateTimestampKey(
-			$makeInvalidateTimestampKeyArg
-		);
+		$pConfig->testMakeCacheKey( ...$makeCacheKeyArg );
 	}
 
 	public function testGetConfigArray() {
 		$params = [
 			$this->createNoOpMock( WANObjectCache::class ),
 			$this->createNoOpMock( UserOptionsLookup::class ),
+			$this->createNoOpMock( ConfigCacheInvalidator::class ),
 			$this->createNoOpMock( Language::class ),
 			$this->createNoOpMock( User::class ),
+			$this->getParsedConfigServiceOptions(),
 		];
 
 		$pConfig = new class ( $params, $this ) extends ParsedConfig {
@@ -149,7 +105,7 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 				$this->testCase = $testCase;
 			}
 
-			protected function initialize() : void {
+			protected function initialize( $noCache ) : void {
 				$this->testCase->assertLessThan(
 					2,
 					++$this->invokeCount,
@@ -184,8 +140,10 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 		$params = [
 			$this->createNoOpMock( WANObjectCache::class ),
 			$this->createNoOpMock( UserOptionsLookup::class ),
+			$this->createNoOpMock( ConfigCacheInvalidator::class ),
 			$this->createNoOpMock( Language::class ),
 			$this->createNoOpMock( User::class ),
+			$this->getParsedConfigServiceOptions(),
 		];
 
 		$pConfig = new class ( $params, $this ) extends ParsedConfig {
@@ -197,7 +155,7 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 				$this->testCase = $testCase;
 			}
 
-			protected function initialize() : void {
+			protected function initialize( $noCache ) : void {
 				$this->testCase->assertLessThan(
 					2,
 					++$this->invokeCount,
