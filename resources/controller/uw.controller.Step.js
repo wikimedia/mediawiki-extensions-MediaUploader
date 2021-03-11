@@ -130,7 +130,6 @@
 		} );
 
 		this.ui.load( uploads );
-		uw.eventFlowLogger.logStep( this.stepName );
 	};
 
 	/**

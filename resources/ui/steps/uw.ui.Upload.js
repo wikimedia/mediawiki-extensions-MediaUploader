@@ -69,7 +69,6 @@
 				flags: 'progressive'
 			} ).on( 'click', function () {
 				upload.flickrInterfaceInit();
-				uw.eventFlowLogger.logEvent( 'flickr-upload-button-clicked' );
 			} );
 
 			this.$flickrAddFileContainer.append(
@@ -469,15 +468,6 @@
 	 * @param {jQuery|string} message The error message
 	 */
 	uw.ui.Upload.prototype.showFilenameError = function ( message ) {
-		var msgText;
-
-		if ( message instanceof $ ) {
-			msgText = message.text();
-		} else {
-			msgText = message;
-		}
-
-		uw.eventFlowLogger.logError( 'file', { code: 'filename', message: msgText } );
 		mw.errorDialog( message );
 	};
 

@@ -114,6 +114,14 @@
 		"MediaWiki\\Extension\\MediaUploader\\Tests\\Unit\\Config\\ConfigUnitTestCase": "tests/phpunit/unit/Config/ConfigUnitTestCase.php"
 	},
 	"ResourceModules": {
+		"ext.mediaUploader.base": {
+			"scripts": "resources/uw.base.js",
+			"targets": [
+				"desktop",
+				"mobile"
+			],
+			"group": "ext.uploadWizard"
+		},
 		"ext.uploadWizard.page": {
 			"scripts": "resources/mw.UploadWizardPage.js",
 			"dependencies": "ext.uploadWizard",
@@ -144,22 +152,9 @@
 				"mobile"
 			]
 		},
-		"uw.EventFlowLogger": {
-			"scripts": [
-				"resources/uw/uw.base.js",
-				"resources/uw.EventFlowLogger.js"
-			],
-			"dependencies": [
-				"oojs"
-			],
-			"targets": [
-				"desktop",
-				"mobile"
-			],
-			"group": "uw.EventFlowLogger"
-		},
 		"ext.uploadWizard": {
 			"dependencies": [
+				"ext.mediaUploader.base",
 				"jquery.client",
 				"jquery.spinner",
 				"jquery.makeCollapsible",
@@ -177,7 +172,6 @@
 				"mediawiki.editfont.styles",
 				"mediawiki.String",
 				"moment",
-				"uw.EventFlowLogger",
 				"oojs",
 				"oojs-ui-core",
 				"oojs-ui-widgets",
@@ -601,7 +595,6 @@
 			"controller/uw.controller.Tutorial.test.js",
 			"controller/uw.controller.Upload.test.js",
 			"transports/mw.FormDataTransport.test.js",
-			"uw.EventFlowLogger.test.js",
 			"uw.ConcurrentQueue.test.js",
 			"mw.UploadWizardUpload.test.js",
 			"mw.UploadWizardLicenseInput.test.js",
@@ -648,19 +641,6 @@
 	},
 	"JobClasses": {
 		"globalConfigAnchorUpdate": "MediaWiki\\Extension\\MediaUploader\\Config\\GlobalConfigAnchorUpdateJob"
-	},
-	"attributes": {
-		"EventLogging": {
-			"Schemas": {
-				"UploadWizardTutorialActions": 5803466,
-				"UploadWizardUploadActions": 5811620,
-				"UploadWizardStep": 18973101,
-				"UploadWizardFlowEvent": 11772723,
-				"UploadWizardErrorFlowEvent": 18973100,
-				"UploadWizardExceptionFlowEvent": 11772722,
-				"UploadWizardUploadFlowEvent": 11772717
-			}
-		}
 	},
 	"namespaces": [
 		{
