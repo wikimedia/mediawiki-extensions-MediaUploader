@@ -194,13 +194,16 @@
 	 * @inheritdoc
 	 */
 	uw.deed.OwnWork.prototype.getAuthorWikiText = function () {
-		var author = this.authorInput.getValue();
+		var author = this.authorInput.getValue(),
+			userPageTitle;
 
 		if ( author.indexOf( '[' ) >= 0 || author.indexOf( '{' ) >= 0 ) {
 			return author;
 		}
 
-		return '[[User:' + mw.config.get( 'wgUserName' ) + '|' + author + ']]';
+		// Construct a Title for the user page to get the localized NS prefix
+		userPageTitle = new mw.Title( 'User:' + mw.config.get( 'wgUserName' ) );
+		return '[[' + userPageTitle.getPrefixedText() + '|' + author + ']]';
 	};
 
 	/**
