@@ -48,7 +48,7 @@
 
 			this.initialiseSteps().then( function ( steps ) {
 				// "select" the first step - highlight, make it visible, hide all others
-				steps.tutorial.load( [] );
+				steps[ 0 ].load( [] );
 			} );
 		},
 
@@ -59,27 +59,36 @@
 		 */
 		initialiseSteps: function () {
 			var self = this,
-				steps = {};
+				steps = [],
+				i,
+				uploadStep;
 
-			steps.tutorial = new uw.controller.Tutorial( this.api, this.config );
-			steps.file = new uw.controller.Upload( this.api, this.config );
-			steps.deeds = new uw.controller.Deed( this.api, this.config );
-			steps.details = new uw.controller.Details( this.api, this.config );
-			steps.thanks = new uw.controller.Thanks( this.api, this.config );
+			// Add the tutorial step if it's enabled
+			if ( this.config.tutorial.enabled ) {
+				steps.push( new uw.controller.Tutorial( this.api, this.config ) );
+			}
 
-			steps.tutorial.setNextStep( steps.file );
+			uploadStep = new uw.controller.Upload( this.api, this.config );
 
-			steps.file.setPreviousStep( steps.tutorial );
-			steps.file.setNextStep( steps.deeds );
+			steps.push(
+				uploadStep,
+				new uw.controller.Deed( this.api, this.config ),
+				new uw.controller.Details( this.api, this.config ),
+				new uw.controller.Thanks( this.api, this.config )
+			);
 
-			steps.deeds.setPreviousStep( steps.file );
-			steps.deeds.setNextStep( steps.details );
+			// The first step obviously does not have a previous step
+			steps[ 0 ].setNextStep( steps[ 1 ] );
 
-			steps.details.setPreviousStep( steps.deeds );
-			steps.details.setNextStep( steps.thanks );
+			// The "intermediate" steps can navigate in both directions
+			for ( i = 1; i < steps.length - 1; i++ ) {
+				steps[ i ].setPreviousStep( steps[ i - 1 ] );
+				steps[ i ].setNextStep( steps[ i + 1 ] );
+			}
 
-			// thanks doesn't need a "previous" step, there's no undoing uploads!
-			steps.thanks.setNextStep( steps.file );
+			// The last step does not have a "previous" step, there's no undoing uploads!
+			// The "next" one is always looping back to the upload step
+			steps[ steps.length - 1 ].setNextStep( uploadStep );
 
 			return $.Deferred().resolve( steps ).promise()
 				.always( function ( steps ) {

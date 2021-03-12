@@ -64,11 +64,6 @@
 	"mwe-upwiz-campaign-unknown-error": "Error message shown when saving a campaign fails for an unknown reason",
 	"mwe-upwiz-api-warning-exists": "Used as warning. Parameters:\n* $1 - full URL of the file",
 	"mwe-upwiz-api-warning-was-deleted": "Unused at this time.\n\nUsed as warning. Parameters:\n* $1 - filename",
-	"mwe-upwiz-tutorial-error-localized-file-missing": "Shown when a tutorial file in a fallback language for user's interface language is used instead.\n\nParameters:\n* $1 - the name of the fallback language",
-	"mwe-upwiz-tutorial-error-file-missing": "Shown in the place of a tutorial image if we cannot find the configured image on the wiki.",
-	"mwe-upwiz-tutorial-error-cannot-transform": "Shown if the tutorial image exists, but a thumbnail could not be created for some reason.",
-	"mwe-upwiz-help-desk": "This should be the same text as it is used in the svg comic on the first page of the Upload Wizard",
-	"mwe-upwiz-help-desk-url": "As this is mainly used on Wikimedia Commons, it should remain as such and be overrriden when the UploadWizard is pushed on the local wikis.",
 	"mwe-upwiz-add-file-n": "{| align=\"right\"\n| [[file:commons-uw-L525.png|The \"{{MediaWiki:mwe-upwiz-step-file/en}}\" page after 1 file was added|thumb|right]]\n| [[file:commons-uw-L526.png|The \"{{MediaWiki:mwe-upwiz-step-file/en}}\" page after 2 files were added|thumb|right]]\n|} This is a button label, used in the \"{{MediaWiki:mwe-upwiz-step-file/en}}\" page of the [[:mw:Extension:UploadWizard|MediaWiki Upload Wizard]].",
 	"mwe-upwiz-add-file-0-free": "This message appears on the big button on the first page of the Upload Wizard. Files can be dragged to that button from the operating system's file manager. Pressing the button will open a \"browse\" window to choose a file. Note: when translating \"share\", remember that you have to makee it clear to the user that they are sharing the media with the public, making it freely available (technically, published and released under a free license); if no equivalent is available, just translate as \"upload\".",
 	"mwe-upwiz-add-file-flickr": "Label of a button in the first view of Special:UploadWizard, which is offered as an alternative to upload of local files and brings to another step.",
@@ -373,5 +368,6 @@
 	"mwe-upwiz-mv-cta-user-preference-set-failed": "Message to show if preference save fails",
 	"mwe-upwiz-upload-comment-own-work": "Own work upload comment shown in upload log. This message will not be parsed.",
 	"mwe-upwiz-upload-comment-third-party": "Third party work upload comment shown in upload log. Only variable substitution will be done on this message.\n* $1 – author of the work\n* $2 – source of the work",
-	"mwe-upwiz-global-config-anchor": "Message displayed on the Campaign:- \"magic\" page."
+	"mwe-upwiz-global-config-anchor": "Message displayed on the Campaign:- \"magic\" page.",
+	"mwe-upwiz-default-tutorial-text": "The default tutorial message explaining how to configure it and what can it contain."
 }

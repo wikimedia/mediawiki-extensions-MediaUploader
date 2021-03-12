@@ -86,12 +86,6 @@
 		// eslint-disable-next-line no-jquery/no-global-selector
 		this.$tutorialHtml = $( '#mwe-upwiz-tutorial-html' );
 
-		// Helpdesk link click
-		// eslint-disable-next-line no-jquery/no-global-selector
-		$( '#mwe-upwiz-tutorial-helpdesk' ).on( 'click', function () {
-			ui.emit( 'helpdesk-click' );
-		} );
-
 		this.addPreviousButton();
 		this.addNextButton();
 	};

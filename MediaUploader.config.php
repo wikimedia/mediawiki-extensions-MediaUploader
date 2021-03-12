@@ -71,18 +71,17 @@ return [
 	// Settings for the tutorial to be shown.
 	// Empty array if we want to skip
 	'tutorial' => [
-		// Set to true to skip the tutorial
+		// Set to false to hide the tutorial step entirely
+		'enabled' => true,
+
+		// Set to true to skip the tutorial by default
 		'skip' => false,
 
-		// Name of the tutorial on Wikimedia Commons. The $1 is replaced with the language desired.
-		'template' => 'Licensing_tutorial_$1.svg',
-
-		// The width we want to scale the tutorial to, for our interface.
-		'width' => 720,
-
-		// Imagemap coordinates of the "helpdesk" button at the bottom, which is supposed to be clickable.
-		// Empty string or false to not have an imagemap linked to the helpdesk.
-		'helpdeskCoords' => '27, 1319, 691, 1384',
+		// Wikitext to be displayed in the tutorial step.
+		// When set to a falsy value, the tutorial step will be hidden entirely.
+		// The default is a message explaining how to configure the tutorial.
+		// The parsed tutorial HTML is later placed in the 'html' property.
+		'wikitext' => '{{int:mwe-upwiz-default-tutorial-text}}',
 	],
 
 	// Tracking categories for various scenarios

@@ -126,18 +126,15 @@
 	/**
 	 * Initializes the arrow steps above the wizard.
 	 *
-	 * @param {Object.<uw.controller.Step>} steps
+	 * @param {uw.controller.Step[]} steps
 	 */
 	uw.ui.Wizard.prototype.initialiseSteps = function ( steps ) {
 		var $steps = $( '<ul>' )
-				.attr( 'id', 'mwe-upwiz-steps' )
-				.addClass( 'ui-helper-clearfix' )
-				.insertBefore( '#mwe-upwiz-content' ),
-			sortedSteps = this.sortSteps( Object.keys( steps ).map( function ( key ) {
-				return steps[ key ];
-			} ) );
+			.attr( 'id', 'mwe-upwiz-steps' )
+			.addClass( 'ui-helper-clearfix' )
+			.insertBefore( '#mwe-upwiz-content' );
 
-		sortedSteps.forEach( function ( step ) {
+		steps.forEach( function ( step ) {
 			var $arrow = $( '<li>' )
 				.attr( 'id', 'mwe-upwiz-step-' + step.stepName )
 				.append(
@@ -152,33 +149,6 @@
 		} );
 
 		$steps.arrowSteps();
-	};
-
-	/**
-	 * Sorts the steps in the order they'll actually be used.
-	 *
-	 * @param {uw.controller.Step[]} steps
-	 * @return {uw.controller.Step[]}
-	 */
-	uw.ui.Wizard.prototype.sortSteps = function ( steps ) {
-		var first = steps[ 0 ],
-			sorted,
-			i;
-
-		// find the very first step (element at position [0] is not guaranteed
-		// to be first (it was just added first)
-		// The actual internal relationship is defined in previousStep & nextStep
-		// properties ...)
-		while ( first.previousStep !== null ) {
-			first = first.previousStep;
-		}
-
-		sorted = [ first ];
-		for ( i = 1; i < steps.length; i++ ) {
-			sorted.push( sorted[ i - 1 ].nextStep );
-		}
-
-		return sorted;
 	};
 
 }( mw.uploadWizard ) );

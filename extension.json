@@ -98,7 +98,6 @@
 	],
 	"AutoloadClasses": {
 		"UploadWizardHooks": "includes/UploadWizardHooks.php",
-		"UploadWizardTutorial": "includes/UploadWizardTutorial.php",
 		"UploadWizardCampaign": "includes/UploadWizardCampaign.php",
 		"UploadWizardFlickrBlacklist": "includes/UploadWizardFlickrBlacklist.php",
 		"CampaignContentHandler": "includes/CampaignContentHandler.php",
@@ -285,10 +284,6 @@
 				"file-deleted-duplicate",
 				"mwe-upwiz-api-warning-was-deleted",
 				"mwe-upwiz-api-warning-exists",
-				"mwe-upwiz-tutorial-error-localized-file-missing",
-				"mwe-upwiz-tutorial-error-file-missing",
-				"mwe-upwiz-tutorial-error-cannot-transform",
-				"mwe-upwiz-help-desk",
 				"mwe-upwiz-multi-file-select2",
 				"mwe-upwiz-flickr-input-placeholder",
 				"mwe-upwiz-add-flickr-or",

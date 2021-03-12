@@ -33,11 +33,6 @@
 	"mwe-upwiz-campaign-unknown-error": "An unknown error occurred.",
 	"mwe-upwiz-api-warning-exists": "There is [$1 another file] already on the wiki with the same filename",
 	"mwe-upwiz-api-warning-was-deleted": "There was a file by this name, \"$1\", but it was deleted and you can not reupload the file. If your file is different, try renaming it.",
-	"mwe-upwiz-tutorial-error-localized-file-missing": "Sorry, we could not find a tutorial in your language. The $1 one is shown instead.",
-	"mwe-upwiz-tutorial-error-file-missing": "Sorry, we could not find any files for the tutorial that is supposed to go here. Please contact the system administrators.",
-	"mwe-upwiz-tutorial-error-cannot-transform": "Sorry, we could not get a scaled image of the tutorial to fit this screen. This may be a temporary problem with Wikimedia Commons; try again later.",
-	"mwe-upwiz-help-desk": "Help desk",
-	"mwe-upwiz-help-desk-url": "{{ns:project}}:Help desk",
 	"mwe-upwiz-add-file-n": "Add more files",
 	"mwe-upwiz-add-file-0-free": "Select media files to share",
 	"mwe-upwiz-add-file-flickr": "Share images from Flickr",
@@ -342,5 +337,6 @@
 	"mwe-upwiz-mv-cta-user-preference-set-failed": "We couldn't save your preference at this time. Please visit your [[c:Special:Preferences#mw-prefsection-echo|Preferences]] to opt into notifications.",
 	"mwe-upwiz-upload-comment-own-work": "Uploaded own work with UploadWizard",
 	"mwe-upwiz-upload-comment-third-party": "Uploaded a work by $1 from $2 with UploadWizard",
-	"mwe-upwiz-global-config-anchor": "'''This page serves as an anchor for the global MediaUploader config.'''\n\nIt is needed so that the config is correctly updated when any of the templates used in it are changed. Please do not move or delete this page."
+	"mwe-upwiz-global-config-anchor": "'''This page serves as an anchor for the global MediaUploader config.'''\n\nIt is needed so that the config is correctly updated when any of the templates used in it are changed. Please do not move or delete this page.",
+	"mwe-upwiz-default-tutorial-text": "=== This is the default tutorial message ===\nThe tutorial step is a good place to explain the rules for uploading files to your wiki's users.\n* You can disable the tutorial entirely by setting <code>$wgMediaUploader['tutorial']['enabled'] = false;</code>. This is probably the best choice for internal wikis.\n* Or you can change the wikitext of the tutorial using this setting: <code>$wgMediaUploader['tutorial']['content'] = 'some wikitext';</code>.\nPlease refer to [https://www.mediawiki.org/wiki/Extension:MediaUploader/Configuration the documentation] for further information."
 }

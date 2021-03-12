@@ -27,7 +27,6 @@ use Title;
 use UploadBase;
 use UploadFromUrl;
 use UploadWizardCampaign;
-use UploadWizardTutorial;
 use User;
 use UserBlockedError;
 
@@ -418,16 +417,12 @@ class MediaUploader extends SpecialPage {
 			);
 		}
 
-		// always load the html: even if the tutorial is skipped, users can
-		// still move back to view it
-		$tutorialHtml = UploadWizardTutorial::getHtml( $this->campaign );
-
 		// TODO move this into UploadWizard.js or some other javascript resource so the upload wizard
 		// can be dynamically included ( for example the add media wizard )
 		// @codingStandardsIgnoreStart
 		return '<div id="upload-wizard" class="upload-section">' .
 			'<div id="mwe-upwiz-tutorial-html" style="display:none;">' .
-				$tutorialHtml .
+				$config['tutorial']['html'] .
 			'</div>' .
 			'<div class="mwe-first-spinner">' .
 				new SpinnerWidget( [ 'size' => 'large' ] ) .

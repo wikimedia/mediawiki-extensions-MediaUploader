@@ -152,6 +152,57 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 			]
 		];
 
+		yield 'tutorial enabled, wikitext present' => [
+			[
+				'tutorial' => [
+					'enabled' => true,
+					'skip' => true,
+					'wikitext' => 'toParse'
+				]
+			],
+			[
+				'tutorial' => [
+					'enabled' => true,
+					'skip' => true,
+					'html' => self::PARSED_TEXT
+				]
+			]
+		];
+
+		yield 'tutorial enabled, wikitext not present' => [
+			[
+				'tutorial' => [
+					'enabled' => true,
+					'skip' => false,
+					'wikitext' => ''
+				]
+			],
+			[
+				'tutorial' => [
+					'enabled' => false,
+					'skip' => true,
+					'html' => ''
+				]
+			]
+		];
+
+		yield 'tutorial disabled, wikitext present' => [
+			[
+				'tutorial' => [
+					'enabled' => false,
+					'skip' => false,
+					'wikitext' => 'toParse'
+				]
+			],
+			[
+				'tutorial' => [
+					'enabled' => false,
+					'skip' => true,
+					'html' => ''
+				]
+			]
+		];
+
 		yield 'fields section' => [
 			[
 				'fields' => [

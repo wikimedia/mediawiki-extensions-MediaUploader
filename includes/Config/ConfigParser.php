@@ -102,6 +102,23 @@ class ConfigParser {
 						}
 					}
 					break;
+				case 'tutorial':
+					if ( ( $value['enabled'] ?? true ) && ( $value['wikitext'] ?? false ) ) {
+						// Parse tutorial wikitext
+						$parsedConfig['tutorial'] = [
+							'enabled' => true,
+							'skip' => $value['skip'] ?? false,
+							'html' => $this->parseValue( $value['wikitext'] ),
+						];
+					} else {
+						// The tutorial is not present or is disabled
+						$parsedConfig['tutorial'] = [
+							'enabled' => false,
+							'skip' => true,
+							'html' => '',
+						];
+					}
+					break;
 				case 'fields':
 					$parsedConfig['fields'] = [];
 					foreach ( $value as $field ) {

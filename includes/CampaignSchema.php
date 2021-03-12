@@ -219,17 +219,14 @@ return [
 		"tutorial" => [
 			"type" => "object",
 			"properties" => [
+				"enabled" => [
+					"type" => "boolean"
+				],
 				"skip" => [
 					"type" => "boolean"
 				],
-				"helpdeskCoords" => [
+				"wikitext" => [
 					"type" => "string"
-				],
-				"template" => [
-					"type" => "string"
-				],
-				"width" => [
-					"type" => "number"
 				]
 			]
 		],
