@@ -9,8 +9,6 @@
  * @author Yuvi Panda <yuvipanda@gmail.com>
  */
 
-use MediaWiki\MediaWikiServices;
-
 /**
  * Helper class to produce formatted HTML output for Campaigns
  */
@@ -27,12 +25,6 @@ class CampaignPageFormatter {
 		} else {
 			$this->context = $context;
 		}
-	}
-
-	private function isCampaignExtensionEnabled() {
-		$rl = MediaWikiServices::getInstance()->getResourceLoader();
-		// FIXME: This string exists nowhere in Wikimedia Gerrit outside this file.
-		return $rl->isModuleRegistered( 'ext.campaigns' );
 	}
 
 	public function generateReadHtml() {
@@ -58,11 +50,6 @@ class CampaignPageFormatter {
 
 		if ( $this->context->getUser()->isAnon() ) {
 			$urlParams = [ 'returnto' => $this->campaign->getTitle()->getPrefixedText() ];
-
-			if ( $this->isCampaignExtensionEnabled() ) {
-				$campaignTemplate = $config->getSetting( 'campaignCTACampaignTemplate' );
-				$urlParams['campaign'] = str_replace( '$1', $this->campaign->getName(), $campaignTemplate );
-			}
 			$createAccountUrl = Skin::makeSpecialUrlSubpage( 'UserLogin', 'signup', $urlParams );
 			$uploadLink = new OOUI\ButtonWidget( [
 				'label' => wfMessage( 'mwe-upwiz-campaign-create-account-button' )->text(),
