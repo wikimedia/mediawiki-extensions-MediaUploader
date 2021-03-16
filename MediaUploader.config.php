@@ -454,6 +454,12 @@ return [
 		]
 	],
 
+	// Additional messages to be loaded with MediaUploader
+	// This is only useful if your campaigns define custom licenses or license groups.
+	// MediaUploader has no way of knowing about them when loading the global config,
+	// so you will have to list them manually in this setting.
+	'additionalMessages' => [],
+
 	// Max author string length
 	'maxAuthorLength' => 10000,
 
