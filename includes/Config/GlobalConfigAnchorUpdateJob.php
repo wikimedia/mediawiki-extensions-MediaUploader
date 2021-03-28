@@ -2,12 +2,12 @@
 
 namespace MediaWiki\Extension\MediaUploader\Config;
 
-use CampaignContent;
-use CampaignContentHandler;
 use CommentStoreComment;
 use GenericParameterJob;
 use Job;
 use JobSpecification;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignContentHandler;
 use MediaWiki\MediaWikiServices;
 use MWException;
 use User;

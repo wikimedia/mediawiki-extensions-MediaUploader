@@ -5,6 +5,13 @@ use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 class UploadWizardHooks {
 
 	/**
+	 * Sets up constants.
+	 */
+	public static function registerExtension() : void {
+		require_once dirname( __DIR__ ) . '/defines.php';
+	}
+
+	/**
 	 * Schema update to set up the needed database tables.
 	 *
 	 * @since 1.2

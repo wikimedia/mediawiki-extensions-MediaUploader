@@ -2,9 +2,9 @@
 
 namespace MediaWiki\Extension\MediaUploader\Config;
 
-use CampaignContent;
 use Language;
 use MediaWiki\Config\ServiceOptions;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
@@ -41,7 +41,7 @@ class CampaignParsedConfig extends ParsedConfig {
 	 * @param ConfigParserFactory $configParserFactory
 	 * @param RequestConfig $requestConfig
 	 * @param array $urlOverrides
-	 * @param CampaignContent $content
+	 * @param CampaignContent $content assumed to be valid
 	 * @param LinkTarget $campaignLinkTarget
 	 * @param ServiceOptions $options
 	 *
@@ -128,7 +128,7 @@ class CampaignParsedConfig extends ParsedConfig {
 		$configParser = $this->configParserFactory->newConfigParser(
 			$this->arrayReplaceSanely(
 				$this->requestConfig->getConfigArray(),
-				$this->content->getJsonData() ?: []
+				$this->content->getData()->getValue() ?? []
 			),
 			$this->user,
 			$this->language,

@@ -2,8 +2,8 @@
 
 namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
 
-use CampaignContent;
-use CampaignContentHandler;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignContentHandler;
 use MediaWiki\Extension\MediaUploader\Config\GlobalConfigAnchorUpdateJob;
 use MediaWiki\Storage\EditResult;
 use MediaWiki\Storage\RevisionRecord;

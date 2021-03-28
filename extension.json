@@ -62,8 +62,9 @@
 		"upwizcampaigns",
 		"mass-upload"
 	],
+	"callback": "UploadWizardHooks::registerExtension",
 	"ContentHandlers": {
-		"Campaign": "CampaignContentHandler"
+		"Campaign": "MediaWiki\\Extension\\MediaUploader\\Campaign\\CampaignContentHandler"
 	},
 	"SpecialPages": {
 		"MediaUploader": {
@@ -100,8 +101,6 @@
 		"UploadWizardHooks": "includes/UploadWizardHooks.php",
 		"UploadWizardCampaign": "includes/UploadWizardCampaign.php",
 		"UploadWizardFlickrBlacklist": "includes/UploadWizardFlickrBlacklist.php",
-		"CampaignContentHandler": "includes/CampaignContentHandler.php",
-		"CampaignContent": "includes/CampaignContent.php",
 		"CampaignPageFormatter": "includes/CampaignPageFormatter.php",
 		"ApiQueryAllCampaigns": "includes/ApiQueryAllCampaigns.php",
 		"ApiFlickrBlacklist": "includes/ApiFlickrBlacklist.php"
@@ -113,6 +112,10 @@
 		"MediaWiki\\Extension\\MediaUploader\\Tests\\Unit\\Config\\ConfigUnitTestCase": "tests/phpunit/unit/Config/ConfigUnitTestCase.php"
 	},
 	"ResourceModules": {
+		"ext.mediaUploader.campaignEditor": {
+			"scripts": "resources/ext.mediaUploader.campaignEditor.js",
+			"group": "ext.wikiEditor"
+		},
 		"ext.mediaUploader.base": {
 			"scripts": "resources/uw.base.js",
 			"targets": [
@@ -519,21 +522,22 @@
 		]
 	},
 	"Hooks": {
-		"LoadExtensionSchemaUpdates": "UploadWizardHooks::onSchemaUpdate",
-		"GetPreferences": "UploadWizardHooks::onGetPreferences",
-		"IsUploadAllowedFromUrl": "UploadWizardHooks::onIsUploadAllowedFromUrl",
-		"ListDefinedTags": "registration",
-		"ChangeTagsListActive": "registration",
-		"ChangeTagsAllowedAdd": "registration",
-		"ContentModelCanBeUsedOn": "campaignContent",
-		"EditFilterMergedContent": "campaign",
-		"CodeEditorGetPageLanguage": "\\MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignContentHooks::onCodeEditorGetPageLanguage",
-		"PageSaveComplete": "campaign",
 		"ArticleDelete": "campaign",
 		"ArticleDeleteComplete": "campaign",
+		"ChangeTagsAllowedAdd": "registration",
+		"ChangeTagsListActive": "registration",
+		"CodeEditorGetPageLanguage": "\\MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignContentHooks::onCodeEditorGetPageLanguage",
+		"ContentModelCanBeUsedOn": "campaignContent",
+		"EditFilterMergedContent": "campaign",
+		"EditPage::showEditForm:initial": "campaignContent",
+		"GetPreferences": "UploadWizardHooks::onGetPreferences",
+		"IsUploadAllowedFromUrl": "UploadWizardHooks::onIsUploadAllowedFromUrl",
+		"LinksUpdateComplete": "campaign",
+		"ListDefinedTags": "registration",
+		"LoadExtensionSchemaUpdates": "UploadWizardHooks::onSchemaUpdate",
 		"MovePageIsValidMove": "campaign",
 		"PageMoveComplete": "campaign",
-		"LinksUpdateComplete": "campaign",
+		"PageSaveComplete": "campaign",
 		"UserGetReservedNames": "registration"
 	},
 	"HookHandlers": {
@@ -545,7 +549,8 @@
 			]
 		},
 		"campaignContent": {
-			"class": "MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignContentHooks"
+			"class": "MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignContentHooks",
+			"factory": "MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignContentHooks::newFromGlobalState"
 		},
 		"registration": {
 			"class": "MediaWiki\\Extension\\MediaUploader\\Hooks\\RegistrationHooks"
@@ -578,5 +583,6 @@
 			"value": []
 		}
 	},
+	"load_composer_autoloader": true,
 	"manifest_version": 2
 }

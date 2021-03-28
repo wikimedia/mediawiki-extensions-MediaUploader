@@ -1,21 +1,18 @@
 <?php
-/**
- * JSON Schema Content Handler
- *
- * @file
- * @ingroup Extensions
- * @ingroup UploadWizard
- *
- * @author Ori Livneh <ori@wikimedia.org>
- * @author Yuvi Panda <yuvipanda@gmail.com>
- */
 
+namespace MediaWiki\Extension\MediaUploader\Campaign;
+
+use JsonContentHandler;
+
+/**
+ * Content handler for campaign pages.
+ */
 class CampaignContentHandler extends JsonContentHandler {
 
 	/**
 	 * @param string $modelId
 	 */
-	public function __construct( $modelId = CampaignContent::MODEL_NAME ) {
+	public function __construct( $modelId = CONTENT_MODEL_CAMPAIGN ) {
 		parent::__construct( $modelId );
 	}
 
@@ -31,6 +28,7 @@ class CampaignContentHandler extends JsonContentHandler {
 	 */
 	public function makeEmptyContent() {
 		$class = $this->getContentClass();
-		return new $class( '{"enabled":false}' );
+
+		return new $class( 'enabled: false' );
 	}
 }

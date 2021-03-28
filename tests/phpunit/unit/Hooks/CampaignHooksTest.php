@@ -2,13 +2,12 @@
 
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Hooks;
 
-use CampaignContent;
 use Content;
 use IContextSource;
 use IDatabase;
-use JsonSchemaException;
 use LinksUpdate;
 use ManualLogEntry;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Hooks\CampaignHooks;
 use MediaWiki\Linker\LinkTarget;
@@ -147,8 +146,8 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$content = $this->createMock( CampaignContent::class );
 		$content->expects( $this->once() )
-			->method( 'validate' )
-			->willReturn( true );
+			->method( 'getValidationStatus' )
+			->willReturn( Status::newGood() );
 
 		$hooks = $this->getCampaignHooks();
 
@@ -166,24 +165,25 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 	}
 
 	public function testEditFilterMergedContent_invalid() {
-		$content = $this->createMock( CampaignContent::class );
-		$content->expects( $this->once() )
-			->method( 'validate' )
-			->willThrowException( new JsonSchemaException( 'dummy-code' ) );
-
 		$context = $this->createMock( IContextSource::class );
 		$context->expects( $this->atLeastOnce() )
 			->method( 'getTitle' )
 			->willReturn( $this->getTitleInCampaignNamespace() );
-		$context->expects( $this->once() )
-			->method( 'msg' )
-			->with( 'dummy-code' )
-			->willReturn( 'Dummy error message.' );
+
+		$validationStatus = $this->createMock( Status::class );
+		$validationStatus->expects( $this->once() )
+			->method( 'getErrors' )
+			->willReturn( [ [ 'message' => 'dummy-code' ] ] );
+
+		$content = $this->createMock( CampaignContent::class );
+		$content->expects( $this->once() )
+			->method( 'getValidationStatus' )
+			->willReturn( $validationStatus );
 
 		$status = $this->createMock( Status::class );
 		$status->expects( $this->once() )
 			->method( 'fatal' )
-			->with( 'Dummy error message.' );
+			->with( 'dummy-code' );
 
 		$hooks = $this->getCampaignHooks();
 
@@ -287,12 +287,12 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 	}
 
 	/**
-	 * @param array|null $jsonData
+	 * @param array|null $data
 	 * @param int $expectedEnabled
 	 *
 	 * @dataProvider provideDoCampaignUpdate
 	 */
-	public function testDoCampaignUpdate( ?array $jsonData, int $expectedEnabled ) {
+	public function testDoCampaignUpdate( ?array $data, int $expectedEnabled ) {
 		$wikiPage = $this->createMock( WikiPage::class );
 		$wikiPage->expects( $this->atLeastOnce() )
 			->method( 'getTitle' )
@@ -300,8 +300,8 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$content = $this->createMock( CampaignContent::class );
 		$content->expects( $this->once() )
-			->method( 'getJsonData' )
-			->willReturn( $jsonData );
+			->method( 'getData' )
+			->willReturn( Status::newGood( $data ) );
 
 		$dbw = $this->createMock( IDatabase::class );
 		$dbw->expects( $this->once() )

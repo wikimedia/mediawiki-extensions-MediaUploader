@@ -2,9 +2,11 @@
 
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Hooks;
 
-use CampaignContent;
+use EditPage;
+use ExtensionRegistry;
 use MediaWiki\Extension\MediaUploader\Hooks\CampaignContentHooks;
 use MediaWikiUnitTestCase;
+use OutputPage;
 use Title;
 
 /**
@@ -15,11 +17,11 @@ class CampaignContentHooksTest extends MediaWikiUnitTestCase {
 
 	public function provideContentModelCanBeUsedOn() : iterable {
 		yield 'Campaign content model, Campaign: namespace' => [
-			CampaignContent::MODEL_NAME, true, true
+			CONTENT_MODEL_CAMPAIGN, true, true
 		];
 
 		yield 'Campaign content model, other namespace' => [
-			CampaignContent::MODEL_NAME, false, false
+			CONTENT_MODEL_CAMPAIGN, false, false
 		];
 
 		yield 'other content model, Campaign: namespace' => [
@@ -43,7 +45,9 @@ class CampaignContentHooksTest extends MediaWikiUnitTestCase {
 		bool $inCampaignNamespace,
 		bool $expected
 	) {
-		$hooks = new CampaignContentHooks();
+		$hooks = new CampaignContentHooks(
+			$this->createNoOpMock( ExtensionRegistry::class )
+		);
 		$title = $this->createMock( Title::class );
 		$title->expects( $this->once() )
 			->method( 'inNamespace' )
@@ -61,7 +65,7 @@ class CampaignContentHooksTest extends MediaWikiUnitTestCase {
 
 	public function provideCodeEditorGetPageLanguage() : iterable {
 		yield 'title not in Campaign namespace' => [ false, null ];
-		yield 'title in Campaign namespace' => [ true, 'json' ];
+		yield 'title in Campaign namespace' => [ true, 'yaml' ];
 	}
 
 	/**
@@ -89,6 +93,85 @@ class CampaignContentHooksTest extends MediaWikiUnitTestCase {
 			$expectedLang,
 			$lang,
 			'&$lang parameter'
+		);
+	}
+
+	public function testShowEditFormInitial_noCodeEditor() {
+		$extensionRegistry = $this->createMock( ExtensionRegistry::class );
+		$extensionRegistry->expects( $this->once() )
+			->method( 'isLoaded' )
+			->with( 'CodeEditor' )
+			->willReturn( false );
+
+		$hooks = new CampaignContentHooks( $extensionRegistry );
+
+		$this->assertTrue(
+			$hooks->onEditPage__showEditForm_initial(
+				$this->createNoOpMock( EditPage::class ),
+				$this->createNoOpMock( OutputPage::class )
+			),
+			'onEditPage__showEditForm_initial()'
+		);
+	}
+
+	public function testShowEditFormInitial_notInCampaignNamespace() {
+		$extensionRegistry = $this->createMock( ExtensionRegistry::class );
+		$extensionRegistry->expects( $this->once() )
+			->method( 'isLoaded' )
+			->with( 'CodeEditor' )
+			->willReturn( true );
+
+		$title = $this->createMock( Title::class );
+		$title->expects( $this->once() )
+			->method( 'getNamespace' )
+			->willReturn( NS_MEDIAWIKI );
+
+		$editPage = $this->createMock( EditPage::class );
+		$editPage->expects( $this->once() )
+			->method( 'getContextTitle' )
+			->willReturn( $title );
+
+		$hooks = new CampaignContentHooks( $extensionRegistry );
+
+		$this->assertTrue(
+			$hooks->onEditPage__showEditForm_initial(
+				$editPage,
+				$this->createNoOpMock( OutputPage::class )
+			),
+			'onEditPage__showEditForm_initial()'
+		);
+	}
+
+	public function testShowEditFormInitial_valid() {
+		$extensionRegistry = $this->createMock( ExtensionRegistry::class );
+		$extensionRegistry->expects( $this->once() )
+			->method( 'isLoaded' )
+			->with( 'CodeEditor' )
+			->willReturn( true );
+
+		$title = $this->createMock( Title::class );
+		$title->expects( $this->once() )
+			->method( 'getNamespace' )
+			->willReturn( NS_CAMPAIGN );
+
+		$editPage = $this->createMock( EditPage::class );
+		$editPage->expects( $this->once() )
+			->method( 'getContextTitle' )
+			->willReturn( $title );
+
+		$outputPage = $this->createMock( OutputPage::class );
+		$outputPage->expects( $this->once() )
+			->method( 'addModules' )
+			->with( 'ext.mediaUploader.campaignEditor' );
+
+		$hooks = new CampaignContentHooks( $extensionRegistry );
+
+		$this->assertTrue(
+			$hooks->onEditPage__showEditForm_initial(
+				$editPage,
+				$outputPage
+			),
+			'onEditPage__showEditForm_initial()'
 		);
 	}
 }

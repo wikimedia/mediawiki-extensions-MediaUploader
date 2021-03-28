@@ -2,13 +2,12 @@
 
 namespace MediaWiki\Extension\MediaUploader\Hooks;
 
-use CampaignContent;
 use Content;
 use DeferredUpdates;
 use IContextSource;
-use JsonSchemaException;
 use LinksUpdate;
 use ManualLogEntry;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Hook\EditFilterMergedContentHook;
 use MediaWiki\Hook\LinksUpdateCompleteHook;
@@ -92,7 +91,7 @@ class CampaignHooks implements
 	}
 
 	/**
-	 * Validates that the revised contents of a campaign are valid JSON.
+	 * Validates that the revised contents of a campaign are valid YAML.
 	 * If not valid, rejects edit with error message.
 	 *
 	 * @param IContextSource $context
@@ -124,10 +123,11 @@ class CampaignHooks implements
 			return true;
 		}
 
-		try {
-			$content->validate();
-		} catch ( JsonSchemaException $e ) {
-			$status->fatal( $context->msg( $e->getCode(), $e->args ) );
+		// $status is not passed by ref, so we have to copy the validation
+		// errors manually, if there are any.
+		$validationStatus = $content->getValidationStatus();
+		foreach ( $validationStatus->getErrors() as $error ) {
+			$status->fatal( $error['message'], ...( $error['params'] ?? [] ) );
 		}
 
 		return true;
@@ -239,7 +239,7 @@ class CampaignHooks implements
 		$dbw = $this->loadBalancer->getConnection( DB_MASTER );
 
 		$campaignName = $wikiPage->getTitle()->getDBkey();
-		$campaignData = $content->getJsonData();
+		$campaignData = $content->getData()->getValue();
 		$insertData = [
 			'campaign_enabled' => $campaignData !== null && $campaignData['enabled'] ? 1 : 0
 		];

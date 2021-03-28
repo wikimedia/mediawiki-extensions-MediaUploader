@@ -2,8 +2,8 @@
 
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Config;
 
-use CampaignContent;
 use Language;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParser;
@@ -11,6 +11,7 @@ use MediaWiki\Extension\MediaUploader\Config\ConfigParserFactory;
 use MediaWiki\Extension\MediaUploader\Config\RequestConfig;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
+use Status;
 use TitleValue;
 use WANObjectCache;
 
@@ -227,8 +228,8 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 
 		$content = $this->createMock( CampaignContent::class );
 		$content->expects( $this->once() )
-			->method( 'getJsonData' )
-			->willReturn( [ 'someKey' => 'v' ] );
+			->method( 'getData' )
+			->willReturn( Status::newGood( [ 'someKey' => 'v' ] ) );
 
 		$invalidator = $this->createMock( ConfigCacheInvalidator::class );
 		$invalidator->expects( $this->atLeastOnce() )
@@ -315,8 +316,8 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 
 		$content = $this->createMock( CampaignContent::class );
 		$content->expects( $this->once() )
-			->method( 'getJsonData' )
-			->willReturn( [ 'someKey' => 'v' ] );
+			->method( 'getData' )
+			->willReturn( Status::newGood( [ 'someKey' => 'v' ] ) );
 
 		$linkTarget = new TitleValue( NS_CAMPAIGN, 'Dummy' );
 

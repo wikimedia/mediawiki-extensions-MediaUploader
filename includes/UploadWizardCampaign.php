@@ -1,5 +1,6 @@
 <?php
 
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\MediaWikiServices;
