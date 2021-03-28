@@ -6,8 +6,8 @@ use CampaignContent;
 use Language;
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\Linker\LinkTarget;
+use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
-use User;
 use WANObjectCache;
 
 /**
@@ -37,7 +37,7 @@ class CampaignParsedConfig extends ParsedConfig {
 	 * @param UserOptionsLookup $userOptionsLookup
 	 * @param ConfigCacheInvalidator $cacheInvalidator
 	 * @param Language $language
-	 * @param User $user
+	 * @param UserIdentity $user
 	 * @param ConfigParserFactory $configParserFactory
 	 * @param RequestConfig $requestConfig
 	 * @param array $urlOverrides
@@ -52,7 +52,7 @@ class CampaignParsedConfig extends ParsedConfig {
 		UserOptionsLookup $userOptionsLookup,
 		ConfigCacheInvalidator $cacheInvalidator,
 		Language $language,
-		User $user,
+		UserIdentity $user,
 		ConfigParserFactory $configParserFactory,
 		RequestConfig $requestConfig,
 		array $urlOverrides,

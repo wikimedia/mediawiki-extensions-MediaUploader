@@ -9,8 +9,8 @@ use MediaWiki\Cache\LinkBatchFactory;
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\Languages\LanguageNameUtils;
 use MediaWiki\Linker\LinkTarget;
+use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
-use User;
 use WANObjectCache;
 
 /**
@@ -92,7 +92,7 @@ class ConfigFactory {
 	/**
 	 * Returns the global parsed config.
 	 *
-	 * @param User $user
+	 * @param UserIdentity $user
 	 * @param Language $language
 	 * @param array $urlOverrides URL parameter overrides in the form of an
 	 *   associative array. Use with caution and do not pass unvalidated user
@@ -102,7 +102,7 @@ class ConfigFactory {
 	 * @return GlobalParsedConfig
 	 */
 	public function newGlobalConfig(
-		User $user,
+		UserIdentity $user,
 		Language $language,
 		array $urlOverrides = [],
 		bool $noCache = false
@@ -127,7 +127,7 @@ class ConfigFactory {
 	/**
 	 * Returns the parsed config of a campaign.
 	 *
-	 * @param User $user
+	 * @param UserIdentity $user
 	 * @param Language $language
 	 * @param CampaignContent $campaignContent
 	 * @param LinkTarget $campaignLinkTarget
@@ -139,7 +139,7 @@ class ConfigFactory {
 	 * @return CampaignParsedConfig
 	 */
 	public function newCampaignConfig(
-		User $user,
+		UserIdentity $user,
 		Language $language,
 		CampaignContent $campaignContent,
 		LinkTarget $campaignLinkTarget,

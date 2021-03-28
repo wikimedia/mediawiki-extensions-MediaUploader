@@ -5,8 +5,8 @@ namespace MediaWiki\Extension\MediaUploader\Config;
 use JobQueueGroup;
 use Language;
 use MediaWiki\Config\ServiceOptions;
+use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
-use User;
 use WANObjectCache;
 
 /**
@@ -34,7 +34,7 @@ class GlobalParsedConfig extends ParsedConfig {
 	 * @param UserOptionsLookup $userOptionsLookup
 	 * @param ConfigCacheInvalidator $cacheInvalidator
 	 * @param Language $language
-	 * @param User $user
+	 * @param UserIdentity $user
 	 * @param ConfigParserFactory $configParserFactory
 	 * @param RequestConfig $requestConfig
 	 * @param JobQueueGroup $jobQueueGroup
@@ -48,7 +48,7 @@ class GlobalParsedConfig extends ParsedConfig {
 		UserOptionsLookup $userOptionsLookup,
 		ConfigCacheInvalidator $cacheInvalidator,
 		Language $language,
-		User $user,
+		UserIdentity $user,
 		ConfigParserFactory $configParserFactory,
 		RequestConfig $requestConfig,
 		JobQueueGroup $jobQueueGroup,

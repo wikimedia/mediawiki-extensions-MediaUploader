@@ -9,9 +9,9 @@ use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParser;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParserFactory;
 use MediaWiki\Extension\MediaUploader\Config\RequestConfig;
+use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
 use TitleValue;
-use User;
 use WANObjectCache;
 
 /**
@@ -33,7 +33,7 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 			$this->createNoOpMock( UserOptionsLookup::class ),
 			$this->createNoOpMock( ConfigCacheInvalidator::class ),
 			$this->createNoOpMock( Language::class ),
-			$this->createNoOpMock( User::class ),
+			$this->createNoOpMock( UserIdentity::class ),
 			$this->createNoOpMock( ConfigParserFactory::class ),
 			$this->createNoOpMock( RequestConfig::class ),
 			[],
@@ -187,7 +187,7 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 		array $urlOverrides,
 		array $expectedConfig
 	) {
-		$user = $this->createNoOpMock( User::class );
+		$user = $this->createNoOpMock( UserIdentity::class );
 		$userOptionsLookup = $this->createMock( UserOptionsLookup::class );
 		$userOptionsLookup->expects( $this->once() )
 			->method( 'getOption' )
@@ -297,7 +297,7 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 			->method( 'getTemplates' )
 			->willReturn( [ 'k' => 'templates' ] );
 
-		$user = $this->createNoOpMock( User::class );
+		$user = $this->createNoOpMock( UserIdentity::class );
 		$language = $this->createNoOpMock( Language::class );
 
 		$configParserFactory = $this->createMock( ConfigParserFactory::class );

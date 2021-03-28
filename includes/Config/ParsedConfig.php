@@ -4,8 +4,8 @@ namespace MediaWiki\Extension\MediaUploader\Config;
 
 use Language;
 use MediaWiki\Config\ServiceOptions;
+use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
-use User;
 use WANObjectCache;
 
 /**
@@ -41,7 +41,7 @@ abstract class ParsedConfig extends ConfigBase {
 	/** @var Language */
 	protected $language;
 
-	/** @var User */
+	/** @var UserIdentity */
 	protected $user;
 
 	/** @var ServiceOptions */
@@ -52,7 +52,7 @@ abstract class ParsedConfig extends ConfigBase {
 	 * @param UserOptionsLookup $userOptionsLookup
 	 * @param ConfigCacheInvalidator $cacheInvalidator
 	 * @param Language $language
-	 * @param User $user
+	 * @param UserIdentity $user
 	 * @param ServiceOptions $options
 	 */
 	protected function __construct(
@@ -60,7 +60,7 @@ abstract class ParsedConfig extends ConfigBase {
 		UserOptionsLookup $userOptionsLookup,
 		ConfigCacheInvalidator $cacheInvalidator,
 		Language $language,
-		User $user,
+		UserIdentity $user,
 		ServiceOptions $options
 	) {
 		$options->assertRequiredOptions( self::CONSTRUCTOR_OPTIONS );
