@@ -1,0 +1,173 @@
+# JSON schema for MediaUploader campaigns
+#
+# Changes to this schema MUST be backwards-compatible.
+# See tests/phpunit/unit/Campaign/ValidatorTest.php for schema tests
+
+$schema: 'http://json-schema.org/draft-04/schema#'
+
+################################
+## Definitions used elsewhere ##
+################################
+definitions:
+  # Represents a name of a license defined in the global config
+  licenseName:
+    type: string
+    # To be filled by PHP code during execution
+    # PHP snippet: $schema->definitions->licenseName->enum = ...
+    enum: [ ~ ]
+
+  # 'defaults' field in licensing config
+  defaultLicensesField:
+    oneOf:
+      - { $ref: '#/definitions/licenseName' }
+      - type: array
+        items: { $ref: '#/definitions/licenseName' }
+
+  # The "display" section of the config
+  displaySection:
+    type: object
+    additionalProperties: false
+    properties:
+      headerLabel: { type: string }
+      thanksLabel: { type: string }
+      homeButton:
+        type: object
+        additionalProperties: false
+        properties:
+          label: { type: string }
+          target: { type: string }
+      beginButton:
+        type: object
+        additionalProperties: false
+        properties:
+          label: { type: string }
+          target: { type: string }
+
+  # The "autoAdd" section of the config
+  autoAddSection:
+    type: object
+    additionalProperties: false
+    properties:
+      categories:
+        type: array
+        items: { type: string }
+      wikitext: { type: string }
+
+################################
+#### The main config object ####
+################################
+type: object
+additionalProperties: false
+properties:
+  # General campaign properties
+  title: { type: string }
+  description: { type: string }
+  enabled: { type: boolean }
+  start: { type: string }
+  end: { type: string }
+
+  # Automatically added items
+  autoAdd: { $ref: '#/definitions/autoAddSection' }
+
+  # Field definitions
+  fields:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        wikitext: { type: string }
+        label: { type: string }
+        maxLength: { type: integer }
+        initialValue: { type: string }
+        required: { type: boolean }
+        type: { type: string }
+        options: { type: object }
+
+  # Default values for fields
+  defaults:
+    type: object
+    additionalProperties: false
+    properties:
+      alt: { type: number }
+      categories:
+        type: array
+        items: { type: string }
+      description: { type: string }
+      lat: { type: number }
+      lon: { type: number }
+
+  # Labels and URLs on things
+  display: { $ref: '#/definitions/displaySection' }
+
+  # License groups
+  licensing:
+    type: object
+    additionalProperties: false
+    properties:
+      defaultType: { type: string }
+      ownWorkDefault: { type: string }
+
+      # TODO: This is all wrong. ownWork should allow for license groups
+      # Resolve this in T278871
+      # Refactor common code from these two and make it readable
+      ownWork:
+        type: object
+        additionalProperties: false
+        properties:
+          defaults: { $ref: '#/definitions/defaultLicensesField' }
+          licenses:
+            type: array
+            items: { $ref: '#/definitions/licenseName' }
+          template: { type: string }
+          type: { type: string }
+
+      thirdParty:
+        type: object
+        additionalProperties: false
+        properties:
+          defaults: { $ref: '#/definitions/defaultLicensesField' }
+          licenseGroups:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                head: { type: string }
+                licenses:
+                  type: array
+                  items: { $ref: '#/definitions/licenseName' }
+                subhead: { type: string }
+          type: { type: string }
+
+  # The tutorial
+  tutorial:
+    type: object
+    additionalProperties: false
+    properties:
+      enabled: { type: boolean }
+      skip: { type: boolean }
+      wikitext: { type: string }
+
+  # (before|while|after)Active modifiers
+  beforeActive:
+    type: object
+    additionalProperties: false
+    properties:
+      display: { $ref: '#/definitions/displaySection' }
+
+  whileActive:
+    type: object
+    additionalProperties: false
+    properties:
+      display: { $ref: '#/definitions/displaySection' }
+      autoAdd: { $ref: '#/definitions/autoAddSection' }
+
+  afterActive:
+    type: object
+    additionalProperties: false
+    properties:
+      display: { $ref: '#/definitions/displaySection' }
+
+required:
+  - enabled

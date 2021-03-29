@@ -8,7 +8,10 @@ $cfg['file_list'][] = 'defines.php';
 $cfg['directory_list'] = array_merge(
 	$cfg['directory_list'],
 	[
-		'vendor',
+		// Include only the YAML library. The JSON Schema library is also
+		// included in dev requirements for core, which causes duplicate
+		// definition errors in Phan.
+		'vendor/symfony/yaml',
 		'../../extensions/EventLogging',
 	]
 );
@@ -16,7 +19,7 @@ $cfg['directory_list'] = array_merge(
 $cfg['exclude_analysis_directory_list'] = array_merge(
 	$cfg['exclude_analysis_directory_list'],
 	[
-		'vendor',
+		'vendor/symfony/yaml',
 		'../../extensions/EventLogging',
 	]
 );

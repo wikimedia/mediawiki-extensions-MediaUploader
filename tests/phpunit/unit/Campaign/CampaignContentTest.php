@@ -3,7 +3,9 @@
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Campaign;
 
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
+use MediaWiki\Extension\MediaUploader\Campaign\Validator;
 use MediaWikiUnitTestCase;
+use Status;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -50,5 +52,89 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 			$errors[0]['message'],
 			"'message' key of the first error in the array"
 		);
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::isValid
+	 * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::getValidationStatus
+	 */
+	public function testIsValid_valid() {
+		$content = new CampaignContent( 'enabled: true' );
+
+		$validator = $this->createMock( Validator::class );
+		$validator->expects( $this->once() )
+			->method( 'validate' )
+			->willReturn( Status::newGood() );
+
+		$content->setServices( null, $validator );
+
+		$this->assertTrue(
+			$content->getValidationStatus()->isGood(),
+			'first call: getValidationStatus()->isGood()'
+		);
+
+		// Call the method twice to ensure the campaign is validated only once
+		$this->assertTrue(
+			$content->getValidationStatus()->isGood(),
+			'second call: getValidationStatus()->isGood()'
+		);
+
+		$this->assertTrue( $content->isValid(), 'isValid()' );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::isValid
+	 * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::getValidationStatus
+	 */
+	public function testIsValid_invalidSyntax() {
+		// Try to parse some very invalid YAML
+		$content = new CampaignContent( '[[[[' );
+
+		$content->setServices(
+			null,
+			$this->createNoOpMock( Validator::class )
+		);
+
+		$status = $content->getValidationStatus();
+		$this->assertFalse( $status->isGood(), 'Status::isGood()' );
+
+		$errors = $status->getErrors();
+		$this->assertCount( 1, $errors, 'number of errors' );
+		$this->assertSame(
+			'mediauploader-yaml-parse-error',
+			$errors[0]['message'],
+			"'message' key of the first error in the array"
+		);
+
+		$this->assertFalse( $content->isValid(), 'isValid()' );
+	}
+
+	/**
+	 * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::isValid
+	 * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::getValidationStatus
+	 */
+	public function testIsValid_invalidSchema() {
+		// This is valid YAML, but it violates the campaign schema
+		$content = new CampaignContent( '- a' );
+
+		$validator = $this->createMock( Validator::class );
+		$validator->expects( $this->once() )
+			->method( 'validate' )
+			->willReturn( Status::newFatal( 'dummy-message' ) );
+
+		$content->setServices( null, $validator );
+
+		$status = $content->getValidationStatus();
+		$this->assertFalse( $status->isGood(), 'Status::isGood()' );
+
+		$errors = $status->getErrors();
+		$this->assertCount( 1, $errors, 'number of errors' );
+		$this->assertSame(
+			'dummy-message',
+			$errors[0]['message'],
+			"'message' key of the first error in the array"
+		);
+
+		$this->assertFalse( $content->isValid(), 'isValid()' );
 	}
 }

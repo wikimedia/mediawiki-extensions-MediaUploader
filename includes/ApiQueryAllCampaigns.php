@@ -22,6 +22,8 @@
  * @file
  */
 
+use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
+
 /**
  * Query module to enumerate all registered campaigns
  *
@@ -73,7 +75,13 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 				break;
 			}
 
-			$campaign = UploadWizardCampaign::newFromName( $row->campaign_name );
+			try {
+				$campaign = UploadWizardCampaign::newFromName( $row->campaign_name );
+			} catch ( InvalidCampaignContentException $e ) {
+				// TODO: Shouldn't we report some error here?
+				continue;
+			}
+
 			if ( $campaign === null ) {
 				// TODO: Shouldn't we report some error here?
 				continue;

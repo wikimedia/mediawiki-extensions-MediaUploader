@@ -39,6 +39,9 @@ class CampaignContent extends TextContent {
 	/** @var ConfigFactory */
 	private $configFactory;
 
+	/** @var Validator */
+	private $validator;
+
 	/** @var Status */
 	private $yamlParse;
 
@@ -56,9 +59,14 @@ class CampaignContent extends TextContent {
 	 * Set services for unit testing purposes.
 	 *
 	 * @param ConfigFactory|null $configFactory
+	 * @param Validator|null $validator
 	 */
-	public function setServices( ConfigFactory $configFactory = null ) {
+	public function setServices(
+		ConfigFactory $configFactory = null,
+		Validator $validator = null
+	) {
 		$this->configFactory = $configFactory;
+		$this->validator = $validator;
 		$this->initializedServices = true;
 	}
 
@@ -71,7 +79,8 @@ class CampaignContent extends TextContent {
 		}
 
 		$this->setServices(
-			MediaUploaderServices::getConfigFactory()
+			MediaUploaderServices::getConfigFactory(),
+			MediaUploaderServices::getCampaignValidator()
 		);
 	}
 
@@ -81,6 +90,8 @@ class CampaignContent extends TextContent {
 	 * @return Status
 	 */
 	public function getValidationStatus() : Status {
+		$this->initServices();
+
 		if ( $this->validationStatus ) {
 			return $this->validationStatus;
 		}
@@ -92,28 +103,9 @@ class CampaignContent extends TextContent {
 			return $this->validationStatus;
 		}
 
-		// FIXME: CampaignContent MUST NOT rely on merging with the global config for verifying
-		//  its validity. Campaign schema should be restructured to represent the ACTUAL schema
-		//  of a campaign specification, not the schema of the specification merged with the
-		//  global config. Until that is fixed, campaign schema validation is commented out.
-		/* $schema = include __DIR__ . '/CampaignSchema.php';
-
-		// Only validate fields we care about
-		$campaignFields = array_keys( $schema['properties'] );
-
-		$fullConfig = UploadWizardConfig::getConfig();
-
-		$defaultCampaignConfig = [];
-
-		foreach ( $fullConfig as $key => $value ) {
-			if ( in_array( $key, $campaignFields ) ) {
-				$defaultCampaignConfig[$key] = $value;
-			}
-		}
-
-		$mergedConfig = UploadWizardConfig::arrayReplaceSanely( $defaultCampaignConfig, $campaign );
-		return EventLogging::schemaValidate( $mergedConfig, $schema ); */
-		$this->validationStatus = Status::newGood();
+		$this->validationStatus = $this->validator->validate(
+			$yamlParse->getValue()
+		);
 
 		return $this->validationStatus;
 	}
@@ -175,12 +167,17 @@ class CampaignContent extends TextContent {
 		// (like PageSaveComplete or LinksUpdateComplete), because we can't modify
 		// ParserOutput at those points. We need an up-to-date list of templates here
 		// and now.
-		$campaign = UploadWizardCampaign::newFromTitle(
-			$title,
-			[],
-			$this,
-			true
-		);
+		try {
+			$campaign = UploadWizardCampaign::newFromTitle(
+				$title,
+				[],
+				$this,
+				true
+			);
+		} catch ( InvalidCampaignContentException $e ) {
+			// TODO: handle this somehow, show a proper error message
+			throw $e;
+		}
 
 		if ( $generateHtml ) {
 			$formatter = new CampaignPageFormatter( $campaign );
@@ -243,8 +240,6 @@ class CampaignContent extends TextContent {
 
 	/**
 	 * Normalizes line endings before saving.
-	 * TODO: add optional beautifying here? YAML can be serialized in many ways, so
-	 *  this should probably be a configurable thing.
 	 *
 	 * @param Title $title
 	 * @param User $user

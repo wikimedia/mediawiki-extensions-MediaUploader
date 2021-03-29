@@ -2,12 +2,12 @@
 
 namespace MediaWiki\Extension\MediaUploader\Config;
 
-use InvalidArgumentException;
 use JobQueueGroup;
 use Language;
 use MediaWiki\Cache\LinkBatchFactory;
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
+use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
 use MediaWiki\Languages\LanguageNameUtils;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\User\UserIdentity;
@@ -138,6 +138,7 @@ class ConfigFactory {
 	 * @param bool $noCache Whether to ignore config cache
 	 *
 	 * @return CampaignParsedConfig
+	 * @throws InvalidCampaignContentException
 	 */
 	public function newCampaignConfig(
 		UserIdentity $user,
@@ -148,7 +149,9 @@ class ConfigFactory {
 		bool $noCache = false
 	) : CampaignParsedConfig {
 		if ( !$campaignContent->isValid() ) {
-			throw new InvalidArgumentException( '$campaignContent must be valid' );
+			throw new InvalidCampaignContentException(
+				$campaignLinkTarget->getText()
+			);
 		}
 
 		return new CampaignParsedConfig(

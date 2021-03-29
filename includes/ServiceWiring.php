@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\Config\ServiceOptions;
+use MediaWiki\Extension\MediaUploader\Campaign\Validator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParserFactory;
@@ -10,6 +11,13 @@ use MediaWiki\MediaWikiServices;
 
 /** @phpcs-require-sorted-array */
 return [
+	'MediaUploaderCampaignValidator' => function ( MediaWikiServices $services ) : Validator {
+		return new Validator(
+			MediaUploaderServices::getRawConfig( $services ),
+			$services->getLocalServerObjectCache()
+		);
+	},
+
 	'MediaUploaderConfigCacheInvalidator' => function ( MediaWikiServices $services ) : ConfigCacheInvalidator {
 		return new ConfigCacheInvalidator(
 			$services->getMainWANObjectCache()

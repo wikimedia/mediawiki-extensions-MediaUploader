@@ -3,6 +3,7 @@
 namespace MediaWiki\Extension\MediaUploader\Special;
 
 use Html;
+use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
 use SpecialPage;
 use UploadWizardCampaign;
 
@@ -52,7 +53,13 @@ class Campaigns extends SpecialPage {
 				$lastId = $row->campaign_id;
 				break;
 			} else {
-				$campaign = UploadWizardCampaign::newFromName( $row->campaign_name );
+				try {
+					$campaign = UploadWizardCampaign::newFromName( $row->campaign_name );
+				} catch ( InvalidCampaignContentException $e ) {
+					// TODO: report an error?
+					continue;
+				}
+
 				if ( $campaign !== null ) {
 					$this->getOutput()->addHTML( $this->getHtmlForCampaign( $campaign ) );
 				}

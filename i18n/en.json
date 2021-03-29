@@ -332,5 +332,7 @@
 	"mwe-upwiz-upload-comment-third-party": "Uploaded a work by $1 from $2 with UploadWizard",
 	"mwe-upwiz-global-config-anchor": "'''This page serves as an anchor for the global MediaUploader config.'''\n\nIt is needed so that the config is correctly updated when any of the templates used in it are changed. Please do not move or delete this page.",
 	"mwe-upwiz-default-tutorial-text": "=== This is the default tutorial message ===\nThe tutorial step is a good place to explain the rules for uploading files to your wiki's users.\n* You can disable the tutorial entirely by setting <code>$wgMediaUploader['tutorial']['enabled'] = false;</code>. This is probably the best choice for internal wikis.\n* Or you can change the wikitext of the tutorial using this setting: <code>$wgMediaUploader['tutorial']['wikitext'] = 'some wikitext';</code>.\nPlease refer to [https://www.mediawiki.org/wiki/Extension:MediaUploader/Configuration the documentation] for further information.",
-	"mediauploader-yaml-parse-error": "YAML parsing failed with the following message: $1"
+	"mediauploader-yaml-parse-error": "YAML parsing failed with the following message: $1",
+	"mediauploader-schema-validation-error": "[$1] $2",
+	"mediauploader-invalid-campaign-content": "The content of campaign \"$1\" is invalid. Please try editing it to fix any validation errors."
 }

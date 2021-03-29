@@ -7,3 +7,4 @@ if ( !defined( 'NS_CAMPAIGN' ) ) {
 }
 
 define( 'CONTENT_MODEL_CAMPAIGN', 'Campaign' );
+define( 'MU_SCHEMA_DIR', __DIR__ . '/schemas/' );

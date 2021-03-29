@@ -16,6 +16,7 @@ use ChangeTags;
 use DerivativeContext;
 use Html;
 use LogicException;
+use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
@@ -149,18 +150,26 @@ class MediaUploader extends SpecialPage {
 		}
 
 		if ( $campaignName !== null && $campaignName !== '' ) {
-			$campaign = UploadWizardCampaign::newFromName(
-				$campaignName,
-				$urlOverrides
-			);
+			try {
+				$campaign = UploadWizardCampaign::newFromName(
+					$campaignName,
+					$urlOverrides
+				);
 
-			if ( $campaign === null ) {
-				$this->displayError( $this->msg( 'mwe-upwiz-error-nosuchcampaign', $campaignName )->text() );
-			} elseif ( !$campaign->isEnabled() ) {
-				$this->displayError( $this->msg( 'mwe-upwiz-error-campaigndisabled', $campaignName )->text() );
-			} else {
-				$this->campaign = $campaignName;
-				$this->loadedConfig = $campaign->getConfig();
+				if ( $campaign === null ) {
+					$this->displayError(
+						$this->msg( 'mwe-upwiz-error-nosuchcampaign', $campaignName )->text()
+					);
+				} elseif ( !$campaign->isEnabled() ) {
+					$this->displayError(
+						$this->msg( 'mwe-upwiz-error-campaigndisabled', $campaignName )->text()
+					);
+				} else {
+					$this->campaign = $campaignName;
+					$this->loadedConfig = $campaign->getConfig();
+				}
+			} catch ( InvalidCampaignContentException $e ) {
+				$this->displayError( $e->getMessage() );
 			}
 		}
 

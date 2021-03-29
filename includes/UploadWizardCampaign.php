@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
+use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\MediaWikiServices;
@@ -39,10 +40,15 @@ class UploadWizardCampaign {
 	private $content;
 
 	/**
+	 * TODO: Tidy up error handling here. Suggestion:
+	 *  make the factory methods never return null and instead always throw
+	 *  an appropriate exception if something went wrong.
+	 *
 	 * @param string $name
 	 * @param array $urlOverrides
 	 *
 	 * @return UploadWizardCampaign|null
+	 * @throws InvalidCampaignContentException
 	 */
 	public static function newFromName(
 		string $name,
@@ -60,6 +66,7 @@ class UploadWizardCampaign {
 	 * @param bool $noConfigCache Whether to ignore config cache
 	 *
 	 * @return UploadWizardCampaign|null
+	 * @throws InvalidCampaignContentException
 	 */
 	public static function newFromTitle(
 		Title $title,
@@ -90,6 +97,8 @@ class UploadWizardCampaign {
 	 * @param CampaignContent $content
 	 * @param array $urlOverrides
 	 * @param bool $noConfigCache
+	 *
+	 * @throws InvalidCampaignContentException
 	 */
 	private function __construct(
 		Title $title,
@@ -173,6 +182,7 @@ class UploadWizardCampaign {
 
 				$actorQuery = ActorMigration::newMigration()->getJoin( 'img_user' );
 
+				// TODO: use SelectQueryBuilder
 				$result = $dbr->select(
 					[ 'categorylinks', 'page', 'image' ] + $actorQuery['tables'],
 					[ 'count' => 'COUNT(DISTINCT ' . $actorQuery['fields']['img_user'] . ')' ],
@@ -199,6 +209,7 @@ class UploadWizardCampaign {
 	 */
 	public function getUploadedMedia( $limit = 24 ) {
 		$dbr = wfGetDB( DB_REPLICA );
+		// TODO: use SelectQueryBuilder
 		$result = $dbr->select(
 			[ 'categorylinks', 'page' ],
 			[ 'cl_from', 'page_namespace', 'page_title' ],
