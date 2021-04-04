@@ -428,7 +428,6 @@ class MediaUploader extends SpecialPage {
 
 		// TODO move this into UploadWizard.js or some other javascript resource so the upload wizard
 		// can be dynamically included ( for example the add media wizard )
-		// @codingStandardsIgnoreStart
 		return '<div id="upload-wizard" class="upload-section">' .
 			'<div id="mwe-upwiz-tutorial-html" style="display:none;">' .
 				$config['tutorial']['html'] .
@@ -437,7 +436,6 @@ class MediaUploader extends SpecialPage {
 				new SpinnerWidget( [ 'size' => 'large' ] ) .
 			'</div>' .
 		'</div>';
-		// @codingStandardsIgnoreEnd
 	}
 
 	/**

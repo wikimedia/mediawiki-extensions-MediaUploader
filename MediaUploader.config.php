@@ -129,8 +129,6 @@ return [
 		// Initial value for the description field.
 		'description' => '',
 
-		// @codingStandardsIgnoreStart
-
 		// These values are commented out by default, so they can be undefined
 		// Define them here if you want defaults.
 		// This is required, because the JsonSchema for these defines them to be type number
@@ -148,8 +146,6 @@ return [
 
 		//// Initial value for the heading field.
 		//'heading' => 0,
-
-		// @codingStandardsIgnoreEnd
 	],
 
 	// 'languages' is a list of languages and codes, for use in the description step.
@@ -159,14 +155,12 @@ return [
 	// Initialized in RequestConfig.php
 	'languages' => [],
 
-	// @codingStandardsIgnoreStart
 	// The UploadWizard allows users to provide file descriptions in multiple languages. For each description, the user
 	// can choose the language. The UploadWizard wraps each description in a "language template". A language template is
 	// by default assumed to be a template with a name corresponding to the ISO 646 code of the language. For instance,
 	// Template:en for English, or Template:fr for French.
 	// If this is not the case for some or all or your wiki's language templates, this map can be used to define the
 	// template names to be used. Keys are ISO 646 language codes, values are template names.
-	// @codingStandardsIgnoreEnd
 	'languageTemplateFixups' => [],
 
 	// 'licenses' is a list of licenses you could possibly use elsewhere, for instance in
@@ -533,9 +527,7 @@ return [
 	// Defaults to UploadWizard's bug tracker.
 	// If you want to use a wiki page, set this to a falsy value,
 	// and set feedbackPage to the name of the wiki page.
-	// @codingStandardsIgnoreStart
 	'feedbackLink' => '',
-	// @codingStandardsIgnoreEnd
 
 	// [deprecated] Wiki page for leaving Upload Wizard feedback,
 	// for example 'Commons:Upload wizard feedback'
@@ -545,7 +537,6 @@ return [
 	// Shown on the Details stage, above the category selection field.
 	'allCategoriesLink' => 'https://commons.wikimedia.org/wiki/Commons:Categories',
 
-	// @codingStandardsIgnoreStart
 	// Title of page for alternative uploading form, e.g.:
 	//   'altUploadForm' => 'Special:Upload',
 	//
@@ -556,7 +547,6 @@ return [
 	//		'default'	=> 'Commons:Upload',
 	//		'de'		=> 'Commons:Hochladen'
 	//	 );
-	// @codingStandardsIgnoreEnd
 	'altUploadForm' => '',
 
 	// Wiki page that lists alternative ways to upload
