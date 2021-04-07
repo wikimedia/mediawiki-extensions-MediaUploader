@@ -7,6 +7,7 @@ use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\Linker\LinkTarget;
+use MWException;
 use ParserOptions;
 use ParserOutput;
 use Status;
@@ -51,8 +52,19 @@ class CampaignContent extends TextContent {
 	/** @var bool Whether the services were initialized */
 	private $initializedServices = false;
 
-	public function __construct( $text ) {
+	/**
+	 * CampaignContent constructor.
+	 *
+	 * @param string $text
+	 * @param Status|null $validationStatus The validation status of the previous,
+	 *   insignificantly different instance of this class.
+	 *
+	 * @throws MWException
+	 */
+	public function __construct( string $text, Status $validationStatus = null ) {
 		parent::__construct( $text, CONTENT_MODEL_CAMPAIGN );
+
+		$this->validationStatus = $validationStatus;
 	}
 
 	/**
@@ -248,10 +260,19 @@ class CampaignContent extends TextContent {
 	 * @return CampaignContent
 	 */
 	public function preSaveTransform( Title $title, User $user, ParserOptions $popts ) {
+		// Allow the system user to bypass schema checks
+		if ( MediaUploaderServices::isSystemUser( $user ) ) {
+			$this->validationStatus = $this->getData();
+		}
+
 		if ( !$this->isValid() ) {
 			return $this;
 		}
 
-		return new static( self::normalizeLineEndings( $this->getText() ) );
+		return new static(
+			self::normalizeLineEndings( $this->getText() ),
+			// Carry forward the current validation status
+			$this->validationStatus
+		);
 	}
 }

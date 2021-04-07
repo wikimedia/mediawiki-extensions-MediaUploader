@@ -9,7 +9,9 @@ use MediaWiki\Extension\MediaUploader\Config\ConfigParserFactory;
 use MediaWiki\Extension\MediaUploader\Config\GlobalParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\User\UserIdentity;
 use RequestContext;
+use User;
 
 class MediaUploaderServices {
 
@@ -44,6 +46,25 @@ class MediaUploaderServices {
 
 	public static function getRawConfig( MediaWikiServices $services = null ) : RawConfig {
 		return self::getService( $services, 'RawConfig' );
+	}
+
+	/**
+	 * Returns the system (MediaUploader) user used for maintenance tasks.
+	 * @return User
+	 */
+	public static function getSystemUser() : User {
+		return User::newSystemUser( 'MediaUploader', [ 'steal' => true ] );
+	}
+
+	/**
+	 * Checks whether a given user is the system (MediaUploader) user.
+	 *
+	 * @param UserIdentity $user
+	 *
+	 * @return bool
+	 */
+	public static function isSystemUser( UserIdentity $user ) : bool {
+		return $user->getName() === 'MediaUploader';
 	}
 
 	/**

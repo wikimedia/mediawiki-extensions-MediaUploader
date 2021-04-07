@@ -1,5 +1,6 @@
 <?php
 
+use MediaWiki\Extension\MediaUploader\Maintenance\FixCampaigns;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 
 class UploadWizardHooks {
@@ -20,11 +21,13 @@ class UploadWizardHooks {
 	 *
 	 * @return true
 	 */
-	public static function onSchemaUpdate( /* DatabaseUpdater */ $updater = null ) {
+	public static function onSchemaUpdate( DatabaseUpdater $updater = null ) {
 		$type = $updater->getDB()->getType();
 		$path = dirname( __DIR__ ) . '/sql/';
 
 		$updater->addExtensionTable( 'uw_campaigns', "$path/$type/tables-generated.sql" );
+
+		$updater->addPostDatabaseUpdateMaintenance( FixCampaigns::class );
 
 		return true;
 	}

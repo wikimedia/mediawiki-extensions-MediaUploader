@@ -94,7 +94,9 @@ class Validator {
 			$status->fatal(
 				'mediauploader-schema-validation-error',
 				$error['property'],
-				$error['message']
+				$error['message'],
+				// Pass the inner error with all the details
+				$error
 			);
 		}
 

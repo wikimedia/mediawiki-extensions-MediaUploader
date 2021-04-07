@@ -8,9 +8,9 @@ use Job;
 use JobSpecification;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContentHandler;
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\MediaWikiServices;
 use MWException;
-use User;
 
 /**
  * Job for updating the global config anchor page (Campaign:-).
@@ -55,7 +55,7 @@ class GlobalConfigAnchorUpdateJob extends Job implements GenericParameterJob {
 		}
 
 		$pageUpdater = $anchor->newPageUpdater(
-			User::newSystemUser( 'MediaUploader', [ 'steal' => true ] )
+			MediaUploaderServices::getSystemUser()
 		);
 		$pageUpdater->setContent( 'main', $content );
 

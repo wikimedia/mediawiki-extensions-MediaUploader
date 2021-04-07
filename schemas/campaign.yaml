@@ -122,6 +122,7 @@ properties:
           template: { type: string }
           type: { type: string }
 
+      # TODO: thirdParty should allow for licenses without groups
       thirdParty:
         type: object
         additionalProperties: false
