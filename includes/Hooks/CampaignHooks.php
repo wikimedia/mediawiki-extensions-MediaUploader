@@ -123,14 +123,9 @@ class CampaignHooks implements
 			return true;
 		}
 
-		// $status is not passed by ref, so we have to copy the validation
-		// errors manually, if there are any.
-		$validationStatus = $content->getValidationStatus();
-		foreach ( $validationStatus->getErrors() as $error ) {
-			$status->fatal( $error['message'], ...( $error['params'] ?? [] ) );
-		}
+		$status->merge( $content->getValidationStatus() );
 
-		return true;
+		return $status->isOK();
 	}
 
 	/**

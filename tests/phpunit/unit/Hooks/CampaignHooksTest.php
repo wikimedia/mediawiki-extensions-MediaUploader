@@ -149,41 +149,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 			->method( 'getValidationStatus' )
 			->willReturn( Status::newGood() );
 
-		$hooks = $this->getCampaignHooks();
-
-		$this->assertTrue(
-			$hooks->onEditFilterMergedContent(
-				$context,
-				$content,
-				$this->createNoOpMock( Status::class ),
-				'',
-				$this->createNoOpMock( User::class ),
-				false
-			),
-			'onEditFilterMergedContent()'
-		);
-	}
-
-	public function testEditFilterMergedContent_invalid() {
-		$context = $this->createMock( IContextSource::class );
-		$context->expects( $this->atLeastOnce() )
-			->method( 'getTitle' )
-			->willReturn( $this->getTitleInCampaignNamespace() );
-
-		$validationStatus = $this->createMock( Status::class );
-		$validationStatus->expects( $this->once() )
-			->method( 'getErrors' )
-			->willReturn( [ [ 'message' => 'dummy-code' ] ] );
-
-		$content = $this->createMock( CampaignContent::class );
-		$content->expects( $this->once() )
-			->method( 'getValidationStatus' )
-			->willReturn( $validationStatus );
-
-		$status = $this->createMock( Status::class );
-		$status->expects( $this->once() )
-			->method( 'fatal' )
-			->with( 'dummy-code' );
+		$status = Status::newGood();
 
 		$hooks = $this->getCampaignHooks();
 
@@ -198,6 +164,38 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 			),
 			'onEditFilterMergedContent()'
 		);
+		$this->assertTrue( $status->isGood() );
+	}
+
+	public function testEditFilterMergedContent_invalid() {
+		$context = $this->createMock( IContextSource::class );
+		$context->expects( $this->atLeastOnce() )
+			->method( 'getTitle' )
+			->willReturn( $this->getTitleInCampaignNamespace() );
+
+		$validationStatus = Status::newFatal( 'dummy-code' );
+
+		$content = $this->createMock( CampaignContent::class );
+		$content->expects( $this->once() )
+			->method( 'getValidationStatus' )
+			->willReturn( $validationStatus );
+
+		$status = Status::newGood();
+
+		$hooks = $this->getCampaignHooks();
+
+		$this->assertFalse(
+			$hooks->onEditFilterMergedContent(
+				$context,
+				$content,
+				$status,
+				'',
+				$this->createNoOpMock( User::class ),
+				false
+			),
+			'onEditFilterMergedContent()'
+		);
+		$this->assertTrue( $status->hasMessage( 'dummy-code' ) );
 	}
 
 	public function testLinksUpdateComplete_notCampaign() {
