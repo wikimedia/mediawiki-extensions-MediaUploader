@@ -61,7 +61,7 @@ class RequestConfigTest extends ConfigUnitTestCase {
 		$wanCache->getWithSetCallback(
 			'testKey',
 			WANObjectCache::TTL_INDEFINITE,
-			function () {
+			static function () {
 				return [ 'test' => 'Test' ];
 			},
 			[ 'version' => 1 ]

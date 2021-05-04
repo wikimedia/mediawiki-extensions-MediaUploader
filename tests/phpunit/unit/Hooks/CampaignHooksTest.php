@@ -61,7 +61,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 		$dbw->expects( $this->once() )
 			->method( 'onTransactionPreCommitOrIdle' )
 			->willReturnCallback(
-				function ( $callback ) {
+				static function ( $callback ) {
 					$callback();
 				}
 			);
@@ -77,7 +77,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 		$loadBalancer = $this->createMock( ILoadBalancer::class );
 		$loadBalancer->expects( $this->once() )
 			->method( 'getConnection' )
-			->with( DB_MASTER )
+			->with( DB_PRIMARY )
 			->willReturn( $dbw );
 
 		$hooks = $this->getCampaignHooks( $loadBalancer );
@@ -317,7 +317,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 		$loadBalancer = $this->createMock( ILoadBalancer::class );
 		$loadBalancer->expects( $this->once() )
 			->method( 'getConnection' )
-			->with( DB_MASTER )
+			->with( DB_PRIMARY )
 			->willReturn( $dbw );
 
 		$hooks = $this->getCampaignHooks( $loadBalancer );
@@ -451,7 +451,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$title->method( 'isSameLinkAs' )
 			->willReturnCallback(
-				function ( LinkTarget $target ) : bool {
+				static function ( LinkTarget $target ) : bool {
 					return $target->getNamespace() === NS_CAMPAIGN &&
 						$target->getDBkey() === CampaignContent::GLOBAL_CONFIG_ANCHOR_DBKEY;
 				}

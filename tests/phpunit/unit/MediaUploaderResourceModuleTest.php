@@ -209,7 +209,7 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 		$rawConfig = $this->createMock( RawConfig::class );
 		$rawConfig->method( 'getSetting' )
 			->willReturnCallback(
-				function ( $key, $default = null ) use ( $rawConfigValue ) {
+				static function ( $key, $default = null ) use ( $rawConfigValue ) {
 					return $rawConfigValue[$key] ?? $default;
 				}
 			);

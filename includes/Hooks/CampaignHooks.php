@@ -78,8 +78,8 @@ class CampaignHooks implements
 		}
 
 		$fname = __METHOD__;
-		$dbw = $this->loadBalancer->getConnection( DB_MASTER );
-		$dbw->onTransactionPreCommitOrIdle( function () use ( $dbw, $wikiPage, $fname ) {
+		$dbw = $this->loadBalancer->getConnection( DB_PRIMARY );
+		$dbw->onTransactionPreCommitOrIdle( static function () use ( $dbw, $wikiPage, $fname ) {
 			$dbw->delete(
 				'uw_campaigns',
 				[ 'campaign_name' => $wikiPage->getTitle()->getDBkey() ],
@@ -180,7 +180,7 @@ class CampaignHooks implements
 			return true;
 		}
 
-		$dbw = $this->loadBalancer->getConnection( DB_MASTER );
+		$dbw = $this->loadBalancer->getConnection( DB_PRIMARY );
 
 		return $dbw->update(
 			'uw_campaigns',
@@ -231,7 +231,7 @@ class CampaignHooks implements
 	 * @param CampaignContent $content
 	 */
 	public function doCampaignUpdate( WikiPage $wikiPage, CampaignContent $content ) : void {
-		$dbw = $this->loadBalancer->getConnection( DB_MASTER );
+		$dbw = $this->loadBalancer->getConnection( DB_PRIMARY );
 
 		$campaignName = $wikiPage->getTitle()->getDBkey();
 		$campaignData = $content->getData()->getValue();

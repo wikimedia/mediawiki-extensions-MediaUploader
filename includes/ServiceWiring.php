@@ -11,20 +11,20 @@ use MediaWiki\MediaWikiServices;
 
 /** @phpcs-require-sorted-array */
 return [
-	'MediaUploaderCampaignValidator' => function ( MediaWikiServices $services ) : Validator {
+	'MediaUploaderCampaignValidator' => static function ( MediaWikiServices $services ) : Validator {
 		return new Validator(
 			MediaUploaderServices::getRawConfig( $services ),
 			$services->getLocalServerObjectCache()
 		);
 	},
 
-	'MediaUploaderConfigCacheInvalidator' => function ( MediaWikiServices $services ) : ConfigCacheInvalidator {
+	'MediaUploaderConfigCacheInvalidator' => static function ( MediaWikiServices $services ) : ConfigCacheInvalidator {
 		return new ConfigCacheInvalidator(
 			$services->getMainWANObjectCache()
 		);
 	},
 
-	'MediaUploaderConfigFactory' => function ( MediaWikiServices $services ) : ConfigFactory {
+	'MediaUploaderConfigFactory' => static function ( MediaWikiServices $services ) : ConfigFactory {
 		return new ConfigFactory(
 			$services->getMainWANObjectCache(),
 			$services->getUserOptionsLookup(),
@@ -37,11 +37,11 @@ return [
 		);
 	},
 
-	'MediaUploaderConfigParserFactory' => function ( MediaWikiServices $services ) : ConfigParserFactory {
+	'MediaUploaderConfigParserFactory' => static function ( MediaWikiServices $services ) : ConfigParserFactory {
 		return new ConfigParserFactory( $services->getParserFactory() );
 	},
 
-	'MediaUploaderRawConfig' => function ( MediaWikiServices $services ) : RawConfig {
+	'MediaUploaderRawConfig' => static function ( MediaWikiServices $services ) : RawConfig {
 		return new RawConfig(
 			new ServiceOptions(
 				RawConfig::CONSTRUCTOR_OPTIONS,
