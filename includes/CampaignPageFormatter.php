@@ -50,7 +50,7 @@ class CampaignPageFormatter {
 
 		if ( $this->context->getUser()->isAnon() ) {
 			$urlParams = [ 'returnto' => $this->campaign->getTitle()->getPrefixedText() ];
-			$createAccountUrl = Skin::makeSpecialUrlSubpage( 'UserLogin', 'signup', $urlParams );
+			$createAccountUrl = Skin::makeSpecialUrlSubpage( 'Userlogin', 'signup', $urlParams );
 			$uploadLink = new OOUI\ButtonWidget( [
 				'label' => wfMessage( 'mwe-upwiz-campaign-create-account-button' )->text(),
 				'flags' => [ 'progressive', 'primary' ],
