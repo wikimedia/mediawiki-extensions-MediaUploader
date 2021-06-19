@@ -11,7 +11,6 @@ use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Hooks\CampaignHooks;
 use MediaWiki\Linker\LinkTarget;
-use MediaWiki\User\UserIdentity;
 use MediaWikiUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Status;
@@ -110,7 +109,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 				$this->createNoOpMock( WikitextContent::class ),
 				$this->createNoOpMock( Status::class ),
 				'',
-				$this->createNoOpMock( User::class ),
+				$this->getOtherUser(),
 				false
 			),
 			'onEditFilterMergedContent()'
@@ -131,7 +130,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 				$this->createNoOpMock( CampaignContent::class ),
 				$this->createNoOpMock( Status::class ),
 				'',
-				$this->createNoOpMock( User::class ),
+				$this->getOtherUser(),
 				false
 			),
 			'onEditFilterMergedContent()'
@@ -159,7 +158,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 				$content,
 				$status,
 				'',
-				$this->createNoOpMock( User::class ),
+				$this->getOtherUser(),
 				false
 			),
 			'onEditFilterMergedContent()'
@@ -190,7 +189,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 				$content,
 				$status,
 				'',
-				$this->createNoOpMock( User::class ),
+				$this->getOtherUser(),
 				false
 			),
 			'onEditFilterMergedContent()'
@@ -463,10 +462,10 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 	/**
 	 * Returns User:MediaUploader
 	 *
-	 * @return UserIdentity|MockObject
+	 * @return User|MockObject
 	 */
 	private function getMediaUploaderUser() {
-		$user = $this->createMock( UserIdentity::class );
+		$user = $this->createMock( User::class );
 		$user->method( 'getName' )
 			->willReturn( 'MediaUploader' );
 		$user->method( 'isRegistered' )
@@ -478,10 +477,10 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 	/**
 	 * Returns some other (non-system) user
 	 *
-	 * @return UserIdentity|MockObject
+	 * @return User|MockObject
 	 */
 	private function getOtherUser() {
-		$user = $this->createMock( UserIdentity::class );
+		$user = $this->createMock( User::class );
 		$user->method( 'getName' )
 			->willReturn( 'DummyUser' );
 		$user->method( 'isRegistered' )

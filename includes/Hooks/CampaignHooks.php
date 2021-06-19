@@ -9,6 +9,7 @@ use LinksUpdate;
 use ManualLogEntry;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\Hook\EditFilterMergedContentHook;
 use MediaWiki\Hook\LinksUpdateCompleteHook;
 use MediaWiki\Hook\MovePageIsValidMoveHook;
@@ -120,6 +121,10 @@ class CampaignHooks implements
 		if ( $this->isGlobalConfigAnchor( $context->getTitle() ) ) {
 			// There's no need to validate the anchor's contents, it doesn't
 			// matter anyway.
+			return true;
+		}
+
+		if ( MediaUploaderServices::isSystemUser( $user ) ) {
 			return true;
 		}
 

@@ -1,7 +1,7 @@
 {
 	"require": {
 		"justinrainbow/json-schema": "~5.2",
-		"symfony/yaml": "^5.0"
+		"symfony/yaml": "~5.3"
 	},
 	"require-dev": {
 		"mediawiki/mediawiki-codesniffer": "36.0.0",

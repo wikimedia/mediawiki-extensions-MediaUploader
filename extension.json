@@ -106,7 +106,8 @@
 		"ApiFlickrBlacklist": "includes/ApiFlickrBlacklist.php"
 	},
 	"AutoloadNamespaces": {
-		"MediaWiki\\Extension\\MediaUploader\\": "includes/"
+		"MediaWiki\\Extension\\MediaUploader\\": "includes/",
+		"MediaWiki\\Extension\\MediaUploader\\Maintenance\\": "maintenance/"
 	},
 	"TestAutoloadClasses": {
 		"MediaWiki\\Extension\\MediaUploader\\Tests\\Unit\\Config\\ConfigUnitTestCase": "tests/phpunit/unit/Config/ConfigUnitTestCase.php"
