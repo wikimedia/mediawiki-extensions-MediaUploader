@@ -180,12 +180,10 @@ class UploadWizardCampaign {
 				$dbr = wfGetDB( DB_REPLICA );
 				$setOpts += Database::getCacheSetOptions( $dbr );
 
-				$actorQuery = ActorMigration::newMigration()->getJoin( 'img_user' );
-
 				// TODO: use SelectQueryBuilder
 				$result = $dbr->select(
-					[ 'categorylinks', 'page', 'image' ] + $actorQuery['tables'],
-					[ 'count' => 'COUNT(DISTINCT ' . $actorQuery['fields']['img_user'] . ')' ],
+					[ 'categorylinks', 'page', 'image' ],
+					[ 'count' => 'COUNT(DISTINCT img_actor)' ],
 					[ 'cl_to' => $this->getTrackingCategory()->getDBkey(), 'cl_type' => 'file' ],
 					$fname,
 					[
@@ -194,7 +192,7 @@ class UploadWizardCampaign {
 					[
 						'page' => [ 'INNER JOIN', 'cl_from=page_id' ],
 						'image' => [ 'INNER JOIN', 'page_title=img_name' ]
-					] + $actorQuery['joins']
+					]
 				);
 
 				return $result->current()->count;
