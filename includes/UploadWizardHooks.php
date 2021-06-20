@@ -25,7 +25,7 @@ class UploadWizardHooks {
 		$type = $updater->getDB()->getType();
 		$path = dirname( __DIR__ ) . '/sql/';
 
-		$updater->addExtensionTable( 'uw_campaigns', "$path/$type/tables-generated.sql" );
+		$updater->addExtensionTable( 'mu_campaign', "$path/$type/tables-generated.sql" );
 
 		$updater->addPostDatabaseUpdateMaintenance( FixCampaigns::class );
 

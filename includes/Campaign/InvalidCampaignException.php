@@ -5,9 +5,9 @@ namespace MediaWiki\Extension\MediaUploader\Campaign;
 use MWException;
 
 /**
- * Exception thrown when trying to access a campaign with invalid content.
+ * Exception thrown when trying to access a campaign that is somehow invalid.
  */
-class InvalidCampaignContentException extends MWException {
+abstract class InvalidCampaignException extends MWException {
 
 	/** @var string */
 	private $campaignName;
@@ -18,7 +18,7 @@ class InvalidCampaignContentException extends MWException {
 	public function __construct( string $campaignName ) {
 		$this->campaignName = $campaignName;
 		$message = $this->msg(
-			'mediauploader-invalid-campaign-content',
+			$this->getErrorMessageKey(),
 			'The content of campaign "$1" is invalid. ' .
 			'Please try editing it to fix any validation errors.',
 			$campaignName
@@ -35,4 +35,11 @@ class InvalidCampaignContentException extends MWException {
 	public function getCampaignName() : string {
 		return $this->campaignName;
 	}
+
+	/**
+	 * Returns the message key to use for the exception.
+	 *
+	 * @return string
+	 */
+	abstract protected function getErrorMessageKey() : string;
 }

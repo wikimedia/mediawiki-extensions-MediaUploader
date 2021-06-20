@@ -4,7 +4,7 @@ namespace MediaWiki\Extension\MediaUploader\Config;
 
 use Language;
 use MediaWiki\Config\ServiceOptions;
-use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
@@ -26,8 +26,8 @@ class CampaignParsedConfig extends ParsedConfig {
 	/** @var array */
 	private $urlOverrides;
 
-	/** @var CampaignContent */
-	private $content;
+	/** @var CampaignRecord */
+	private $campaignRecord;
 
 	/** @var LinkTarget */
 	private $campaignLinkTarget;
@@ -41,7 +41,7 @@ class CampaignParsedConfig extends ParsedConfig {
 	 * @param ConfigParserFactory $configParserFactory
 	 * @param RequestConfig $requestConfig
 	 * @param array $urlOverrides
-	 * @param CampaignContent $content assumed to be valid
+	 * @param CampaignRecord $campaignRecord assumed to be valid
 	 * @param LinkTarget $campaignLinkTarget
 	 * @param ServiceOptions $options
 	 *
@@ -56,7 +56,7 @@ class CampaignParsedConfig extends ParsedConfig {
 		ConfigParserFactory $configParserFactory,
 		RequestConfig $requestConfig,
 		array $urlOverrides,
-		CampaignContent $content,
+		CampaignRecord $campaignRecord,
 		LinkTarget $campaignLinkTarget,
 		ServiceOptions $options
 	) {
@@ -72,7 +72,7 @@ class CampaignParsedConfig extends ParsedConfig {
 		$this->configParserFactory = $configParserFactory;
 		$this->requestConfig = $requestConfig;
 		$this->urlOverrides = $urlOverrides;
-		$this->content = $content;
+		$this->campaignRecord = $campaignRecord;
 		$this->campaignLinkTarget = $campaignLinkTarget;
 	}
 
@@ -128,7 +128,7 @@ class CampaignParsedConfig extends ParsedConfig {
 		$configParser = $this->configParserFactory->newConfigParser(
 			$this->arrayReplaceSanely(
 				$this->requestConfig->getConfigArray(),
-				$this->content->getData()->getValue() ?? []
+				$this->campaignRecord->getContent() ?: []
 			),
 			$this->user,
 			$this->language,

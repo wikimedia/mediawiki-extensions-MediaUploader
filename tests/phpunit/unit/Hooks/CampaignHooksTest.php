@@ -4,10 +4,11 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Hooks;
 
 use Content;
 use IContextSource;
-use IDatabase;
 use LinksUpdate;
 use ManualLogEntry;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Hooks\CampaignHooks;
 use MediaWiki\Linker\LinkTarget;
@@ -16,7 +17,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Status;
 use Title;
 use User;
-use Wikimedia\Rdbms\ILoadBalancer;
 use WikiPage;
 use WikitextContent;
 
@@ -27,6 +27,7 @@ use WikitextContent;
 class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 	private const DUMMY_CAMPAIGN_NAME = 'Dummy';
+	private const DUMMY_CAMPAIGN_ID = 1234;
 
 	public function testArticleDeleteComplete_notCampaignNS() {
 		$wikiPage = $this->createMock( WikiPage::class );
@@ -56,37 +57,19 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 			->method( 'getTitle' )
 			->willReturn( $this->getTitleInCampaignNamespace() );
 
-		$dbw = $this->createMock( IDatabase::class );
-		$dbw->expects( $this->once() )
-			->method( 'onTransactionPreCommitOrIdle' )
-			->willReturnCallback(
-				static function ( $callback ) {
-					$callback();
-				}
-			);
+		$campaignStore = $this->createMock( CampaignStore::class );
+		$campaignStore->expects( $this->once() )
+			->method( 'deleteCampaignByPageId' )
+			->with( self::DUMMY_CAMPAIGN_ID );
 
-		// Should be called by $callback passed to onTransactionCommitOrIdle
-		$dbw->expects( $this->once() )
-			->method( 'delete' )
-			->with(
-				'uw_campaigns',
-				[ 'campaign_name' => self::DUMMY_CAMPAIGN_NAME ]
-			);
-
-		$loadBalancer = $this->createMock( ILoadBalancer::class );
-		$loadBalancer->expects( $this->once() )
-			->method( 'getConnection' )
-			->with( DB_PRIMARY )
-			->willReturn( $dbw );
-
-		$hooks = $this->getCampaignHooks( $loadBalancer );
+		$hooks = $this->getCampaignHooks( $campaignStore );
 
 		$this->assertTrue(
 			$hooks->onArticleDeleteComplete(
 				$wikiPage,
 				$this->createNoOpMock( User::class ),
 				'',
-				123,
+				self::DUMMY_CAMPAIGN_ID,
 				$this->createNoOpMock( Content::class ),
 				$this->createNoOpMock( ManualLogEntry::class ),
 				10
@@ -277,49 +260,25 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 		);
 	}
 
-	public function provideDoCampaignUpdate() : iterable {
-		yield 'enabled' => [ [ 'enabled' => true ], 1 ];
-		yield 'disabled' => [ [ 'enabled' => false ], 0 ];
-		yield 'no data' => [ null, 0 ];
-	}
-
-	/**
-	 * @param array|null $data
-	 * @param int $expectedEnabled
-	 *
-	 * @dataProvider provideDoCampaignUpdate
-	 */
-	public function testDoCampaignUpdate( ?array $data, int $expectedEnabled ) {
+	public function testDoCampaignUpdate() {
 		$wikiPage = $this->createMock( WikiPage::class );
-		$wikiPage->expects( $this->atLeastOnce() )
-			->method( 'getTitle' )
-			->willReturn( $this->getTitleInCampaignNamespace() );
+		$wikiPage->expects( $this->once() )
+			->method( 'getId' )
+			->willReturn( self::DUMMY_CAMPAIGN_ID );
+
+		$record = $this->createNoOpMock( CampaignRecord::class );
 
 		$content = $this->createMock( CampaignContent::class );
 		$content->expects( $this->once() )
-			->method( 'getData' )
-			->willReturn( Status::newGood( $data ) );
+			->method( 'newCampaignRecord' )
+			->willReturn( $record );
 
-		$dbw = $this->createMock( IDatabase::class );
-		$dbw->expects( $this->once() )
-			->method( 'upsert' )
-			->with(
-				'uw_campaigns',
-				[
-					'campaign_name' => self::DUMMY_CAMPAIGN_NAME,
-					'campaign_enabled' => $expectedEnabled
-				],
-				'campaign_name',
-				[ 'campaign_enabled' => $expectedEnabled ]
-			);
+		$campaignStore = $this->createMock( CampaignStore::class );
+		$campaignStore->expects( $this->once() )
+			->method( 'upsertCampaign' )
+			->with( $record );
 
-		$loadBalancer = $this->createMock( ILoadBalancer::class );
-		$loadBalancer->expects( $this->once() )
-			->method( 'getConnection' )
-			->with( DB_PRIMARY )
-			->willReturn( $dbw );
-
-		$hooks = $this->getCampaignHooks( $loadBalancer );
+		$hooks = $this->getCampaignHooks( $campaignStore );
 
 		$hooks->doCampaignUpdate( $wikiPage, $content );
 	}
@@ -381,18 +340,18 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 	 * Returns a CampaignHooks object for testing.
 	 * Null arguments will be changed to be no-op mocks.
 	 *
-	 * @param ILoadBalancer|null $loadBalancer
+	 * @param CampaignStore|null $campaignStore
 	 * @param ConfigCacheInvalidator|null $cacheInvalidator
 	 *
 	 * @return CampaignHooks
 	 */
 	private function getCampaignHooks(
-		ILoadBalancer $loadBalancer = null,
+		CampaignStore $campaignStore = null,
 		ConfigCacheInvalidator $cacheInvalidator = null
 	) : CampaignHooks {
 		return new CampaignHooks(
-			$loadBalancer ?:
-				$this->createNoOpMock( ILoadBalancer::class ),
+			$campaignStore ?:
+				$this->createNoOpMock( CampaignStore::class ),
 			$cacheInvalidator ?:
 				$this->createNoOpMock( ConfigCacheInvalidator::class )
 		);
@@ -429,6 +388,9 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$title->method( 'isSameLinkAs' )
 			->willReturn( false );
+
+		$title->method( 'getId' )
+			->willReturn( self::DUMMY_CAMPAIGN_ID );
 
 		return $title;
 	}

@@ -165,7 +165,13 @@ YAML;
 		$title = Title::newFromText( $name, NS_CAMPAIGN );
 		$this->editPage(
 			$title,
-			new CampaignContent( $content, Status::newGood() )
+			new CampaignContent(
+				$content,
+				// Pass a fake YAML parsing result to force saving the campaign.
+				Status::newGood( [] ),
+				// Set validation status to "good".
+				Status::newGood()
+			)
 		);
 	}
 

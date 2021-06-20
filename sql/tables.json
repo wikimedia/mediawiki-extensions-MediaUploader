@@ -1,36 +1,45 @@
 [
 	{
-		"name": "uw_campaigns",
-		"comment": "Upload wizard campaigns. This is *not* the primary storage for campaigns. Just stores a copy of information that is already present in the appropriate wikipages, for easier indexing / querying",
+		"name": "mu_campaign",
+		"comment": "MediaUploader campaigns. This is *not* the primary storage for campaigns. Just stores a copy of information that is already present in the appropriate wikipages, for easier indexing / querying",
 		"columns": [
 			{
-				"name": "campaign_id",
+				"name": "campaign_page_id",
+				"comment": "Foreign and primary key – the ID of the page the campaign is stored in.",
 				"type": "integer",
-				"options": { "autoincrement": true, "notnull": true, "unsigned": true }
-			},
-			{
-				"name": "campaign_name",
-				"type": "string",
-				"options": { "length": 255, "notnull": true }
+				"options": { "notnull": true, "unsigned": true }
 			},
 			{
 				"name": "campaign_enabled",
+				"comment": "Whether the campaign is enabled (not necessarily active)",
 				"type": "integer",
 				"options": { "default": 0, "length": 1, "notnull": true }
+			},
+			{
+				"name": "campaign_validity",
+				"comment": "Validity status of this campaign",
+				"type": "integer",
+				"options": { "length": 1, "notnull": true }
+			},
+			{
+				"name": "campaign_content",
+				"comment": "The raw, unparsed content of the campaign, encoded as JSON.",
+				"type": "blob",
+				"options": { "notnull": false }
 			}
 		],
 		"indexes": [
 			{
-				"name": "uw_campaigns_name",
-				"columns": [ "campaign_name" ],
+				"name": "mu_campaign_page",
+				"columns": [ "campaign_page_id" ],
 				"unique": true
 			},
 			{
-				"name": "uw_campaigns_enabled",
-				"columns": [ "campaign_enabled", "campaign_id" ],
+				"name": "mu_campaign_enabled",
+				"columns": [ "campaign_enabled", "campaign_page_id" ],
 				"unique": false
 			}
 		],
-		"pk": [ "campaign_id" ]
+		"pk": [ "campaign_page_id" ]
 	}
 ]

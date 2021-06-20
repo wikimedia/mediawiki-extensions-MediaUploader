@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\Config\ServiceOptions;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Campaign\Validator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
@@ -11,6 +12,10 @@ use MediaWiki\MediaWikiServices;
 
 /** @phpcs-require-sorted-array */
 return [
+	'MediaUploaderCampaignStore' => static function ( MediaWikiServices $services ) : CampaignStore {
+		return new CampaignStore( $services->getDBLoadBalancer() );
+	},
+
 	'MediaUploaderCampaignValidator' => static function ( MediaWikiServices $services ) : Validator {
 		return new Validator(
 			MediaUploaderServices::getRawConfig( $services ),

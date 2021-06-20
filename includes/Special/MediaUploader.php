@@ -16,7 +16,7 @@ use ChangeTags;
 use DerivativeContext;
 use Html;
 use LogicException;
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
+use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
@@ -168,7 +168,7 @@ class MediaUploader extends SpecialPage {
 					$this->campaign = $campaignName;
 					$this->loadedConfig = $campaign->getConfig();
 				}
-			} catch ( InvalidCampaignContentException $e ) {
+			} catch ( InvalidCampaignException $e ) {
 				$this->displayError( $e->getMessage() );
 			}
 		}
@@ -388,6 +388,7 @@ class MediaUploader extends SpecialPage {
 	 * Return the basic HTML structure for the entire page
 	 * Will be enhanced by the javascript to actually do stuff
 	 * @return string html
+	 * TODO: check this suppression
 	 * @suppress SecurityCheck-XSS The documentation of $config['display']['headerLabel'] says,
 	 *   it is wikitext, but all *label are used as html
 	 */

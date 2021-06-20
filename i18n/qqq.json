@@ -365,7 +365,8 @@
 	"mwe-upwiz-default-tutorial-text": "The default tutorial message explaining how to configure it and what can it contain.",
 	"mediauploader-yaml-parse-error": "Error message for YAML parsing exceptions. $1 – parse error message",
 	"mediauploader-schema-validation-error": "JSON Schema validation error formatter. This is a temporary message used until MediaWiki core gets real i18n support for JSON validation. $1 is the JSON property, $2 is the error message.",
-	"mediauploader-invalid-campaign-content": "Error message shown when trying to access a campaign with invalid content.",
+	"mediauploader-invalid-campaign-format": "Error message shown when trying to access a campaign with content that is in an invalid format.",
+	"mediauploader-invalid-campaign-schema": "Error message shown when trying to access a campaign with content that does not validate against the campaign schema.",
 	"mediauploader-fix-campaign-comment-fixed": "Edit comment informing that some schema issues were fixed in in a campaign definition. $1 – number of fixes applied. $2 – number of issues left to resolve manually (implementing it in the message is optional).",
 	"mediauploader-fix-campaign-comment-prettified": "Edit comment informing that a campaign definition was reformatted (prettified). $1 – number of fixes applied (always 0). $2 – number of issues left to resolve manually (implementing it in the message is optional)."
 }

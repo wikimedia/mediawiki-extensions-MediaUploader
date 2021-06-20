@@ -144,7 +144,11 @@ class FixCampaigns extends LoggedUpdateMaintenance {
 			}
 		}
 
-		if ( $valid && !$dryRun && ( $fixed || $this->getOption( 'prettify' ) ) ) {
+		if ( $dryRun ) {
+			return;
+		}
+
+		if ( $valid && ( $fixed || $this->getOption( 'prettify' ) ) ) {
 			// Save changes
 			$text = Yaml::dump(
 				$data,
@@ -175,6 +179,15 @@ class FixCampaigns extends LoggedUpdateMaintenance {
 				"Saved changes. Fixed $fixed issue(s), " .
 				"$toFixManual left to fix manually.\n"
 			);
+		} else {
+			// Perform a null edit on the campaign, just in case
+			$updater = $page->newPageUpdater( MediaUploaderServices::getSystemUser() );
+			$updater->setContent( SlotRecord::MAIN, $content );
+			$comment = CommentStoreComment::newUnsavedComment( '' );
+			$updater->setOriginalRevisionId( $page->getRevisionRecord()->getId() );
+			$updater->saveRevision( $comment, EDIT_UPDATE );
+
+			$this->output( 'Performed a null edit.' );
 		}
 	}
 

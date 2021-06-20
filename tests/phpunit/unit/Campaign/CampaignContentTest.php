@@ -3,6 +3,7 @@
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Campaign;
 
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\Validator;
 use MediaWikiUnitTestCase;
 use Status;
@@ -136,5 +137,96 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 		);
 
 		$this->assertFalse( $content->isValid(), 'isValid()' );
+	}
+
+	public function provideNewCampaignRecord() : iterable {
+		yield 'Invalid markup' => [
+			'[', false, CampaignRecord::CONTENT_INVALID_FORMAT, null
+		];
+		yield 'Valid markup, but violates the schema' => [
+			'- a', false, CampaignRecord::CONTENT_INVALID_SCHEMA, [ 'a' ]
+		];
+		yield 'Partially valid, has the "enabled" option set' => [
+			"enabled: true\naaaa: aaaa",
+			true,
+			CampaignRecord::CONTENT_INVALID_SCHEMA,
+			[ 'enabled' => true, 'aaaa' => 'aaaa' ]
+		];
+		yield 'All valid, enabled' => [
+			"enabled: true",
+			true,
+			CampaignRecord::CONTENT_VALID,
+			[ 'enabled' => true ]
+		];
+		yield 'All valid, disabled' => [
+			"enabled: false",
+			false,
+			CampaignRecord::CONTENT_VALID,
+			[ 'enabled' => false ]
+		];
+	}
+
+	/**
+	 * @param string $contentText
+	 * @param bool $expectedEnabled
+	 * @param int $expectedValidity
+	 * @param array|null $expectedContent
+	 *
+	 * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::newCampaignRecord
+	 * @dataProvider provideNewCampaignRecord
+	 */
+	public function testNewCampaignRecord(
+		string $contentText,
+		bool $expectedEnabled,
+		int $expectedValidity,
+		?array $expectedContent
+	) {
+		if ( $expectedValidity === CampaignRecord::CONTENT_INVALID_FORMAT ) {
+			$validator = $this->createNoOpMock( Validator::class );
+		} else {
+			$status = $expectedValidity === CampaignRecord::CONTENT_VALID
+				? Status::newGood()
+				: Status::newFatal( 'dummy-message' );
+
+			$validator = $this->createMock( Validator::class );
+			$validator->expects( $this->once() )
+				->method( 'validate' )
+				->willReturn( $status );
+		}
+
+		$content = new CampaignContent( $contentText );
+		$content->setServices( null, $validator );
+		$record = $content->newCampaignRecord( 123 );
+
+		$this->assertSame(
+			123,
+			$record->getPageId(),
+			'CampaignRecord::getPageId()'
+		);
+		$this->assertSame(
+			$expectedEnabled,
+			$record->isEnabled(),
+			'CampaignRecord::isEnabled()'
+		);
+		$this->assertSame(
+			$expectedValidity,
+			$record->getValidity(),
+			'CampaignRecord::getValidity()'
+		);
+
+		if ( $expectedContent === null ) {
+			$this->assertNull(
+				$record->getContent(),
+				'CampaignRecord::getContent()'
+			);
+		} else {
+			$this->assertArrayEquals(
+				$expectedContent,
+				$record->getContent(),
+				false,
+				true,
+				'CampaignRecord::getContent()'
+			);
+		}
 	}
 }

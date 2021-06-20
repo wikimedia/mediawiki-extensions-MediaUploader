@@ -51,4 +51,11 @@ class MediaUploaderServicesTest extends MediaWikiIntegrationTestCase {
 		);
 		$gConfig->getConfigArray();
 	}
+
+	public function testGetCampaignStore() {
+		$this->expectNotToPerformAssertions();
+
+		$campaignStore = MediaUploaderServices::getCampaignStore();
+		$campaignStore->newSelectQueryBuilder();
+	}
 }

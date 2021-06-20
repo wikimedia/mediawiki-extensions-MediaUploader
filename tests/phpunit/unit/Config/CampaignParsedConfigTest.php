@@ -3,7 +3,7 @@
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Config;
 
 use Language;
-use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParser;
@@ -11,7 +11,6 @@ use MediaWiki\Extension\MediaUploader\Config\ConfigParserFactory;
 use MediaWiki\Extension\MediaUploader\Config\RequestConfig;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
-use Status;
 use TitleValue;
 use WANObjectCache;
 
@@ -38,7 +37,7 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 			$this->createNoOpMock( ConfigParserFactory::class ),
 			$this->createNoOpMock( RequestConfig::class ),
 			[],
-			$this->createNoOpMock( CampaignContent::class ),
+			$this->createNoOpMock( CampaignRecord::class ),
 			$linkTarget,
 			$this->getParsedConfigServiceOptions()
 		);
@@ -226,10 +225,10 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 			)
 			->willReturn( $configParser );
 
-		$content = $this->createMock( CampaignContent::class );
-		$content->expects( $this->once() )
-			->method( 'getData' )
-			->willReturn( Status::newGood( [ 'someKey' => 'v' ] ) );
+		$record = $this->createMock( CampaignRecord::class );
+		$record->expects( $this->once() )
+			->method( 'getContent' )
+			->willReturn( [ 'someKey' => 'v' ] );
 
 		$invalidator = $this->createMock( ConfigCacheInvalidator::class );
 		$invalidator->expects( $this->atLeastOnce() )
@@ -249,7 +248,7 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 			$configParserFactory,
 			$requestConfig,
 			$urlOverrides,
-			$content,
+			$record,
 			$linkTarget,
 			$this->getParsedConfigServiceOptions()
 		);
@@ -314,10 +313,10 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 			)
 			->willReturn( $configParser );
 
-		$content = $this->createMock( CampaignContent::class );
-		$content->expects( $this->once() )
-			->method( 'getData' )
-			->willReturn( Status::newGood( [ 'someKey' => 'v' ] ) );
+		$record = $this->createMock( CampaignRecord::class );
+		$record->expects( $this->once() )
+			->method( 'getContent' )
+			->willReturn( [ 'someKey' => 'v' ] );
 
 		$linkTarget = new TitleValue( NS_CAMPAIGN, 'Dummy' );
 
@@ -330,7 +329,7 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 			$configParserFactory,
 			$requestConfig,
 			$urlOverrides,
-			$content,
+			$record,
 			$linkTarget,
 			$this->getParsedConfigServiceOptions( true )
 		);

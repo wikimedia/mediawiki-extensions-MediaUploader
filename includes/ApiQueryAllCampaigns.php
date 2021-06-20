@@ -22,7 +22,10 @@
  * @file
  */
 
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
+use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignException;
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 
 /**
  * Query module to enumerate all registered campaigns
@@ -31,53 +34,54 @@ use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
  */
 class ApiQueryAllCampaigns extends ApiQueryBase {
 
+	/** @var CampaignStore */
+	private $campaignStore;
+
 	/**
 	 * @param ApiQuery $query
 	 * @param string $moduleName
 	 */
 	public function __construct( ApiQuery $query, string $moduleName ) {
 		parent::__construct( $query, $moduleName, 'uwc' );
+
+		// TODO: move to DI
+		$this->campaignStore = MediaUploaderServices::getCampaignStore();
 	}
 
 	public function execute() {
 		$params = $this->extractRequestParams();
-
 		$limit = $params['limit'];
+		$queryBuilder = $this->campaignStore->newSelectQueryBuilder()
+			->orderByIdAsc()
+			->option( 'LIMIT', $limit + 1 );
 
-		$this->addTables( 'uw_campaigns' );
-
-		$this->addWhereIf( [ 'campaign_enabled' => 1 ], $params['enabledonly'] );
-		$this->addOption( 'LIMIT', $limit + 1 );
-		$this->addOption( 'ORDER BY', 'campaign_id' ); // Not sure if required?
-
-		$this->addFields( [
-			'campaign_id',
-			'campaign_name',
-			'campaign_enabled'
-		] );
+		if ( $params['enabledonly'] ) {
+			$queryBuilder->whereEnabled( true );
+		}
 
 		if ( $params['continue'] !== null ) {
 			$from_id = (int)$params['continue'];
 			// Not SQL Injection, since we already force this to be an integer
-			$this->addWhere( "campaign_id >= $from_id" );
+			$queryBuilder->where( "campaign_page_id >= $from_id" );
 		}
 
-		$res = $this->select( __METHOD__ );
-
 		$result = $this->getResult();
-
 		$count = 0;
-
-		foreach ( $res as $row ) {
+		foreach ( $queryBuilder->fetchCampaignRecords() as $record ) {
+			/** @var CampaignRecord $record */
 			if ( ++$count > $limit ) {
 				// We have more results than $limit. Set continue
-				$this->setContinueEnumParameter( 'continue', $row->campaign_id );
+				$this->setContinueEnumParameter( 'continue', $record->getPageId() );
 				break;
 			}
 
 			try {
-				$campaign = UploadWizardCampaign::newFromName( $row->campaign_name );
-			} catch ( InvalidCampaignContentException $e ) {
+				$campaign = UploadWizardCampaign::newFromTitle(
+					Title::newFromID( $record->getPageId() ),
+					[],
+					$record
+				);
+			} catch ( InvalidCampaignException $e ) {
 				// TODO: Shouldn't we report some error here?
 				continue;
 			}
@@ -87,12 +91,12 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 				continue;
 			}
 
-			$campaignPath = [ 'query', $this->getModuleName(), $row->campaign_id ];
+			$campaignPath = [ 'query', $this->getModuleName(), $record->getPageId() ];
 
 			$result->addValue(
 				$campaignPath,
 				'*',
-				json_encode( $campaign->getConfig()->getConfigArray() )
+				FormatJson::encode( $campaign->getConfig()->getConfigArray() )
 			);
 			$result->addValue(
 				$campaignPath,

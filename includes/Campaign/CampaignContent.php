@@ -3,6 +3,7 @@
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
 use CampaignPageFormatter;
+use Html;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
@@ -47,7 +48,13 @@ class CampaignContent extends TextContent {
 	private $yamlParse;
 
 	/** @var Status */
+	private $realYamlParse;
+
+	/** @var Status */
 	private $validationStatus;
+
+	/** @var Status */
+	private $realValidationStatus;
 
 	/** @var bool Whether the services were initialized */
 	private $initializedServices = false;
@@ -56,14 +63,21 @@ class CampaignContent extends TextContent {
 	 * CampaignContent constructor.
 	 *
 	 * @param string $text
+	 * @param Status|null $yamlParse YAML parsing status of the previous instance
+	 *   of this class.
 	 * @param Status|null $validationStatus The validation status of the previous,
 	 *   insignificantly different instance of this class.
 	 *
 	 * @throws MWException
 	 */
-	public function __construct( string $text, Status $validationStatus = null ) {
+	public function __construct(
+		string $text,
+		Status $yamlParse = null,
+		Status $validationStatus = null
+	) {
 		parent::__construct( $text, CONTENT_MODEL_CAMPAIGN );
 
+		$this->yamlParse = $yamlParse;
 		$this->validationStatus = $validationStatus;
 	}
 
@@ -183,12 +197,15 @@ class CampaignContent extends TextContent {
 			$campaign = UploadWizardCampaign::newFromTitle(
 				$title,
 				[],
-				$this,
+				$this->newCampaignRecord( $title->getId() ),
 				true
 			);
-		} catch ( InvalidCampaignContentException $e ) {
-			// TODO: handle this somehow, show a proper error message
-			throw $e;
+		} catch ( InvalidCampaignException $e ) {
+			// TODO: this is really ugly.
+			$output->setText(
+				Html::element( 'pre', [], $e->getText() )
+			);
+			return;
 		}
 
 		if ( $generateHtml ) {
@@ -260,9 +277,12 @@ class CampaignContent extends TextContent {
 	 * @return CampaignContent
 	 */
 	public function preSaveTransform( Title $title, User $user, ParserOptions $popts ) {
-		// Allow the system user to bypass schema checks
+		// Allow the system user to bypass format and schema checks
 		if ( MediaUploaderServices::isSystemUser( $user ) ) {
-			$this->validationStatus = $this->getData();
+			$this->realValidationStatus = $this->getValidationStatus();
+			$this->realYamlParse = $this->getData();
+			$this->yamlParse = Status::newGood();
+			$this->validationStatus = $this->yamlParse;
 		}
 
 		if ( !$this->isValid() ) {
@@ -272,7 +292,34 @@ class CampaignContent extends TextContent {
 		return new static(
 			self::normalizeLineEndings( $this->getText() ),
 			// Carry forward the current validation status
+			$this->yamlParse,
 			$this->validationStatus
+		);
+	}
+
+	/**
+	 * @param int $pageId
+	 *
+	 * @return CampaignRecord
+	 */
+	public function newCampaignRecord( int $pageId ) : CampaignRecord {
+		$yamlParse = $this->realYamlParse ?: $this->getData();
+		if ( !$yamlParse->isGood() ) {
+			$validity = CampaignRecord::CONTENT_INVALID_FORMAT;
+		} else {
+			$status = $this->realValidationStatus ?: $this->getValidationStatus();
+			if ( !$status->isGood() ) {
+				$validity = CampaignRecord::CONTENT_INVALID_SCHEMA;
+			} else {
+				$validity = CampaignRecord::CONTENT_VALID;
+			}
+		}
+
+		return new CampaignRecord(
+			$pageId,
+			( $this->getData()->getValue() ?: [] )['enabled'] ?? false,
+			$validity,
+			$this->getData()->getValue()
 		);
 	}
 }

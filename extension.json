@@ -74,7 +74,13 @@
 				"MediaUploaderConfigFactory"
 			]
 		},
-		"Campaigns": "MediaWiki\\Extension\\MediaUploader\\Special\\Campaigns"
+		"Campaigns": {
+			"class": "MediaWiki\\Extension\\MediaUploader\\Special\\Campaigns",
+			"services": [
+				"MediaUploaderCampaignStore",
+				"MediaUploaderConfigFactory"
+			]
+		}
 	},
 	"APIModules": {
 		"flickrblacklist": "ApiFlickrBlacklist"
@@ -537,7 +543,6 @@
 		"ListDefinedTags": "registration",
 		"LoadExtensionSchemaUpdates": "UploadWizardHooks::onSchemaUpdate",
 		"MovePageIsValidMove": "campaign",
-		"PageMoveComplete": "campaign",
 		"PageSaveComplete": "campaign",
 		"UserGetReservedNames": "registration"
 	},
@@ -545,7 +550,7 @@
 		"campaign": {
 			"class": "MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignHooks",
 			"services": [
-				"DBLoadBalancer",
+				"MediaUploaderCampaignStore",
 				"MediaUploaderConfigCacheInvalidator"
 			]
 		},

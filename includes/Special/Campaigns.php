@@ -3,14 +3,29 @@
 namespace MediaWiki\Extension\MediaUploader\Special;
 
 use Html;
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
+use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignException;
+use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use SpecialPage;
-use UploadWizardCampaign;
+use Title;
 
 class Campaigns extends SpecialPage {
 
-	public function __construct() {
-		parent::__construct( "Campaigns" );
+	/** @var CampaignStore */
+	private $campaignStore;
+
+	/** @var ConfigFactory */
+	private $configFactory;
+
+	public function __construct(
+		CampaignStore $campaignStore,
+		ConfigFactory $configFactory
+	) {
+		parent::__construct( 'Campaigns' );
+
+		$this->campaignStore = $campaignStore;
+		$this->configFactory = $configFactory;
 	}
 
 	/**
@@ -18,25 +33,22 @@ class Campaigns extends SpecialPage {
 	 */
 	public function execute( $subPage ) {
 		$request = $this->getRequest();
-		$dbr = wfGetDB( DB_REPLICA );
-
 		$start = $request->getIntOrNull( 'start' );
-
 		$limit = 50;
 
-		$cond = [ 'campaign_enabled = 1' ];
+		$queryBuilder = $this->campaignStore->newSelectQueryBuilder()
+			// TODO: we show all campaigns, add an option to filter by enabled.
+			//  Also display whether the campaign is enabled or not.
+			//->whereEnabled( true )
+			->orderByIdAsc()
+			->join( 'page', null, 'campaign_page_id = page_id' )
+			->fields( $this->campaignStore->getSelectFields() )
+			->fields( [ 'page_title', 'page_namespace' ] )
+			->option( 'LIMIT', $limit + 1 );
 
 		if ( $start !== null ) {
-			$cond[] = 'campaign_id > ' . $start;
+			$queryBuilder->where( "campaign_page_id > $start" );
 		}
-
-		$res = $dbr->select(
-			'uw_campaigns',
-			[ 'campaign_id', 'campaign_name' ],
-			$cond,
-			__METHOD__,
-			[ 'LIMIT' => $limit + 1 ]
-		);
 
 		$this->getOutput()->setPageTitle( $this->msg( 'mwe-upload-campaigns-list-title' ) );
 		$this->getOutput()->addModules( 'ext.uploadWizard.uploadCampaign.list' );
@@ -45,25 +57,18 @@ class Campaigns extends SpecialPage {
 		$curCount = 0;
 		$lastId = null;
 
-		foreach ( $res as $row ) {
+		foreach ( $queryBuilder->fetchResultSet() as $row ) {
 			$curCount++;
+			$record = $this->campaignStore->newRecordFromRow( $row );
 
 			if ( $curCount > $limit ) {
-				// We've an extra element. Paginate!
-				$lastId = $row->campaign_id;
+				// We've got an extra element. Paginate!
+				$lastId = $record->getPageId();
 				break;
-			} else {
-				try {
-					$campaign = UploadWizardCampaign::newFromName( $row->campaign_name );
-				} catch ( InvalidCampaignContentException $e ) {
-					// TODO: report an error?
-					continue;
-				}
-
-				if ( $campaign !== null ) {
-					$this->getOutput()->addHTML( $this->getHtmlForCampaign( $campaign ) );
-				}
 			}
+
+			$title = Title::newFromRow( $row );
+			$this->getOutput()->addHTML( $this->getHtmlForCampaign( $record, $title ) );
 		}
 		$this->getOutput()->addHTML( '</dl>' );
 
@@ -74,24 +79,50 @@ class Campaigns extends SpecialPage {
 	}
 
 	/**
-	 * @param UploadWizardCampaign $campaign
+	 * @param CampaignRecord $record
+	 * @param Title $title
 	 *
 	 * @return string
 	 */
-	private function getHtmlForCampaign( UploadWizardCampaign $campaign ) {
-		$config = $campaign->getConfig();
-		$campaignURL = $campaign->getTitle()->getLocalURL();
-		$campaignTitle = $config->getSetting(
-			'title',
-			htmlspecialchars( $campaign->getName() )
+	private function getHtmlForCampaign( CampaignRecord $record, Title $title ) : string {
+		try {
+			$campaignConfig = $this->configFactory->newCampaignConfig(
+				$this->getUser(),
+				$this->getLanguage(),
+				$record,
+				$title
+			);
+		} catch ( InvalidCampaignException $ex ) {
+			// Display an error
+			return Html::rawElement(
+				'dt',
+				[],
+				Html::Element(
+					'a',
+					[ 'href' => $title->getLocalURL() ],
+					$ex->getMessage()
+				)
+			);
+		}
+
+		return Html::rawElement(
+			'dt',
+			[],
+			Html::rawElement(
+				'a',
+				[ 'href' => $title->getLocalURL() ],
+				$campaignConfig->getSetting(
+					'title',
+					// Escape the raw title
+					htmlspecialchars( $title->getText() )
+				)
+			)
+		) .
+		Html::rawElement(
+			'dd',
+			[],
+			$campaignConfig->getSetting( 'description', '' )
 		);
-		$campaignDescription = $config->getSetting( 'description', '' );
-		$returnHTML =
-			Html::rawElement( 'dt', [],
-				Html::rawElement( 'a', [ 'href' => $campaignURL ], $campaignTitle )
-			) .
-			Html::rawElement( 'dd', [], $campaignDescription );
-		return $returnHTML;
 	}
 
 	/**

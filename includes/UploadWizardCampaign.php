@@ -1,7 +1,8 @@
 <?php
 
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
+use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignException;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\MediaWikiServices;
@@ -36,9 +37,6 @@ class UploadWizardCampaign {
 	/** @var CampaignParsedConfig */
 	private $config;
 
-	/** @var CampaignContent */
-	private $content;
-
 	/**
 	 * TODO: Tidy up error handling here. Suggestion:
 	 *  make the factory methods never return null and instead always throw
@@ -48,7 +46,7 @@ class UploadWizardCampaign {
 	 * @param array $urlOverrides
 	 *
 	 * @return UploadWizardCampaign|null
-	 * @throws InvalidCampaignContentException
+	 * @throws InvalidCampaignException
 	 */
 	public static function newFromName(
 		string $name,
@@ -62,47 +60,48 @@ class UploadWizardCampaign {
 	/**
 	 * @param Title $title
 	 * @param array $urlOverrides
-	 * @param CampaignContent|null $content
+	 * @param CampaignRecord|null $campaignRecord
 	 * @param bool $noConfigCache Whether to ignore config cache
 	 *
 	 * @return UploadWizardCampaign|null
-	 * @throws InvalidCampaignContentException
+	 * @throws InvalidCampaignException
 	 */
 	public static function newFromTitle(
 		Title $title,
 		array $urlOverrides = [],
-		CampaignContent $content = null,
+		CampaignRecord $campaignRecord = null,
 		bool $noConfigCache = false
 	) : ?self {
 		if ( !$title->exists() ) {
 			return null;
 		}
 
-		if ( $content === null ) {
+		if ( $campaignRecord === null ) {
 			$wikiPageFactory = MediaWikiServices::getInstance()->getWikiPageFactory();
 			$content = $wikiPageFactory->newFromTitle( $title )->getContent();
 
 			if ( !$content instanceof CampaignContent ) {
 				return null;
 			}
+			$campaignRecord = $content->newCampaignRecord( $title->getId() );
 		}
 
-		return new self( $title, $content, $urlOverrides, $noConfigCache );
+		return new self( $title, $campaignRecord, $urlOverrides, $noConfigCache );
 	}
 
 	/**
 	 * Use factory methods instead.
 	 *
 	 * @param Title $title
-	 * @param CampaignContent $content
+	 * @param CampaignRecord $record
 	 * @param array $urlOverrides
 	 * @param bool $noConfigCache
 	 *
-	 * @throws InvalidCampaignContentException
+	 * @throws InvalidCampaignException
 	 */
 	private function __construct(
 		Title $title,
-		CampaignContent $content,
+		CampaignRecord $record,
 		array $urlOverrides,
 		bool $noConfigCache
 	) {
@@ -112,14 +111,13 @@ class UploadWizardCampaign {
 		$this->config = $configFactory->newCampaignConfig(
 			$requestContext->getUser(),
 			$requestContext->getLanguage(),
-			$content,
+			$record,
 			$title,
 			$urlOverrides,
 			$noConfigCache
 		);
 
 		$this->title = $title;
-		$this->content = $content;
 	}
 
 	/**

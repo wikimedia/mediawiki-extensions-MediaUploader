@@ -2,6 +2,7 @@
 
 namespace MediaWiki\Extension\MediaUploader;
 
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Campaign\Validator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
@@ -26,6 +27,10 @@ class MediaUploaderServices {
 			$services = MediaWikiServices::getInstance();
 		}
 		return $services->getService( 'MediaUploader' . $name );
+	}
+
+	public static function getCampaignStore( MediaWikiServices $services = null ) : CampaignStore {
+		return self::getService( $services, 'CampaignStore' );
 	}
 
 	public static function getCampaignValidator( MediaWikiServices $services = null ) : Validator {

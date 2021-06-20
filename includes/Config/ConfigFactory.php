@@ -6,8 +6,8 @@ use JobQueueGroup;
 use Language;
 use MediaWiki\Cache\LinkBatchFactory;
 use MediaWiki\Config\ServiceOptions;
-use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
+use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignException;
 use MediaWiki\Languages\LanguageNameUtils;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\User\UserIdentity;
@@ -130,7 +130,7 @@ class ConfigFactory {
 	 *
 	 * @param UserIdentity $user
 	 * @param Language $language
-	 * @param CampaignContent $campaignContent
+	 * @param CampaignRecord $campaignRecord
 	 * @param LinkTarget $campaignLinkTarget
 	 * @param array $urlOverrides URL parameter overrides in the form of an
 	 *   associative array. Use with caution and do not pass unvalidated user
@@ -138,21 +138,17 @@ class ConfigFactory {
 	 * @param bool $noCache Whether to ignore config cache
 	 *
 	 * @return CampaignParsedConfig
-	 * @throws InvalidCampaignContentException
+	 * @throws InvalidCampaignException
 	 */
 	public function newCampaignConfig(
 		UserIdentity $user,
 		Language $language,
-		CampaignContent $campaignContent,
+		CampaignRecord $campaignRecord,
 		LinkTarget $campaignLinkTarget,
 		array $urlOverrides = [],
 		bool $noCache = false
 	) : CampaignParsedConfig {
-		if ( !$campaignContent->isValid() ) {
-			throw new InvalidCampaignContentException(
-				$campaignLinkTarget->getText()
-			);
-		}
+		$campaignRecord->assertValid( $campaignLinkTarget->getText() );
 
 		return new CampaignParsedConfig(
 			$this->cache,
@@ -163,7 +159,7 @@ class ConfigFactory {
 			$this->configParserFactory,
 			$this->newRequestConfig( $language ),
 			$urlOverrides,
-			$campaignContent,
+			$campaignRecord,
 			$campaignLinkTarget,
 			new ServiceOptions(
 				ParsedConfig::CONSTRUCTOR_OPTIONS,

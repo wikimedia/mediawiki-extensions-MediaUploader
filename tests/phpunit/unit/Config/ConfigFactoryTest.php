@@ -5,8 +5,7 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Config;
 use JobQueueGroup;
 use Language;
 use MediaWiki\Cache\LinkBatchFactory;
-use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignContentException;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
@@ -25,11 +24,8 @@ use WANObjectCache;
  */
 class ConfigFactoryTest extends MediaWikiUnitTestCase {
 
-	/**
-	 * @return ConfigFactory
-	 */
-	private function getConfigFactory() : ConfigFactory {
-		return new ConfigFactory(
+	public function testNewCampaignConfig_validContent() {
+		$factory = new ConfigFactory(
 			$this->createNoOpMock( WANObjectCache::class ),
 			$this->createNoOpMock( UserOptionsLookup::class ),
 			$this->createNoOpMock( LanguageNameUtils::class ),
@@ -39,34 +35,10 @@ class ConfigFactoryTest extends MediaWikiUnitTestCase {
 			$this->createNoOpMock( ConfigParserFactory::class ),
 			$this->createNoOpMock( ConfigCacheInvalidator::class )
 		);
-	}
 
-	public function testNewCampaignConfig_invalidContent() {
-		$this->expectException( InvalidCampaignContentException::class );
-		$this->expectExceptionMessageMatches( '/Camp name/' );
-
-		$factory = $this->getConfigFactory();
-
-		$content = $this->createMock( CampaignContent::class );
+		$content = $this->createMock( CampaignRecord::class );
 		$content->expects( $this->once() )
-			->method( 'isValid' )
-			->willReturn( false );
-
-		$factory->newCampaignConfig(
-			$this->createNoOpMock( UserIdentity::class ),
-			$this->createNoOpMock( Language::class ),
-			$content,
-			new TitleValue( NS_CAMPAIGN, 'Camp name' )
-		);
-	}
-
-	public function testNewCampaignConfig_validContent() {
-		$factory = $this->getConfigFactory();
-
-		$content = $this->createMock( CampaignContent::class );
-		$content->expects( $this->once() )
-			->method( 'isValid' )
-			->willReturn( true );
+			->method( 'assertValid' );
 
 		$this->assertInstanceOf(
 			CampaignParsedConfig::class,

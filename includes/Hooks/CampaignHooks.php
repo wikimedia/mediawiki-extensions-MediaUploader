@@ -8,12 +8,12 @@ use IContextSource;
 use LinksUpdate;
 use ManualLogEntry;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\Hook\EditFilterMergedContentHook;
 use MediaWiki\Hook\LinksUpdateCompleteHook;
 use MediaWiki\Hook\MovePageIsValidMoveHook;
-use MediaWiki\Hook\PageMoveCompleteHook;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\Page\Hook\ArticleDeleteCompleteHook;
 use MediaWiki\Page\Hook\ArticleDeleteHook;
@@ -25,7 +25,6 @@ use Status;
 use Title;
 use User;
 use Wikimedia\Assert\PreconditionException;
-use Wikimedia\Rdbms\ILoadBalancer;
 use WikiPage;
 
 /**
@@ -35,32 +34,31 @@ class CampaignHooks implements
 	PageSaveCompleteHook,
 	LinksUpdateCompleteHook,
 	ArticleDeleteCompleteHook,
-	PageMoveCompleteHook,
 	EditFilterMergedContentHook,
 	ArticleDeleteHook,
 	MovePageIsValidMoveHook
 {
 
-	/** @var ILoadBalancer */
-	private $loadBalancer;
+	/** @var CampaignStore */
+	private $campaignStore;
 
 	/** @var ConfigCacheInvalidator */
 	private $cacheInvalidator;
 
 	/**
-	 * @param ILoadBalancer $loadBalancer
+	 * @param CampaignStore $campaignStore
 	 * @param ConfigCacheInvalidator $cacheInvalidator
 	 */
 	public function __construct(
-		ILoadBalancer $loadBalancer,
+		CampaignStore $campaignStore,
 		ConfigCacheInvalidator $cacheInvalidator
 	) {
-		$this->loadBalancer = $loadBalancer;
+		$this->campaignStore = $campaignStore;
 		$this->cacheInvalidator = $cacheInvalidator;
 	}
 
 	/**
-	 * Deletes entries from uc_campaigns table when a Campaign is deleted
+	 * Deletes entries from mu_campaign table when a Campaign is deleted
 	 * @param WikiPage $wikiPage
 	 * @param User $user
 	 * @param string $reason
@@ -78,16 +76,7 @@ class CampaignHooks implements
 			return true;
 		}
 
-		$fname = __METHOD__;
-		$dbw = $this->loadBalancer->getConnection( DB_PRIMARY );
-		$dbw->onTransactionPreCommitOrIdle( static function () use ( $dbw, $wikiPage, $fname ) {
-			$dbw->delete(
-				'uw_campaigns',
-				[ 'campaign_name' => $wikiPage->getTitle()->getDBkey() ],
-				$fname
-			);
-		}, $fname );
-
+		$this->campaignStore->deleteCampaignByPageId( $id );
 		return true;
 	}
 
@@ -166,36 +155,6 @@ class CampaignHooks implements
 	}
 
 	/**
-	 * Update campaign names when the Campaign page moves
-	 *
-	 * @param LinkTarget $oldTitle
-	 * @param LinkTarget $newTitle
-	 * @param UserIdentity $user
-	 * @param int $pageid
-	 * @param int $redirid
-	 * @param string $reason
-	 * @param RevisionRecord $revision
-	 *
-	 * @return bool
-	 */
-	public function onPageMoveComplete(
-		$oldTitle, $newTitle, $user, $pageid, $redirid, $reason, $revision
-	) : bool {
-		if ( !$oldTitle->inNamespace( NS_CAMPAIGN ) ) {
-			return true;
-		}
-
-		$dbw = $this->loadBalancer->getConnection( DB_PRIMARY );
-
-		return $dbw->update(
-			'uw_campaigns',
-			[ 'campaign_name' => $newTitle->getDBkey() ],
-			[ 'campaign_name' => $oldTitle->getDBkey() ],
-			__METHOD__
-		);
-	}
-
-	/**
 	 * Sets up appropriate entries in the uc_campaigns table for each Campaign
 	 * Acts everytime a page in the NS_CAMPAIGN namespace is saved
 	 *
@@ -236,23 +195,8 @@ class CampaignHooks implements
 	 * @param CampaignContent $content
 	 */
 	public function doCampaignUpdate( WikiPage $wikiPage, CampaignContent $content ) : void {
-		$dbw = $this->loadBalancer->getConnection( DB_PRIMARY );
-
-		$campaignName = $wikiPage->getTitle()->getDBkey();
-		$campaignData = $content->getData()->getValue();
-		$insertData = [
-			'campaign_enabled' => $campaignData !== null && $campaignData['enabled'] ? 1 : 0
-		];
-		$dbw->upsert(
-			'uw_campaigns',
-			array_merge(
-				[ 'campaign_name' => $campaignName ],
-				$insertData
-			),
-			'campaign_name',
-			$insertData,
-			__METHOD__
-		);
+		$campaignRecord = $content->newCampaignRecord( $wikiPage->getId() );
+		$this->campaignStore->upsertCampaign( $campaignRecord );
 	}
 
 	/**
