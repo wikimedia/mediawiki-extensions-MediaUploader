@@ -67,7 +67,8 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 
 		$result = $this->getResult();
 		$count = 0;
-		foreach ( $queryBuilder->fetchCampaignRecords() as $record ) {
+		$records = $queryBuilder->fetchCampaignRecords( CampaignStore::SELECT_TITLE );
+		foreach ( $records as $record ) {
 			/** @var CampaignRecord $record */
 			if ( ++$count > $limit ) {
 				// We have more results than $limit. Set continue
@@ -76,18 +77,9 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 			}
 
 			try {
-				$campaign = UploadWizardCampaign::newFromTitle(
-					Title::newFromID( $record->getPageId() ),
-					[],
-					$record
-				);
+				$record->assertValid( $record->getTitle()->getDBkey() );
 			} catch ( InvalidCampaignException $e ) {
-				// TODO: Shouldn't we report some error here?
-				continue;
-			}
-
-			if ( $campaign === null ) {
-				// TODO: Shouldn't we report some error here?
+				// TODO: Report some error here
 				continue;
 			}
 
@@ -95,15 +87,12 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 
 			$result->addValue(
 				$campaignPath,
-				'*',
-				FormatJson::encode( $campaign->getConfig()->getConfigArray() )
-			);
-			$result->addValue(
-				$campaignPath,
 				'name',
-				$campaign->getName()
+				$record->getTitle()->getDBkey()
 			);
-			$result->addValue(
+
+			// TODO: to be handled by the future CampaignStats class
+			/* $result->addValue(
 				$campaignPath,
 				'trackingCategory',
 				$campaign->getTrackingCategory()->getDBkey()
@@ -119,7 +108,7 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 					'totalContributors',
 					$campaign->getTotalContributorsCount()
 				);
-			}
+			} */
 		}
 		$result->addIndexedTagName( [ 'query', $this->getModuleName() ], 'campaign' );
 	}

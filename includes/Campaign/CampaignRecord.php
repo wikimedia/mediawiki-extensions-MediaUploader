@@ -2,6 +2,8 @@
 
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
+use Title;
+
 /**
  * Represents a row in the mu_campaign table.
  * This is not the actual campaign page or its effective config. The purpose
@@ -27,22 +29,28 @@ class CampaignRecord {
 	/** @var null|array */
 	protected $content;
 
+	/** @var null|Title */
+	protected $title;
+
 	/**
 	 * @param int $pageId
 	 * @param bool $enabled
 	 * @param int $validity
-	 * @param null|array $content
+	 * @param null|array $content optional
+	 * @param null|Title $title the title of the corresponding page, optional
 	 */
 	public function __construct(
 		int $pageId,
 		bool $enabled,
 		int $validity,
-		?array $content
+		array $content = null,
+		Title $title = null
 	) {
 		$this->pageId = $pageId;
 		$this->enabled = $enabled;
 		$this->validity = $validity;
 		$this->content = $content;
+		$this->title = $title;
 	}
 
 	/**
@@ -76,6 +84,14 @@ class CampaignRecord {
 	 */
 	public function getContent() : ?array {
 		return $this->content;
+	}
+
+	/**
+	 * The title of the page this campaign is on.
+	 * @return Title|null
+	 */
+	public function getTitle() : ?Title {
+		return $this->title;
 	}
 
 	/**

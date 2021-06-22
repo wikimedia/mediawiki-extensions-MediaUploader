@@ -4,6 +4,7 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
 
 use FormatJson;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWikiIntegrationTestCase;
 
@@ -80,7 +81,7 @@ class CampaignStoreTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertSelect(
 			'mu_campaign',
-			$store->getSelectFields(),
+			$store->getSelectFields( CampaignStore::SELECT_CONTENT ),
 			[ 'campaign_page_id' => 124 ],
 			[ [ 124, 0, CampaignRecord::CONTENT_INVALID_FORMAT, null ] ]
 		);
@@ -97,7 +98,7 @@ class CampaignStoreTest extends MediaWikiIntegrationTestCase {
 
 		$this->assertSelect(
 			'mu_campaign',
-			$store->getSelectFields(),
+			$store->getSelectFields( CampaignStore::SELECT_CONTENT ),
 			[ 'campaign_page_id' => 124 ],
 			[ [
 				124,

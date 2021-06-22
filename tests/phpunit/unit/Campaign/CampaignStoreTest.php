@@ -6,6 +6,7 @@ use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWikiUnitTestCase;
 use stdClass;
+use Title;
 use Wikimedia\Rdbms\ILoadBalancer;
 
 /**
@@ -22,41 +23,78 @@ use Wikimedia\Rdbms\ILoadBalancer;
 class CampaignStoreTest extends MediaWikiUnitTestCase {
 
 	public function provideNewRecordFromRow() : iterable {
-		yield 'enabled' => [
-			1,
-			'{"enabled":true}',
-			true,
-			[ 'enabled' => true ],
-		];
-
-		yield 'disabled' => [
+		yield 'fetch content, disabled' => [
+			CampaignStore::SELECT_CONTENT,
 			0,
 			'{"enabled":false}',
 			false,
 			[ 'enabled' => false ],
+			false,
 		];
 
-		yield 'null content' => [
+		yield 'fetch content, null content' => [
+			CampaignStore::SELECT_CONTENT,
 			0,
 			null,
 			false,
 			null,
+			false,
+		];
+
+		yield "fetch content, enabled" => [
+			CampaignStore::SELECT_CONTENT,
+			1,
+			'{"enabled":true}',
+			true,
+			[ 'enabled' => true ],
+			false,
+		];
+
+		yield "don't fetch content, enabled" => [
+			CampaignStore::SELECT_MINIMAL,
+			1,
+			'{"enabled":true}',
+			true,
+			null,
+			false,
+		];
+
+		yield "don't fetch content, fetch title" => [
+			CampaignStore::SELECT_TITLE,
+			1,
+			'{"enabled":true}',
+			true,
+			null,
+			true,
+		];
+
+		yield "fetch content, fetch title" => [
+			CampaignStore::SELECT_CONTENT | CampaignStore::SELECT_TITLE,
+			1,
+			'{"enabled":true}',
+			true,
+			[ 'enabled' => true ],
+			true,
 		];
 	}
 
 	/**
+	 * @param int $selectFlags
 	 * @param int $enabled
 	 * @param string|null $content
 	 * @param bool $expectedEnabled
 	 * @param array|null $expectedContent
+	 * @param bool $shouldHaveTitle
 	 *
 	 * @dataProvider provideNewRecordFromRow
 	 */
 	public function testNewRecordFromRow(
+		int $selectFlags,
 		int $enabled,
 		?string $content,
 		bool $expectedEnabled,
-		?array $expectedContent
+		?array $expectedContent,
+		bool $shouldHaveTitle
 	) {
 		$store = new CampaignStore(
 			$this->createNoOpMock( ILoadBalancer::class )
@@ -66,8 +104,10 @@ class CampaignStoreTest extends MediaWikiUnitTestCase {
 		$row->campaign_enabled = $enabled;
 		$row->campaign_validity = CampaignRecord::CONTENT_VALID;
 		$row->campaign_content = $content;
+		$row->page_title = 'aaa';
+		$row->page_namespace = 321;
 
-		$record = $store->newRecordFromRow( $row );
+		$record = $store->newRecordFromRow( $row, $selectFlags );
 
 		$this->assertSame(
 			123,
@@ -85,6 +125,7 @@ class CampaignStoreTest extends MediaWikiUnitTestCase {
 			'CampaignRecord::getValidity()'
 		);
 
+		// Assert the content
 		if ( $expectedContent === null ) {
 			$this->assertNull(
 				$record->getContent(),
@@ -98,6 +139,32 @@ class CampaignStoreTest extends MediaWikiUnitTestCase {
 				true,
 				'CampaignRecord::getContent()'
 			);
+		}
+
+		// Assert the title
+		if ( $shouldHaveTitle ) {
+			$this->assertInstanceOf(
+				Title::class,
+				$record->getTitle(),
+				'CampaignRecord::getTitle()'
+			);
+			$this->assertSame(
+				321,
+				$record->getTitle()->getNamespace(),
+				'Title::getNamespace()'
+			);
+			$this->assertSame(
+				123,
+				$record->getTitle()->getId(),
+				'Title::getId()'
+			);
+			$this->assertSame(
+				'aaa',
+				$record->getTitle()->getDBkey(),
+				'Title::getDBkey()'
+			);
+		} else {
+			$this->assertNull( $record->getTitle(), 'CampaignRecord::getTitle()' );
 		}
 	}
 }

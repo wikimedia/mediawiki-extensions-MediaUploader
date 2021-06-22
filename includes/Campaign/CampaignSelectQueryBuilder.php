@@ -52,26 +52,43 @@ class CampaignSelectQueryBuilder extends SelectQueryBuilder {
 	/**
 	 * Fetch a single CampaignRecord.
 	 *
+	 * @param int $selectFlags Bitfield of CampaignStore::SELECT_* constants
+	 *
 	 * @return CampaignRecord|null
 	 */
-	public function fetchCampaignRecord() : ?CampaignRecord {
-		$this->fields( $this->store->getSelectFields() );
+	public function fetchCampaignRecord(
+		int $selectFlags = CampaignStore::SELECT_MINIMAL
+	) : ?CampaignRecord {
+		$this->prepareForSelect( $selectFlags );
 
 		$row = $this->fetchRow();
-		return $row ? $this->store->newRecordFromRow( $row ) : null;
+		return $row ? $this->store->newRecordFromRow( $row, $selectFlags ) : null;
 	}
 
 	/**
 	 * Returns an iterator over resulting CampaignRecords.
 	 *
+	 * @param int $selectFlags Bitfield of CampaignStore::SELECT_* constants
+	 *
 	 * @return Iterator<CampaignRecord>
 	 */
-	public function fetchCampaignRecords() : Iterator {
-		$this->fields( $this->store->getSelectFields() );
+	public function fetchCampaignRecords(
+		int $selectFlags = CampaignStore::SELECT_MINIMAL
+	) : Iterator {
+		$this->prepareForSelect( $selectFlags );
 
 		$result = $this->fetchResultSet();
 		foreach ( $result as $row ) {
-			yield $this->store->newRecordFromRow( $row );
+			yield $this->store->newRecordFromRow( $row, $selectFlags );
 		}
+	}
+
+	/**
+	 * @param int $selectFlags
+	 */
+	private function prepareForSelect( int $selectFlags ) : void {
+		$this->fields( $this->store->getSelectFields( $selectFlags ) );
+		$this->tables( $this->store->getSelectTables( $selectFlags ) );
+		$this->joinConds( $this->store->getJoinConds( $selectFlags ) );
 	}
 }

@@ -3,12 +3,12 @@
 namespace MediaWiki\Extension\MediaUploader\Special;
 
 use Html;
+use LogicException;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use SpecialPage;
-use Title;
 
 class Campaigns extends SpecialPage {
 
@@ -41,9 +41,6 @@ class Campaigns extends SpecialPage {
 			//  Also display whether the campaign is enabled or not.
 			//->whereEnabled( true )
 			->orderByIdAsc()
-			->join( 'page', null, 'campaign_page_id = page_id' )
-			->fields( $this->campaignStore->getSelectFields() )
-			->fields( [ 'page_title', 'page_namespace' ] )
 			->option( 'LIMIT', $limit + 1 );
 
 		if ( $start !== null ) {
@@ -56,10 +53,10 @@ class Campaigns extends SpecialPage {
 
 		$curCount = 0;
 		$lastId = null;
+		$records = $queryBuilder->fetchCampaignRecords( CampaignStore::SELECT_TITLE );
 
-		foreach ( $queryBuilder->fetchResultSet() as $row ) {
+		foreach ( $records as $record ) {
 			$curCount++;
-			$record = $this->campaignStore->newRecordFromRow( $row );
 
 			if ( $curCount > $limit ) {
 				// We've got an extra element. Paginate!
@@ -67,8 +64,7 @@ class Campaigns extends SpecialPage {
 				break;
 			}
 
-			$title = Title::newFromRow( $row );
-			$this->getOutput()->addHTML( $this->getHtmlForCampaign( $record, $title ) );
+			$this->getOutput()->addHTML( $this->getHtmlForCampaign( $record ) );
 		}
 		$this->getOutput()->addHTML( '</dl>' );
 
@@ -80,11 +76,16 @@ class Campaigns extends SpecialPage {
 
 	/**
 	 * @param CampaignRecord $record
-	 * @param Title $title
 	 *
 	 * @return string
 	 */
-	private function getHtmlForCampaign( CampaignRecord $record, Title $title ) : string {
+	private function getHtmlForCampaign( CampaignRecord $record ) : string {
+		$title = $record->getTitle();
+		if ( $title === null ) {
+			// Should never happen. The 'if' is here to make Phan happy.
+			throw new LogicException( 'Title for Campaign was expected to be set.' );
+		}
+
 		try {
 			$campaignConfig = $this->configFactory->newCampaignConfig(
 				$this->getUser(),
