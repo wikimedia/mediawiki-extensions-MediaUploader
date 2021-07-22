@@ -15,7 +15,7 @@ use WANObjectCache;
  */
 class ParsedConfigTest extends ConfigUnitTestCase {
 
-	public function provideGetCacheKey() : iterable {
+	public function provideGetCacheKey(): iterable {
 		yield 'no additional parameters' => [ [] ];
 
 		yield 'with additional parameters' => [ [
@@ -72,10 +72,10 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 				parent::__construct( ...$params );
 			}
 
-			protected function initialize( $noCache ) : void {
+			protected function initialize( $noCache ): void {
 			}
 
-			public function invalidateCache() : void {
+			public function invalidateCache(): void {
 			}
 
 			public function testMakeCacheKey( ...$args ) {
@@ -105,7 +105,7 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 				$this->testCase = $testCase;
 			}
 
-			protected function initialize( $noCache ) : void {
+			protected function initialize( $noCache ): void {
 				$this->testCase->assertLessThan(
 					2,
 					++$this->invokeCount,
@@ -114,7 +114,7 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 				$this->parsedConfig = [ 'test' ];
 			}
 
-			public function invalidateCache() : void {
+			public function invalidateCache(): void {
 			}
 		};
 
@@ -155,7 +155,7 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 				$this->testCase = $testCase;
 			}
 
-			protected function initialize( $noCache ) : void {
+			protected function initialize( $noCache ): void {
 				$this->testCase->assertLessThan(
 					2,
 					++$this->invokeCount,
@@ -164,7 +164,7 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 				$this->usedTemplates = [ 'test' ];
 			}
 
-			public function invalidateCache() : void {
+			public function invalidateCache(): void {
 			}
 		};
 

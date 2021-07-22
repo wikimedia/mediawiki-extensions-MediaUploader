@@ -22,7 +22,7 @@ use Wikimedia\Rdbms\ILoadBalancer;
  */
 class CampaignStoreTest extends MediaWikiUnitTestCase {
 
-	public function provideNewRecordFromRow() : iterable {
+	public function provideNewRecordFromRow(): iterable {
 		yield 'fetch content, disabled' => [
 			CampaignStore::SELECT_CONTENT,
 			0,

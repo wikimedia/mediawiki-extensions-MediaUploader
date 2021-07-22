@@ -80,7 +80,7 @@ class ConfigFactory {
 	 *
 	 * @return RequestConfig
 	 */
-	private function newRequestConfig( Language $language ) : RequestConfig {
+	private function newRequestConfig( Language $language ): RequestConfig {
 		return new RequestConfig(
 			$this->cache,
 			$this->languageNameUtils,
@@ -107,7 +107,7 @@ class ConfigFactory {
 		Language $language,
 		array $urlOverrides = [],
 		bool $noCache = false
-	) : GlobalParsedConfig {
+	): GlobalParsedConfig {
 		return new GlobalParsedConfig(
 			$this->cache,
 			$this->userOptionsLookup,
@@ -147,7 +147,7 @@ class ConfigFactory {
 		LinkTarget $campaignLinkTarget,
 		array $urlOverrides = [],
 		bool $noCache = false
-	) : CampaignParsedConfig {
+	): CampaignParsedConfig {
 		$campaignRecord->assertValid( $campaignLinkTarget->getText() );
 
 		return new CampaignParsedConfig(

@@ -13,7 +13,7 @@ abstract class ConfigBase {
 	 *
 	 * @return array
 	 */
-	abstract public function getConfigArray() : array;
+	abstract public function getConfigArray(): array;
 
 	/**
 	 * Returns a specific setting of the configuration array.
@@ -32,7 +32,7 @@ abstract class ConfigBase {
 	 *
 	 * @return array
 	 */
-	public function getThirdPartyLicenses() : array {
+	public function getThirdPartyLicenses(): array {
 		$licensing = $this->getSetting( 'licensing', [] );
 		$thirdParty = $licensing['thirdParty'] ?? [];
 		$licenses = [];
@@ -51,7 +51,7 @@ abstract class ConfigBase {
 	 *
 	 * @return bool
 	 */
-	private function isAssoc( array $array ) : bool {
+	private function isAssoc( array $array ): bool {
 		return (bool)count( array_filter( array_keys( $array ), 'is_string' ) );
 	}
 
@@ -65,7 +65,7 @@ abstract class ConfigBase {
 	 *
 	 * @return array Yet another array, sanely replacing contents of $array with $array1
 	 */
-	final protected function arrayReplaceSanely( array $array, array $array1 ) : array {
+	final protected function arrayReplaceSanely( array $array, array $array1 ): array {
 		$newArray = [];
 
 		foreach ( $array as $key => $value ) {

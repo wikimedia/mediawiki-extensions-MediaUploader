@@ -58,7 +58,7 @@ class RawConfig extends ConfigBase {
 	 *
 	 * @return array
 	 */
-	private function getDefaultConfig() : array {
+	private function getDefaultConfig(): array {
 		$configPath = dirname( __DIR__, 2 ) . '/MediaUploader.config.php';
 		$config = is_file( $configPath ) ? include $configPath : [];
 
@@ -76,7 +76,7 @@ class RawConfig extends ConfigBase {
 	/**
 	 * @inheritDoc
 	 */
-	public function getConfigArray() : array {
+	public function getConfigArray(): array {
 		if (
 			self::$mergedGlobalConfig === null ||
 			!$this->options->get( 'PersistDuringRequest' )
@@ -97,7 +97,7 @@ class RawConfig extends ConfigBase {
 	 *
 	 * @return array
 	 */
-	private function mergeConfigs( array $defaults ) : array {
+	private function mergeConfigs( array $defaults ): array {
 		$muConfig = $this->options->get( 'MediaUploaderConfig' );
 		if ( $muConfig ) {
 			return $this->arrayReplaceSanely( $defaults, $muConfig );
@@ -119,7 +119,7 @@ class RawConfig extends ConfigBase {
 	 * @return array
 	 * @internal For use by ParsedConfig
 	 */
-	public function getConfigWithAdditionalDefaults( array $defaults ) : array {
+	public function getConfigWithAdditionalDefaults( array $defaults ): array {
 		return $this->mergeConfigs( $defaults + $this->getDefaultConfig() );
 	}
 }

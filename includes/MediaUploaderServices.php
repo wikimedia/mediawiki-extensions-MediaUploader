@@ -29,27 +29,27 @@ class MediaUploaderServices {
 		return $services->getService( 'MediaUploader' . $name );
 	}
 
-	public static function getCampaignStore( MediaWikiServices $services = null ) : CampaignStore {
+	public static function getCampaignStore( MediaWikiServices $services = null ): CampaignStore {
 		return self::getService( $services, 'CampaignStore' );
 	}
 
-	public static function getCampaignValidator( MediaWikiServices $services = null ) : Validator {
+	public static function getCampaignValidator( MediaWikiServices $services = null ): Validator {
 		return self::getService( $services, 'CampaignValidator' );
 	}
 
-	public static function getConfigFactory( MediaWikiServices $services = null ) : ConfigFactory {
+	public static function getConfigFactory( MediaWikiServices $services = null ): ConfigFactory {
 		return self::getService( $services, 'ConfigFactory' );
 	}
 
-	public static function getConfigParserFactory( MediaWikiServices $services = null ) : ConfigParserFactory {
+	public static function getConfigParserFactory( MediaWikiServices $services = null ): ConfigParserFactory {
 		return self::getService( $services, 'ConfigParserFactory' );
 	}
 
-	public static function getConfigCacheInvalidator( MediaWikiServices $services = null ) : ConfigCacheInvalidator {
+	public static function getConfigCacheInvalidator( MediaWikiServices $services = null ): ConfigCacheInvalidator {
 		return self::getService( $services, 'ConfigCacheInvalidator' );
 	}
 
-	public static function getRawConfig( MediaWikiServices $services = null ) : RawConfig {
+	public static function getRawConfig( MediaWikiServices $services = null ): RawConfig {
 		return self::getService( $services, 'RawConfig' );
 	}
 
@@ -57,7 +57,7 @@ class MediaUploaderServices {
 	 * Returns the system (MediaUploader) user used for maintenance tasks.
 	 * @return User
 	 */
-	public static function getSystemUser() : User {
+	public static function getSystemUser(): User {
 		return User::newSystemUser( 'MediaUploader', [ 'steal' => true ] );
 	}
 
@@ -68,7 +68,7 @@ class MediaUploaderServices {
 	 *
 	 * @return bool
 	 */
-	public static function isSystemUser( UserIdentity $user ) : bool {
+	public static function isSystemUser( UserIdentity $user ): bool {
 		return $user->getName() === 'MediaUploader';
 	}
 
@@ -78,7 +78,7 @@ class MediaUploaderServices {
 	 * @deprecated Temporary method, will be removed when all code moves to DI.
 	 *  Use getConfigFactory()->newGlobalConfig() instead.
 	 */
-	public static function getGlobalParsedConfig() : GlobalParsedConfig {
+	public static function getGlobalParsedConfig(): GlobalParsedConfig {
 		$context = RequestContext::getMain();
 
 		return self::getConfigFactory()->newGlobalConfig(

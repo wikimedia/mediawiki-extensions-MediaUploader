@@ -27,7 +27,7 @@ class GlobalConfigAnchorUpdateJob extends Job implements GenericParameterJob {
 	 *
 	 * @return JobSpecification
 	 */
-	public static function newSpec() : JobSpecification {
+	public static function newSpec(): JobSpecification {
 		return new JobSpecification( self::NAME, [] );
 	}
 
@@ -42,7 +42,7 @@ class GlobalConfigAnchorUpdateJob extends Job implements GenericParameterJob {
 	 * @inheritDoc
 	 * @throws MWException
 	 */
-	public function run() : bool {
+	public function run(): bool {
 		$wikiPageFactory = MediaWikiServices::getInstance()->getWikiPageFactory();
 		$anchor = $wikiPageFactory->newFromLinkTarget(
 			CampaignContent::getGlobalConfigAnchorLinkTarget()

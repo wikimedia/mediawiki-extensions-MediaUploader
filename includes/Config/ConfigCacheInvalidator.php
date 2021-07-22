@@ -27,7 +27,7 @@ class ConfigCacheInvalidator {
 	 *
 	 * @return string
 	 */
-	public function makeInvalidateTimestampKey( string ...$additionalComponents ) : string {
+	public function makeInvalidateTimestampKey( string ...$additionalComponents ): string {
 		return $this->cache->makeKey(
 			'mediauploader',
 			'parsed-config',
@@ -45,7 +45,7 @@ class ConfigCacheInvalidator {
 	 *
 	 * @param string ...$additionalComponents
 	 */
-	public function invalidate( string ...$additionalComponents ) : void {
+	public function invalidate( string ...$additionalComponents ): void {
 		$this->cache->touchCheckKey(
 			$this->makeInvalidateTimestampKey( ...$additionalComponents )
 		);

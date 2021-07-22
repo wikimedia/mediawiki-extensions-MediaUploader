@@ -12,7 +12,7 @@ class MediaUploaderResourceModuleFactory {
 	 *
 	 * @return MediaUploaderResourceModule
 	 */
-	public static function factory( array $options ) : MediaUploaderResourceModule {
+	public static function factory( array $options ): MediaUploaderResourceModule {
 		return new MediaUploaderResourceModule(
 			$options,
 			MediaUploaderServices::getRawConfig()

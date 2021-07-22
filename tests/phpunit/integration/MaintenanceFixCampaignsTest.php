@@ -161,7 +161,7 @@ YAML;
 	 * @param string $name
 	 * @param string $content
 	 */
-	private function makeCampaign( string $name, string $content ) : void {
+	private function makeCampaign( string $name, string $content ): void {
 		$title = Title::newFromText( $name, NS_CAMPAIGN );
 		$this->editPage(
 			$title,
@@ -180,7 +180,7 @@ YAML;
 		int $changeType,
 		int $fixed = 0,
 		int $toFix = 0
-	) : void {
+	): void {
 		$wpFactory = $this->getServiceContainer()->getWikiPageFactory();
 
 		$title = Title::newFromText( $name, NS_CAMPAIGN );
@@ -222,7 +222,7 @@ YAML;
 		);
 	}
 
-	private function deleteCampaign( string $name ) : void {
+	private function deleteCampaign( string $name ): void {
 		$wpFactory = $this->getServiceContainer()->getWikiPageFactory();
 		$title = Title::newFromText( $name, NS_CAMPAIGN );
 		$page = $wpFactory->newFromLinkTarget( $title );
@@ -232,7 +232,7 @@ YAML;
 	/**
 	 * @inheritDoc
 	 */
-	protected function getMaintenanceClass() : string {
+	protected function getMaintenanceClass(): string {
 		return FixCampaigns::class;
 	}
 }

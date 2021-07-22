@@ -57,7 +57,7 @@ class CampaignRecord {
 	 * The ID of the page this campaign is stored on.
 	 * @return int
 	 */
-	public function getPageId() : int {
+	public function getPageId(): int {
 		return $this->pageId;
 	}
 
@@ -65,7 +65,7 @@ class CampaignRecord {
 	 * Whether this campaign is enabled (not necessarily active).
 	 * @return bool
 	 */
-	public function isEnabled() : bool {
+	public function isEnabled(): bool {
 		return $this->enabled;
 	}
 
@@ -74,7 +74,7 @@ class CampaignRecord {
 	 * One of self::CONTENT_* constants
 	 * @return int
 	 */
-	public function getValidity() : int {
+	public function getValidity(): int {
 		return $this->validity;
 	}
 
@@ -82,7 +82,7 @@ class CampaignRecord {
 	 * The raw, unparsed content of the campaign, as array.
 	 * @return array|null
 	 */
-	public function getContent() : ?array {
+	public function getContent(): ?array {
 		return $this->content;
 	}
 
@@ -90,7 +90,7 @@ class CampaignRecord {
 	 * The title of the page this campaign is on.
 	 * @return Title|null
 	 */
-	public function getTitle() : ?Title {
+	public function getTitle(): ?Title {
 		return $this->title;
 	}
 
@@ -101,7 +101,7 @@ class CampaignRecord {
 	 *
 	 * @throws InvalidCampaignException
 	 */
-	public function assertValid( string $name ) : void {
+	public function assertValid( string $name ): void {
 		switch ( $this->validity ) {
 			case self::CONTENT_INVALID_FORMAT:
 				throw new InvalidCampaignFormatException( $name );

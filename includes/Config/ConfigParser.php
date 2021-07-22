@@ -58,7 +58,7 @@ class ConfigParser {
 	 *
 	 * @return array
 	 */
-	public function getParsedConfig() : array {
+	public function getParsedConfig(): array {
 		if ( $this->parsedConfig === null ) {
 			$this->parseConfig();
 		}
@@ -70,7 +70,7 @@ class ConfigParser {
 	 *
 	 * @return array [ ns => [ dbk => [ page_id, rev_id ] ] ]
 	 */
-	public function getTemplates() : array {
+	public function getTemplates(): array {
 		if ( $this->parsedConfig === null ) {
 			$this->parseConfig();
 		}
@@ -82,7 +82,7 @@ class ConfigParser {
 	 *
 	 * @return void
 	 */
-	private function parseConfig() : void {
+	private function parseConfig(): void {
 		$parsedConfig = [];
 		foreach ( $this->unparsedConfig as $key => $value ) {
 			switch ( $key ) {
@@ -153,7 +153,7 @@ class ConfigParser {
 	 *
 	 * @return array
 	 */
-	private function parseArrayValues( array $array, $forKeys = null ) : array {
+	private function parseArrayValues( array $array, $forKeys = null ): array {
 		$parsed = [];
 		foreach ( $array as $key => $value ) {
 			if ( $forKeys !== null ) {
@@ -180,7 +180,7 @@ class ConfigParser {
 	 *
 	 * @return string HTML
 	 */
-	private function parseValue( string $value ) : string {
+	private function parseValue( string $value ): string {
 		$output = $this->parserFactory->create()->parse(
 			$value, $this->title, $this->parserOptions
 		);
@@ -200,7 +200,7 @@ class ConfigParser {
 	 *
 	 * @return void
 	 */
-	private function updateTemplates( ParserOutput $parserOutput ) : void {
+	private function updateTemplates( ParserOutput $parserOutput ): void {
 		$templateIds = $parserOutput->getTemplateIds();
 		foreach ( $parserOutput->getTemplates() as $ns => $templates ) {
 			foreach ( $templates as $dbk => $id ) {

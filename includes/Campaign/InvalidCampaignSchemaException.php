@@ -7,7 +7,7 @@ namespace MediaWiki\Extension\MediaUploader\Campaign;
  */
 class InvalidCampaignSchemaException extends InvalidCampaignException {
 	/** @inheritDoc */
-	protected function getErrorMessageKey() : string {
+	protected function getErrorMessageKey(): string {
 		return 'mediauploader-invalid-campaign-schema';
 	}
 }

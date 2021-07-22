@@ -43,7 +43,7 @@ class CampaignStore implements IDBAccessObject {
 	 */
 	public function getSelectFields(
 		int $selectFlags = self::SELECT_MINIMAL
-	) : array {
+	): array {
 		$fields = [
 			'campaign_page_id',
 			'campaign_enabled',
@@ -69,7 +69,7 @@ class CampaignStore implements IDBAccessObject {
 	 */
 	public function getSelectTables(
 		int $selectFlags = self::SELECT_MINIMAL
-	) : array {
+	): array {
 		$tables = [ 'mu_campaign' ];
 		if ( self::SELECT_TITLE & $selectFlags ) {
 			$tables[] = 'page';
@@ -87,7 +87,7 @@ class CampaignStore implements IDBAccessObject {
 	 */
 	public function getJoinConds(
 		int $selectFlags = self::SELECT_MINIMAL
-	) : array {
+	): array {
 		if ( self::SELECT_TITLE & $selectFlags ) {
 			return [ 'page' => [ 'JOIN', 'campaign_page_id = page_id' ] ];
 		}
@@ -106,7 +106,7 @@ class CampaignStore implements IDBAccessObject {
 	public function newRecordFromRow(
 		stdClass $row,
 		int $selectFlags
-	) : CampaignRecord {
+	): CampaignRecord {
 		$content = null;
 		if ( self::SELECT_CONTENT & $selectFlags && $row->campaign_content ) {
 			$content = FormatJson::parse(
@@ -142,7 +142,7 @@ class CampaignStore implements IDBAccessObject {
 	 */
 	public function newSelectQueryBuilder(
 		int $queryFlags = self::READ_NORMAL
-	) : CampaignSelectQueryBuilder {
+	): CampaignSelectQueryBuilder {
 		[ $mode, $options ] = DBAccessObjectUtils::getDBOptions( $queryFlags );
 		$db = $this->loadBalancer->getConnectionRef( $mode );
 		$queryBuilder = new CampaignSelectQueryBuilder( $db, $this );
@@ -156,7 +156,7 @@ class CampaignStore implements IDBAccessObject {
 	 *
 	 * @param CampaignRecord $record
 	 */
-	public function upsertCampaign( CampaignRecord $record ) : void {
+	public function upsertCampaign( CampaignRecord $record ): void {
 		$db = $this->loadBalancer->getConnectionRef( DB_PRIMARY );
 		$content = $record->getContent();
 		if ( $content !== null ) {
@@ -182,7 +182,7 @@ class CampaignStore implements IDBAccessObject {
 	 *
 	 * @param int $pageId
 	 */
-	public function deleteCampaignByPageId( int $pageId ) : void {
+	public function deleteCampaignByPageId( int $pageId ): void {
 		$db = $this->loadBalancer->getConnectionRef( DB_PRIMARY );
 		$db->delete(
 			'mu_campaign',

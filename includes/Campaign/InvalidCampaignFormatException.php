@@ -7,7 +7,7 @@ namespace MediaWiki\Extension\MediaUploader\Campaign;
  */
 class InvalidCampaignFormatException extends InvalidCampaignException {
 	/** @inheritDoc */
-	protected function getErrorMessageKey() : string {
+	protected function getErrorMessageKey(): string {
 		return 'mediauploader-invalid-campaign-format';
 	}
 }

@@ -71,7 +71,7 @@ class CampaignHooks implements
 	 */
 	public function onArticleDeleteComplete(
 		$wikiPage, $user, $reason, $id, $content, $logEntry, $archivedRevisionCount
-	) : bool {
+	): bool {
 		if ( !$wikiPage->getTitle()->inNamespace( NS_CAMPAIGN ) ) {
 			return true;
 		}
@@ -100,7 +100,7 @@ class CampaignHooks implements
 		$summary,
 		User $user,
 		$minoredit
-	) : bool {
+	): bool {
 		if ( !$context->getTitle()->inNamespace( NS_CAMPAIGN )
 			|| !$content instanceof CampaignContent
 		) {
@@ -134,7 +134,7 @@ class CampaignHooks implements
 	 *
 	 * @return bool
 	 */
-	public function onLinksUpdateComplete( $linksUpdate, $ticket ) : bool {
+	public function onLinksUpdateComplete( $linksUpdate, $ticket ): bool {
 		if ( !$linksUpdate->getTitle()->inNamespace( NS_CAMPAIGN ) ) {
 			return true;
 		}
@@ -171,7 +171,7 @@ class CampaignHooks implements
 	 */
 	public function onPageSaveComplete(
 		$wikiPage, $userIdentity, $summary, $flags, $revisionRecord, $editResult
-	) : bool {
+	): bool {
 		$content = $wikiPage->getContent();
 		if ( !$content instanceof CampaignContent
 			|| $this->isGlobalConfigAnchor( $wikiPage->getTitle() )
@@ -194,7 +194,7 @@ class CampaignHooks implements
 	 * @param WikiPage $wikiPage
 	 * @param CampaignContent $content
 	 */
-	public function doCampaignUpdate( WikiPage $wikiPage, CampaignContent $content ) : void {
+	public function doCampaignUpdate( WikiPage $wikiPage, CampaignContent $content ): void {
 		$campaignRecord = $content->newCampaignRecord( $wikiPage->getId() );
 		$this->campaignStore->upsertCampaign( $campaignRecord );
 	}
@@ -213,7 +213,7 @@ class CampaignHooks implements
 	 */
 	public function onArticleDelete(
 		WikiPage $wikiPage, User $user, &$reason, &$error, Status &$status, $suppress
-	) : bool {
+	): bool {
 		if ( $this->isGlobalConfigAnchor( $wikiPage->getTitle() ) ) {
 			$status->fatal( 'mwe-upwiz-global-config-anchor' );
 			return false;
@@ -231,7 +231,7 @@ class CampaignHooks implements
 	 *
 	 * @return bool
 	 */
-	public function onMovePageIsValidMove( $oldTitle, $newTitle, $status ) : bool {
+	public function onMovePageIsValidMove( $oldTitle, $newTitle, $status ): bool {
 		if ( $this->isGlobalConfigAnchor( $oldTitle ) ||
 			$this->isGlobalConfigAnchor( $newTitle )
 		) {
@@ -247,7 +247,7 @@ class CampaignHooks implements
 	 *
 	 * @return bool
 	 */
-	private function isGlobalConfigAnchor( LinkTarget $linkTarget ) : bool {
+	private function isGlobalConfigAnchor( LinkTarget $linkTarget ): bool {
 		return $linkTarget->isSameLinkAs(
 			CampaignContent::getGlobalConfigAnchorLinkTarget()
 		);
@@ -260,7 +260,7 @@ class CampaignHooks implements
 	 *
 	 * @return bool
 	 */
-	private function isMagicUser( UserIdentity $identity ) : bool {
+	private function isMagicUser( UserIdentity $identity ): bool {
 		try {
 			$identity->assertWiki( UserIdentity::LOCAL );
 		} catch ( PreconditionException $ex ) {

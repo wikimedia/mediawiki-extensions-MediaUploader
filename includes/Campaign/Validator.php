@@ -38,7 +38,7 @@ class Validator {
 	 *
 	 * @return Status with validation errors (if any)
 	 */
-	public function validate( array $object ) : Status {
+	public function validate( array $object ): Status {
 		$cacheKey = $this->localServerCache->makeKey(
 			'mediauploader',
 			'campaign-schema'
@@ -46,7 +46,7 @@ class Validator {
 		$schema = $this->localServerCache->getWithSetCallback(
 			$cacheKey,
 			$this->localServerCache::TTL_MINUTE * 5,
-			function () : stdClass {
+			function (): stdClass {
 				return $this->makeSchema();
 			}
 		);
@@ -59,7 +59,7 @@ class Validator {
 	 *
 	 * @return stdClass
 	 */
-	private function makeSchema() : stdClass {
+	private function makeSchema(): stdClass {
 		$schema = Yaml::parseFile(
 			MU_SCHEMA_DIR . 'campaign.yaml',
 			Yaml::PARSE_OBJECT_FOR_MAP | Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE
@@ -79,7 +79,7 @@ class Validator {
 	 *
 	 * @return Status
 	 */
-	private function doValidate( array $object, stdClass $schema ) : Status {
+	private function doValidate( array $object, stdClass $schema ): Status {
 		$validator = new \JsonSchema\Validator();
 		$objectObject = $validator::arrayToObjectRecursive( $object );
 

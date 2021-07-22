@@ -73,7 +73,7 @@ class GlobalParsedConfig extends ParsedConfig {
 	/**
 	 * @inheritDoc
 	 */
-	final protected function initialize( bool $noCache ) : void {
+	final protected function initialize( bool $noCache ): void {
 		if ( $noCache ) {
 			// Just reparse the config
 			$this->parseConfig();
@@ -115,7 +115,7 @@ class GlobalParsedConfig extends ParsedConfig {
 	/**
 	 * Parses the config and sets appropriate fields.
 	 */
-	private function parseConfig() : void {
+	private function parseConfig(): void {
 		$configParser = $this->configParserFactory->newConfigParser(
 			$this->requestConfig->getConfigArray(),
 			$this->user,
@@ -134,7 +134,7 @@ class GlobalParsedConfig extends ParsedConfig {
 	 */
 	private function saveConfigToCache(
 		string $cacheKey, string $configHash
-	) : void {
+	): void {
 		$this->cache->set(
 			$cacheKey,
 			[
@@ -151,7 +151,7 @@ class GlobalParsedConfig extends ParsedConfig {
 	/**
 	 * Applies URL overrides to the parsed config.
 	 */
-	private function applyUrlOverrides() : void {
+	private function applyUrlOverrides(): void {
 		$this->parsedConfig = array_replace_recursive(
 			$this->parsedConfig,
 			$this->urlOverrides

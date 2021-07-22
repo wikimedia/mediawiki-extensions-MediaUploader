@@ -34,7 +34,7 @@ class CampaignContent extends TextContent {
 	 */
 	public const GLOBAL_CONFIG_ANCHOR_DBKEY = '-';
 
-	public static function getGlobalConfigAnchorLinkTarget() : LinkTarget {
+	public static function getGlobalConfigAnchorLinkTarget(): LinkTarget {
 		return new TitleValue( NS_CAMPAIGN, self::GLOBAL_CONFIG_ANCHOR_DBKEY );
 	}
 
@@ -115,7 +115,7 @@ class CampaignContent extends TextContent {
 	 *
 	 * @return Status
 	 */
-	public function getValidationStatus() : Status {
+	public function getValidationStatus(): Status {
 		$this->initServices();
 
 		if ( $this->validationStatus ) {
@@ -228,7 +228,7 @@ class CampaignContent extends TextContent {
 	private function registerTemplates(
 		ParsedConfig $parsedConfig,
 		ParserOutput $parserOutput
-	) : void {
+	): void {
 		// FIXME: should we be registering other stuff??
 		foreach ( $parsedConfig->getTemplates() as $ns => $templates ) {
 			foreach ( $templates as $dbk => $ids ) {
@@ -247,7 +247,7 @@ class CampaignContent extends TextContent {
 	 *
 	 * @return Status
 	 */
-	public function getData() : Status {
+	public function getData(): Status {
 		if ( $this->yamlParse ) {
 			return $this->yamlParse;
 		}
@@ -302,7 +302,7 @@ class CampaignContent extends TextContent {
 	 *
 	 * @return CampaignRecord
 	 */
-	public function newCampaignRecord( int $pageId ) : CampaignRecord {
+	public function newCampaignRecord( int $pageId ): CampaignRecord {
 		$yamlParse = $this->realYamlParse ?: $this->getData();
 		if ( !$yamlParse->isGood() ) {
 			$validity = CampaignRecord::CONTENT_INVALID_FORMAT;

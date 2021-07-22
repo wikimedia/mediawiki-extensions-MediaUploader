@@ -200,7 +200,7 @@ class FixCampaigns extends LoggedUpdateMaintenance {
 	 *
 	 * @return bool Whether the removal was successful.
 	 */
-	private function removeProperty( &$data, string $path, string $prop ) : bool {
+	private function removeProperty( &$data, string $path, string $prop ): bool {
 		$cursor =& $data;
 		$path = str_replace( [ '[', ']' ], '.', $path );
 

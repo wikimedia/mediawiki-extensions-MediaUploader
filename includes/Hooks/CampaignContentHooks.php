@@ -25,7 +25,7 @@ class CampaignContentHooks implements
 	 *
 	 * @return static
 	 */
-	public static function newFromGlobalState() : self {
+	public static function newFromGlobalState(): self {
 		return new static( ExtensionRegistry::getInstance() );
 	}
 
@@ -44,7 +44,7 @@ class CampaignContentHooks implements
 	 * @param bool &$ok
 	 * @return bool
 	 */
-	public function onContentModelCanBeUsedOn( $contentModel, $title, &$ok ) : bool {
+	public function onContentModelCanBeUsedOn( $contentModel, $title, &$ok ): bool {
 		$isCampaignModel = $contentModel === CONTENT_MODEL_CAMPAIGN;
 		$isCampaignNamespace = $title->inNamespace( NS_CAMPAIGN );
 		if ( $isCampaignModel !== $isCampaignNamespace ) {
@@ -82,7 +82,7 @@ class CampaignContentHooks implements
 	 *
 	 * @return bool
 	 */
-	public static function onCodeEditorGetPageLanguage( Title $title, ?string &$lang ) : bool {
+	public static function onCodeEditorGetPageLanguage( Title $title, ?string &$lang ): bool {
 		if ( $title->inNamespace( NS_CAMPAIGN ) ) {
 			$lang = 'yaml';
 		}

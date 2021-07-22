@@ -67,7 +67,7 @@ class ConfigBaseTest extends MediaWikiUnitTestCase {
 		);
 	}
 
-	public function provideArrayReplaceSanely() : iterable {
+	public function provideArrayReplaceSanely(): iterable {
 		yield 'no replacements to be made' => [
 			[ 'key' => [ 'key' => 'value' ] ],
 			[],
@@ -131,7 +131,7 @@ class ConfigBaseTest extends MediaWikiUnitTestCase {
 	 */
 	public function testArrayReplaceSanely( array $array, array $array1, array $expected ) {
 		$config = new class extends ConfigBase {
-			public function getConfigArray() : array {
+			public function getConfigArray(): array {
 				return [];
 			}
 

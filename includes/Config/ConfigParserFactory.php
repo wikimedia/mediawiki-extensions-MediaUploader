@@ -44,7 +44,7 @@ class ConfigParserFactory {
 		UserIdentity $user,
 		Language $language,
 		LinkTarget $linkTarget = null
-	) : ConfigParser {
+	): ConfigParser {
 		if ( $linkTarget === null ) {
 			$title = SpecialPage::getTitleFor( 'MediaUploader' );
 		} else {

@@ -32,7 +32,7 @@ abstract class InvalidCampaignException extends MWException {
 	 *
 	 * @return string
 	 */
-	public function getCampaignName() : string {
+	public function getCampaignName(): string {
 		return $this->campaignName;
 	}
 
@@ -41,5 +41,5 @@ abstract class InvalidCampaignException extends MWException {
 	 *
 	 * @return string
 	 */
-	abstract protected function getErrorMessageKey() : string;
+	abstract protected function getErrorMessageKey(): string;
 }

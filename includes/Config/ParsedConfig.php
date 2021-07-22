@@ -80,7 +80,7 @@ abstract class ParsedConfig extends ConfigBase {
 	 *
 	 * @return string
 	 */
-	final protected function makeCacheKey( string ...$additionalComponents ) : string {
+	final protected function makeCacheKey( string ...$additionalComponents ): string {
 		$gender = $this->userOptionsLookup->getOption( $this->user, 'gender' );
 		return $this->cache->makeKey(
 			'mediauploader',
@@ -99,12 +99,12 @@ abstract class ParsedConfig extends ConfigBase {
 	 * @param bool $noCache Whether to bypass cache entirely.
 	 *  No reads or writes to cache should be made.
 	 */
-	abstract protected function initialize( bool $noCache ) : void;
+	abstract protected function initialize( bool $noCache ): void;
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getConfigArray() : array {
+	public function getConfigArray(): array {
 		if ( $this->parsedConfig === null ) {
 			$this->initialize(
 				$this->options->get( self::NO_CACHE )
@@ -119,7 +119,7 @@ abstract class ParsedConfig extends ConfigBase {
 	 *
 	 * @return array [ ns => [ dbKey => [ page_id, rev_id ] ] ]
 	 */
-	public function getTemplates() : array {
+	public function getTemplates(): array {
 		if ( $this->usedTemplates === null ) {
 			$this->initialize(
 				$this->options->get( self::NO_CACHE )

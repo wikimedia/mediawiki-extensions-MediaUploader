@@ -34,7 +34,7 @@ class CampaignSelectQueryBuilder extends SelectQueryBuilder {
 	 *
 	 * @return $this
 	 */
-	public function whereEnabled( bool $enabled ) : self {
+	public function whereEnabled( bool $enabled ): self {
 		$this->where( [ 'campaign_enabled' => $enabled ? 1 : 0 ] );
 		return $this;
 	}
@@ -44,7 +44,7 @@ class CampaignSelectQueryBuilder extends SelectQueryBuilder {
 	 *
 	 * @return $this
 	 */
-	public function orderByIdAsc() : self {
+	public function orderByIdAsc(): self {
 		$this->orderBy( 'campaign_page_id', self::SORT_ASC );
 		return $this;
 	}
@@ -58,7 +58,7 @@ class CampaignSelectQueryBuilder extends SelectQueryBuilder {
 	 */
 	public function fetchCampaignRecord(
 		int $selectFlags = CampaignStore::SELECT_MINIMAL
-	) : ?CampaignRecord {
+	): ?CampaignRecord {
 		$this->prepareForSelect( $selectFlags );
 
 		$row = $this->fetchRow();
@@ -74,7 +74,7 @@ class CampaignSelectQueryBuilder extends SelectQueryBuilder {
 	 */
 	public function fetchCampaignRecords(
 		int $selectFlags = CampaignStore::SELECT_MINIMAL
-	) : Iterator {
+	): Iterator {
 		$this->prepareForSelect( $selectFlags );
 
 		$result = $this->fetchResultSet();
@@ -86,7 +86,7 @@ class CampaignSelectQueryBuilder extends SelectQueryBuilder {
 	/**
 	 * @param int $selectFlags
 	 */
-	private function prepareForSelect( int $selectFlags ) : void {
+	private function prepareForSelect( int $selectFlags ): void {
 		$this->fields( $this->store->getSelectFields( $selectFlags ) );
 		$this->tables( $this->store->getSelectTables( $selectFlags ) );
 		$this->joinConds( $this->store->getJoinConds( $selectFlags ) );

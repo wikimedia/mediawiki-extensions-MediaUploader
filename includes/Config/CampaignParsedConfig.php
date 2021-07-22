@@ -81,14 +81,14 @@ class CampaignParsedConfig extends ParsedConfig {
 	 *
 	 * @return string
 	 */
-	public function getName() : string {
+	public function getName(): string {
 		return $this->campaignLinkTarget->getDBkey();
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	protected function initialize( bool $noCache ) : void {
+	protected function initialize( bool $noCache ): void {
 		if ( $noCache ) {
 			// Just parse the config
 			$configValue = $this->parseConfigForCache();
@@ -124,7 +124,7 @@ class CampaignParsedConfig extends ParsedConfig {
 	 *
 	 * @return array
 	 */
-	private function parseConfigForCache() : array {
+	private function parseConfigForCache(): array {
 		$configParser = $this->configParserFactory->newConfigParser(
 			$this->arrayReplaceSanely(
 				$this->requestConfig->getConfigArray(),
@@ -149,7 +149,7 @@ class CampaignParsedConfig extends ParsedConfig {
 	 *
 	 * @return array Modified configuration array
 	 */
-	protected function applyTimeBasedModifiers( array $configArray ) : array {
+	protected function applyTimeBasedModifiers( array $configArray ): array {
 		if ( $this->isActive( $configArray ) ) {
 			$activeModifiers = $configArray['whileActive'] ?? [];
 		} elseif ( $this->wasActive( $configArray ) ) {
@@ -184,7 +184,7 @@ class CampaignParsedConfig extends ParsedConfig {
 	 *
 	 * @return bool
 	 */
-	private function isActive( array $configArray ) : bool {
+	private function isActive( array $configArray ): bool {
 		$now = time();
 		$start = array_key_exists(
 			'start', $configArray
@@ -204,7 +204,7 @@ class CampaignParsedConfig extends ParsedConfig {
 	 *
 	 * @return bool
 	 */
-	private function wasActive( array $configArray ) : bool {
+	private function wasActive( array $configArray ): bool {
 		$now = time();
 		$start = array_key_exists(
 			'start', $configArray

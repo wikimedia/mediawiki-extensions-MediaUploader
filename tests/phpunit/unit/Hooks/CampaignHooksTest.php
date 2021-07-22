@@ -348,7 +348,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 	private function getCampaignHooks(
 		CampaignStore $campaignStore = null,
 		ConfigCacheInvalidator $cacheInvalidator = null
-	) : CampaignHooks {
+	): CampaignHooks {
 		return new CampaignHooks(
 			$campaignStore ?:
 				$this->createNoOpMock( CampaignStore::class ),
@@ -412,7 +412,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$title->method( 'isSameLinkAs' )
 			->willReturnCallback(
-				static function ( LinkTarget $target ) : bool {
+				static function ( LinkTarget $target ): bool {
 					return $target->getNamespace() === NS_CAMPAIGN &&
 						$target->getDBkey() === CampaignContent::GLOBAL_CONFIG_ANCHOR_DBKEY;
 				}

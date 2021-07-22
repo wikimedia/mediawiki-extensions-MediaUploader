@@ -14,7 +14,7 @@ use MediaWikiUnitTestCase;
  */
 class InvalidCampaignExceptionTest extends MediaWikiUnitTestCase {
 
-	public function provideExceptionClasses() : iterable {
+	public function provideExceptionClasses(): iterable {
 		$classes = [
 			InvalidCampaignFormatException::class,
 			InvalidCampaignSchemaException::class,

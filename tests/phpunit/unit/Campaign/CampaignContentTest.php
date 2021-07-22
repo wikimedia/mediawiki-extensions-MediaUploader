@@ -139,7 +139,7 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 		$this->assertFalse( $content->isValid(), 'isValid()' );
 	}
 
-	public function provideNewCampaignRecord() : iterable {
+	public function provideNewCampaignRecord(): iterable {
 		yield 'Invalid markup' => [
 			'[', false, CampaignRecord::CONTENT_INVALID_FORMAT, null
 		];

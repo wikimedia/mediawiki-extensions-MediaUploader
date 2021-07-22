@@ -12,7 +12,7 @@ use UploadBase;
  */
 class RawConfigTest extends ConfigUnitTestCase {
 
-	public function provideConfig() : iterable {
+	public function provideConfig(): iterable {
 		yield 'no overrides' => [
 			[
 				'CheckFileExtensions' => true,

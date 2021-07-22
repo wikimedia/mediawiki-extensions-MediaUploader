@@ -71,7 +71,7 @@ class RequestConfig extends ConfigBase {
 	 *
 	 * @return array
 	 */
-	public function getConfigArray() : array {
+	public function getConfigArray(): array {
 		if ( $this->config !== null ) {
 			return $this->config;
 		}
@@ -87,7 +87,7 @@ class RequestConfig extends ConfigBase {
 	/**
 	 * @return string
 	 */
-	public function getConfigHash() : string {
+	public function getConfigHash(): string {
 		return md5( FormatJson::encode( $this->getConfigArray() ) );
 	}
 
@@ -97,7 +97,7 @@ class RequestConfig extends ConfigBase {
 	 *
 	 * @return array
 	 */
-	private function getTemplateLanguages() : array {
+	private function getTemplateLanguages(): array {
 		// We need to get a list of languages for the description dropdown.
 		// Increase the 'version' number in the options below if this logic or format changes.
 		return $this->cache->getWithSetCallback(

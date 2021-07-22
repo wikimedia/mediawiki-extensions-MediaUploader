@@ -79,7 +79,7 @@ class Campaigns extends SpecialPage {
 	 *
 	 * @return string
 	 */
-	private function getHtmlForCampaign( CampaignRecord $record ) : string {
+	private function getHtmlForCampaign( CampaignRecord $record ): string {
 		$title = $record->getTitle();
 		if ( $title === null ) {
 			// Should never happen. The 'if' is here to make Phan happy.

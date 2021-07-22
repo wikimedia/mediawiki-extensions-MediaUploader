@@ -51,7 +51,7 @@ class UploadWizardCampaign {
 	public static function newFromName(
 		string $name,
 		array $urlOverrides = []
-	) : ?UploadWizardCampaign {
+	): ?UploadWizardCampaign {
 		$campaignTitle = Title::makeTitleSafe( NS_CAMPAIGN, $name );
 
 		return self::newFromTitle( $campaignTitle, $urlOverrides );
@@ -71,7 +71,7 @@ class UploadWizardCampaign {
 		array $urlOverrides = [],
 		CampaignRecord $campaignRecord = null,
 		bool $noConfigCache = false
-	) : ?self {
+	): ?self {
 		if ( !$title->exists() ) {
 			return null;
 		}
@@ -136,7 +136,7 @@ class UploadWizardCampaign {
 	/**
 	 * @return CampaignParsedConfig
 	 */
-	public function getConfig() : CampaignParsedConfig {
+	public function getConfig(): CampaignParsedConfig {
 		return $this->config;
 	}
 
@@ -145,7 +145,7 @@ class UploadWizardCampaign {
 	 *
 	 * @return bool
 	 */
-	public function isEnabled() : bool {
+	public function isEnabled(): bool {
 		return $this->config->getSetting( 'enabled' );
 	}
 
@@ -156,7 +156,7 @@ class UploadWizardCampaign {
 	 *
 	 * @return Title
 	 */
-	public function getTrackingCategory() : Title {
+	public function getTrackingCategory(): Title {
 		$trackingCats = $this->config->getSetting( 'trackingCategory' );
 		return Title::makeTitleSafe(
 			NS_CATEGORY, str_replace( '$1', $this->getName(), $trackingCats['campaign'] )

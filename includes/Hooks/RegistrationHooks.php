@@ -32,7 +32,7 @@ class RegistrationHooks implements
 	 *
 	 * @return bool true
 	 */
-	public function onListDefinedTags( &$tags ) : bool {
+	public function onListDefinedTags( &$tags ): bool {
 		$tags = array_merge( $tags, self::CHANGE_TAGS );
 		return true;
 	}
@@ -40,14 +40,14 @@ class RegistrationHooks implements
 	/**
 	 * @inheritDoc
 	 */
-	public function onChangeTagsAllowedAdd( &$allowedTags, $addTags, $user ) : bool {
+	public function onChangeTagsAllowedAdd( &$allowedTags, $addTags, $user ): bool {
 		return $this->onListDefinedTags( $allowedTags );
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function onChangeTagsListActive( &$tags ) : bool {
+	public function onChangeTagsListActive( &$tags ): bool {
 		return $this->onListDefinedTags( $tags );
 	}
 
@@ -58,7 +58,7 @@ class RegistrationHooks implements
 	 *
 	 * @return bool true
 	 */
-	public function onUserGetReservedNames( &$reservedUsernames ) : bool {
+	public function onUserGetReservedNames( &$reservedUsernames ): bool {
 		$reservedUsernames[] = 'MediaUploader';
 		return true;
 	}

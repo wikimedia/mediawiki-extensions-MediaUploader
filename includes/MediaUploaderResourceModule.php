@@ -63,7 +63,7 @@ class MediaUploaderResourceModule extends ResourceLoaderFileModule {
 	private function getMessagesForLicenseGroups(
 		array $licensingConfig,
 		string $type
-	) : array {
+	): array {
 		if ( !isset( $licensingConfig[$type] ) ) {
 			return [];
 		}
@@ -105,7 +105,7 @@ class MediaUploaderResourceModule extends ResourceLoaderFileModule {
 	 *
 	 * @return string[]
 	 */
-	private function getMessagesForDefaultLicenses( array $licenses ) : array {
+	private function getMessagesForDefaultLicenses( array $licenses ): array {
 		$messages = [];
 		foreach ( $licenses as $license ) {
 			$messages[] = 'mwe-upwiz-source-ownwork-assert-' . $license;

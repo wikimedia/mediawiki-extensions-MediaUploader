@@ -53,7 +53,7 @@ abstract class ConfigUnitTestCase extends MediaWikiUnitTestCase {
 	 */
 	final protected function getParsedConfigServiceOptions(
 		bool $noCache = false
-	) : ServiceOptions {
+	): ServiceOptions {
 		return new ServiceOptions(
 			ParsedConfig::CONSTRUCTOR_OPTIONS,
 			[ ParsedConfig::NO_CACHE => $noCache ]

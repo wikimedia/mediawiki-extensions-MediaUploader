@@ -49,7 +49,7 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 		);
 	}
 
-	public function provideInitialize() : iterable {
+	public function provideInitialize(): iterable {
 		yield 'no URL overrides' => [
 			[ 'k' => 'config' ],
 			[],

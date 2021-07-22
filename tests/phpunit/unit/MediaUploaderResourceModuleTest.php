@@ -12,7 +12,7 @@ use MediaWikiUnitTestCase;
  */
 class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 
-	public function provideGetMessages() : iterable {
+	public function provideGetMessages(): iterable {
 		yield 'empty config' => [
 			[],
 			[]

@@ -372,12 +372,15 @@ class MediaUploader extends SpecialPage {
 
 		// Check blocks
 		if ( $user->isBlockedFromUpload() ) {
+			// If the user is blocked from uploading then there is a block
+			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			throw new UserBlockedError( $user->getBlock() );
 		}
 
 		// Global blocks
-		if ( $user->isBlockedGlobally() ) {
-			throw new UserBlockedError( $user->getGlobalBlock() );
+		$globalBlock = $user->getGlobalBlock();
+		if ( $globalBlock ) {
+			throw new UserBlockedError( $globalBlock );
 		}
 
 		// we got all the way here, so it must be okay to upload

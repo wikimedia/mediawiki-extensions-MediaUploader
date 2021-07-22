@@ -8,7 +8,7 @@ class UploadWizardHooks {
 	/**
 	 * Sets up constants.
 	 */
-	public static function registerExtension() : void {
+	public static function registerExtension(): void {
 		require_once dirname( __DIR__ ) . '/defines.php';
 	}
 
