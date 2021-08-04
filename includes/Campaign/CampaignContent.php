@@ -18,7 +18,6 @@ use TextContent;
 use Title;
 use TitleValue;
 use UploadWizardCampaign;
-use User;
 
 /**
  * Represents the configuration of an Upload Campaign
@@ -79,6 +78,16 @@ class CampaignContent extends TextContent {
 
 		$this->yamlParse = $yamlParse;
 		$this->validationStatus = $validationStatus;
+	}
+
+	/**
+	 * Overrides the parsing and schema checks. Should only be used when saving an edit by the system user.
+	 */
+	public function overrideValidationStatus() {
+		$this->realValidationStatus = $this->getValidationStatus();
+		$this->realYamlParse = $this->getData();
+		$this->yamlParse = Status::newGood();
+		$this->validationStatus = $this->yamlParse;
 	}
 
 	/**
@@ -265,36 +274,6 @@ class CampaignContent extends TextContent {
 				$e->getMessage()
 			);
 		}
-	}
-
-	/**
-	 * Normalizes line endings before saving.
-	 *
-	 * @param Title $title
-	 * @param User $user
-	 * @param ParserOptions $popts
-	 *
-	 * @return CampaignContent
-	 */
-	public function preSaveTransform( Title $title, User $user, ParserOptions $popts ) {
-		// Allow the system user to bypass format and schema checks
-		if ( MediaUploaderServices::isSystemUser( $user ) ) {
-			$this->realValidationStatus = $this->getValidationStatus();
-			$this->realYamlParse = $this->getData();
-			$this->yamlParse = Status::newGood();
-			$this->validationStatus = $this->yamlParse;
-		}
-
-		if ( !$this->isValid() ) {
-			return $this;
-		}
-
-		return new static(
-			self::normalizeLineEndings( $this->getText() ),
-			// Carry forward the current validation status
-			$this->yamlParse,
-			$this->validationStatus
-		);
 	}
 
 	/**

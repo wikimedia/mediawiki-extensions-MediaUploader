@@ -2,7 +2,10 @@
 
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
+use Content;
 use JsonContentHandler;
+use MediaWiki\Content\Transform\PreSaveTransformParams;
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 
 /**
  * Content handler for campaign pages.
@@ -30,5 +33,33 @@ class CampaignContentHandler extends JsonContentHandler {
 		$class = $this->getContentClass();
 
 		return new $class( 'enabled: false' );
+	}
+
+	/**
+	 * Normalizes line endings before saving.
+	 *
+	 * @param Content $content
+	 * @param PreSaveTransformParams $pstParams
+	 *
+	 * @return CampaignContent
+	 */
+	public function preSaveTransform( Content $content, PreSaveTransformParams $pstParams ): Content {
+		'@phan-var CampaignContent $content';
+		// Allow the system user to bypass format and schema checks
+		if ( MediaUploaderServices::isSystemUser( $pstParams->getUser() ) ) {
+			$content->overrideValidationStatus();
+		}
+
+		if ( !$content->isValid() ) {
+			return $content;
+		}
+
+		$contentClass = $this->getContentClass();
+		return new $contentClass(
+			$contentClass::normalizeLineEndings( $content->getText() ),
+			// Carry forward the current validation status
+			$content->getData(),
+			$content->getValidationStatus()
+		);
 	}
 }
