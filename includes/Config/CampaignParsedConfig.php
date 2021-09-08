@@ -158,18 +158,16 @@ class CampaignParsedConfig extends ParsedConfig {
 			$activeModifiers = $configArray['beforeActive'] ?? [];
 		}
 
-		if ( isset( $activeModifiers ) ) {
-			foreach ( $activeModifiers as $cnf => $modifier ) {
-				switch ( $cnf ) {
-					case 'autoAdd':
-					case 'display':
-						if ( !array_key_exists( $cnf, $configArray ) ) {
-							$configArray[$cnf] = [];
-						}
+		foreach ( $activeModifiers as $cnf => $modifier ) {
+			switch ( $cnf ) {
+				case 'autoAdd':
+				case 'display':
+					if ( !array_key_exists( $cnf, $configArray ) ) {
+						$configArray[$cnf] = [];
+					}
 
-						$configArray[$cnf] = array_merge( $configArray[$cnf], $modifier );
-						break;
-				}
+					$configArray[$cnf] = array_merge( $configArray[$cnf], $modifier );
+					break;
 			}
 		}
 
