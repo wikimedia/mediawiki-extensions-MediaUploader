@@ -4,6 +4,7 @@ namespace MediaWiki\Extension\MediaUploader\Campaign;
 
 use CampaignPageFormatter;
 use Html;
+use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
@@ -17,7 +18,6 @@ use Symfony\Component\Yaml\Yaml;
 use TextContent;
 use Title;
 use TitleValue;
-use UploadWizardCampaign;
 
 /**
  * Represents the configuration of an Upload Campaign
@@ -160,6 +160,8 @@ class CampaignContent extends TextContent {
 	 * @param ParserOptions $options
 	 * @param bool $generateHtml
 	 * @param ParserOutput &$output
+	 *
+	 * @throws MWException
 	 */
 	protected function fillParserOutput(
 		Title $title,
@@ -196,20 +198,12 @@ class CampaignContent extends TextContent {
 		}
 
 		// Handle a regular campaign.
-		// Here we also ignore the cache, as there's no way to tell whether
-		// it's just someone viewing the page and parser cache has expired, or there
-		// was an actual edit or a LinksUpdate. We can't defer this until later
-		// (like PageSaveComplete or LinksUpdateComplete), because we can't modify
-		// ParserOutput at those points. We need an up-to-date list of templates here
-		// and now.
+		$record = $this->newCampaignRecord( $title );
+
 		try {
-			$campaign = UploadWizardCampaign::newFromTitle(
-				$title,
-				[],
-				$this->newCampaignRecord( $title->getId() ),
-				true
-			);
-		} catch ( InvalidCampaignException $e ) {
+			// Title and content will always be set, no need to check that.
+			$record->assertValid( $title->getDBkey() );
+		} catch ( BaseCampaignException $e ) {
 			// TODO: this is really ugly.
 			$output->setText(
 				Html::element( 'pre', [], $e->getText() )
@@ -217,12 +211,27 @@ class CampaignContent extends TextContent {
 			return;
 		}
 
+		// Here we also ignore the cache, as there's no way to tell whether
+		// it's just someone viewing the page and parser cache has expired, or there
+		// was an actual edit or a LinksUpdate. We can't defer this until later
+		// (like PageSaveComplete or LinksUpdateComplete), because we can't modify
+		// ParserOutput at those points. We need an up-to-date list of templates here
+		// and now.
+		$campaignConfig = $this->configFactory->newCampaignConfig(
+			$options->getUserIdentity(),
+			$options->getTargetLanguage(),
+			$record,
+			$title,
+			[],
+			true
+		);
+
 		if ( $generateHtml ) {
-			$formatter = new CampaignPageFormatter( $campaign );
-			$output->setText( $formatter->generateReadHtml() );
+			$formatter = new CampaignPageFormatter( $record, $campaignConfig );
+			$formatter->fillParserOutput( $output );
 		}
 
-		$this->registerTemplates( $campaign->getConfig(), $output );
+		$this->registerTemplates( $campaignConfig, $output );
 
 		// Add some styles
 		$output->addModuleStyles( 'ext.uploadWizard.uploadCampaign.display' );
@@ -277,11 +286,11 @@ class CampaignContent extends TextContent {
 	}
 
 	/**
-	 * @param int $pageId
+	 * @param Title $title
 	 *
 	 * @return CampaignRecord
 	 */
-	public function newCampaignRecord( int $pageId ): CampaignRecord {
+	public function newCampaignRecord( Title $title ): CampaignRecord {
 		$yamlParse = $this->realYamlParse ?: $this->getData();
 		if ( !$yamlParse->isGood() ) {
 			$validity = CampaignRecord::CONTENT_INVALID_FORMAT;
@@ -294,11 +303,20 @@ class CampaignContent extends TextContent {
 			}
 		}
 
+		$content = $this->getData()->getValue();
+		// Content can be null, when YAML is invalid and we're force-saving
+		// with the system user. Fall back to empty array, so that the config
+		// factory doesn't do a backflip.
+		if ( $content === null && $validity === CampaignRecord::CONTENT_VALID ) {
+			$content = [];
+		}
+
 		return new CampaignRecord(
-			$pageId,
+			$title->getId(),
 			( $this->getData()->getValue() ?: [] )['enabled'] ?? false,
 			$validity,
-			$this->getData()->getValue()
+			$content,
+			$title
 		);
 	}
 }

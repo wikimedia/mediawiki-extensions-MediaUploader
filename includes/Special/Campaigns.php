@@ -6,7 +6,7 @@ use Html;
 use LogicException;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignException;
+use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use SpecialPage;
 
@@ -53,7 +53,9 @@ class Campaigns extends SpecialPage {
 
 		$curCount = 0;
 		$lastId = null;
-		$records = $queryBuilder->fetchCampaignRecords( CampaignStore::SELECT_TITLE );
+		$records = $queryBuilder->fetchCampaignRecords(
+			CampaignStore::SELECT_TITLE | CampaignStore::SELECT_CONTENT
+		);
 
 		foreach ( $records as $record ) {
 			$curCount++;
@@ -93,7 +95,7 @@ class Campaigns extends SpecialPage {
 				$record,
 				$title
 			);
-		} catch ( InvalidCampaignException $ex ) {
+		} catch ( BaseCampaignException $ex ) {
 			// Display an error
 			return Html::rawElement(
 				'dt',

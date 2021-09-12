@@ -337,5 +337,6 @@
 	"mediauploader-invalid-campaign-format": "The content of campaign \"$1\" is in an invalid format. Please try editing it to fix any validation errors.",
 	"mediauploader-invalid-campaign-schema": "The content of campaign \"$1\" does not validate against the campaign schema. Please try editing it to fix any validation errors.",
 	"mediauploader-fix-campaign-comment-fixed": "Fixed $1 {{PLURAL:$1|issue|issues}} in campaign definition",
-	"mediauploader-fix-campaign-comment-prettified": "Reformatted the campaign definition"
+	"mediauploader-fix-campaign-comment-prettified": "Reformatted the campaign definition",
+	"mediauploader-incomplete-campaign-record": "The record for campaign \"$1\" is missing the following elements: $2"
 }

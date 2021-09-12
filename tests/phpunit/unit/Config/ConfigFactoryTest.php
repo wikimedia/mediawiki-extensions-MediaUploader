@@ -29,6 +29,7 @@ class ConfigFactoryTest extends MediaWikiUnitTestCase {
 			$this->createNoOpMock( WANObjectCache::class ),
 			$this->createNoOpMock( UserOptionsLookup::class ),
 			$this->createNoOpMock( LanguageNameUtils::class ),
+			$this->createNoOpMock( Language::class ),
 			$this->createNoOpMock( LinkBatchFactory::class ),
 			$this->createNoOpMock( JobQueueGroup::class ),
 			$this->createNoOpMock( RawConfig::class ),

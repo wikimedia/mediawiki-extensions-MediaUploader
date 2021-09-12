@@ -1,16 +1,11 @@
 <?php
 
-namespace MediaWiki\Extension\MediaUploader\Campaign;
-
-use MWException;
+namespace MediaWiki\Extension\MediaUploader\Campaign\Exception;
 
 /**
  * Exception thrown when trying to access a campaign that is somehow invalid.
  */
-abstract class InvalidCampaignException extends MWException {
-
-	/** @var string */
-	private $campaignName;
+abstract class InvalidCampaignException extends BaseCampaignException {
 
 	/**
 	 * @param string $campaignName
@@ -24,16 +19,7 @@ abstract class InvalidCampaignException extends MWException {
 			$campaignName
 		);
 
-		parent::__construct( $message );
-	}
-
-	/**
-	 * Returns the name of the campaign that is invalid.
-	 *
-	 * @return string
-	 */
-	public function getCampaignName(): string {
-		return $this->campaignName;
+		parent::__construct( $campaignName, $message );
 	}
 
 	/**

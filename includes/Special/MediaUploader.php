@@ -16,7 +16,8 @@ use ChangeTags;
 use DerivativeContext;
 use Html;
 use LogicException;
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignException;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
+use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
@@ -27,7 +28,6 @@ use SpecialPage;
 use Title;
 use UploadBase;
 use UploadFromUrl;
-use UploadWizardCampaign;
 use User;
 use UserBlockedError;
 
@@ -48,14 +48,19 @@ class MediaUploader extends SpecialPage {
 	/** @var RawConfig */
 	private $rawConfig;
 
+	/** @var CampaignStore */
+	private $campaignStore;
+
 	public function __construct(
 		RawConfig $rawConfig,
-		ConfigFactory $configFactory
+		ConfigFactory $configFactory,
+		CampaignStore $campaignStore
 	) {
 		parent::__construct( 'MediaUploader', 'upload' );
 
 		$this->configFactory = $configFactory;
 		$this->rawConfig = $rawConfig;
+		$this->campaignStore = $campaignStore;
 	}
 
 	/**
@@ -139,39 +144,12 @@ class MediaUploader extends SpecialPage {
 	}
 
 	/**
-	 * Handles the campaign parameter and loads the appropriate config.
+	 * Loads the appropriate config.
 	 *
 	 * @param array $urlOverrides
 	 */
-	protected function loadConfig( array $urlOverrides ) {
-		$campaignName = $this->getRequest()->getVal( 'campaign' );
-		if ( $campaignName === null ) {
-			$campaignName = $this->rawConfig->getSetting( 'defaultCampaign' );
-		}
-
-		if ( $campaignName !== null && $campaignName !== '' ) {
-			try {
-				$campaign = UploadWizardCampaign::newFromName(
-					$campaignName,
-					$urlOverrides
-				);
-
-				if ( $campaign === null ) {
-					$this->displayError(
-						$this->msg( 'mwe-upwiz-error-nosuchcampaign', $campaignName )->text()
-					);
-				} elseif ( !$campaign->isEnabled() ) {
-					$this->displayError(
-						$this->msg( 'mwe-upwiz-error-campaigndisabled', $campaignName )->text()
-					);
-				} else {
-					$this->campaign = $campaignName;
-					$this->loadedConfig = $campaign->getConfig();
-				}
-			} catch ( InvalidCampaignException $e ) {
-				$this->displayError( $e->getMessage() );
-			}
-		}
+	protected function loadConfig( array $urlOverrides ): void {
+		$this->tryLoadCampaignConfig( $urlOverrides );
 
 		// This is not a campaign or the campaign failed to load
 		// Either way, we fall back to the global config
@@ -181,6 +159,60 @@ class MediaUploader extends SpecialPage {
 				$this->getLanguage(),
 				$urlOverrides
 			);
+		}
+	}
+
+	/**
+	 * Attempts to load a campaign config.
+	 * Sets $this->loadedConfig if successful.
+	 *
+	 * @param array $urlOverrides
+	 */
+	private function tryLoadCampaignConfig( array $urlOverrides ): void {
+		// Establish the name of the campaign to load
+		$campaignName = $this->getRequest()->getVal( 'campaign' );
+		if ( $campaignName === null ) {
+			$campaignName = $this->rawConfig->getSetting( 'defaultCampaign' );
+		}
+
+		if ( $campaignName === null || $campaignName === '' ) {
+			return;
+		}
+
+		// Load it
+		$campaignTitle = Title::newFromText( $campaignName, NS_CAMPAIGN );
+		$record = $this->campaignStore->getCampaignByDBkey(
+			$campaignTitle->getDBkey(),
+			CampaignStore::SELECT_TITLE | CampaignStore::SELECT_CONTENT
+		);
+
+		// Handle all possible cases where we should reject this campaign
+		if ( $record === null ) {
+			$this->displayError(
+				$this->msg( 'mwe-upwiz-error-nosuchcampaign', $campaignName )->text()
+			);
+			return;
+		}
+
+		if ( !$record->isEnabled() ) {
+			$this->displayError(
+				$this->msg( 'mwe-upwiz-error-campaigndisabled', $campaignName )->text()
+			);
+			return;
+		}
+
+		// Load the config
+		try {
+			$this->loadedConfig = $this->configFactory->newCampaignConfig(
+				$this->getUser(),
+				$this->getLanguage(),
+				$record,
+				$campaignTitle,
+				$urlOverrides
+			);
+			$this->campaign = $campaignName;
+		} catch ( BaseCampaignException $e ) {
+			$this->displayError( $e->getMessage() );
 		}
 	}
 
@@ -210,6 +242,7 @@ class MediaUploader extends SpecialPage {
 	public function addJsVars( $subPage ) {
 		$config = $this->loadedConfig->getConfigArray();
 
+		// TODO: use CampaignRecord::getTrackingCategoryName
 		if ( array_key_exists( 'trackingCategory', $config ) ) {
 			if ( array_key_exists( 'campaign', $config['trackingCategory'] ) ) {
 				if ( $this->campaign !== null ) {

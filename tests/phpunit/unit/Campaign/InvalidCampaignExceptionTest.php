@@ -2,22 +2,23 @@
 
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Campaign;
 
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignFormatException;
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignSchemaException;
+use MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidFormatException;
+use MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidSchemaException;
 use MediaWikiUnitTestCase;
 
 /**
  * @ingroup Upload
- * @covers \MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignException
- * @covers \MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignFormatException
- * @covers \MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignSchemaException
+ * @covers \MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException
+ * @covers \MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidCampaignException
+ * @covers \MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidFormatException
+ * @covers \MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidSchemaException
  */
 class InvalidCampaignExceptionTest extends MediaWikiUnitTestCase {
 
 	public function provideExceptionClasses(): iterable {
 		$classes = [
-			InvalidCampaignFormatException::class,
-			InvalidCampaignSchemaException::class,
+			InvalidFormatException::class,
+			InvalidSchemaException::class,
 		];
 
 		foreach ( $classes as $class ) {

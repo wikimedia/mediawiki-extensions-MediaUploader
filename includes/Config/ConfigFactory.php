@@ -7,7 +7,8 @@ use Language;
 use MediaWiki\Cache\LinkBatchFactory;
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignException;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
+use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
 use MediaWiki\Languages\LanguageNameUtils;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\User\UserIdentity;
@@ -28,6 +29,9 @@ class ConfigFactory {
 	/** @var LanguageNameUtils */
 	private $languageNameUtils;
 
+	/** @var Language */
+	private $contentLanguage;
+
 	/** @var LinkBatchFactory */
 	private $linkBatchFactory;
 
@@ -47,6 +51,7 @@ class ConfigFactory {
 	 * @param WANObjectCache $cache
 	 * @param UserOptionsLookup $userOptionsLookup
 	 * @param LanguageNameUtils $languageNameUtils
+	 * @param Language $contentLanguage
 	 * @param LinkBatchFactory $linkBatchFactory
 	 * @param JobQueueGroup $jobQueueGroup
 	 * @param RawConfig $rawGlobalConfig
@@ -59,6 +64,7 @@ class ConfigFactory {
 		WANObjectCache $cache,
 		UserOptionsLookup $userOptionsLookup,
 		LanguageNameUtils $languageNameUtils,
+		Language $contentLanguage,
 		LinkBatchFactory $linkBatchFactory,
 		JobQueueGroup $jobQueueGroup,
 		RawConfig $rawGlobalConfig,
@@ -68,6 +74,7 @@ class ConfigFactory {
 		$this->cache = $cache;
 		$this->userOptionsLookup = $userOptionsLookup;
 		$this->languageNameUtils = $languageNameUtils;
+		$this->contentLanguage = $contentLanguage;
 		$this->linkBatchFactory = $linkBatchFactory;
 		$this->jobQueueGroup = $jobQueueGroup;
 		$this->rawGlobalConfig = $rawGlobalConfig;
@@ -94,7 +101,7 @@ class ConfigFactory {
 	 * Returns the global parsed config.
 	 *
 	 * @param UserIdentity $user
-	 * @param Language $language
+	 * @param Language|null $language will fallback to wiki's content language
 	 * @param array $urlOverrides URL parameter overrides in the form of an
 	 *   associative array. Use with caution and do not pass unvalidated user
 	 *   input.
@@ -104,10 +111,11 @@ class ConfigFactory {
 	 */
 	public function newGlobalConfig(
 		UserIdentity $user,
-		Language $language,
+		?Language $language,
 		array $urlOverrides = [],
 		bool $noCache = false
 	): GlobalParsedConfig {
+		$language = $language ?: $this->contentLanguage;
 		return new GlobalParsedConfig(
 			$this->cache,
 			$this->userOptionsLookup,
@@ -129,7 +137,7 @@ class ConfigFactory {
 	 * Returns the parsed config of a campaign.
 	 *
 	 * @param UserIdentity $user
-	 * @param Language $language
+	 * @param Language|null $language will fallback to wiki's content language
 	 * @param CampaignRecord $campaignRecord
 	 * @param LinkTarget $campaignLinkTarget
 	 * @param array $urlOverrides URL parameter overrides in the form of an
@@ -138,18 +146,22 @@ class ConfigFactory {
 	 * @param bool $noCache Whether to ignore config cache
 	 *
 	 * @return CampaignParsedConfig
-	 * @throws InvalidCampaignException
+	 * @throws BaseCampaignException
 	 */
 	public function newCampaignConfig(
 		UserIdentity $user,
-		Language $language,
+		?Language $language,
 		CampaignRecord $campaignRecord,
 		LinkTarget $campaignLinkTarget,
 		array $urlOverrides = [],
 		bool $noCache = false
 	): CampaignParsedConfig {
-		$campaignRecord->assertValid( $campaignLinkTarget->getText() );
+		$campaignRecord->assertValid(
+			$campaignLinkTarget->getDBkey(),
+			CampaignStore::SELECT_CONTENT
+		);
 
+		$language = $language ?: $this->contentLanguage;
 		return new CampaignParsedConfig(
 			$this->cache,
 			$this->userOptionsLookup,
