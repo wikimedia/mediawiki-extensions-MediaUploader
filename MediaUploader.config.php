@@ -17,11 +17,8 @@ return [
 	// Number of seconds to cache Campaign pages in squid, for anon users
 	'campaignSquidMaxAge' => 10 * 60,
 
-	// Enable or disable campaignstats that are expensive to compute
-	'campaignExpensiveStatsEnabled' => true,
-
 	// Number of seconds to cache Campaign stats
-	// Currently affects: Contributors count for each campaign
+	// Currently affects: uploaded media list and contributors count
 	'campaignStatsMaxAge' => 60,
 
 	// File extensions acceptable in this wiki
@@ -91,6 +88,8 @@ return [
 		// 'all' => '',
 
 		// Tracking category added for campaigns. $1 is replaced with campaign page name
+		// Changing this to an invalid value will prevent MediaUploader from collecting
+		// statistics, such as the total number of uploads and contributors in a campaign.
 		'campaign' => 'Uploaded via Campaign:$1'
 	],
 

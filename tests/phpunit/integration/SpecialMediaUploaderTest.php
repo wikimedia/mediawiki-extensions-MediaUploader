@@ -19,7 +19,8 @@ class SpecialMediaUploaderTest extends SpecialPageTestBase {
 	protected function newSpecialPage() {
 		return new MediaUploader(
 			MediaUploaderServices::getRawConfig(),
-			MediaUploaderServices::getConfigFactory()
+			MediaUploaderServices::getConfigFactory(),
+			MediaUploaderServices::getCampaignStore()
 		);
 	}
 
@@ -42,7 +43,9 @@ class SpecialMediaUploaderTest extends SpecialPageTestBase {
 		] );
 		$block->setTarget( $user );
 		$block->setBlocker( $this->getTestSysop()->getUser() );
-		$block->insert();
+
+		$blockStore = $this->getServiceContainer()->getDatabaseBlockStore();
+		$blockStore->insertBlock( $block );
 
 		$caughtException = false;
 		try {
@@ -51,7 +54,7 @@ class SpecialMediaUploaderTest extends SpecialPageTestBase {
 			$caughtException = true;
 		}
 
-		$block->delete();
+		$blockStore->deleteBlock( $block );
 
 		$this->assertSame( $expectException, $caughtException );
 	}

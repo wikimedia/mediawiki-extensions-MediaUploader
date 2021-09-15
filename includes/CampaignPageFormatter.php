@@ -1,67 +1,90 @@
 <?php
-/**
- * Upload Campaign Formatter
- *
- * @file
- * @ingroup Extensions
- * @ingroup UploadWizard
- *
- * @author Yuvi Panda <yuvipanda@gmail.com>
- */
+
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStats;
+use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 
 /**
  * Helper class to produce formatted HTML output for Campaigns
  */
 class CampaignPageFormatter {
-	/** @var UploadWizardCampaign|null */
-	protected $campaign = null;
-	/** @var IContextSource|null */
-	protected $context = null;
 
-	public function __construct( $campaign, $context = null ) {
-		$this->campaign = $campaign;
-		if ( $context === null ) {
-			$this->context = RequestContext::getMain();
-		} else {
-			$this->context = $context;
-		}
+	/** @var CampaignRecord */
+	private $record;
+
+	/** @var CampaignParsedConfig */
+	private $config;
+
+	/** @var CampaignStats */
+	private $campaignStats;
+
+	/** @var RequestContext */
+	private $context;
+
+	public function __construct(
+		CampaignRecord $campaignRecord,
+		CampaignParsedConfig $config
+	) {
+		$this->record = $campaignRecord;
+		$this->config = $config;
+
+		// TODO: use DI
+		$this->campaignStats = MediaUploaderServices::getCampaignStats();
+		// No way to get rid of this for now.
+		// Blockers: ImageGalleryBase and message localization.
+		$this->context = RequestContext::getMain();
 	}
 
-	public function generateReadHtml() {
-		$config = $this->campaign->getConfig();
+	/**
+	 * @param ParserOutput $output
+	 *
+	 * @return void
+	 * @throws MWException
+	 */
+	public function fillParserOutput( ParserOutput $output ): void {
+		$campaignTitle = $this->config->getSetting(
+			'title',
+			$this->record->getTitle()->getText()
+		);
+		$campaignDescription = $this->config->getSetting( 'description', '' );
+		$trackingCat = Title::newFromText(
+			$this->record->getTrackingCategoryName( $this->config ),
+			NS_CATEGORY
+		);
+		$campaignViewMoreLink = $trackingCat ? $trackingCat->getFullURL() : '';
 
-		$campaignTitle = $config->getSetting( 'title', $this->campaign->getName() );
-		$campaignDescription = $config->getSetting( 'description', '' );
-		$campaignViewMoreLink = $this->campaign->getTrackingCategory()->getFullURL();
-
-		$gallery = ImageGalleryBase::factory( 'packed-hover' );
-		$gallery->setContext( $this->context );
+		$gallery = ImageGalleryBase::factory( 'packed-hover', $this->context );
 		$gallery->setWidths( '180' );
 		$gallery->setHeights( '180' );
 		$gallery->setShowBytes( false );
 
-		$this->context->getOutput()->setCdnMaxage(
-			$config->getSetting( 'campaignSquidMaxAge' )
+		$outputPage = $this->context->getOutput();
+		$outputPage->setCdnMaxage(
+			$this->config->getSetting( 'campaignSquidMaxAge' )
 		);
-		$this->context->getOutput()->setHTMLTitle( $this->context->msg( 'pagetitle', $campaignTitle ) );
-		$this->context->getOutput()->enableOOUI();
+		$outputPage->setHTMLTitle(
+			$this->context->msg( 'pagetitle', $campaignTitle )
+		);
+		$outputPage->enableOOUI();
 
-		$images = $this->campaign->getUploadedMedia();
+		$stats = $this->campaignStats->getStatsForRecord( $this->record ) ?? [];
+		$images = $stats['uploadedMedia'] ?? [];
 
 		if ( $this->context->getUser()->isAnon() ) {
-			$urlParams = [ 'returnto' => $this->campaign->getTitle()->getPrefixedText() ];
+			$urlParams = [ 'returnto' => $this->record->getTitle()->getPrefixedText() ];
 			$createAccountUrl = Skin::makeSpecialUrlSubpage( 'Userlogin', 'signup', $urlParams );
 			$uploadLink = new OOUI\ButtonWidget( [
-				'label' => wfMessage( 'mwe-upwiz-campaign-create-account-button' )->text(),
+				'label' => $this->context->msg( 'mwe-upwiz-campaign-create-account-button' )->text(),
 				'flags' => [ 'progressive', 'primary' ],
 				'href' => $createAccountUrl
 			] );
 		} else {
 			$uploadUrl = Skin::makeSpecialUrl(
-				'MediaUploader', [ 'campaign' => $this->campaign->getName() ]
+				'MediaUploader', [ 'campaign' => $this->record->getTitle()->getDBkey() ]
 			);
 			$uploadLink = new OOUI\ButtonWidget( [
-				'label' => wfMessage( 'mwe-upwiz-campaign-upload-button' )->text(),
+				'label' => $this->context->msg( 'mwe-upwiz-campaign-upload-button' )->text(),
 				'flags' => [ 'progressive', 'primary' ],
 				'href' => $uploadUrl
 			] );
@@ -71,11 +94,11 @@ class CampaignPageFormatter {
 			$body = Html::element(
 				'div',
 				[ 'id' => 'mw-campaign-no-uploads-yet' ],
-				wfMessage( 'mwe-upwiz-campaign-no-uploads-yet' )->plain()
+				$this->context->msg( 'mwe-upwiz-campaign-no-uploads-yet' )->plain()
 			);
 		} else {
 			foreach ( $images as $image ) {
-				$gallery->add( $image );
+				$gallery->add( Title::newFromText( $image, NS_FILE ) );
 			}
 
 			$body =
@@ -86,7 +109,7 @@ class CampaignPageFormatter {
 						'span',
 						[ 'class' => 'mw-campaign-chevron mw-campaign-float-left' ], '&nbsp;'
 					) .
-					wfMessage( 'mwe-upwiz-campaign-view-all-media' )->escaped() .
+					$this->context->msg( 'mwe-upwiz-campaign-view-all-media' )->escaped() .
 					Html::rawElement(
 						'span',
 						[ 'class' => 'mw-campaign-chevron mw-campaign-float-right' ], '&nbsp;'
@@ -94,24 +117,20 @@ class CampaignPageFormatter {
 				);
 		}
 
-		if ( $config->getSetting( 'campaignExpensiveStatsEnabled' ) === true ) {
-			$uploaderCount = $this->campaign->getTotalContributorsCount();
-			$campaignExpensiveStats =
-				Html::rawElement( 'div', [ 'class' => 'mw-campaign-number-container' ],
-					Html::element( 'div', [ 'class' => 'mw-campaign-number' ],
-						$this->context->getLanguage()->formatNum( $uploaderCount ) ) .
-					Html::element( 'span',
-						[ 'class' => 'mw-campaign-number-desc' ],
-						wfMessage( 'mwe-upwiz-campaign-contributors-count-desc' )
-						->numParams( $uploaderCount )
-						->text()
-					)
-				);
-		} else {
-			$campaignExpensiveStats = '';
-		}
+		$contributorsCount = $stats['contributorsCount'] ?? 0;
+		$campaignExpensiveStats =
+			Html::rawElement( 'div', [ 'class' => 'mw-campaign-number-container' ],
+				Html::element( 'div', [ 'class' => 'mw-campaign-number' ],
+					$this->context->getLanguage()->formatNum( $contributorsCount ) ) .
+				Html::element( 'span',
+					[ 'class' => 'mw-campaign-number-desc' ],
+					$this->context->msg( 'mwe-upwiz-campaign-contributors-count-desc' )
+					->numParams( $contributorsCount )
+					->text()
+				)
+			);
 
-		$uploadCount = $this->campaign->getUploadedMediaCount();
+		$uploadCount = $stats['uploadedMediaCount'] ?? 0;
 		$result =
 			Html::rawElement( 'div', [ 'id' => 'mw-campaign-container' ],
 				Html::rawElement( 'div', [ 'id' => 'mw-campaign-header' ],
@@ -130,7 +149,7 @@ class CampaignPageFormatter {
 							) .
 							Html::element( 'span',
 								[ 'class' => 'mw-campaign-number-desc' ],
-								wfMessage( 'mwe-upwiz-campaign-media-count-desc' )
+								$this->context->msg( 'mwe-upwiz-campaign-media-count-desc' )
 								->numParams( $uploadCount )
 								->text()
 							)
@@ -139,6 +158,6 @@ class CampaignPageFormatter {
 				) .
 				$body
 			);
-		return $result;
+		$output->setText( $result );
 	}
 }

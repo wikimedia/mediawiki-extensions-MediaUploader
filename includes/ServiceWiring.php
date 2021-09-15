@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\Config\ServiceOptions;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStats;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Campaign\Validator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
@@ -12,6 +13,14 @@ use MediaWiki\MediaWikiServices;
 
 /** @phpcs-require-sorted-array */
 return [
+	'MediaUploaderCampaignStats' => static function ( MediaWikiServices $services ): CampaignStats {
+		return new CampaignStats(
+			$services->getDBLoadBalancer(),
+			$services->getMainWANObjectCache(),
+			MediaUploaderServices::getRawConfig( $services )
+		);
+	},
+
 	'MediaUploaderCampaignStore' => static function ( MediaWikiServices $services ): CampaignStore {
 		return new CampaignStore( $services->getDBLoadBalancer() );
 	},
@@ -34,8 +43,9 @@ return [
 			$services->getMainWANObjectCache(),
 			$services->getUserOptionsLookup(),
 			$services->getLanguageNameUtils(),
+			$services->getContentLanguage(),
 			$services->getLinkBatchFactory(),
-			JobQueueGroup::singleton(),
+			$services->getJobQueueGroup(),
 			MediaUploaderServices::getRawConfig( $services ),
 			MediaUploaderServices::getConfigParserFactory( $services ),
 			MediaUploaderServices::getConfigCacheInvalidator( $services )

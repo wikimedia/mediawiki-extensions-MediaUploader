@@ -71,7 +71,8 @@
 			"class": "MediaWiki\\Extension\\MediaUploader\\Special\\MediaUploader",
 			"services": [
 				"MediaUploaderRawConfig",
-				"MediaUploaderConfigFactory"
+				"MediaUploaderConfigFactory",
+				"MediaUploaderCampaignStore"
 			]
 		},
 		"Campaigns": {
@@ -105,7 +106,6 @@
 	],
 	"AutoloadClasses": {
 		"UploadWizardHooks": "includes/UploadWizardHooks.php",
-		"UploadWizardCampaign": "includes/UploadWizardCampaign.php",
 		"UploadWizardFlickrBlacklist": "includes/UploadWizardFlickrBlacklist.php",
 		"CampaignPageFormatter": "includes/CampaignPageFormatter.php",
 		"ApiQueryAllCampaigns": "includes/ApiQueryAllCampaigns.php",

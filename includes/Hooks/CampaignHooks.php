@@ -195,7 +195,7 @@ class CampaignHooks implements
 	 * @param CampaignContent $content
 	 */
 	public function doCampaignUpdate( WikiPage $wikiPage, CampaignContent $content ): void {
-		$campaignRecord = $content->newCampaignRecord( $wikiPage->getId() );
+		$campaignRecord = $content->newCampaignRecord( $wikiPage->getTitle() );
 		$this->campaignStore->upsertCampaign( $campaignRecord );
 	}
 
@@ -256,11 +256,14 @@ class CampaignHooks implements
 	/**
 	 * Checks whether $identity is of the "magic" built-in MediaUploader user.
 	 *
-	 * @param UserIdentity $identity
+	 * @param UserIdentity|null $identity
 	 *
 	 * @return bool
 	 */
-	private function isMagicUser( UserIdentity $identity ): bool {
+	private function isMagicUser( ?UserIdentity $identity ): bool {
+		if ( $identity === null ) {
+			return false;
+		}
 		try {
 			$identity->assertWiki( UserIdentity::LOCAL );
 		} catch ( PreconditionException $ex ) {

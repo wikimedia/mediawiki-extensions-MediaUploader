@@ -23,8 +23,9 @@
  */
 
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
+use MediaWiki\Extension\MediaUploader\Campaign\CampaignStats;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
-use MediaWiki\Extension\MediaUploader\Campaign\InvalidCampaignException;
+use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 
 /**
@@ -37,6 +38,9 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 	/** @var CampaignStore */
 	private $campaignStore;
 
+	/** @var CampaignStats */
+	private $campaignStats;
+
 	/**
 	 * @param ApiQuery $query
 	 * @param string $moduleName
@@ -46,8 +50,13 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 
 		// TODO: move to DI
 		$this->campaignStore = MediaUploaderServices::getCampaignStore();
+		$this->campaignStats = MediaUploaderServices::getCampaignStats();
 	}
 
+	/**
+	 * @throws ApiUsageException
+	 * @throws MWException
+	 */
 	public function execute() {
 		$params = $this->extractRequestParams();
 		$limit = $params['limit'];
@@ -67,20 +76,31 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 
 		$result = $this->getResult();
 		$count = 0;
-		$records = $queryBuilder->fetchCampaignRecords( CampaignStore::SELECT_TITLE );
+		$recordsUnfiltered = $queryBuilder->fetchCampaignRecords(
+			CampaignStore::SELECT_TITLE
+		);
+
+		// First scan the retrieved records for validity
+		$records = [];
+		foreach ( $recordsUnfiltered as $record ) {
+			try {
+				$record->assertValid( $record->getTitle()->getDBkey() );
+			} catch ( BaseCampaignException $e ) {
+				// TODO: Report some error here
+				continue;
+			}
+			$records[] = $record;
+		}
+
+		// Fetch stats in batch
+		$stats = $this->campaignStats->getStatsForRecords( $records );
+
 		foreach ( $records as $record ) {
 			/** @var CampaignRecord $record */
 			if ( ++$count > $limit ) {
 				// We have more results than $limit. Set continue
 				$this->setContinueEnumParameter( 'continue', $record->getPageId() );
 				break;
-			}
-
-			try {
-				$record->assertValid( $record->getTitle()->getDBkey() );
-			} catch ( InvalidCampaignException $e ) {
-				// TODO: Report some error here
-				continue;
 			}
 
 			$campaignPath = [ 'query', $this->getModuleName(), $record->getPageId() ];
@@ -91,24 +111,32 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 				$record->getTitle()->getDBkey()
 			);
 
-			// TODO: to be handled by the future CampaignStats class
-			/* $result->addValue(
-				$campaignPath,
-				'trackingCategory',
-				$campaign->getTrackingCategory()->getDBkey()
-			);
-			$result->addValue(
-				$campaignPath,
-				'totalUploads',
-				$campaign->getUploadedMediaCount()
-			);
-			if ( $campaign->getConfig()->getSetting( 'campaignExpensiveStatsEnabled' ) === true ) {
+			$statsRecord = $stats[$record->getPageId()] ?? [];
+			if ( array_key_exists( 'trackingCategory', $statsRecord ) ) {
+				$result->addValue(
+					$campaignPath,
+					'trackingCategory',
+					$statsRecord['trackingCategory']
+				);
+			} else {
+				// The stats cannot be computed without a tracking category
+				continue;
+			}
+
+			if ( array_key_exists( 'uploadedMediaCount', $statsRecord ) ) {
+				$result->addValue(
+					$campaignPath,
+					'totalUploads',
+					$statsRecord['uploadedMediaCount']
+				);
+			}
+			if ( array_key_exists( 'contributorsCount', $statsRecord ) ) {
 				$result->addValue(
 					$campaignPath,
 					'totalContributors',
-					$campaign->getTotalContributorsCount()
+					$statsRecord['contributorsCount']
 				);
-			} */
+			}
 		}
 		$result->addIndexedTagName( [ 'query', $this->getModuleName() ], 'campaign' );
 	}
@@ -124,8 +152,8 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 				ApiBase::PARAM_DFLT => 50,
 				ApiBase::PARAM_TYPE => 'limit',
 				ApiBase::PARAM_MIN => 1,
-				ApiBase::PARAM_MAX => ApiBase::LIMIT_BIG1,
-				ApiBase::PARAM_MAX2 => ApiBase::LIMIT_BIG2
+				ApiBase::PARAM_MAX => ApiBase::LIMIT_SML1,
+				ApiBase::PARAM_MAX2 => ApiBase::LIMIT_SML2,
 			],
 			'continue' => [
 				ApiBase::PARAM_HELP_MSG => 'api-help-param-continue',

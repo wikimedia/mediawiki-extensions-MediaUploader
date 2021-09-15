@@ -190,4 +190,26 @@ class CampaignStore implements IDBAccessObject {
 			__METHOD__
 		);
 	}
+
+	/**
+	 * Convenience function to retrieve a record for a given DB key.
+	 *
+	 * @param string $dbKey
+	 * @param int $selectFlags Bitfield of self::SELECT_* constants used to
+	 *   retrieve the row from the DB. SELECT_TITLE is always included
+	 *   regardless of this parameter.
+	 * @param int $queryFlags bitfield of self::READ_* constants
+	 *
+	 * @return CampaignRecord|null
+	 */
+	public function getCampaignByDBKey(
+		string $dbKey,
+		int $selectFlags = self::SELECT_TITLE,
+		int $queryFlags = self::READ_NORMAL
+	): ?CampaignRecord {
+		$selectFlags |= self::SELECT_TITLE;
+		return $this->newSelectQueryBuilder( $queryFlags )
+			->where( [ 'page_title' => $dbKey ] )
+			->fetchCampaignRecord( $selectFlags );
+	}
 }

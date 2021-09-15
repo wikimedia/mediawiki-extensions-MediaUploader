@@ -263,8 +263,8 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 	public function testDoCampaignUpdate() {
 		$wikiPage = $this->createMock( WikiPage::class );
 		$wikiPage->expects( $this->once() )
-			->method( 'getId' )
-			->willReturn( self::DUMMY_CAMPAIGN_ID );
+			->method( 'getTitle' )
+			->willReturn( $this->createNoOpMock( Title::class ) );
 
 		$record = $this->createNoOpMock( CampaignRecord::class );
 

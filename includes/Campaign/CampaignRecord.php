@@ -2,6 +2,13 @@
 
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
+use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
+use MediaWiki\Extension\MediaUploader\Campaign\Exception\IncompleteRecordException;
+use MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidFormatException;
+use MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidSchemaException;
+use MediaWiki\Extension\MediaUploader\Config\ConfigBase;
+
+use MWException;
 use Title;
 
 /**
@@ -18,19 +25,21 @@ class CampaignRecord {
 	public const CONTENT_INVALID_SCHEMA = 3;
 
 	/** @var int */
-	protected $pageId;
+	private $pageId;
 
 	/** @var bool */
-	protected $enabled;
+	private $enabled;
 
 	/** @var int */
-	protected $validity;
+	private $validity;
 
 	/** @var null|array */
-	protected $content;
+	private $content;
 
 	/** @var null|Title */
-	protected $title;
+	private $title;
+
+	/** @var false|null|string */
 
 	/**
 	 * @param int $pageId
@@ -97,16 +106,50 @@ class CampaignRecord {
 	/**
 	 * Asserts that the campaign is valid. Throws an exception otherwise.
 	 *
-	 * @param string $name The title of the page with the campaign.
+	 * @param string $name The DB key or other identifier of the campaign.
+	 * @param int $requiredFields A bitfield of CampaignStore::SELECT_* constants
 	 *
-	 * @throws InvalidCampaignException
+	 * @throws BaseCampaignException
 	 */
-	public function assertValid( string $name ): void {
+	public function assertValid( string $name, int $requiredFields = 0 ): void {
 		switch ( $this->validity ) {
 			case self::CONTENT_INVALID_FORMAT:
-				throw new InvalidCampaignFormatException( $name );
+				throw new InvalidFormatException( $name );
 			case self::CONTENT_INVALID_SCHEMA:
-				throw new InvalidCampaignSchemaException( $name );
+				throw new InvalidSchemaException( $name );
 		}
+
+		if ( $requiredFields & CampaignStore::SELECT_CONTENT && $this->content === null ) {
+			throw new IncompleteRecordException( $name, 'content' );
+		}
+		if ( $requiredFields & CampaignStore::SELECT_TITLE && $this->title === null ) {
+			throw new IncompleteRecordException( $name, 'title' );
+		}
+	}
+
+	/**
+	 * Convenience function for retrieving the tracking category name of this campaign.
+	 *
+	 * @param ConfigBase $config Any MU config, can be RawConfig
+	 *
+	 * @return string|null name of the category (without NS prefix)
+	 * @throws MWException
+	 */
+	public function getTrackingCategoryName( ConfigBase $config ): ?string {
+		if ( $this->title === null ) {
+			throw new MWException( "The title of the campaign was not fetched." );
+		}
+
+		$config = $config->getConfigArray();
+		$catTemplate = $config['trackingCategory']['campaign'] ?? null;
+		if ( $catTemplate !== null && strpos( $catTemplate, '$1' ) !== false ) {
+			return str_replace(
+				'$1',
+				$this->title->getText(),
+				$catTemplate
+			);
+		}
+
+		return null;
 	}
 }

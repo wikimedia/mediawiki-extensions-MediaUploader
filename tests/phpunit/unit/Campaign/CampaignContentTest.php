@@ -8,6 +8,7 @@ use MediaWiki\Extension\MediaUploader\Campaign\Validator;
 use MediaWikiUnitTestCase;
 use Status;
 use Symfony\Component\Yaml\Yaml;
+use Title;
 
 /**
  * @ingroup Upload
@@ -172,7 +173,7 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 	 * @param int $expectedValidity
 	 * @param array|null $expectedContent
 	 *
-	 * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::newCampaignRecord
+	 * @covers       \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::newCampaignRecord
 	 * @dataProvider provideNewCampaignRecord
 	 */
 	public function testNewCampaignRecord(
@@ -196,12 +197,22 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 
 		$content = new CampaignContent( $contentText );
 		$content->setServices( null, $validator );
-		$record = $content->newCampaignRecord( 123 );
+		$title = $this->createMock( Title::class );
+		$title->expects( $this->once() )
+			->method( 'getId' )
+			->willReturn( 123 );
+
+		$record = $content->newCampaignRecord( $title );
 
 		$this->assertSame(
 			123,
 			$record->getPageId(),
 			'CampaignRecord::getPageId()'
+		);
+		$this->assertSame(
+			$title,
+			$record->getTitle(),
+			'CampaignRecord::getTitle()'
 		);
 		$this->assertSame(
 			$expectedEnabled,
