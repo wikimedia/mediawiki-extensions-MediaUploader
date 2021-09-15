@@ -240,4 +240,76 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 			);
 		}
 	}
+
+	public function testOverrideValidationStatus_invalidSchema() {
+		$validator = $this->createMock( Validator::class );
+		$validator->expects( $this->once() )
+			->method( 'validate' )
+			->willReturn( Status::newFatal( 'dummy message' ) );
+
+		$content = new CampaignContent( 'garbled: input' );
+		$content->setServices( null, $validator );
+		$title = $this->createMock( Title::class );
+		$title->expects( $this->once() )
+			->method( 'getId' )
+			->willReturn( 123 );
+
+		// We are a system user, so override the checks
+		$content->overrideValidationStatus();
+
+		// The content object should pretend everything is okay
+		$this->assertTrue(
+			$content->getData()->isGood(),
+			'CampaignContent::getData()'
+		);
+		$this->assertTrue(
+			$content->getValidationStatus()->isGood(),
+			'CampaignContent::getValidationStatus()'
+		);
+
+		// Make a CampaignRecord. It should bear the real validation status.
+		$record = $content->newCampaignRecord( $title );
+
+		$this->assertSame(
+			CampaignRecord::CONTENT_INVALID_SCHEMA,
+			$record->getValidity(),
+			'CampaignRecord::getValidity()'
+		);
+	}
+
+	public function testOverrideValidationStatus_valid() {
+		$validator = $this->createMock( Validator::class );
+		$validator->expects( $this->once() )
+			->method( 'validate' )
+			->willReturn( Status::newGood() );
+
+		$content = new CampaignContent( 'enabled: true' );
+		$content->setServices( null, $validator );
+		$title = $this->createMock( Title::class );
+		$title->expects( $this->once() )
+			->method( 'getId' )
+			->willReturn( 123 );
+
+		// We are a system user, so override the checks
+		$content->overrideValidationStatus();
+
+		$record = $content->newCampaignRecord( $title );
+
+		$this->assertSame(
+			CampaignRecord::CONTENT_VALID,
+			$record->getValidity(),
+			'CampaignRecord::getValidity()'
+		);
+		$this->assertArrayEquals(
+			[ 'enabled' => true ],
+			$record->getContent(),
+			false,
+			true,
+			'CampaignRecord::getContent()'
+		);
+		$this->assertTrue(
+			$record->isEnabled(),
+			'CampaignRecord::isEnabled()'
+		);
+	}
 }

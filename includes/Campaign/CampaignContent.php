@@ -61,6 +61,9 @@ class CampaignContent extends TextContent {
 	/**
 	 * CampaignContent constructor.
 	 *
+	 * See CampaignContentHandler::preSaveTransform for a usage of the second and
+	 * third arguments.
+	 *
 	 * @param string $text
 	 * @param Status|null $yamlParse YAML parsing status of the previous instance
 	 *   of this class.
@@ -303,7 +306,7 @@ class CampaignContent extends TextContent {
 			}
 		}
 
-		$content = $this->getData()->getValue();
+		$content = $yamlParse->getValue();
 		// Content can be null, when YAML is invalid and we're force-saving
 		// with the system user. Fall back to empty array, so that the config
 		// factory doesn't do a backflip.
@@ -313,7 +316,7 @@ class CampaignContent extends TextContent {
 
 		return new CampaignRecord(
 			$title->getId(),
-			( $this->getData()->getValue() ?: [] )['enabled'] ?? false,
+			( $content ?: [] )['enabled'] ?? false,
 			$validity,
 			$content,
 			$title

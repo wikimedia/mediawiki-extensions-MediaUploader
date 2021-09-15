@@ -49,6 +49,7 @@ class FixCampaigns extends LoggedUpdateMaintenance {
 
 		$dbr = $this->getDB( DB_REPLICA );
 
+		$this->output( "Fixing MediaUploader campaigns...\n" );
 		$pageRecords = $pageStore->newSelectQueryBuilder( $dbr )
 			->whereNamespace( NS_CAMPAIGN )
 			->fetchPageRecords();
@@ -71,6 +72,7 @@ class FixCampaigns extends LoggedUpdateMaintenance {
 			$this->fixCampaign( $content, $page );
 		}
 
+		$this->output( "\n\n" );
 		return true;
 	}
 
