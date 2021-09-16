@@ -226,21 +226,13 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 	}
 
 	/**
-	 * This is not a very "unit" test, as it tests the integration with the
-	 * JsonSchema library as well. It seemed like a sensible choice to me,
-	 * the test is about verifying if validation works as a whole.
+	 * Sets up mocks and a Validator instance.
 	 *
-	 * @param array $toValidate Campaign config to validate
 	 * @param array $licensesSetting The 'licenses' setting of the global config
-	 * @param bool $expectedIsValid
 	 *
-	 * @dataProvider provideValidate
+	 * @return Validator a Validator for testing
 	 */
-	public function testValidate(
-		array $toValidate,
-		array $licensesSetting,
-		bool $expectedIsValid
-	) {
+	private function makeValidator( array $licensesSetting ): Validator {
 		$rawConfig = $this->createMock( RawConfig::class );
 		$rawConfig->expects( $this->once() )
 			->method( 'getSetting' )
@@ -257,7 +249,26 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 			->with( 'dummy-key' )
 			->willReturn( false );
 
-		$validator = new Validator( $rawConfig, $cache );
+		return new Validator( $rawConfig, $cache );
+	}
+
+	/**
+	 * This is not a very "unit" test, as it tests the integration with the
+	 * JsonSchema library as well. It seemed like a sensible choice to me,
+	 * the test is about verifying if validation works as a whole.
+	 *
+	 * @param array $toValidate Campaign config to validate
+	 * @param array $licensesSetting The 'licenses' setting of the global config
+	 * @param bool $expectedIsValid
+	 *
+	 * @dataProvider provideValidate
+	 */
+	public function testValidate(
+		array $toValidate,
+		array $licensesSetting,
+		bool $expectedIsValid
+	) {
+		$validator = $this->makeValidator( $licensesSetting );
 
 		$status = $validator->validate( $toValidate );
 
@@ -275,6 +286,28 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 			$expectedIsValid,
 			$status->isGood(),
 			'validate()->isGood()'
+		);
+	}
+
+	public function testValidate_tooDeep() {
+		$validator = $this->makeValidator( [] );
+		// A deep array.
+		$toValidate = [ [ [ [ [ [ [ [ [] ] ] ] ] ] ] ] ];
+
+		$status = $validator->validate( $toValidate );
+		$this->assertFalse(
+			$status->isGood(),
+			'validate()->isGood()'
+		);
+		$this->assertCount(
+			1,
+			$status->getErrors(),
+			'validate()->getErrors()'
+		);
+		$this->assertSame(
+			'json-error-depth',
+			$status->getErrors()[0]['message'],
+			'returned error message key'
 		);
 	}
 }

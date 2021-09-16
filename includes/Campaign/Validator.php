@@ -74,16 +74,21 @@ class Validator {
 	/**
 	 * Does the actual validation work.
 	 *
-	 * @param array $object
+	 * @param array $array
 	 * @param stdClass $schema
 	 *
 	 * @return Status
 	 */
-	private function doValidate( array $object, stdClass $schema ): Status {
+	private function doValidate( array $array, stdClass $schema ): Status {
 		$validator = new \JsonSchema\Validator();
-		$objectObject = $validator::arrayToObjectRecursive( $object );
+		$objectStatus = self::arrayToObject( $array );
 
-		$validator->validate( $objectObject, $schema );
+		if ( !$objectStatus->isGood() ) {
+			return $objectStatus;
+		}
+
+		$object = $objectStatus->getValue();
+		$validator->validate( $object, $schema );
 
 		if ( $validator->isValid() ) {
 			return Status::newGood();
@@ -101,5 +106,28 @@ class Validator {
 		}
 
 		return $status;
+	}
+
+	/**
+	 * Converts an array to PHP object, while restricting the array's
+	 * maximum depth to 8.
+	 *
+	 * @param array $array
+	 *
+	 * @return Status
+	 */
+	private static function arrayToObject( array $array ): Status {
+		// Encode with max depth of 8
+		// This should be enough for campaign configs.
+		$json = json_encode( $array, 0, 8 );
+
+		$code = json_last_error();
+		if ( $code === JSON_ERROR_NONE ) {
+			return Status::newGood( (object)json_decode( $json ) );
+		} elseif ( $code === JSON_ERROR_DEPTH ) {
+			return Status::newFatal( 'json-error-depth' );
+		} else {
+			return Status::newFatal( 'json-error-unknown', $code );
+		}
 	}
 }
