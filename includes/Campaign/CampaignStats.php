@@ -2,11 +2,11 @@
 
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
-use IDatabase;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use Title;
 use WANObjectCache;
 use Wikimedia\Rdbms\Database;
+use Wikimedia\Rdbms\IDatabase;
 use Wikimedia\Rdbms\ILoadBalancer;
 
 /**

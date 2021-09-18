@@ -2,8 +2,8 @@
 
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
-use IDatabase;
 use Iterator;
+use Wikimedia\Rdbms\IDatabase;
 use Wikimedia\Rdbms\SelectQueryBuilder;
 
 /**
