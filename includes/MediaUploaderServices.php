@@ -8,11 +8,9 @@ use MediaWiki\Extension\MediaUploader\Campaign\Validator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParserFactory;
-use MediaWiki\Extension\MediaUploader\Config\GlobalParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\User\UserIdentity;
-use RequestContext;
 use User;
 
 class MediaUploaderServices {
@@ -75,20 +73,5 @@ class MediaUploaderServices {
 	 */
 	public static function isSystemUser( UserIdentity $user ): bool {
 		return $user->getName() === 'MediaUploader';
-	}
-
-	/**
-	 * @return GlobalParsedConfig
-	 *
-	 * @deprecated Temporary method, will be removed when all code moves to DI.
-	 *  Use getConfigFactory()->newGlobalConfig() instead.
-	 */
-	public static function getGlobalParsedConfig(): GlobalParsedConfig {
-		$context = RequestContext::getMain();
-
-		return self::getConfigFactory()->newGlobalConfig(
-			$context->getUser(),
-			$context->getLanguage()
-		);
 	}
 }

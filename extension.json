@@ -62,7 +62,7 @@
 		"upwizcampaigns",
 		"mass-upload"
 	],
-	"callback": "UploadWizardHooks::registerExtension",
+	"callback": "MediaWiki\\Extension\\MediaUploader\\Hooks\\RegistrationHooks::registerExtension",
 	"ContentHandlers": {
 		"Campaign": "MediaWiki\\Extension\\MediaUploader\\Campaign\\CampaignContentHandler"
 	},
@@ -105,7 +105,6 @@
 		"includes/ServiceWiring.php"
 	],
 	"AutoloadClasses": {
-		"UploadWizardHooks": "includes/UploadWizardHooks.php",
 		"UploadWizardFlickrBlacklist": "includes/UploadWizardFlickrBlacklist.php",
 		"CampaignPageFormatter": "includes/CampaignPageFormatter.php",
 		"ApiQueryAllCampaigns": "includes/ApiQueryAllCampaigns.php",
@@ -535,11 +534,11 @@
 		"ContentModelCanBeUsedOn": "campaignContent",
 		"EditFilterMergedContent": "campaign",
 		"EditPage::showEditForm:initial": "campaignContent",
-		"GetPreferences": "UploadWizardHooks::onGetPreferences",
-		"IsUploadAllowedFromUrl": "UploadWizardHooks::onIsUploadAllowedFromUrl",
+		"GetPreferences": "general",
+		"IsUploadAllowedFromUrl": "general",
 		"LinksUpdateComplete": "campaign",
 		"ListDefinedTags": "registration",
-		"LoadExtensionSchemaUpdates": "UploadWizardHooks::onSchemaUpdate",
+		"LoadExtensionSchemaUpdates": "registration",
 		"MovePageIsValidMove": "campaign",
 		"PageSaveComplete": "campaign",
 		"UserGetReservedNames": "registration"
@@ -555,6 +554,10 @@
 		"campaignContent": {
 			"class": "MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignContentHooks",
 			"factory": "MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignContentHooks::newFromGlobalState"
+		},
+		"general": {
+			"class": "MediaWiki\\Extension\\MediaUploader\\Hooks\\Hooks",
+			"services": [ "MediaUploaderRawConfig" ]
 		},
 		"registration": {
 			"class": "MediaWiki\\Extension\\MediaUploader\\Hooks\\RegistrationHooks"

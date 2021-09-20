@@ -1,53 +1,39 @@
 <?php
 
-use MediaWiki\Extension\MediaUploader\Maintenance\FixCampaigns;
-use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
+namespace MediaWiki\Extension\MediaUploader\Hooks;
 
-class UploadWizardHooks {
+use MediaWiki\Extension\MediaUploader\Config\RawConfig;
+use MediaWiki\Hook\IsUploadAllowedFromUrlHook;
+use MediaWiki\Preferences\Hook\GetPreferencesHook;
+use UploadWizardFlickrBlacklist;
+use User;
+
+/**
+ * General MediaUploader hooks.
+ */
+class Hooks implements
+	GetPreferencesHook,
+	IsUploadAllowedFromUrlHook
+{
+	/** @var RawConfig */
+	private $config;
 
 	/**
-	 * Sets up constants.
+	 * @param RawConfig $rawConfig
 	 */
-	public static function registerExtension(): void {
-		require_once dirname( __DIR__ ) . '/defines.php';
+	public function __construct( RawConfig $rawConfig ) {
+		$this->config = $rawConfig;
 	}
 
 	/**
-	 * Schema update to set up the needed database tables.
-	 *
-	 * @since 1.2
-	 *
-	 * @param DatabaseUpdater|null $updater
-	 *
-	 * @return true
-	 */
-	public static function onSchemaUpdate( DatabaseUpdater $updater = null ) {
-		$type = $updater->getDB()->getType();
-		$path = dirname( __DIR__ ) . '/sql/';
-
-		$updater->addExtensionTable( 'mu_campaign', "$path/$type/tables-generated.sql" );
-
-		$updater->addPostDatabaseUpdateMaintenance( FixCampaigns::class );
-
-		return true;
-	}
-
-	/**
-	 * Adds the preferences of UploadWizard to the list of available ones.
-	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/GetPreferences
-	 *
-	 * @since 1.2
-	 *
 	 * @param User $user
 	 * @param array &$preferences
 	 *
 	 * @return true
 	 */
-	public static function onGetPreferences( User $user, array &$preferences ) {
-		$config = MediaUploaderServices::getRawConfig();
-
+	public function onGetPreferences( $user, &$preferences ) {
 		// User preference to skip the licensing tutorial, provided it's not globally disabled
-		if ( $config->getSetting( 'tutorial' ) ) {
+		if ( $this->config->getSetting( 'tutorial' ) ) {
 			$preferences['upwiz_skiptutorial'] = [
 				'type' => 'check',
 				'label-message' => 'mwe-upwiz-prefs-skiptutorial',
@@ -62,27 +48,25 @@ class UploadWizardHooks {
 			'section' => 'uploads/upwiz-licensing'
 		];
 
-		if ( $config->getSetting( 'enableLicensePreference' ) ) {
-			$licenseConfig = $config->getSetting( 'licenses' );
-
+		if ( $this->config->getSetting( 'enableLicensePreference' ) ) {
 			$licenses = [];
 
-			$licensingOptions = $config->getSetting( 'licensing' );
+			$licensingOptions = $this->config->getSetting( 'licensing' );
 
 			$ownWork = $licensingOptions['ownWork'];
 			foreach ( $ownWork['licenses'] as $license ) {
-				$licenseMessage = self::getLicenseMessage( $license, $licenseConfig );
+				$licenseMessage = $this->getLicenseMessage( $license ) ?: '';
 				$licenseKey = wfMessage( 'mwe-upwiz-prefs-license-own' )
 					->rawParams( $licenseMessage )->escaped();
 				$licenseValue = htmlspecialchars( 'ownwork-' . $license, ENT_QUOTES, 'UTF-8', false );
 				$licenses[$licenseKey] = $licenseValue;
 			}
 
-			$thirdParty = $config->getThirdPartyLicenses();
+			$thirdParty = $this->config->getThirdPartyLicenses();
 			$hasCustom = false;
 			foreach ( $thirdParty as $license ) {
 				if ( $license !== 'custom' ) {
-					$licenseMessage = self::getLicenseMessage( $license, $licenseConfig );
+					$licenseMessage = $this->getLicenseMessage( $license ) ?: '';
 					$licenseKey = wfMessage( 'mwe-upwiz-prefs-license-thirdparty' )
 						->rawParams( $licenseMessage )->escaped();
 					$licenseValue = htmlspecialchars( 'thirdparty-' . $license, ENT_QUOTES, 'UTF-8', false );
@@ -102,7 +86,7 @@ class UploadWizardHooks {
 			if ( $hasCustom ) {
 				// The "custom license" option must be last, otherwise the text referring to "following
 				// wikitext" and "last option above" makes no sense.
-				$licenseMessage = self::getLicenseMessage( 'custom', $licenseConfig );
+				$licenseMessage = $this->getLicenseMessage( 'custom' ) ?: '';
 				$licenseKey = wfMessage( 'mwe-upwiz-prefs-license-thirdparty' )
 					->rawParams( $licenseMessage )->escaped();
 				$licenses[$licenseKey] = 'thirdparty-custom';
@@ -126,9 +110,9 @@ class UploadWizardHooks {
 		}
 
 		// Setting for maximum number of simultaneous uploads (always lower than the server-side config)
-		if ( ( $config->getSetting( 'maxSimultaneousConnections', 0 ) ) > 1 ) {
+		if ( ( $this->config->getSetting( 'maxSimultaneousConnections', 0 ) ) > 1 ) {
 			// Hack to make the key and value the same otherwise options are added wrongly.
-			$range = range( 0, $config->getSetting( 'maxSimultaneousConnections' ) );
+			$range = range( 0, $this->config->getSetting( 'maxSimultaneousConnections' ) );
 			$range[0] = 'default';
 
 			$preferences['upwiz_maxsimultaneous'] = [
@@ -139,52 +123,44 @@ class UploadWizardHooks {
 			];
 		}
 
-		// Store user dismissal of machine vision CTA on final step.
-		$preferences['upwiz_mv_cta_dismissed'] = [
-			'type' => 'api'
-		];
-
 		return true;
 	}
 
 	/**
-	 * Hook to blacklist flickr images by intercepting upload from url
+	 * Helper to return the parsed text of a license message.
+	 *
+	 * @param string $licenseName
+	 *
+	 * @return string|null
+	 */
+	private function getLicenseMessage( string $licenseName ): ?string {
+		$license = $this->config->getSetting( 'licenses', [] )[$licenseName] ?? null;
+		if ( $license === null ) {
+			return null;
+		}
+
+		if ( array_key_exists( 'url', $license ) ) {
+			return wfMessage( $license['msg'], '', $license['url'] )->parse();
+		} else {
+			return wfMessage( $license['msg'] )->parse();
+		}
+	}
+
+	/**
 	 * @param string $url
 	 * @param bool &$allowed
+	 *
 	 * @return true
 	 */
-	public static function onIsUploadAllowedFromUrl( $url, &$allowed ) {
+	public function onIsUploadAllowedFromUrl( $url, &$allowed ) {
 		if ( $allowed ) {
 			$flickrBlacklist = new UploadWizardFlickrBlacklist(
-				MediaUploaderServices::getGlobalParsedConfig()->getConfigArray(),
-				RequestContext::getMain()
+				$this->config->getConfigArray()
 			);
 			if ( $flickrBlacklist->isBlacklisted( $url ) ) {
 				$allowed = false;
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * Helper function to get the message for a license.
-	 *
-	 * @since 1.2
-	 *
-	 * @param string $licenseName
-	 * @param array $licenseConfig
-	 *
-	 * @return string
-	 */
-	public static function getLicenseMessage( $licenseName, array $licenseConfig ) {
-		if ( array_key_exists( 'url', $licenseConfig[$licenseName] ) ) {
-			return wfMessage(
-				$licenseConfig[$licenseName]['msg'],
-				'',
-				$licenseConfig[$licenseName]['url']
-			)->parse();
-		} else {
-			return wfMessage( $licenseConfig[$licenseName]['msg'] )->escaped();
-		}
 	}
 }

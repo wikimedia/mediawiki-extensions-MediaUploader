@@ -166,7 +166,7 @@ class ApiFlickrBlacklistTest extends ApiTestCase {
 		// Don't actually run HTTP requests in unit test runs
 		$this->installMockHttp( $this->makeFakeHttpRequest( '', 0 ) );
 
-		$config = MediaUploaderServices::getGlobalParsedConfig()->getConfigArray();
+		$config = MediaUploaderServices::getRawConfig()->getConfigArray();
 
 		if ( !isset( $config['flickrApiKey'] ) ) {
 			$this->markTestSkipped( 'This test needs a Flickr API key to work' );

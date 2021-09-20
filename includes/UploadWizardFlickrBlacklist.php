@@ -46,21 +46,14 @@ class UploadWizardFlickrBlacklist {
 	protected $flickrBlacklistPage;
 
 	/**
-	 * @var IContextSource
-	 */
-	protected $context;
-
-	/**
 	 * Sets options based on a config array such as UploadWizardConfig::getConfig().
 	 * @param array $options an array with 'flickrApiKey', 'flickrApiUrl' and
 	 *     'flickrBlacklistPage' keys
-	 * @param IContextSource $context
 	 */
-	public function __construct( array $options, IContextSource $context ) {
+	public function __construct( array $options ) {
 		$this->flickrApiKey = $options['flickrApiKey'];
 		$this->flickrApiUrl = $options['flickrApiUrl'];
 		$this->flickrBlacklistPage = $options['flickrBlacklistPage'];
-		$this->context = $context;
 	}
 
 	/**

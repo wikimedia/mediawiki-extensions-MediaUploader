@@ -20,8 +20,7 @@ class ApiFlickrBlacklist extends ApiBase {
 		$this->requireOnlyOneParameter( $params, 'url', 'list' );
 
 		$flickrBlacklist = new UploadWizardFlickrBlacklist(
-			MediaUploaderServices::getRawConfig()->getConfigArray(),
-			$this->getContext()
+			MediaUploaderServices::getRawConfig()->getConfigArray()
 		);
 
 		if ( $params['list'] ) {

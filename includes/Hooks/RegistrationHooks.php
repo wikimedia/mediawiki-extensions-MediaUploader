@@ -2,9 +2,12 @@
 
 namespace MediaWiki\Extension\MediaUploader\Hooks;
 
+use DatabaseUpdater;
 use MediaWiki\ChangeTags\Hook\ChangeTagsAllowedAddHook;
 use MediaWiki\ChangeTags\Hook\ChangeTagsListActiveHook;
 use MediaWiki\ChangeTags\Hook\ListDefinedTagsHook;
+use MediaWiki\Extension\MediaUploader\Maintenance\FixCampaigns;
+use MediaWiki\Installer\Hook\LoadExtensionSchemaUpdatesHook;
 use MediaWiki\User\Hook\UserGetReservedNamesHook;
 
 /**
@@ -14,7 +17,8 @@ class RegistrationHooks implements
 	UserGetReservedNamesHook,
 	ListDefinedTagsHook,
 	ChangeTagsListActiveHook,
-	ChangeTagsAllowedAddHook
+	ChangeTagsAllowedAddHook,
+	LoadExtensionSchemaUpdatesHook
 {
 	/**
 	 * Change tags used in the extension.
@@ -23,6 +27,13 @@ class RegistrationHooks implements
 		'uploadwizard',
 		'uploadwizard-flickr',
 	];
+
+	/**
+	 * Sets up constants.
+	 */
+	public static function registerExtension(): void {
+		require_once dirname( __DIR__, 2 ) . '/defines.php';
+	}
 
 	/**
 	 * Lists tags used by UploadWizard (via ListDefinedTags,
@@ -56,10 +67,26 @@ class RegistrationHooks implements
 	 *
 	 * @param array &$reservedUsernames
 	 *
-	 * @return bool true
+	 * @return true
 	 */
 	public function onUserGetReservedNames( &$reservedUsernames ): bool {
 		$reservedUsernames[] = 'MediaUploader';
+		return true;
+	}
+
+	/**
+	 * @param DatabaseUpdater $updater
+	 *
+	 * @return true
+	 */
+	public function onLoadExtensionSchemaUpdates( $updater ) {
+		$type = $updater->getDB()->getType();
+		$path = dirname( __DIR__, 2 ) . '/sql';
+
+		$updater->addExtensionTable( 'mu_campaign', "$path/$type/tables-generated.sql" );
+
+		$updater->addPostDatabaseUpdateMaintenance( FixCampaigns::class );
+
 		return true;
 	}
 }
