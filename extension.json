@@ -88,7 +88,11 @@
 	},
 	"APIListModules": {
 		"allcampaigns": {
-			"class": "ApiQueryAllCampaigns"
+			"class": "MediaWiki\\Extension\\MediaUploader\\Api\\QueryAllCampaigns",
+			"services": [
+				"MediaUploaderCampaignStore",
+				"MediaUploaderCampaignStats"
+			]
 		}
 	},
 	"MessagesDirs": {
@@ -107,7 +111,6 @@
 	"AutoloadClasses": {
 		"UploadWizardFlickrBlacklist": "includes/UploadWizardFlickrBlacklist.php",
 		"CampaignPageFormatter": "includes/CampaignPageFormatter.php",
-		"ApiQueryAllCampaigns": "includes/ApiQueryAllCampaigns.php",
 		"ApiFlickrBlacklist": "includes/ApiFlickrBlacklist.php"
 	},
 	"AutoloadNamespaces": {

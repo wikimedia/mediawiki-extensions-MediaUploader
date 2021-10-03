@@ -1,39 +1,25 @@
 <?php
-/**
- *
- *
- * Copyright © 2013 Yuvi Panda <yuvipanda@gmail.com>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- * http://www.gnu.org/copyleft/gpl.html
- *
- * @file
- */
 
+namespace MediaWiki\Extension\MediaUploader\Api;
+
+use ApiBase;
+use ApiQuery;
+use ApiQueryBase;
+use ApiUsageException;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStats;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
-use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
+use MWException;
+use Wikimedia\ParamValidator\ParamValidator;
+use Wikimedia\ParamValidator\TypeDef\IntegerDef;
 
 /**
  * Query module to enumerate all registered campaigns
  *
  * @ingroup API
  */
-class ApiQueryAllCampaigns extends ApiQueryBase {
+class QueryAllCampaigns extends ApiQueryBase {
 
 	/** @var CampaignStore */
 	private $campaignStore;
@@ -44,13 +30,20 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 	/**
 	 * @param ApiQuery $query
 	 * @param string $moduleName
+	 * @param CampaignStore $campaignStore
+	 * @param CampaignStats $campaignStats
 	 */
-	public function __construct( ApiQuery $query, string $moduleName ) {
-		parent::__construct( $query, $moduleName, 'uwc' );
+	public function __construct(
+		ApiQuery $query,
+		string $moduleName,
+		CampaignStore $campaignStore,
+		CampaignStats $campaignStats
+	) {
+		// Prefix: MediaUploader – Campaigns
+		parent::__construct( $query, $moduleName, 'muc' );
 
-		// TODO: move to DI
-		$this->campaignStore = MediaUploaderServices::getCampaignStore();
-		$this->campaignStats = MediaUploaderServices::getCampaignStats();
+		$this->campaignStore = $campaignStore;
+		$this->campaignStats = $campaignStats;
 	}
 
 	/**
@@ -82,11 +75,30 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 
 		// First scan the retrieved records for validity
 		$records = [];
+		$basePath = [ 'query', $this->getModuleName() ];
+
 		foreach ( $recordsUnfiltered as $record ) {
+			if ( ++$count > $limit ) {
+				// We have more results than $limit. Set continue
+				$this->setContinueEnumParameter( 'continue', $record->getPageId() );
+				break;
+			}
+
 			try {
-				$record->assertValid( $record->getTitle()->getDBkey() );
+				$record->assertValid(
+					$record->getTitle()->getDBkey(),
+					CampaignStore::SELECT_TITLE
+				);
 			} catch ( BaseCampaignException $e ) {
-				// TODO: Report some error here
+				$result->addValue(
+					$basePath,
+					$record->getPageId(),
+					[
+						'name' => $record->getTitle()->getDBkey(),
+						'enabled' => $record->isEnabled(),
+						'error' => $e->getMessage(),
+					]
+				);
 				continue;
 			}
 			$records[] = $record;
@@ -97,18 +109,17 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 
 		foreach ( $records as $record ) {
 			/** @var CampaignRecord $record */
-			if ( ++$count > $limit ) {
-				// We have more results than $limit. Set continue
-				$this->setContinueEnumParameter( 'continue', $record->getPageId() );
-				break;
-			}
-
 			$campaignPath = [ 'query', $this->getModuleName(), $record->getPageId() ];
 
 			$result->addValue(
 				$campaignPath,
 				'name',
 				$record->getTitle()->getDBkey()
+			);
+			$result->addValue(
+				$campaignPath,
+				'enabled',
+				$record->isEnabled()
 			);
 
 			$statsRecord = $stats[$record->getPageId()] ?? [];
@@ -149,11 +160,11 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 		return [
 			'enabledonly' => false,
 			'limit' => [
-				ApiBase::PARAM_DFLT => 50,
-				ApiBase::PARAM_TYPE => 'limit',
-				ApiBase::PARAM_MIN => 1,
-				ApiBase::PARAM_MAX => ApiBase::LIMIT_SML1,
-				ApiBase::PARAM_MAX2 => ApiBase::LIMIT_SML2,
+				ParamValidator::PARAM_DEFAULT => 50,
+				ParamValidator::PARAM_TYPE => 'limit',
+				IntegerDef::PARAM_MIN => 1,
+				IntegerDef::PARAM_MAX => ApiBase::LIMIT_SML1,
+				IntegerDef::PARAM_MAX2 => ApiBase::LIMIT_SML2,
 			],
 			'continue' => [
 				ApiBase::PARAM_HELP_MSG => 'api-help-param-continue',
@@ -166,12 +177,13 @@ class ApiQueryAllCampaigns extends ApiQueryBase {
 	 */
 	protected function getExamplesMessages() {
 		return [
-			'action=query&list=allcampaigns&uwcenabledonly='
+			'action=query&list=allcampaigns&mucenabledonly='
 				=> 'apihelp-query+allcampaigns-example-1',
 		];
 	}
 
 	public function getHelpUrls() {
-		return 'https://www.mediawiki.org/wiki/Special:MyLanguage/Extension:UploadWizard';
+		// TODO: point to a subpage with API docs when it gets created
+		return 'https://www.mediawiki.org/wiki/Special:MyLanguage/Extension:MediaUploader';
 	}
 }
