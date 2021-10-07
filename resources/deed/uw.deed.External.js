@@ -30,7 +30,7 @@
 			1,
 			upload.api
 		);
-		this.licenseInput.$element.addClass( 'mwe-upwiz-External-deed' );
+		this.licenseInput.$element.addClass( 'mediauploader-External-deed' );
 		this.licenseInputField = new uw.FieldLayout( this.licenseInput );
 		this.licenseInput.setDefaultValues();
 	};

@@ -140,7 +140,7 @@
 	 */
 	uw.controller.Details.prototype.createDetails = function ( upload ) {
 		// eslint-disable-next-line no-jquery/no-global-selector
-		upload.details = new mw.UploadWizardDetails( upload, $( '#mwe-upwiz-macro-files' ) );
+		upload.details = new mw.UploadWizardDetails( upload, $( '#mediauploader-macro-files' ) );
 	};
 
 	/**
@@ -195,7 +195,7 @@
 					if ( titles[ title ] ) {
 						// Don't submit. Instead, set an error in details step.
 						upload.details.setDuplicateTitleError();
-						errors.push( mw.message( 'mwe-upwiz-error-title-duplicate' ) );
+						errors.push( mw.message( 'mediauploader-error-title-duplicate' ) );
 					} else {
 						titles[ title ] = true;
 					}
@@ -235,7 +235,7 @@
 
 	uw.controller.Details.prototype.confirmationDialog = function ( warnings ) {
 		var i,
-			$message = $( '<p>' ).text( mw.message( 'mwe-upwiz-dialog-warning' ).text() ),
+			$message = $( '<p>' ).text( mw.message( 'mediauploader-dialog-warning' ).text() ),
 			$ul = $( '<ul>' );
 
 		// parse warning messages
@@ -253,7 +253,7 @@
 		}
 
 		return OO.ui.confirm( $message.append( $ul ), {
-			title: mw.message( 'mwe-upwiz-dialog-title' ).text()
+			title: mw.message( 'mediauploader-dialog-title' ).text()
 		} );
 	};
 

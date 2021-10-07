@@ -121,14 +121,14 @@
 
 		this.deedChooser = new mw.UploadWizardDeedChooser(
 			this.config,
-			'#mwe-upwiz-deeds',
+			'#mediauploader-deeds',
 			this.deeds,
 			this.uploads
 		);
 
 		$( '<div>' )
-			.insertBefore( this.deedChooser.$selector.find( '.mwe-upwiz-deed-ownwork' ) )
-			.msg( 'mwe-upwiz-deeds-macro-prompt', this.uploads.length, mw.user );
+			.insertBefore( this.deedChooser.$selector.find( '.mediauploader-deed-ownwork' ) )
+			.msg( 'mediauploader-deeds-macro-prompt', this.uploads.length, mw.user );
 
 		uploads.forEach( function ( upload ) {
 			// Add previews and details to the DOM

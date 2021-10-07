@@ -38,31 +38,31 @@
 		);
 
 		this.$div.prepend(
-			$( '<div>' ).attr( 'id', 'mwe-upwiz-thanks' )
+			$( '<div>' ).attr( 'id', 'mediauploader-thanks' )
 		);
 
 		$( '<p>' )
-			.addClass( 'mwe-upwiz-thanks-explain' )
-			.msg( 'mwe-upwiz-thanks-explain' )
+			.addClass( 'mediauploader-thanks-explain' )
+			.msg( 'mediauploader-thanks-explain' )
 			.prependTo( this.$div );
 
 		$header = $( '<h3>' )
-			.addClass( 'mwe-upwiz-thanks-header' )
+			.addClass( 'mediauploader-thanks-header' )
 			.prependTo( this.$div );
 
 		if ( !this.config.display || !this.config.display.thanksLabel ) {
-			$header.text( mw.message( 'mwe-upwiz-thanks-intro' ).text() );
+			$header.text( mw.message( 'mediauploader-thanks-intro' ).text() );
 		} else {
 			$header.html( this.config.display.thanksLabel );
 		}
 
 		this.homeButton = new OO.ui.ButtonWidget( {
-			label: this.getButtonConfig( 'homeButton', 'label' ) || mw.message( 'mwe-upwiz-home' ).text(),
+			label: this.getButtonConfig( 'homeButton', 'label' ) || mw.message( 'mediauploader-home' ).text(),
 			href: this.getButtonConfig( 'homeButton', 'target' ) || mw.config.get( 'wgArticlePath' ).replace( '$1', '' )
 		} );
 
 		this.beginButton = new OO.ui.ButtonWidget( {
-			label: this.getButtonConfig( 'beginButton', 'label' ) || mw.message( 'mwe-upwiz-upload-another' ).text(),
+			label: this.getButtonConfig( 'beginButton', 'label' ) || mw.message( 'mediauploader-upload-another' ).text(),
 			flags: [ 'progressive', 'primary' ]
 		} );
 
@@ -117,12 +117,12 @@
 		].join( '|' ) + ']]';
 
 		$thanksDiv = $( '<div>' )
-			.addClass( 'mwe-upwiz-thanks ui-helper-clearfix' );
+			.addClass( 'mediauploader-thanks ui-helper-clearfix' );
 		$thumbnailWrapDiv = $( '<div>' )
-			.addClass( 'mwe-upwiz-thumbnail-side' )
+			.addClass( 'mediauploader-thumbnail-side' )
 			.appendTo( $thanksDiv );
 		$thumbnailDiv = $( '<div>' )
-			.addClass( 'mwe-upwiz-thumbnail' )
+			.addClass( 'mediauploader-thumbnail' )
 			.appendTo( $thumbnailWrapDiv );
 		$thumbnailCaption = $( '<div>' )
 			.css( { 'text-align': 'center', 'font-size': 'small' } )
@@ -132,25 +132,25 @@
 			.appendTo( $thumbnailCaption );
 
 		$( '<div>' )
-			.addClass( 'mwe-upwiz-data' )
+			.addClass( 'mediauploader-data' )
 			.appendTo( $thanksDiv )
 			.append(
-				this.makeReadOnlyInput( thumbWikiText, mw.message( 'mwe-upwiz-thanks-wikitext' ).text(), true ),
-				this.makeReadOnlyInput( upload.imageinfo.descriptionurl, mw.message( 'mwe-upwiz-thanks-url' ).text() )
+				this.makeReadOnlyInput( thumbWikiText, mw.message( 'mediauploader-thanks-wikitext' ).text(), true ),
+				this.makeReadOnlyInput( upload.imageinfo.descriptionurl, mw.message( 'mediauploader-thanks-url' ).text() )
 			);
 
-		// This must match the CSS dimensions of .mwe-upwiz-thumbnail
+		// This must match the CSS dimensions of .mediauploader-thumbnail
 		upload.getThumbnail( 120, 120 ).done( function ( thumb ) {
 			mw.UploadWizard.placeThumbnail( $thumbnailDiv, thumb );
 		} );
 
 		// Set the thumbnail links so that they point to the image description page
-		$thumbnailLink.add( $thumbnailDiv.find( '.mwe-upwiz-thumbnail-link' ) ).attr( {
+		$thumbnailLink.add( $thumbnailDiv.find( '.mediauploader-thumbnail-link' ) ).attr( {
 			href: upload.imageinfo.descriptionurl,
 			target: '_blank'
 		} );
 
-		this.$div.find( '.mwe-upwiz-buttons' ).before( $thanksDiv );
+		this.$div.find( '.mediauploader-buttons' ).before( $thanksDiv );
 	};
 
 	/**
@@ -173,15 +173,15 @@
 		}
 
 		// Wrapper div.
-		$mvCtaDiv = $( '<div>' ).addClass( 'mwe-upwiz-mv-cta' );
+		$mvCtaDiv = $( '<div>' ).addClass( 'mediauploader-mv-cta' );
 
 		// Add dismiss icon button.
 		$mvCtaDismiss = new OO.ui.ButtonWidget( {
-			classes: [ 'mwe-upwiz-mv-cta-dismiss' ],
+			classes: [ 'mediauploader-mv-cta-dismiss' ],
 			icon: 'close',
 			invisibleLabel: true,
-			label: mw.message( 'mwe-upwiz-mv-cta-dismiss' ).text(),
-			title: mw.message( 'mwe-upwiz-mv-cta-dismiss' ).text()
+			label: mw.message( 'mediauploader-mv-cta-dismiss' ).text(),
+			title: mw.message( 'mediauploader-mv-cta-dismiss' ).text()
 		} ).on( 'click', function () {
 			$mvCtaDiv.remove();
 
@@ -192,45 +192,45 @@
 		$mvCtaDismiss.$element.appendTo( $mvCtaDiv );
 
 		// Add icon div.
-		$mvCtaDiv.append( $( '<div>' ).addClass( 'mwe-upwiz-mv-cta-icon' ) );
+		$mvCtaDiv.append( $( '<div>' ).addClass( 'mediauploader-mv-cta-icon' ) );
 
 		// Add wrapper for everything to the right of the icon.
 		$mvCtaContent = $( '<div>' )
-			.addClass( 'mwe-upwiz-mv-cta-content' )
+			.addClass( 'mediauploader-mv-cta-content' )
 			.appendTo( $mvCtaDiv );
 
 		// Add heading.
 		$mvCtaContent.append( $( '<h3>' )
-			.addClass( 'mwe-upwiz-mv-cta-heading' )
-			.msg( 'mwe-upwiz-mv-cta-heading' )
+			.addClass( 'mediauploader-mv-cta-heading' )
+			.msg( 'mediauploader-mv-cta-heading' )
 		);
 
 		// Add description text.
 		$mvCtaContent.append( $( '<p>' )
-			.addClass( 'mwe-upwiz-mv-cta-description' )
-			.msg( 'mwe-upwiz-mv-cta-description' )
+			.addClass( 'mediauploader-mv-cta-description' )
+			.msg( 'mediauploader-mv-cta-description' )
 		);
 
 		// Add wrapper checkbox and confirmation message.
 		$mvCtaCheckboxSection = $( '<div>' )
-			.addClass( 'mwe-upwiz-mv-cta-checkbox-section' )
+			.addClass( 'mediauploader-mv-cta-checkbox-section' )
 			.appendTo( $mvCtaContent );
 
 		// Add checkbox field layout.
 		mvCtaCheckboxField = new OO.ui.FieldLayout( this.mvCtaCheckbox, {
-			label: mw.message( 'mwe-upwiz-mv-cta-checkbox-label' ).text(),
+			label: mw.message( 'mediauploader-mv-cta-checkbox-label' ).text(),
 			align: 'inline'
 		} );
 		mvCtaCheckboxField.$element.appendTo( $mvCtaCheckboxSection );
 
 		// Add final CTA to go to the MV tool.
 		$mvCtaContent.append( $( '<p>' )
-			.addClass( 'mwe-upwiz-mv-cta-final-cta' )
-			.msg( 'mwe-upwiz-mv-cta-final-cta' )
+			.addClass( 'mediauploader-mv-cta-final-cta' )
+			.msg( 'mediauploader-mv-cta-final-cta' )
 		);
 
 		// Add entire element above the main content of this step.
-		this.$div.find( '.mwe-upwiz-thanks-header' ).before( $mvCtaDiv );
+		this.$div.find( '.mediauploader-thanks-header' ).before( $mvCtaDiv );
 	};
 
 	/**
@@ -243,12 +243,12 @@
 			key = 'echo-subscriptions-web-machinevision',
 			value = selected ? 1 : 0,
 			message = selected ?
-				'mwe-upwiz-mv-cta-user-preference-set' :
-				'mwe-upwiz-mv-cta-user-preference-unset',
-			$mvCtaCheckboxSection = this.$div.find( '.mwe-upwiz-mv-cta-checkbox-section' );
+				'mediauploader-mv-cta-user-preference-set' :
+				'mediauploader-mv-cta-user-preference-unset',
+			$mvCtaCheckboxSection = this.$div.find( '.mediauploader-mv-cta-checkbox-section' );
 
 		// Remove existing confirmation message if there is one.
-		this.$div.find( '.mwe-upwiz-mv-cta-confirmation' ).remove();
+		this.$div.find( '.mediauploader-mv-cta-confirmation' ).remove();
 
 		// Disable the checkbox until API call finishes.
 		this.mvCtaCheckbox.setDisabled( true );
@@ -258,18 +258,18 @@
 		new mw.Api().saveOption( key, value )
 			.done( function () {
 				// Show the appropriate message.
+				// eslint-disable-next-line mediawiki/msg-doc
 				$mvCtaCheckboxSection.append( $( '<p>' )
-					.addClass( 'mwe-upwiz-mv-cta-confirmation' )
-					// eslint-disable-next-line mediawiki/msg-doc
+					.addClass( 'mediauploader-mv-cta-confirmation' )
 					.msg( message )
 				);
 				mw.user.options.set( key, value );
 			} )
 			.fail( function () {
-				message = 'mwe-upwiz-mv-cta-user-preference-set-failed';
+				message = 'mediauploader-mv-cta-user-preference-set-failed';
+				// eslint-disable-next-line mediawiki/msg-doc
 				$mvCtaCheckboxSection.append( $( '<p>' )
-					.addClass( 'mwe-upwiz-mv-cta-confirmation' )
-					// eslint-disable-next-line mediawiki/msg-doc
+					.addClass( 'mediauploader-mv-cta-confirmation' )
 					.msg( message )
 				);
 			} )

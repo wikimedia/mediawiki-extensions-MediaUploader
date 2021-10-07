@@ -215,7 +215,7 @@ class CampaignHooks implements
 		WikiPage $wikiPage, User $user, &$reason, &$error, Status &$status, $suppress
 	): bool {
 		if ( $this->isGlobalConfigAnchor( $wikiPage->getTitle() ) ) {
-			$status->fatal( 'mwe-upwiz-global-config-anchor' );
+			$status->fatal( 'mediauploader-global-config-anchor' );
 			return false;
 		}
 
@@ -235,7 +235,7 @@ class CampaignHooks implements
 		if ( $this->isGlobalConfigAnchor( $oldTitle ) ||
 			$this->isGlobalConfigAnchor( $newTitle )
 		) {
-			$status->fatal( 'mwe-upwiz-global-config-anchor' );
+			$status->fatal( 'mediauploader-global-config-anchor' );
 		}
 		return true;
 	}

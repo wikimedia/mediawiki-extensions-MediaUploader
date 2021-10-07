@@ -19,7 +19,7 @@
 			this.api,
 			this.formData
 		).on( 'update-stage', function ( stage ) {
-			upload.ui.setStatus( 'mwe-upwiz-' + stage );
+			upload.ui.setStatus( 'mediauploader-' + stage );
 		} );
 	};
 
@@ -37,7 +37,7 @@
 
 		return this.configureEditToken().then( function () {
 			handler.beginTime = ( new Date() ).getTime();
-			handler.upload.ui.setStatus( 'mwe-upwiz-transport-started' );
+			handler.upload.ui.setStatus( 'mediauploader-transport-started' );
 			handler.upload.ui.showTransportProgress();
 
 			return handler.transport.upload( handler.upload.file, handler.upload.title.getMainText() )

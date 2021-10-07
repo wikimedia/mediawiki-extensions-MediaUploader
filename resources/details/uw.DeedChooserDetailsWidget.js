@@ -9,7 +9,7 @@
 		uw.DeedChooserDetailsWidget.parent.call( this );
 
 		this.deedChooser = false;
-		this.$element.addClass( 'mwe-upwiz-deedChooserDetailsWidget' );
+		this.$element.addClass( 'mediauploader-deedChooserDetailsWidget' );
 	};
 	OO.inheritClass( uw.DeedChooserDetailsWidget, uw.DetailsWidget );
 
@@ -25,7 +25,7 @@
 	 * @param {mw.UploadWizardUpload} upload
 	 */
 	uw.DeedChooserDetailsWidget.prototype.useCustomDeedChooser = function ( upload ) {
-		var $deedDiv = $( '<div>' ).addClass( 'mwe-upwiz-custom-deed' );
+		var $deedDiv = $( '<div>' ).addClass( 'mediauploader-custom-deed' );
 
 		this.$element.append( $deedDiv );
 		this.deedChooser = upload.deedChooser = new mw.UploadWizardDeedChooser(
@@ -43,7 +43,7 @@
 		var errors = [];
 		if ( this.deedChooser ) {
 			if ( !this.deedChooser.deed ) {
-				errors.push( mw.message( 'mwe-upwiz-deeds-need-deed' ) );
+				errors.push( mw.message( 'mediauploader-deeds-need-deed' ) );
 			}
 		}
 		return $.Deferred().resolve( errors ).promise();

@@ -210,7 +210,7 @@
 	 */
 	mw.UploadWizard.placeThumbnail = function ( selector, image ) {
 		if ( image === null ) {
-			$( selector ).addClass( 'mwe-upwiz-file-preview-broken' );
+			$( selector ).addClass( 'mediauploader-file-preview-broken' );
 			return;
 		}
 
@@ -218,7 +218,7 @@
 			.css( { background: 'none' } )
 			.prepend(
 				$( '<a>' )
-					.addClass( 'mwe-upwiz-thumbnail-link' )
+					.addClass( 'mediauploader-thumbnail-link' )
 					.append( image )
 			);
 	};

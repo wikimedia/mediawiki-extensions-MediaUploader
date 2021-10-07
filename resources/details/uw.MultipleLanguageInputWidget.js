@@ -27,7 +27,7 @@
 
 		this.required = !!this.config.required;
 		this.addButton = new OO.ui.ButtonWidget( {
-			classes: [ 'mwe-upwiz-multipleLanguageInputWidget-addItem' ],
+			classes: [ 'mediauploader-multipleLanguageInputWidget-addItem' ],
 			framed: true,
 			icon: 'add',
 			flags: [ 'progressive' ],
@@ -48,7 +48,7 @@
 		// Aggregate 'change' event
 		this.aggregate( { change: 'change' } );
 
-		this.$element.addClass( 'mwe-upwiz-multipleLanguageInputsWidget' );
+		this.$element.addClass( 'mediauploader-multipleLanguageInputsWidget' );
 		this.$element.append(
 			this.$group,
 			this.addButton.$element
@@ -224,7 +224,7 @@
 			}
 			// And add some more:
 			if ( this.required && this.getWikiText() === '' ) {
-				errors.push( mw.message( 'mwe-upwiz-error-blank' ) );
+				errors.push( mw.message( 'mediauploader-error-blank' ) );
 			}
 			// TODO Check for duplicate languages
 			return errors;

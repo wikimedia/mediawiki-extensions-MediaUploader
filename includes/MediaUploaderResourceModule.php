@@ -108,8 +108,8 @@ class MediaUploaderResourceModule extends ResourceLoaderFileModule {
 	private function getMessagesForDefaultLicenses( array $licenses ): array {
 		$messages = [];
 		foreach ( $licenses as $license ) {
-			$messages[] = 'mwe-upwiz-source-ownwork-assert-' . $license;
-			$messages[] = 'mwe-upwiz-source-ownwork-' . $license . '-explain';
+			$messages[] = 'mediauploader-source-ownwork-assert-' . $license;
+			$messages[] = 'mediauploader-source-ownwork-' . $license . '-explain';
 		}
 
 		return $messages;

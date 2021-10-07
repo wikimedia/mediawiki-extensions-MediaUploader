@@ -9,7 +9,7 @@
 		uw.OtherDetailsWidget.parent.call( this );
 
 		this.textInput = new OO.ui.MultilineTextInputWidget( {
-			classes: [ 'mwe-upwiz-other-textarea', 'mwe-upwiz-otherDetailsWidget-other' ],
+			classes: [ 'mediauploader-other-textarea', 'mediauploader-otherDetailsWidget-other' ],
 			autosize: true,
 			rows: 2
 		} );
@@ -18,7 +18,7 @@
 		// (but do not flash warnings in the user's face while they're typing)
 		this.textInput.on( 'change', OO.ui.debounce( this.emit.bind( this, 'change' ), 500 ) );
 
-		this.$element.addClass( 'mwe-upwiz-otherDetailsWidget' );
+		this.$element.addClass( 'mediauploader-otherDetailsWidget' );
 		this.$element.append(
 			this.textInput.$element
 		);

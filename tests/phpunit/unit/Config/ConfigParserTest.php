@@ -291,7 +291,7 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 			],
 			'licenses' => [
 				'cc-by-sa-4.0' => [
-					'msg' => 'mwe-upwiz-license-cc-by-sa-4.0',
+					'msg' => 'mediauploader-license-cc-by-sa-4.0',
 					'icons' => [ 'cc-by', 'cc-sa' ],
 					'url' => '//creativecommons.org/licenses/by-sa/4.0/',
 					'languageCodePrefix' => 'deed.'

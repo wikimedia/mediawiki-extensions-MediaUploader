@@ -220,7 +220,7 @@
 				selectedInputs = this.getSerialized();
 
 			if ( Object.keys( selectedInputs ).length === 0 ) {
-				addError( 'mwe-upwiz-deeds-need-license' );
+				addError( 'mediauploader-deeds-need-license' );
 			} else {
 				// It's pretty hard to screw up a radio button, so if even one of them is selected it's okay.
 				// But also check that associated textareas are filled for if the input is selected, and that
@@ -236,15 +236,15 @@
 					wikitext = data.trim();
 
 					if ( wikitext === '' ) {
-						addError( 'mwe-upwiz-error-license-wikitext-missing' );
+						addError( 'mediauploader-error-license-wikitext-missing' );
 					} else if ( wikitext.length < mw.UploadWizard.config.minCustomLicenseLength ) {
-						addError( 'mwe-upwiz-error-license-wikitext-too-short' );
+						addError( 'mediauploader-error-license-wikitext-too-short' );
 					} else if ( wikitext.length > mw.UploadWizard.config.maxCustomLicenseLength ) {
-						addError( 'mwe-upwiz-error-license-wikitext-too-long' );
+						addError( 'mediauploader-error-license-wikitext-too-long' );
 					} else if ( wikitext.match( /\{\{(.+?)\}\}/g ) === null ) {
 						// if text doesn't contain a template, we don't even
 						// need to validate it any further...
-						addError( 'mwe-upwiz-error-license-wikitext-missing-template' );
+						addError( 'mediauploader-error-license-wikitext-missing-template' );
 					} else if ( mw.UploadWizard.config.customLicenseTemplate !== false ) {
 						// now do a thorough test to see if the text actually
 						// includes a license template
@@ -254,7 +254,7 @@
 						).then( function ( errorsCopy, usedTemplates ) {
 							if ( usedTemplates.indexOf( mw.UploadWizard.config.customLicenseTemplate ) < 0 ) {
 								// no license template found, add another error
-								errorsCopy.push( mw.message( 'mwe-upwiz-error-license-wikitext-missing-template' ) );
+								errorsCopy.push( mw.message( 'mediauploader-error-license-wikitext-missing-template' ) );
 							}
 
 							return errorsCopy;

@@ -24,7 +24,7 @@
 	overflow: hidden;
 }
 
-#mwe-upwiz-steps li.head {
+#mediauploader-steps li.head {
 	color: #36c;
 	background-color: #eaf3ff;
 	font-weight: bold;
@@ -58,7 +58,7 @@
 	z-index: 1;
 }
 
-#mwe-upwiz-steps li.head:after {
+#mediauploader-steps li.head:after {
 	border-left-color: #eaf3ff;
 }
 

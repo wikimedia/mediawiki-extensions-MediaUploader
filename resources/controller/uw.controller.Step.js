@@ -231,22 +231,22 @@
 
 		this.updateProgressBarCount( okCount );
 
-		$buttons = this.ui.$div.find( '.mwe-upwiz-buttons' );
+		$buttons = this.ui.$div.find( '.mediauploader-buttons' );
 		$buttons.show();
 
-		$buttons.find( '.mwe-upwiz-file-next-all-ok' ).hide();
-		$buttons.find( '.mwe-upwiz-file-next-some-failed' ).hide();
-		$buttons.find( '.mwe-upwiz-file-next-all-failed' ).hide();
+		$buttons.find( '.mediauploader-file-next-all-ok' ).hide();
+		$buttons.find( '.mediauploader-file-next-some-failed' ).hide();
+		$buttons.find( '.mediauploader-file-next-all-failed' ).hide();
 
 		if ( okCount === this.uploads.length ) {
-			$buttons.find( '.mwe-upwiz-file-next-all-ok' ).show();
+			$buttons.find( '.mediauploader-file-next-all-ok' ).show();
 			return true;
 		}
 
 		if ( this.getUploadStatesCount( [ 'error', 'recoverable-error' ] ) === this.uploads.length ) {
-			$buttons.find( '.mwe-upwiz-file-next-all-failed' ).show();
+			$buttons.find( '.mediauploader-file-next-all-failed' ).show();
 		} else if ( this.getUploadStatesCount( 'transporting' ) === 0 ) {
-			$buttons.find( '.mwe-upwiz-file-next-some-failed' ).show();
+			$buttons.find( '.mediauploader-file-next-some-failed' ).show();
 		}
 
 		return false;

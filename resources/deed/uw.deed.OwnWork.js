@@ -40,14 +40,14 @@
 		// copyright holder
 		this.authorInput = new OO.ui.TextInputWidget( {
 			name: 'author',
-			title: mw.message( 'mwe-upwiz-tooltip-sign' ).text(),
+			title: mw.message( 'mediauploader-tooltip-sign' ).text(),
 			value: prefAuthName,
-			classes: [ 'mwe-upwiz-sign' ]
+			classes: [ 'mediauploader-sign' ]
 		} );
 		this.fakeAuthorInput = new OO.ui.TextInputWidget( {
 			readOnly: true,
 			value: prefAuthName,
-			classes: [ 'mwe-upwiz-sign' ]
+			classes: [ 'mediauploader-sign' ]
 		} );
 		this.authorInput.on( 'change', function () {
 			deed.fakeAuthorInput.setValue( deed.authorInput.getValue() );
@@ -61,7 +61,7 @@
 				this.uploadCount,
 				api
 			);
-			this.licenseInput.$element.addClass( 'mwe-upwiz-deed-license' );
+			this.licenseInput.$element.addClass( 'mediauploader-deed-license' );
 			this.licenseInputField = new uw.FieldLayout( this.licenseInput );
 		}
 	};
@@ -100,14 +100,14 @@
 		defaultLicenseURL = this.config.licenses[ defaultLicense ].url === undefined ?
 			'#missing license URL' :
 			this.config.licenses[ defaultLicense ].url + 'deed.' + languageCode;
-		defaultLicenseMsg = 'mwe-upwiz-source-ownwork-assert-' + defaultLicense;
-		defaultLicenseExplainMsg = 'mwe-upwiz-source-ownwork-' + defaultLicense + '-explain';
+		defaultLicenseMsg = 'mediauploader-source-ownwork-assert-' + defaultLicense;
+		defaultLicenseExplainMsg = 'mediauploader-source-ownwork-' + defaultLicense + '-explain';
 		$defaultLicenseLink = $( '<a>' ).attr( { target: '_blank', href: defaultLicenseURL } );
 
 		this.$form = $( '<form>' );
 
 		/* eslint-disable mediawiki/msg-doc */
-		$standardDiv = $( '<div>' ).addClass( 'mwe-upwiz-standard' ).append(
+		$standardDiv = $( '<div>' ).addClass( 'mediauploader-standard' ).append(
 			$( '<p>' ).msg(
 				defaultLicenseMsg,
 				this.uploadCount,
@@ -120,12 +120,12 @@
 				this.uploadCount
 			)
 		);
-		$crossfader = $( '<div>' ).addClass( 'mwe-upwiz-crossfader' ).append( $standardDiv );
+		$crossfader = $( '<div>' ).addClass( 'mediauploader-crossfader' ).append( $standardDiv );
 		/* eslint-enable mediawiki/msg-doc */
 
 		if ( this.showCustomDiv ) {
-			$customDiv = $( '<div>' ).addClass( 'mwe-upwiz-custom' ).append(
-				$( '<p>' ).msg( 'mwe-upwiz-source-ownwork-assert-custom',
+			$customDiv = $( '<div>' ).addClass( 'mediauploader-custom' ).append(
+				$( '<p>' ).msg( 'mediauploader-source-ownwork-assert-custom',
 					this.uploadCount,
 					this.fakeAuthorInput.$element )
 			);
@@ -145,14 +145,14 @@
 			crossfaderWidget.emit( 'change' );
 		}, 500 ) );
 
-		$formFields = $( '<div>' ).addClass( 'mwe-upwiz-deed-form-internal' )
+		$formFields = $( '<div>' ).addClass( 'mediauploader-deed-form-internal' )
 			.append( this.authorInputField.$element );
 
 		if ( this.showCustomDiv ) {
 			// FIXME: Move CSS rule to CSS file
 			$toggler = $( '<p>' ).addClass( 'mwe-more-options' ).css( 'text-align', 'right' )
 				.append( $( '<a>' )
-					.msg( 'mwe-upwiz-license-show-all' )
+					.msg( 'mediauploader-license-show-all' )
 					.on( 'click', function () {
 						if ( $crossfader.data( 'crossfadeDisplay' ).get( 0 ) === $customDiv.get( 0 ) ) {
 							deed.standardLicense();
@@ -287,8 +287,8 @@
 
 	uw.deed.OwnWork.prototype.standardLicense = function () {
 		var deed = this,
-			$crossfader = this.$selector.find( '.mwe-upwiz-crossfader' ),
-			$standardDiv = this.$selector.find( '.mwe-upwiz-standard' ),
+			$crossfader = this.$selector.find( '.mediauploader-crossfader' ),
+			$standardDiv = this.$selector.find( '.mediauploader-standard' ),
 			$toggler = this.$selector.find( '.mwe-more-options a' );
 
 		this.setDefaultLicense();
@@ -304,13 +304,13 @@
 			.slideUp()
 			.animate( { opacity: 0 }, { queue: false, easing: 'linear' } );
 
-		$toggler.msg( 'mwe-upwiz-license-show-all' );
+		$toggler.msg( 'mediauploader-license-show-all' );
 	};
 
 	uw.deed.OwnWork.prototype.customLicense = function () {
 		var deed = this,
-			$crossfader = this.$selector.find( '.mwe-upwiz-crossfader' ),
-			$customDiv = this.$selector.find( '.mwe-upwiz-custom' ),
+			$crossfader = this.$selector.find( '.mediauploader-crossfader' ),
+			$customDiv = this.$selector.find( '.mediauploader-custom' ),
 			$toggler = this.$selector.find( '.mwe-more-options a' );
 
 		$crossfader.morphCrossfade( $customDiv )
@@ -324,7 +324,7 @@
 			.slideDown()
 			.css( { opacity: 0 } ).animate( { opacity: 1 }, { queue: false, easing: 'linear' } );
 
-		$toggler.msg( 'mwe-upwiz-license-show-recommended' );
+		$toggler.msg( 'mediauploader-license-show-recommended' );
 	};
 
 	/**
@@ -339,11 +339,11 @@
 			text = input.getValue().trim();
 
 		if ( text === '' ) {
-			errors.push( mw.message( 'mwe-upwiz-error-signature-blank' ) );
+			errors.push( mw.message( 'mediauploader-error-signature-blank' ) );
 		} else if ( text.length < minLength ) {
-			errors.push( mw.message( 'mwe-upwiz-error-signature-too-short', minLength ) );
+			errors.push( mw.message( 'mediauploader-error-signature-too-short', minLength ) );
 		} else if ( text.length > maxLength ) {
-			errors.push( mw.message( 'mwe-upwiz-error-signature-too-long', maxLength ) );
+			errors.push( mw.message( 'mediauploader-error-signature-too-long', maxLength ) );
 		}
 
 		return $.Deferred().resolve( errors ).promise();

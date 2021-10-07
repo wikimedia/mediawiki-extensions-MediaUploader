@@ -26,7 +26,7 @@
 		} );
 
 		this.$messages.addClass( 'oo-ui-fieldLayout-messages' );
-		this.$element.addClass( 'mwe-upwiz-validationMessageElement' );
+		this.$element.addClass( 'mediauploader-validationMessageElement' );
 	};
 
 	// Hack: Steal methods from OO.ui.FieldLayout.
@@ -89,7 +89,7 @@
 		}
 		// eslint-disable-next-line mediawiki/class-doc
 		$listItem = OO.ui.FieldLayout.prototype.makeMessage.call( this, kind, $content )
-			.addClass( 'mwe-upwiz-fieldLayout-' + kind + '-' + code );
+			.addClass( 'mediauploader-fieldLayout-' + kind + '-' + code );
 		return $listItem;
 	};
 

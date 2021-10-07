@@ -15,22 +15,22 @@
 	mw.GroupProgressBar = function ( selector, uploads, successStates, errorStates, progressProperty, weightProperty ) {
 		this.$selector = $( selector );
 		this.$selector.empty().append(
-			$( '<div>' ).addClass( 'mwe-upwiz-progress-inner' ).append(
-				$( '<div>' ).addClass( 'mwe-upwiz-progress-bar-etr-container' ).append(
-					$( '<div>' ).addClass( 'mwe-upwiz-progress-bar-etr' ).hide().append(
-						$( '<div>' ).addClass( 'mwe-upwiz-etr' )
+			$( '<div>' ).addClass( 'mediauploader-progress-inner' ).append(
+				$( '<div>' ).addClass( 'mediauploader-progress-bar-etr-container' ).append(
+					$( '<div>' ).addClass( 'mediauploader-progress-bar-etr' ).hide().append(
+						$( '<div>' ).addClass( 'mediauploader-etr' )
 					)
 				),
-				$( '<div>' ).addClass( 'mwe-upwiz-count' )
+				$( '<div>' ).addClass( 'mediauploader-count' )
 			)
 		);
 
 		this.progressBarWidget = new OO.ui.ProgressBarWidget( {
-			classes: [ 'mwe-upwiz-progress-bar' ],
+			classes: [ 'mediauploader-progress-bar' ],
 			progress: 0
 		} );
 
-		this.$selector.find( '.mwe-upwiz-progress-bar-etr' )
+		this.$selector.find( '.mediauploader-progress-bar-etr' )
 			.prepend( this.progressBarWidget.$element );
 
 		this.uploads = uploads;
@@ -49,7 +49,7 @@
 		showBar: function () {
 			// FIXME: Use CSS transition
 			// eslint-disable-next-line no-jquery/no-fade
-			this.$selector.find( '.mwe-upwiz-progress-bar-etr' ).fadeIn( 200 );
+			this.$selector.find( '.mediauploader-progress-bar-etr' ).fadeIn( 200 );
 		},
 
 		/**
@@ -120,7 +120,7 @@
 		hideBar: function () {
 			// FIXME: Use CSS transition
 			// eslint-disable-next-line no-jquery/no-fade
-			this.$selector.find( '.mwe-upwiz-progress-bar-etr' ).fadeOut( 200 );
+			this.$selector.find( '.mediauploader-progress-bar-etr' ).fadeOut( 200 );
 		},
 
 		/**
@@ -149,15 +149,15 @@
 
 			if ( remainingTime !== null ) {
 				if ( remainingTime === 0 ) {
-					timeString = mw.message( 'mwe-upwiz-finished' ).text();
+					timeString = mw.message( 'mediauploader-finished' ).text();
 				} else if ( remainingTime < 1000 ) {
-					timeString = mw.message( 'mwe-upwiz-almost-finished' ).text();
+					timeString = mw.message( 'mediauploader-almost-finished' ).text();
 				} else {
 					t = moment.duration( remainingTime );
 					timeString = t.humanize();
 				}
 
-				this.$selector.find( '.mwe-upwiz-etr' ).text( timeString );
+				this.$selector.find( '.mediauploader-etr' ).text( timeString );
 			}
 		},
 
@@ -187,10 +187,10 @@
 		showCount: function ( completed ) {
 			var total = this.uploads.length - this.countRemoved();
 			this.$selector
-				.find( '.mwe-upwiz-count' )
+				.find( '.mediauploader-count' )
 				// Hide if there are no uploads, show otherwise
 				.toggle( total !== 0 )
-				.html( mw.message( 'mwe-upwiz-upload-count', completed, total ).escaped() );
+				.html( mw.message( 'mediauploader-upload-count', completed, total ).escaped() );
 		},
 
 		countRemoved: function () {

@@ -19,14 +19,14 @@
 		this.extension = config.extension;
 		// We wouldn't want or use any of mw.widgets.TitleInputWidget functionality.
 		this.titleInput = new OO.ui.TextInputWidget( {
-			classes: [ 'mwe-title', 'mwe-upwiz-titleDetailsWidget-title' ],
+			classes: [ 'mwe-title', 'mediauploader-titleDetailsWidget-title' ],
 			maxLength: config.maxLength
 		} );
 
 		// Aggregate 'change' event (with delay)
 		this.titleInput.on( 'change', OO.ui.debounce( this.emit.bind( this, 'change' ), 500 ) );
 
-		this.$element.addClass( 'mwe-upwiz-titleDetailsWidget' );
+		this.$element.addClass( 'mediauploader-titleDetailsWidget' );
 		this.$element.append(
 			this.titleInput.$element
 		);
@@ -102,22 +102,22 @@
 			length = byteLength( value );
 
 		if ( value === '' ) {
-			errors.push( mw.message( 'mwe-upwiz-error-blank' ) );
+			errors.push( mw.message( 'mediauploader-error-blank' ) );
 			return $.Deferred().resolve( errors ).promise();
 		}
 
 		if ( this.config.minLength && length < this.config.minLength ) {
-			errors.push( mw.message( 'mwe-upwiz-error-title-too-short', this.config.minLength ) );
+			errors.push( mw.message( 'mediauploader-error-title-too-short', this.config.minLength ) );
 			return $.Deferred().resolve( errors ).promise();
 		}
 
 		if ( this.config.maxLength && length > this.config.maxLength ) {
-			errors.push( mw.message( 'mwe-upwiz-error-title-too-long', this.config.maxLength ) );
+			errors.push( mw.message( 'mediauploader-error-title-too-long', this.config.maxLength ) );
 			return $.Deferred().resolve( errors ).promise();
 		}
 
 		if ( !title ) {
-			errors.push( mw.message( 'mwe-upwiz-error-title-invalid' ) );
+			errors.push( mw.message( 'mediauploader-error-title-invalid' ) );
 			return $.Deferred().resolve( errors ).promise();
 		}
 
@@ -129,11 +129,11 @@
 					moreErrors = moreErrors.concat(
 						mw.QuickTitleChecker.checkTitle( title.getNameText() ).map( function ( errorCode ) {
 							// Messages that can be used here:
-							// * mwe-upwiz-error-title-invalid
-							// * mwe-upwiz-error-title-senselessimagename
-							// * mwe-upwiz-error-title-thumbnail
-							// * mwe-upwiz-error-title-extension
-							return mw.message( 'mwe-upwiz-error-title-' + errorCode );
+							// * mediauploader-error-title-invalid
+							// * mediauploader-error-title-senselessimagename
+							// * mediauploader-error-title-thumbnail
+							// * mediauploader-error-title-extension
+							return mw.message( 'mediauploader-error-title-' + errorCode );
 						} )
 					);
 				}
@@ -169,7 +169,7 @@
 			titleString = uw.TitleDetailsWidget.static.makeTitleInFileNS( titleString ).getPrefixedText();
 		} catch ( e ) {
 			// Unparseable result? This shouldn't happen, we checked for that earlier...
-			errors.push( mw.message( 'mwe-upwiz-error-title-invalid' ) );
+			errors.push( mw.message( 'mediauploader-error-title-invalid' ) );
 			return errors;
 		}
 
@@ -177,19 +177,19 @@
 			// result is NOT unique
 			if ( result.unique.href ) {
 				errors.push( mw.message(
-					'mwe-upwiz-fileexists-replace-on-page',
+					'mediauploader-fileexists-replace-on-page',
 					titleString,
 					$( '<a>' ).attr( { href: result.unique.href, target: '_blank' } )
 				) );
 			} else {
-				errors.push( mw.message( 'mwe-upwiz-fileexists-replace-no-link', titleString ) );
+				errors.push( mw.message( 'mediauploader-fileexists-replace-no-link', titleString ) );
 			}
 		} else if ( result.unique.isProtected ) {
-			errors.push( mw.message( 'mwe-upwiz-error-title-protected' ) );
+			errors.push( mw.message( 'mediauploader-error-title-protected' ) );
 		} else {
 			mw.messages.set( result.blacklist.blacklistMessage, result.blacklist.blacklistReason );
 			messageParams = [
-				'mwe-upwiz-blacklisted-details',
+				'mediauploader-blacklisted-details',
 				titleString,
 				function () {
 					// eslint-disable-next-line mediawiki/msg-doc
@@ -199,15 +199,15 @@
 
 			// feedback request for titleblacklist
 			if ( mw.UploadWizard.config.blacklistIssuesPage !== undefined && mw.UploadWizard.config.blacklistIssuesPage !== '' ) {
-				messageParams[ 0 ] = 'mwe-upwiz-blacklisted-details-feedback';
+				messageParams[ 0 ] = 'mediauploader-blacklisted-details-feedback';
 				messageParams.push( function () {
 					var feedback = new mw.Feedback( {
 						title: new mw.Title( mw.UploadWizard.config.blacklistIssuesPage ),
-						dialogTitleMessageKey: 'mwe-upwiz-feedback-title'
+						dialogTitleMessageKey: 'mediauploader-feedback-title'
 					} );
 					feedback.launch( {
-						message: mw.message( 'mwe-upwiz-feedback-blacklist-line-intro', result.blacklist.blacklistLine ).text(),
-						subject: mw.message( 'mwe-upwiz-feedback-blacklist-subject', titleString ).text()
+						message: mw.message( 'mediauploader-feedback-blacklist-line-intro', result.blacklist.blacklistLine ).text(),
+						subject: mw.message( 'mediauploader-feedback-blacklist-subject', titleString ).text()
 					} );
 				} );
 			}

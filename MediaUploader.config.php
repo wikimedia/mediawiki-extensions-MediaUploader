@@ -45,7 +45,7 @@ return [
 		'headerLabel' => '',
 
 		// wikitext to display on top of the "use" page.
-		// When not provided, the message mwe-upwiz-thanks-intro will be used.
+		// When not provided, the message mediauploader-thanks-intro will be used.
 		'thanksLabel' => '',
 	],
 
@@ -62,7 +62,7 @@ return [
 		// When set to a falsy value, the tutorial step will be hidden entirely.
 		// The default is a message explaining how to configure the tutorial.
 		// The parsed tutorial HTML is later placed in the 'html' property.
-		'wikitext' => '{{int:mwe-upwiz-default-tutorial-text}}',
+		'wikitext' => '{{int:mediauploader-default-tutorial-text}}',
 	],
 
 	// Tracking categories for various scenarios
@@ -159,92 +159,92 @@ return [
 	// For those that aren't, there is a "templates" property.
 	'licenses' => [
 		'cc-by-sa-4.0' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-4.0',
+			'msg' => 'mediauploader-license-cc-by-sa-4.0',
 			'icons' => [ 'cc-by', 'cc-sa' ],
 			'url' => '//creativecommons.org/licenses/by-sa/4.0/',
 			'languageCodePrefix' => 'deed.'
 		],
 		'cc-by-sa-3.0' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0',
+			'msg' => 'mediauploader-license-cc-by-sa-3.0',
 			'icons' => [ 'cc-by', 'cc-sa' ],
 			'url' => '//creativecommons.org/licenses/by-sa/3.0/',
 			'languageCodePrefix' => 'deed.'
 		],
 		'cc-by-4.0' => [
-			'msg' => 'mwe-upwiz-license-cc-by-4.0',
+			'msg' => 'mediauploader-license-cc-by-4.0',
 			'icons' => [ 'cc-by' ],
 			'url' => '//creativecommons.org/licenses/by/4.0/',
 			'languageCodePrefix' => 'deed.'
 		],
 		'cc-by-3.0' => [
-			'msg' => 'mwe-upwiz-license-cc-by-3.0',
+			'msg' => 'mediauploader-license-cc-by-3.0',
 			'icons' => [ 'cc-by' ],
 			'url' => '//creativecommons.org/licenses/by/3.0/',
 			'languageCodePrefix' => 'deed.'
 		],
 		'cc-zero' => [
-			'msg' => 'mwe-upwiz-license-cc-zero',
+			'msg' => 'mediauploader-license-cc-zero',
 			'icons' => [ 'cc-zero' ],
 			'url' => '//creativecommons.org/publicdomain/zero/1.0/',
 			'languageCodePrefix' => 'deed.'
 		],
 		'own-pd' => [
-			'msg' => 'mwe-upwiz-license-own-pd',
+			'msg' => 'mediauploader-license-own-pd',
 			'icons' => [ 'cc-zero' ],
 			'templates' => [ 'cc-zero' ]
 		],
 		'cc-by-sa-2.5' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-2.5',
+			'msg' => 'mediauploader-license-cc-by-sa-2.5',
 			'icons' => [ 'cc-by', 'cc-sa' ],
 			'url' => '//creativecommons.org/licenses/by-sa/2.5/',
 			'languageCodePrefix' => 'deed.'
 		],
 		'cc-by-2.5' => [
-			'msg' => 'mwe-upwiz-license-cc-by-2.5',
+			'msg' => 'mediauploader-license-cc-by-2.5',
 			'icons' => [ 'cc-by' ],
 			'url' => '//creativecommons.org/licenses/by/2.5/',
 			'languageCodePrefix' => 'deed.'
 		],
 		'cc-by-sa-2.0' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-2.0',
+			'msg' => 'mediauploader-license-cc-by-sa-2.0',
 			'icons' => [ 'cc-by', 'cc-sa' ],
 			'url' => '//creativecommons.org/licenses/by-sa/2.0/',
 			'languageCodePrefix' => 'deed.'
 		],
 		'cc-by-2.0' => [
-			'msg' => 'mwe-upwiz-license-cc-by-2.0',
+			'msg' => 'mediauploader-license-cc-by-2.0',
 			'icons' => [ 'cc-by' ],
 			'url' => '//creativecommons.org/licenses/by/2.0/',
 			'languageCodePrefix' => 'deed.'
 		],
 		'fal' => [
-			'msg' => 'mwe-upwiz-license-fal',
+			'msg' => 'mediauploader-license-fal',
 			'templates' => [ 'FAL' ]
 		],
 		'pd-old' => [
-			'msg' => 'mwe-upwiz-license-pd-old',
+			'msg' => 'mediauploader-license-pd-old',
 			'templates' => [ 'PD-old' ]
 		],
 		'pd-ineligible' => [
-			'msg' => 'mwe-upwiz-license-pd-ineligible'
+			'msg' => 'mediauploader-license-pd-ineligible'
 		],
 		'attribution' => [
-			'msg' => 'mwe-upwiz-license-attribution'
+			'msg' => 'mediauploader-license-attribution'
 		],
 		'gfdl' => [
-			'msg' => 'mwe-upwiz-license-gfdl',
+			'msg' => 'mediauploader-license-gfdl',
 			'templates' => [ 'GFDL' ]
 		],
 		'none' => [
-			'msg' => 'mwe-upwiz-license-none',
+			'msg' => 'mediauploader-license-none',
 			'templates' => [ 'subst:uwl' ]
 		],
 		'custom' => [
-			'msg' => 'mwe-upwiz-license-custom',
+			'msg' => 'mediauploader-license-custom',
 			'templates' => [ 'subst:Custom license marker added by UW' ]
 		],
 		'generic' => [
-			'msg' => 'mwe-upwiz-license-generic',
+			'msg' => 'mediauploader-license-generic',
 			'templates' => [ 'Generic' ]
 		]
 	],
@@ -280,8 +280,8 @@ return [
 			'licenseGroups' => [
 				[
 					// This should be a list of all CC licenses we can reasonably expect to find around the web
-					'head' => 'mwe-upwiz-license-cc-head',
-					'subhead' => 'mwe-upwiz-license-cc-subhead',
+					'head' => 'mediauploader-license-cc-head',
+					'subhead' => 'mediauploader-license-cc-subhead',
 					'licenses' => [
 						'cc-by-sa-4.0',
 						'cc-by-sa-3.0',
@@ -293,12 +293,12 @@ return [
 					]
 				],
 				[
-					'head' => 'mwe-upwiz-license-custom-head',
+					'head' => 'mediauploader-license-custom-head',
 					'special' => 'custom',
 					'licenses' => [ 'custom' ],
 				],
 				[
-					'head' => 'mwe-upwiz-license-none-head',
+					'head' => 'mediauploader-license-none-head',
 					'licenses' => [ 'none' ]
 				],
 			]

@@ -209,7 +209,7 @@ class CampaignContent extends TextContent {
 
 			if ( $generateHtml ) {
 				$output->setText(
-					wfMessage( 'mwe-upwiz-global-config-anchor' )->parseAsBlock()
+					wfMessage( 'mediauploader-global-config-anchor' )->parseAsBlock()
 				);
 			}
 			return;

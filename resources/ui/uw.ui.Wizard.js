@@ -27,11 +27,11 @@
 		OO.EventEmitter.call( this );
 
 		this.$div = $( '<div>' )
-			.attr( 'id', 'mwe-upwiz-content' );
+			.attr( 'id', 'mediauploader-content' );
 
 		$( selector ).append(
 			this.$div,
-			$( '<div>' ).addClass( 'mwe-upwiz-clearing' )
+			$( '<div>' ).addClass( 'mediauploader-clearing' )
 		);
 
 		this.initHeader( mw.UploadWizard.config );
@@ -63,7 +63,7 @@
 			this.$feedbackLink = $( '<a>' )
 				.addClass( 'contentSubLink' )
 				.prop( 'href', feedbackLink )
-				.msg( 'mwe-upwiz-feedback-prompt' );
+				.msg( 'mediauploader-feedback-prompt' );
 
 			$contentSub.append( this.$feedbackLink );
 		}
@@ -72,7 +72,7 @@
 			this.$alternativeUploads = $( '<a>' )
 				.addClass( 'contentSubLink' )
 				.prop( 'href', new mw.Title( config.alternativeUploadToolsPage ).getUrl() )
-				.msg( 'mwe-upwiz-subhead-alternatives' );
+				.msg( 'mediauploader-subhead-alternatives' );
 
 			$contentSub.append( this.$alternativeUploads );
 		}
@@ -112,7 +112,7 @@
 				title = new mw.Title( altUploadForm );
 
 				$( '<a>' )
-					.msg( 'mwe-upwiz-subhead-alt-upload' )
+					.msg( 'mediauploader-subhead-alt-upload' )
 					.addClass( 'contentSubLink' )
 					.attr( 'href', title.getUrl() )
 					.appendTo( '#contentSub' );
@@ -129,27 +129,27 @@
 	 */
 	uw.ui.Wizard.prototype.initialiseSteps = function ( steps ) {
 		var $steps = $( '<ul>' )
-			.attr( 'id', 'mwe-upwiz-steps' )
+			.attr( 'id', 'mediauploader-steps' )
 			.addClass( 'ui-helper-clearfix' )
-			.insertBefore( '#mwe-upwiz-content' );
+			.insertBefore( '#mediauploader-content' );
 
 		steps.forEach( function ( step ) {
 			var $arrow = $( '<li>' )
-				.attr( 'id', 'mwe-upwiz-step-' + step.stepName )
+				.attr( 'id', 'mediauploader-step-' + step.stepName )
 				.append(
 					// Messages that can be used here:
-					// * mwe-upwiz-step-tutorial
-					// * mwe-upwiz-step-file
-					// * mwe-upwiz-step-deeds
-					// * mwe-upwiz-step-details
-					// * mwe-upwiz-step-thanks
-					$( '<div>' ).text( mw.message( 'mwe-upwiz-step-' + step.stepName ).text() )
+					// * mediauploader-step-tutorial
+					// * mediauploader-step-file
+					// * mediauploader-step-deeds
+					// * mediauploader-step-details
+					// * mediauploader-step-thanks
+					$( '<div>' ).text( mw.message( 'mediauploader-step-' + step.stepName ).text() )
 				);
 			$steps.append( $arrow );
 
 			// once a (new) step loads, highlight it
-			step.on( 'load', function ( $arrow ) {
-				$steps.arrowStepsHighlight( $arrow );
+			step.on( 'load', function ( $arrow2 ) {
+				$steps.arrowStepsHighlight( $arrow2 );
 			}.bind( step, $arrow ) );
 		} );
 

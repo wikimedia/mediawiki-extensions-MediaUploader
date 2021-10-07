@@ -138,8 +138,8 @@
 
 		if ( code === 'abusefilter-warning' ) {
 			$extra = new OO.ui.ButtonWidget( {
-				label: mw.message( 'mwe-upwiz-override' ).text(),
-				title: mw.message( 'mwe-upwiz-override-upload' ).text(),
+				label: mw.message( 'mediauploader-override' ).text(),
+				title: mw.message( 'mediauploader-override-upload' ).text(),
 				flags: 'progressive',
 				framed: false
 			} ).on( 'click', function () {
@@ -238,7 +238,7 @@
 		} );
 
 		for ( i = 0; i < unknownAmount; i++ ) {
-			$a = $( '<em>' ).text( mw.msg( 'mwe-upwiz-deleted-duplicate-unknown-filename' ) );
+			$a = $( '<em>' ).text( mw.msg( 'mediauploader-deleted-duplicate-unknown-filename' ) );
 			$ul.append( $( '<li>' ).append( $a ) );
 		}
 
@@ -250,8 +250,8 @@
 		// foreign repo, not when it's a local dupe
 		if ( Object.keys( localDuplicates ).length === 0 ) {
 			override = new OO.ui.ButtonWidget( {
-				label: mw.message( 'mwe-upwiz-override' ).text(),
-				title: mw.message( 'mwe-upwiz-override-upload' ).text(),
+				label: mw.message( 'mediauploader-override' ).text(),
+				title: mw.message( 'mediauploader-override-upload' ).text(),
 				flags: 'progressive',
 				framed: false
 			} ).on( 'click', function () {
@@ -276,8 +276,8 @@
 	mw.ApiUploadHandler.prototype.setDuplicateArchiveError = function ( code, result, duplicate ) {
 		var filename = mw.Title.makeTitle( NS_FILE, duplicate ).getPrefixedText(),
 			uploadDuplicate = new OO.ui.ButtonWidget( {
-				label: mw.message( 'mwe-upwiz-override' ).text(),
-				title: mw.message( 'mwe-upwiz-override-upload' ).text(),
+				label: mw.message( 'mediauploader-override' ).text(),
+				title: mw.message( 'mediauploader-override-upload' ).text(),
 				flags: 'progressive',
 				framed: false
 			} ).on( 'click', function () {

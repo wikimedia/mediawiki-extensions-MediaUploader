@@ -47,11 +47,11 @@
 				text = this.getValue().trim();
 
 			if ( text === '' ) {
-				errors.push( mw.message( 'mwe-upwiz-error-blank' ) );
+				errors.push( mw.message( 'mediauploader-error-blank' ) );
 			} else if ( text.length < minLength ) {
-				errors.push( mw.message( 'mwe-upwiz-error-too-short', minLength ) );
+				errors.push( mw.message( 'mediauploader-error-too-short', minLength ) );
 			} else if ( text.length > maxLength ) {
-				errors.push( mw.message( 'mwe-upwiz-error-too-long', maxLength ) );
+				errors.push( mw.message( 'mediauploader-error-too-long', maxLength ) );
 			}
 
 			return $.Deferred().resolve( errors ).promise();
@@ -61,8 +61,8 @@
 			return $.Deferred().resolve( [] ).promise();
 		};
 		this.sourceInputField = new uw.FieldLayout( this.sourceInput, {
-			label: mw.message( 'mwe-upwiz-source' ).text(),
-			help: mw.message( 'mwe-upwiz-tooltip-source' ).text(),
+			label: mw.message( 'mediauploader-source' ).text(),
+			help: mw.message( 'mediauploader-tooltip-source' ).text(),
 			required: true
 		} );
 
@@ -81,11 +81,11 @@
 				text = this.getValue().trim();
 
 			if ( text === '' ) {
-				errors.push( mw.message( 'mwe-upwiz-error-blank' ) );
+				errors.push( mw.message( 'mediauploader-error-blank' ) );
 			} else if ( text.length < minLength ) {
-				errors.push( mw.message( 'mwe-upwiz-error-too-short', minLength ) );
+				errors.push( mw.message( 'mediauploader-error-too-short', minLength ) );
 			} else if ( text.length > maxLength ) {
-				errors.push( mw.message( 'mwe-upwiz-error-too-long', maxLength ) );
+				errors.push( mw.message( 'mediauploader-error-too-long', maxLength ) );
 			}
 
 			return $.Deferred().resolve( errors ).promise();
@@ -95,8 +95,8 @@
 			return $.Deferred().resolve( [] ).promise();
 		};
 		this.authorInputField = new uw.FieldLayout( this.authorInput, {
-			label: mw.message( 'mwe-upwiz-author' ).text(),
-			help: mw.message( 'mwe-upwiz-tooltip-author' ).text(),
+			label: mw.message( 'mediauploader-author' ).text(),
+			help: mw.message( 'mediauploader-tooltip-author' ).text(),
 			required: true
 		} );
 
@@ -105,10 +105,10 @@
 			this.uploadCount,
 			api
 		);
-		this.licenseInput.$element.addClass( 'mwe-upwiz-deed-license-groups' );
+		this.licenseInput.$element.addClass( 'mediauploader-deed-license-groups' );
 		this.licenseInput.setDefaultValues();
 		this.licenseInputField = new uw.FieldLayout( this.licenseInput, {
-			label: mw.message( 'mwe-upwiz-source-thirdparty-cases', this.uploadCount ).text(),
+			label: mw.message( 'mediauploader-source-thirdparty-cases', this.uploadCount ).text(),
 			required: true
 		} );
 	};
@@ -127,21 +127,21 @@
 	};
 
 	uw.deed.ThirdParty.prototype.setFormFields = function ( $selector ) {
-		var $formFields = $( '<div>' ).addClass( 'mwe-upwiz-deed-form-internal' );
+		var $formFields = $( '<div>' ).addClass( 'mediauploader-deed-form-internal' );
 
 		this.$form = $( '<form>' );
 
 		if ( this.uploadCount > 1 ) {
-			$formFields.append( $( '<div>' ).msg( 'mwe-upwiz-source-thirdparty-custom-multiple-intro' ) );
+			$formFields.append( $( '<div>' ).msg( 'mediauploader-source-thirdparty-custom-multiple-intro' ) );
 		}
 
 		$formFields.append(
-			$( '<div>' ).addClass( 'mwe-upwiz-source-thirdparty-custom-multiple-intro' ),
-			$( '<div>' ).addClass( 'mwe-upwiz-thirdparty-fields' )
+			$( '<div>' ).addClass( 'mediauploader-source-thirdparty-custom-multiple-intro' ),
+			$( '<div>' ).addClass( 'mediauploader-thirdparty-fields' )
 				.append( this.sourceInputField.$element ),
-			$( '<div>' ).addClass( 'mwe-upwiz-thirdparty-fields' )
+			$( '<div>' ).addClass( 'mediauploader-thirdparty-fields' )
 				.append( this.authorInputField.$element ),
-			$( '<div>' ).addClass( 'mwe-upwiz-thirdparty-license' )
+			$( '<div>' ).addClass( 'mediauploader-thirdparty-license' )
 				.append( this.licenseInputField.$element )
 		);
 
