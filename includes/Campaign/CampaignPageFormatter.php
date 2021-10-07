@@ -1,12 +1,19 @@
 <?php
 
-use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
-use MediaWiki\Extension\MediaUploader\Campaign\CampaignStats;
+namespace MediaWiki\Extension\MediaUploader\Campaign;
+
+use Html;
+use ImageGalleryBase;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
+use MWException;
+use ParserOutput;
+use RequestContext;
+use Skin;
+use Title;
 
 /**
- * Helper class to produce formatted HTML output for Campaigns
+ * Helper class to produce formatted HTML output for campaigns
  */
 class CampaignPageFormatter {
 
@@ -71,7 +78,7 @@ class CampaignPageFormatter {
 		if ( $this->context->getUser()->isAnon() ) {
 			$urlParams = [ 'returnto' => $this->record->getTitle()->getPrefixedText() ];
 			$createAccountUrl = Skin::makeSpecialUrlSubpage( 'Userlogin', 'signup', $urlParams );
-			$uploadLink = new OOUI\ButtonWidget( [
+			$uploadLink = new \OOUI\ButtonWidget( [
 				'label' => $this->context->msg( 'mwe-upwiz-campaign-create-account-button' )->text(),
 				'flags' => [ 'progressive', 'primary' ],
 				'href' => $createAccountUrl
@@ -80,7 +87,7 @@ class CampaignPageFormatter {
 			$uploadUrl = Skin::makeSpecialUrl(
 				'MediaUploader', [ 'campaign' => $this->record->getTitle()->getDBkey() ]
 			);
-			$uploadLink = new OOUI\ButtonWidget( [
+			$uploadLink = new \OOUI\ButtonWidget( [
 				'label' => $this->context->msg( 'mwe-upwiz-campaign-upload-button' )->text(),
 				'flags' => [ 'progressive', 'primary' ],
 				'href' => $uploadUrl

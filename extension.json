@@ -105,9 +105,6 @@
 	"ServiceWiringFiles": [
 		"includes/ServiceWiring.php"
 	],
-	"AutoloadClasses": {
-		"CampaignPageFormatter": "includes/CampaignPageFormatter.php"
-	},
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\MediaUploader\\": "includes/",
 		"MediaWiki\\Extension\\MediaUploader\\Maintenance\\": "maintenance/"

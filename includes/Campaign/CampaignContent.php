@@ -2,7 +2,6 @@
 
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
-use CampaignPageFormatter;
 use Html;
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
