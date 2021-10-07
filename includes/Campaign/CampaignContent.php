@@ -65,22 +65,38 @@ class CampaignContent extends TextContent {
 	 * third arguments.
 	 *
 	 * @param string $text
-	 * @param Status|null $yamlParse YAML parsing status of the previous instance
-	 *   of this class.
-	 * @param Status|null $validationStatus The validation status of the previous,
-	 *   insignificantly different instance of this class.
 	 *
 	 * @throws MWException
 	 */
-	public function __construct(
-		string $text,
-		Status $yamlParse = null,
-		Status $validationStatus = null
-	) {
+	public function __construct( string $text ) {
 		parent::__construct( $text, CONTENT_MODEL_CAMPAIGN );
+	}
 
-		$this->yamlParse = $yamlParse;
-		$this->validationStatus = $validationStatus;
+	/**
+	 * Make a copy of this content instance with new text.
+	 *
+	 * This carries on the services and validation statuses.
+	 *
+	 * @param string $text
+	 *
+	 * @return CampaignContent
+	 * @throws MWException
+	 */
+	public function copyWithNewText( string $text ): CampaignContent {
+		$content = new CampaignContent( $text );
+
+		// Carry on the validation statuses
+		$content->yamlParse = $this->yamlParse;
+		$content->validationStatus = $this->validationStatus;
+		$content->realYamlParse = $this->realYamlParse;
+		$content->realValidationStatus = $this->realValidationStatus;
+
+		// And the services as well
+		$content->setServices(
+			$this->configFactory,
+			$this->validator
+		);
+		return $content;
 	}
 
 	/**
@@ -274,10 +290,18 @@ class CampaignContent extends TextContent {
 		}
 
 		try {
-			$this->yamlParse = Status::newGood( Yaml::parse(
+			$data = Yaml::parse(
 				$this->getText(),
 				Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE
-			) );
+			);
+			if ( is_array( $data ) ) {
+				$this->yamlParse = Status::newGood( $data );
+			} else {
+				$this->yamlParse = Status::newFatal(
+					'mediauploader-yaml-parse-error',
+					'unknown error'
+				);
+			}
 			return $this->yamlParse;
 		}
 		catch ( ParseException $e ) {

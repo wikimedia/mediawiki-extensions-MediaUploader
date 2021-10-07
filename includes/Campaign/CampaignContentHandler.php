@@ -44,6 +44,7 @@ class CampaignContentHandler extends JsonContentHandler {
 	 * @return CampaignContent
 	 */
 	public function preSaveTransform( Content $content, PreSaveTransformParams $pstParams ): Content {
+		/** @var CampaignContent $content */
 		'@phan-var CampaignContent $content';
 		// Allow the system user to bypass format and schema checks
 		if ( MediaUploaderServices::isSystemUser( $pstParams->getUser() ) ) {
@@ -54,12 +55,8 @@ class CampaignContentHandler extends JsonContentHandler {
 			return $content;
 		}
 
-		$contentClass = $this->getContentClass();
-		return new $contentClass(
-			$contentClass::normalizeLineEndings( $content->getText() ),
-			// Carry forward the current validation status
-			$content->getData(),
-			$content->getValidationStatus()
+		return $content->copyWithNewText(
+			CampaignContent::normalizeLineEndings( $content->getText() )
 		);
 	}
 }

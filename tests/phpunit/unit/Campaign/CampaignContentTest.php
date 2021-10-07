@@ -84,13 +84,19 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 		$this->assertTrue( $content->isValid(), 'isValid()' );
 	}
 
+	public function provideInvalidSyntax(): iterable {
+		yield 'invalid YAML' => [ '[[[[' ];
+		yield 'invalid JSON' => [ '{"enabled":false' ];
+	}
+
 	/**
 	 * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::isValid
 	 * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::getValidationStatus
+	 *
+	 * @dataProvider provideInvalidSyntax
 	 */
-	public function testIsValid_invalidSyntax() {
-		// Try to parse some very invalid YAML
-		$content = new CampaignContent( '[[[[' );
+	public function testIsValid_invalidSyntax( string $text ) {
+		$content = new CampaignContent( $text );
 
 		$content->setServices(
 			null,

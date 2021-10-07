@@ -4,8 +4,8 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
 
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Maintenance\FixCampaigns;
+use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\Tests\Maintenance\MaintenanceBaseTestCase;
-use Status;
 use Title;
 
 /**
@@ -13,6 +13,8 @@ use Title;
  * @group Database
  *
  * @covers \MediaWiki\Extension\MediaUploader\Maintenance\FixCampaigns
+ * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent
+ * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContentHandler
  */
 class MaintenanceFixCampaignsTest extends MaintenanceBaseTestCase {
 
@@ -165,13 +167,10 @@ YAML;
 		$title = Title::newFromText( $name, NS_CAMPAIGN );
 		$this->editPage(
 			$title,
-			new CampaignContent(
-				$content,
-				// Pass a fake YAML parsing result to force saving the campaign.
-				Status::newGood( [] ),
-				// Set validation status to "good".
-				Status::newGood()
-			)
+			new CampaignContent( $content ),
+			'creating campaign',
+			NS_CAMPAIGN,
+			MediaUploaderServices::getSystemUser()
 		);
 	}
 
@@ -188,10 +187,10 @@ YAML;
 		$revision = $page->getRevisionRecord();
 
 		if ( $changeType === self::CHANGE_NONE ) {
-			$this->assertNotSame(
-				'MediaUploader',
-				$revision->getUser()->getName(),
-				'$revision->getUser()->getName()'
+			$this->assertSame(
+				'creating campaign',
+				$revision->getComment()->text,
+				'$revision->getComment()->text'
 			);
 			return;
 		} else {
@@ -199,6 +198,11 @@ YAML;
 				'MediaUploader',
 				$revision->getUser()->getName(),
 				'$revision->getUser()->getName()'
+			);
+			$this->assertNotSame(
+				'creating campaign',
+				$revision->getComment()->text,
+				'$revision->getComment()->text'
 			);
 		}
 
