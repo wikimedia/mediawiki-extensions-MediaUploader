@@ -95,7 +95,8 @@
 	"MessagesDirs": {
 		"MediaUploader": [
 			"i18n",
-			"i18n/api"
+			"i18n/api",
+			"i18n/license"
 		]
 	},
 	"ExtensionMessagesFiles": {
