@@ -33,7 +33,7 @@ class RegistrationHooks implements
 	}
 
 	/**
-	 * Lists tags used by UploadWizard (via ListDefinedTags,
+	 * Lists tags used by MediaUploader (via ListDefinedTags,
 	 * ListExplicitlyDefinedTags & ChangeTagsListActive hooks)
 	 *
 	 * @param string[] &$tags

@@ -41,7 +41,7 @@ return [
 	'missingCategoriesWikiText' => '',
 
 	'display' => [
-		// wikitext to display above the UploadWizard UI.
+		// wikitext to display above the MediaUploader UI.
 		'headerLabel' => '',
 
 		// wikitext to display on top of the "use" page.
@@ -71,7 +71,7 @@ return [
 		// Default to none because we don't know what categories
 		// exist or not on local wikis.
 		// Do not uncomment this line, set
-		// $wgUploadWizardConfig['trackingCategory']['all']
+		// $wgMediaUploaderConfig['trackingCategory']['all']
 		// to your favourite category name.
 
 		// 'all' => '',
@@ -143,10 +143,10 @@ return [
 	// Initialized in RequestConfig.php
 	'languages' => [],
 
-	// The UploadWizard allows users to provide file descriptions in multiple languages. For each description, the user
-	// can choose the language. The UploadWizard wraps each description in a "language template". A language template is
-	// by default assumed to be a template with a name corresponding to the ISO 646 code of the language. For instance,
-	// Template:en for English, or Template:fr for French.
+	// The MediaUploader allows users to provide file descriptions in multiple languages. For each description, the user
+	// can choose the language. The MediaUploader wraps each description in a "language template". A language template
+	// is by default assumed to be a template with a name corresponding to the ISO 646 code of the language. For
+	// instance, Template:en for English, or Template:fr for French.
 	// If this is not the case for some or all or your wiki's language templates, this map can be used to define the
 	// template names to be used. Keys are ISO 646 language codes, values are template names.
 	'languageTemplateFixups' => [],
@@ -492,7 +492,7 @@ return [
 	'customLicenseTemplate' => false,
 
 	// Link to page where users can leave feedback or bug reports.
-	// Defaults to UploadWizard's bug tracker.
+	// Defaults to MediaUploader's bug tracker.
 	// If you want to use a wiki page, set this to a falsy value,
 	// and set feedbackPage to the name of the wiki page.
 	'feedbackLink' => '',

@@ -137,7 +137,7 @@ class MediaUploader extends SpecialPage {
 		// load spinner styles early
 		$out->addModuleStyles( 'jquery.spinner.styles' );
 
-		// where the uploadwizard will go
+		// where the uploader will go
 		// TODO import more from MediaUploader's createInterface call.
 		$out->addHTML( $this->getWizardHtml() );
 	}
