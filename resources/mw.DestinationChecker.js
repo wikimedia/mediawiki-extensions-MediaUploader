@@ -13,10 +13,10 @@
 		 *
 		 * @param {string} title Title to check
 		 * @return {jQuery.Promise}
-		 * @return {Function} return.done
-		 * @return {string} return.done.title The title that was passed in
-		 * @return {Object|boolean} return.done.blacklist See #checkBlacklist
-		 * @return {Object|boolean} return.done.unique See #checkUnique
+		 *  {Function} return.done
+		 *  {string} return.done.title The title that was passed in
+		 *  {Object|boolean} return.done.blacklist See #checkBlacklist
+		 *  {Object|boolean} return.done.unique See #checkUnique
 		 */
 		checkTitle: function ( title ) {
 			return $.when(
@@ -36,11 +36,11 @@
 		 *
 		 * @param {string} title Title to check against the blacklist
 		 * @return {jQuery.Promise}
-		 * @return {Function} return.done
-		 * @return {boolean} return.done.notBlacklisted
-		 * @return {string} [return.done.blacklistReason] See mw.Api#isBlacklisted
-		 * @return {string} [return.done.blacklistMessage] See mw.Api#isBlacklisted
-		 * @return {string} [return.done.blacklistLine] See mw.Api#isBlacklisted
+		 *  {Function} return.done
+		 *  {boolean} return.done.notBlacklisted
+		 *  {string} [return.done.blacklistReason] See mw.Api#isBlacklisted
+		 *  {string} [return.done.blacklistMessage] See mw.Api#isBlacklisted
+		 *  {string} [return.done.blacklistLine] See mw.Api#isBlacklisted
 		 */
 		checkBlacklist: function ( title ) {
 			var checker = this;
@@ -88,11 +88,11 @@
 		 *
 		 * @param {string} title Title to check for uniqueness
 		 * @return {jQuery.Promise}
-		 * @return {Function} return.done
-		 * @return {boolean} return.done.isUnique
-		 * @return {boolean} [return.done.isProtected]
-		 * @return {Object} [return.done.img] Image info
-		 * @return {string} [return.done.href] URL to file description page
+		 *  {Function} return.done
+		 *  {boolean} return.done.isUnique
+		 *  {boolean} [return.done.isProtected]
+		 *  {Object} [return.done.img] Image info
+		 *  {string} [return.done.href] URL to file description page
 		 */
 		checkUnique: function ( title ) {
 			var checker = this,

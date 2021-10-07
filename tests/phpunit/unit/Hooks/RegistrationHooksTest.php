@@ -17,7 +17,6 @@ class RegistrationHooksTest extends MediaWikiUnitTestCase {
 		$expected = [
 			'dummy',
 			'uploadwizard',
-			'uploadwizard-flickr'
 		];
 
 		$hooks = new RegistrationHooks();

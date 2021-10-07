@@ -18,6 +18,11 @@
 				size /= 1024.0;
 				i++;
 			}
+			// Messages that can be used here:
+			// * size-bytes
+			// * size-kilobytes
+			// * size-megabytes
+			// * size-gigabytes
 			return mw.message( scaleMsgKeys[ i ], size.toFixed( i > 1 ? 2 : 0 ) ).text();
 		}
 	};

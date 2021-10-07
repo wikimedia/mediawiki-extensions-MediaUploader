@@ -61,10 +61,9 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 								'licenses' => [ 'cc-by-sa-4.0' ]
 							],
 							[
-								'head' => 'mwe-upwiz-license-flickr-head',
-								'subhead' => 'mwe-upwiz-license-flickr-subhead',
-								'prependTemplates' => [ 'flickrreview' ],
-								'licenses' => [ 'cc-by-sa-2.0' ]
+								'head' => 'mwe-upwiz-license-custom-head',
+								'special' => 'custom',
+								'licenses' => [ 'custom' ],
 							],
 						]
 					],
@@ -80,8 +79,7 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 				// Head and subhead messages
 				'mwe-upwiz-license-cc-head',
 				'mwe-upwiz-license-cc-subhead',
-				'mwe-upwiz-license-flickr-head',
-				'mwe-upwiz-license-flickr-subhead',
+				'mwe-upwiz-license-custom-head',
 				// Default license assertions for own work uploads
 				'mwe-upwiz-source-ownwork-assert-cc-by-sa-4.0',
 				'mwe-upwiz-source-ownwork-cc-by-sa-4.0-explain',
@@ -161,10 +159,9 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 								'licenses' => [ 'cc-by-sa-4.0' ]
 							],
 							[
-								'head' => 'mwe-upwiz-license-flickr-head',
-								'subhead' => 'mwe-upwiz-license-flickr-subhead',
-								'prependTemplates' => [ 'flickrreview' ],
-								'licenses' => [ 'cc-by-sa-2.0' ]
+								'head' => 'mwe-upwiz-license-custom-head',
+								'special' => 'custom',
+								'licenses' => [ 'custom' ],
 							],
 						]
 					],
@@ -187,8 +184,7 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 				// Head and subhead messages
 				'mwe-upwiz-license-cc-head',
 				'mwe-upwiz-license-cc-subhead',
-				'mwe-upwiz-license-flickr-head',
-				'mwe-upwiz-license-flickr-subhead',
+				'mwe-upwiz-license-custom-head',
 				// Default license assertions for own work uploads
 				'mwe-upwiz-source-ownwork-assert-cc-by-sa-4.0',
 				'mwe-upwiz-source-ownwork-cc-by-sa-4.0-explain',

@@ -3,18 +3,13 @@
 namespace MediaWiki\Extension\MediaUploader\Hooks;
 
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
-use MediaWiki\Hook\IsUploadAllowedFromUrlHook;
 use MediaWiki\Preferences\Hook\GetPreferencesHook;
-use UploadWizardFlickrBlacklist;
 use User;
 
 /**
  * General MediaUploader hooks.
  */
-class Hooks implements
-	GetPreferencesHook,
-	IsUploadAllowedFromUrlHook
-{
+class Hooks implements GetPreferencesHook {
 	/** @var RawConfig */
 	private $config;
 
@@ -144,23 +139,5 @@ class Hooks implements
 		} else {
 			return wfMessage( $license['msg'] )->parse();
 		}
-	}
-
-	/**
-	 * @param string $url
-	 * @param bool &$allowed
-	 *
-	 * @return true
-	 */
-	public function onIsUploadAllowedFromUrl( $url, &$allowed ) {
-		if ( $allowed ) {
-			$flickrBlacklist = new UploadWizardFlickrBlacklist(
-				$this->config->getConfigArray()
-			);
-			if ( $flickrBlacklist->isBlacklisted( $url ) ) {
-				$allowed = false;
-			}
-		}
-		return true;
 	}
 }

@@ -26,17 +26,6 @@ return [
 	// Initialized in RawConfig.php
 	'fileExtensions' => null,
 
-	// Flickr details
-	// Flickr API is SSL-only as of June 27th, 2014:
-	// http://code.flickr.net/2014/04/30/flickr-api-going-ssl-only-on-june-27th-2014/
-	'flickrApiUrl' => 'https://api.flickr.com/services/rest/?',
-
-	// you should probably replace this with your own
-	'flickrApiKey' => 'aeefff139445d825d4460796616f9349',
-
-	// name of wiki page with blacklist of Flickr users
-	'flickrBlacklistPage' => '',
-
 	// Settings about things that get automatically (and silently) added to uploads
 	'autoAdd' => [
 		// Categories to automatically (and silently) add all uploaded images into.
@@ -407,18 +396,6 @@ return [
 					]
 				],
 				[
-					// n.b. as of April 2011, Flickr still uses CC 2.0 licenses.
-					// The White House also has an account there, hence the Public Domain US Government license
-					'head' => 'mwe-upwiz-license-flickr-head',
-					'subhead' => 'mwe-upwiz-license-flickr-subhead',
-					'prependTemplates' => [ 'flickrreview' ],
-					'licenses' => [
-						'cc-by-sa-2.0',
-						'cc-by-2.0',
-						'pd-usgov',
-					]
-				],
-				[
 					'head' => 'mwe-upwiz-license-public-domain-usa-head',
 					'subhead' => 'mwe-upwiz-license-public-domain-usa-subhead',
 					'licenses' => [
@@ -487,14 +464,6 @@ return [
 	// Only '*' (everyone) and 'mass-upload' (users with this user right) keys are allowed
 	'maxUploads' => [
 		'*' => 50,
-		'mass-upload' => 500,
-	],
-
-	// Max number of files that can be imported from Flickr at one time (T236341)
-	// Note that these numbers should always be equal to or less than the maxUploads above.
-	// Only '*' (everyone) and 'mass-upload' (users with this user right) keys are allowed
-	'maxFlickrUploads' => [
-		'*' => 4,
 		'mass-upload' => 500,
 	],
 

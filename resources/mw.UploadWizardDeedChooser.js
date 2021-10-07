@@ -24,9 +24,11 @@
 			var deed = chooser.deeds[ name ],
 				radio = new OO.ui.RadioSelectWidget( {
 					items: [ new OO.ui.RadioOptionWidget( {
+						// eslint-disable-next-line mediawiki/msg-doc
 						label: mw.message( 'mwe-upwiz-source-' + deed.name, chooser.uploads.length ).text()
 					} ) ]
 				} ),
+				// eslint-disable-next-line mediawiki/class-doc
 				$deedInterface = $( '<div>' ).addClass( 'mwe-upwiz-deed mwe-upwiz-deed-' + deed.name ).append(
 					$( '<div>' ).addClass( 'mwe-upwiz-deed-option-title' ).append(
 						$( '<span>' ).addClass( 'mwe-upwiz-deed-header' ).append(

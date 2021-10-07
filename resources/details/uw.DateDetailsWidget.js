@@ -144,6 +144,7 @@
 				for ( i in warnLicenses ) {
 					if ( warnLicenses[ i ] in licenses ) {
 						license = licenses[ warnLicenses[ i ] ];
+						// eslint-disable-next-line mediawiki/msg-doc
 						licenseMsg = mw.message( license.msg, 0, license.url ? license.url : '#missing license URL' );
 						warnings.push( mw.message( 'mwe-upwiz-error-date-license-unlikely', licenseMsg.parseDom() ) );
 					}
@@ -170,12 +171,15 @@
 		} else if ( 'pd-us' in licenses && date.getFullYear() >= new Date().getFullYear() - 95 ) {
 			// if the license stated the work is public domain, it must've been
 			// created a really long time ago
+			// eslint-disable-next-line mediawiki/msg-doc
 			errors.push( mw.message( 'mwe-upwiz-error-date-license-mismatch', mw.message( licenses[ 'pd-us' ].msg ).parseDom() ) );
 		} else if ( 'pd-old' in licenses && date > old ) {
 			// if the author died 70 years ago, the timestamp should reflect that
+			// eslint-disable-next-line mediawiki/msg-doc
 			errors.push( mw.message( 'mwe-upwiz-error-date-license-mismatch', mw.message( licenses[ 'pd-old' ].msg ).parseDom() ) );
 		} else if ( 'pd-old-100' in licenses && date > old100 ) {
 			// if the author died 100 years ago, the timestamp should reflect that
+			// eslint-disable-next-line mediawiki/msg-doc
 			errors.push( mw.message( 'mwe-upwiz-error-date-license-mismatch', mw.message( licenses[ 'pd-old-100' ].msg ).parseDom() ) );
 		}
 

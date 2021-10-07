@@ -4,7 +4,6 @@
 	 *
 	 * @constructor
 	 * @class mw.FormDataTransport
-	 * @mixins OO.EventEmitter
 	 * @param {mw.Api} api
 	 * @param {Object} formData Additional form fields required for upload api call
 	 * @param {Object} [config]
@@ -162,19 +161,19 @@
 		for ( offset = 0; offset < fileSize; offset += chunkSize ) {
 			// Capture offset in a closure
 			// eslint-disable-next-line no-loop-func
-			( function ( offset ) {
+			( function ( offset2 ) {
 				var
 					newPromise = $.Deferred(),
-					isLastChunk = offset + chunkSize >= fileSize,
+					isLastChunk = offset2 + chunkSize >= fileSize,
 					thisChunkSize = isLastChunk ? ( fileSize % chunkSize ) : chunkSize;
 				prevPromise.done( function () {
-					transport.uploadChunk( file, offset )
+					transport.uploadChunk( file, offset2 )
 						.done( isLastChunk ? deferred.resolve : newPromise.resolve )
 						.fail( deferred.reject )
 						.progress( function ( fraction ) {
 							// The progress notifications give us per-chunk progress.
 							// Calculate progress for the whole file.
-							deferred.notify( ( offset + fraction * thisChunkSize ) / fileSize );
+							deferred.notify( ( offset2 + fraction * thisChunkSize ) / fileSize );
 						} );
 				} );
 				prevPromise = newPromise;

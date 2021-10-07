@@ -128,9 +128,11 @@
 					// We don't have a title blacklist, so just check for some likely undesirable patterns.
 					moreErrors = moreErrors.concat(
 						mw.QuickTitleChecker.checkTitle( title.getNameText() ).map( function ( errorCode ) {
-							// Messages:
-							// mwe-upwiz-error-title-invalid, mwe-upwiz-error-title-senselessimagename,
-							// mwe-upwiz-error-title-thumbnail, mwe-upwiz-error-title-extension,
+							// Messages that can be used here:
+							// * mwe-upwiz-error-title-invalid
+							// * mwe-upwiz-error-title-senselessimagename
+							// * mwe-upwiz-error-title-thumbnail
+							// * mwe-upwiz-error-title-extension
 							return mw.message( 'mwe-upwiz-error-title-' + errorCode );
 						} )
 					);
@@ -190,6 +192,7 @@
 				'mwe-upwiz-blacklisted-details',
 				titleString,
 				function () {
+					// eslint-disable-next-line mediawiki/msg-doc
 					mw.errorDialog( $( '<div>' ).msg( result.blacklist.blacklistMessage ) );
 				}
 			];

@@ -7,7 +7,6 @@
 	 * Items can be added or removed (#addItem, #removeItem) while the queue is already being
 	 * executed.
 	 *
-	 * @mixins OO.EventEmitter
 	 * @param {Object} options
 	 * @param {Function} options.action Action to execute for each item, must return a Promise
 	 * @param {number} options.count Number of functions to execute concurrently

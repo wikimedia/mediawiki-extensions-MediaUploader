@@ -11,6 +11,8 @@
 
 		uw.LanguageDropdownWidget.parent.call( this );
 
+		// The following classes are used here:
+		// * mwe-upwiz-singleLanguageInputWidget-language
 		this.languageDropdown = new OO.ui.DropdownWidget( {
 			menu: { items: this.getLanguageMenuOptionWidgets( config.languages ) },
 			classes: config.classes

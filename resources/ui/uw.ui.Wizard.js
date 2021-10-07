@@ -20,7 +20,6 @@
 	 * Represents the UI for the wizard.
 	 *
 	 * @class uw.ui.Wizard
-	 * @mixins OO.EventEmitter
 	 * @constructor
 	 * @param {string} selector Where to put all of the wizard interface.
 	 */
@@ -138,6 +137,12 @@
 			var $arrow = $( '<li>' )
 				.attr( 'id', 'mwe-upwiz-step-' + step.stepName )
 				.append(
+					// Messages that can be used here:
+					// * mwe-upwiz-step-tutorial
+					// * mwe-upwiz-step-file
+					// * mwe-upwiz-step-deeds
+					// * mwe-upwiz-step-details
+					// * mwe-upwiz-step-thanks
 					$( '<div>' ).text( mw.message( 'mwe-upwiz-step-' + step.stepName ).text() )
 				);
 			$steps.append( $arrow );

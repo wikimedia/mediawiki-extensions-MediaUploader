@@ -79,6 +79,7 @@
 	 * @return {OO.ui.FieldsetLayout}
 	 */
 	uw.LicenseGroup.prototype.createFieldset = function ( group ) {
+		/* eslint-disable mediawiki/msg-doc */
 		var $head = this.config.head && $( '<a>' )
 				.addClass( 'mwe-upwiz-deed-license-group-head mw-collapsible-arrow' )
 				.msg( this.config.head, this.count ),
@@ -90,6 +91,7 @@
 				items: [ group ],
 				classes: [ 'mwe-upwiz-deed-license-group' ]
 			} );
+		/* eslint-enable mediawiki/msg-doc */
 
 		if ( this.collapsible ) {
 			fieldset.$group.makeCollapsible( { collapsed: true, $customTogglers: $head, toggleClasses: true } );
@@ -135,6 +137,7 @@
 			options.push( option );
 		} );
 
+		// eslint-disable-next-line mediawiki/class-doc
 		return new OO.ui.RadioSelectWidget( { items: options, classes: classes } );
 	};
 
@@ -169,6 +172,7 @@
 			options.push( option );
 		} );
 
+		// eslint-disable-next-line mediawiki/class-doc
 		return new OO.ui.CheckboxMultiselectWidget( { items: options, classes: classes } );
 	};
 
@@ -346,10 +350,12 @@
 		$licenseLink = $( '<a>' ).attr( { target: '_blank', href: licenseURL } );
 		if ( licenseInfo.props.icons !== undefined ) {
 			licenseInfo.props.icons.forEach( function ( icon ) {
+				// eslint-disable-next-line mediawiki/class-doc
 				$icons.append( $( '<span>' ).addClass( 'mwe-upwiz-license-icon mwe-upwiz-' + icon + '-icon' ) );
 			} );
 		}
 
+		// eslint-disable-next-line mediawiki/msg-doc
 		$label = $( '<label>' )
 			.msg( messageKey, this.count || 0, $licenseLink )
 			.append( $icons ).addClass( 'mwe-upwiz-copyright-info' );

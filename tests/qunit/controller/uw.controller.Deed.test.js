@@ -32,9 +32,7 @@
 			),
 			ststub = this.sandbox.stub().returns( $.Deferred().promise() ),
 			uploads = [
-				{ file: { fromURL: true }, getThumbnail: ststub, on: function () {}, title: mw.Title.newFromText( 'Test1.jpg', 6 ) },
 				{ file: {}, getThumbnail: ststub, on: function () {}, title: mw.Title.newFromText( 'Test2.jpg', 6 ) },
-				{ file: { fromURL: true }, getThumbnail: ststub, on: function () {}, title: mw.Title.newFromText( 'Test3.jpg', 6 ) },
 				{ file: {}, getThumbnail: ststub, on: function () {}, title: mw.Title.newFromText( 'Test4.jpg', 6 ) }
 			];
 
