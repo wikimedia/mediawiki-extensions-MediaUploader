@@ -5,7 +5,6 @@
 	 *
 	 * @class uw.MultipleLanguageInputWidget
 	 * @extends uw.DetailsWidget
-	 * @mixins OO.ui.mixin.GroupElement
 	 * @constructor
 	 * @param {Object} [config]
 	 * @cfg {boolean} [required=true]
@@ -178,6 +177,7 @@
 			// clone the original object: `.params` doesn't replace existing
 			// params so follow-up calls here would otherwise just keep adding
 			// to the params instead of setting a new value for the first param
+			// eslint-disable-next-line mediawiki/msg-doc
 			msg = mw.message( this.config.label.key ).params( this.config.label.parameters );
 			text = msg.params( [ this.items.length ] ).text();
 		}

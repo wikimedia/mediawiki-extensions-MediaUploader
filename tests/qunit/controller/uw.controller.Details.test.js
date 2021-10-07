@@ -27,8 +27,6 @@
 		};
 
 		return {
-			file: { fromUrl: false },
-
 			deedChooser: { deed: { name: customDeedChooser ? 'custom' : 'cc-by-sa-4.0' } },
 
 			on: function () {},

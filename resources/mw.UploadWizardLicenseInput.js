@@ -57,8 +57,8 @@
 				if ( self.type === 'radio' ) {
 					group.on( 'change', function ( currentGroup ) {
 						var value = currentGroup.getValue(),
-							group = currentGroup.getGroup();
-						self.setValues( value, group );
+							group2 = currentGroup.getGroup();
+						self.setValues( value, group2 );
 					} );
 				}
 			} );
@@ -86,7 +86,7 @@
 		 * Sets the value(s) of a license input. This is a little bit klugey because it relies on an inverted dict, and in some
 		 * cases we are now letting license inputs create multiple templates.
 		 *
-		 * @param {Object} values License-key to boolean values, e.g. { 'cc_by_sa_30': true, gfdl: true, 'flickrreview|cc_by_sa_30': false }
+		 * @param {Object} values License-key to boolean values, e.g. { 'cc_by_sa_30': true, gfdl: false }
 		 * @param {string} [groupName] Name of group, when values are only relevant to this group
 		 */
 		setValues: function ( values, groupName ) {
@@ -211,9 +211,10 @@
 			var input = this,
 				errors = $.Deferred().resolve( [] ).promise(),
 				addError = function ( message ) {
-					errors = errors.then( function ( errors ) {
-						errors.push( mw.message( message ) );
-						return errors;
+					errors = errors.then( function ( errorsCopy ) {
+						// eslint-disable-next-line mediawiki/msg-doc
+						errorsCopy.push( mw.message( message ) );
+						return errorsCopy;
 					} );
 				},
 				selectedInputs = this.getSerialized();
@@ -250,13 +251,13 @@
 						errors = $.when(
 							errors, // array of existing errors
 							input.getUsedTemplates( wikitext )
-						).then( function ( errors, usedTemplates ) {
+						).then( function ( errorsCopy, usedTemplates ) {
 							if ( usedTemplates.indexOf( mw.UploadWizard.config.customLicenseTemplate ) < 0 ) {
 								// no license template found, add another error
-								errors.push( mw.message( 'mwe-upwiz-error-license-wikitext-missing-template' ) );
+								errorsCopy.push( mw.message( 'mwe-upwiz-error-license-wikitext-missing-template' ) );
 							}
 
-							return errors;
+							return errorsCopy;
 						} );
 					}
 				} );

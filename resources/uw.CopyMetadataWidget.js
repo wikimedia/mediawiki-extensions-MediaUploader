@@ -24,9 +24,13 @@
 		for ( metadataType in uw.CopyMetadataWidget.static.copyMetadataTypes ) {
 			if ( Object.prototype.hasOwnProperty.call( uw.CopyMetadataWidget.static.copyMetadataTypes, metadataType ) ) {
 				defaultStatus = uw.CopyMetadataWidget.static.copyMetadataTypes[ metadataType ];
-				// mwe-upwiz-copy-title, mwe-upwiz-copy-description,
-				// mwe-upwiz-copy-date, mwe-upwiz-copy-categories,
-				// mwe-upwiz-copy-location, mwe-upwiz-copy-other
+				// Messages that can be used here:
+				// * mwe-upwiz-copy-title
+				// * mwe-upwiz-copy-description
+				// * mwe-upwiz-copy-date
+				// * mwe-upwiz-copy-categories
+				// * mwe-upwiz-copy-location
+				// * mwe-upwiz-copy-other
 				copyMetadataMsg = mw.message( 'mwe-upwiz-copy-' + metadataType ).text();
 
 				checkboxes.push( new OO.ui.CheckboxMultioptionWidget( {

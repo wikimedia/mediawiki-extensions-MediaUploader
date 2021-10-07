@@ -411,7 +411,7 @@
 		 * (which we should actually be using, such as time and timezone)
 		 */
 		prefillDate: function () {
-			var dateObj, metadata, dateTimeRegex, matches, dateStr, saneTime,
+			var dateObj, metadata, dateStr, saneTime,
 				dateMode = 'calendar',
 				yyyyMmDdRegex = /^(\d\d\d\d)[:/-](\d\d)[:/-](\d\d)\D.*/,
 				timeRegex = /\D(\d\d):(\d\d):(\d\d)/;
@@ -459,19 +459,6 @@
 				} );
 			}
 
-			// If we don't have EXIF lets try other sources - Flickr
-			if ( dateObj === undefined && this.upload.file !== undefined && this.upload.file.date !== undefined ) {
-				dateTimeRegex = /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d/;
-				matches = this.upload.file.date.match( dateTimeRegex );
-				if ( matches ) {
-					this.dateDetails.setSerialized( {
-						mode: dateMode,
-						value: this.upload.file.date
-					} );
-					return;
-				}
-			}
-
 			// if we don't have EXIF or other metadata, just don't put a date in.
 			// XXX if we have FileAPI, it might be clever to look at file attrs, saved
 			// in the upload object for use here later, perhaps
@@ -515,8 +502,7 @@
 		 *
 		 * Note that this is not related to specifying the description from the query
 		 * string (that happens earlier). This is for when we have retrieved a
-		 * description from an upload_by_url upload (e.g. Flickr transfer)
-		 * or from the metadata.
+		 * description from an upload_by_url upload or from the metadata.
 		 */
 		prefillDescription: function () {
 			var m, descText;
@@ -532,8 +518,6 @@
 				if ( descText ) {
 					// strip out any HTML tags
 					descText = descText.replace( /<[^>]+>/g, '' );
-					// & and " are escaped by Flickr, so we need to unescape
-					descText = descText.replace( /&amp;/g, '&' ).replace( /&quot;/g, '"' );
 
 					this.descriptionsDetails.setSerialized( {
 						inputs: [

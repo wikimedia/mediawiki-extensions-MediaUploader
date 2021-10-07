@@ -55,96 +55,6 @@
 
 		this.$addFileContainer.append( this.addFile.$element );
 
-		if ( this.isFlickrImportEnabled() ) {
-			this.$flickrAddFileContainer = $( '<div>' )
-				.attr( 'id', 'mwe-upwiz-upload-ctrl-flickr-container' );
-
-			this.$uploadCenterDivide = $( '<p>' )
-				.attr( 'id', 'mwe-upwiz-upload-ctr-divide' )
-				.text( mw.message( 'mwe-upwiz-add-flickr-or' ).text() );
-
-			this.addFlickrFile = new OO.ui.ButtonWidget( {
-				id: 'mwe-upwiz-add-flickr-file',
-				label: mw.message( 'mwe-upwiz-add-file-flickr' ).text(),
-				flags: 'progressive'
-			} ).on( 'click', function () {
-				upload.flickrInterfaceInit();
-			} );
-
-			this.$flickrAddFileContainer.append(
-				this.$uploadCenterDivide,
-				this.addFlickrFile.$element
-			);
-
-			this.$addFileContainer
-				.append( this.$flickrAddFileContainer );
-
-			this.$flickrSelectList = $( '<div>' )
-				.attr( 'id', 'mwe-upwiz-flickr-select-list' );
-
-			this.$flickrSelectListContainer = $( '<div>' )
-				.attr( 'id', 'mwe-upwiz-flickr-select-list-container' )
-				.addClass( 'ui-corner-all' )
-				.append(
-					$( '<div>' )
-						.text( mw.message(
-							'mwe-upwiz-multi-file-select2',
-							config.maxFlickrUploads
-						) ),
-					this.$flickrSelectList
-				);
-
-			// Button to move on & upload the files that were selected
-			this.flickrSelectButton = new OO.ui.ButtonWidget( {
-				id: 'mwe-upwiz-select-flickr',
-				label: mw.message( 'mwe-upwiz-add-file-0-free' ).text(),
-				flags: [ 'progressive', 'primary' ]
-			} );
-			this.$flickrSelectListContainer.append( this.flickrSelectButton.$element );
-
-			// A container holding a form
-			this.$flickrContainer = $( '<div>' ).attr( 'id', 'mwe-upwiz-upload-add-flickr-container' );
-
-			// Form whose submit event will be listened to and prevented
-			this.$flickrForm = $( '<form>' ).attr( 'id', 'mwe-upwiz-flickr-url-form' )
-				.appendTo( this.$flickrContainer )
-				.on( 'submit', function () {
-					var checker = new mw.FlickrChecker( upload, upload.flickrSelectButton );
-					upload.flickrButton.setDisabled( true );
-					upload.flickrChecker( checker );
-					// TODO Any particular reason to stopPropagation ?
-					return false;
-				} );
-
-			// The input that will hold a flickr URL entered by the user; will be appended to a form
-			this.flickrInput = new OO.ui.TextInputWidget( {
-				placeholder: mw.message( 'mwe-upwiz-flickr-input-placeholder' ).text()
-			} );
-
-			this.flickrButton = new OO.ui.ButtonInputWidget( {
-				label: mw.message( 'mwe-upwiz-add-flickr' ).text(),
-				flags: [ 'progressive', 'primary' ],
-				type: 'submit'
-			} );
-
-			this.flickrField = new OO.ui.ActionFieldLayout(
-				this.flickrInput, this.flickrButton, {
-					align: 'top',
-					classes: [ 'mwe-upwiz-flickr-field' ]
-				}
-			);
-
-			this.$flickrForm.append( this.flickrField.$element );
-
-			// Add disclaimer
-			$( '<div>' ).attr( 'id', 'mwe-upwiz-flickr-disclaimer' )
-				.append(
-					mw.message( 'mwe-upwiz-flickr-disclaimer1' ).parseDom(),
-					$( '<br>' ), mw.message( 'mwe-upwiz-flickr-disclaimer2' ).parseDom()
-				)
-				.appendTo( this.$flickrContainer );
-		}
-
 		this.nextStepButtonAllOk = new OO.ui.ButtonWidget( {
 			label: mw.message( 'mwe-upwiz-next-file' ).text(),
 			flags: [ 'progressive', 'primary' ]
@@ -209,10 +119,6 @@
 			// we have uploads ready to go, so allow us to proceed
 			this.$addFileContainer.add( this.$buttons ).show();
 
-			if ( this.isFlickrImportEnabled() ) {
-				this.$uploadCenterDivide.hide();
-			}
-
 			// fix the rounded corners on file elements.
 			// we want them to be rounded only when their edge touched the top or bottom of the filelist.
 			this.$fileListings = this.$fileList.find( '.filled' );
@@ -228,17 +134,9 @@
 			this.$fileListings.filter( ':even' ).removeClass( 'odd' );
 		} else {
 			this.hideEndButtons();
-
-			if ( this.isFlickrImportEnabled() ) {
-				this.$uploadCenterDivide.show();
-			}
 		}
 
 		this.addFile.setDisabled( !fewerThanMax );
-
-		if ( this.isFlickrImportEnabled() ) {
-			this.addFlickrFile.setDisabled( !fewerThanMax );
-		}
 	};
 
 	/**
@@ -247,25 +145,18 @@
 	 * @param {boolean} more
 	 */
 	uw.ui.Upload.prototype.setAddButtonText = function ( more ) {
-		var msg = 'mwe-upwiz-add-file-',
-			fmsg = 'mwe-upwiz-add-file-flickr';
+		var msg = 'mwe-upwiz-add-file-';
 
 		if ( more ) {
 			msg += 'n';
-			fmsg += '-n';
 		} else {
 			msg += '0-free';
 		}
 
+		// Messages that can be used here:
+		// * mwe-upwiz-add-file-0-free
+		// * mwe-upwiz-add-file-n
 		this.addFile.selectButton.setLabel( mw.message( msg ).text() );
-
-		// if Flickr uploading is available to this user, show the "add more files from flickr" button
-		if ( this.isFlickrImportEnabled() ) {
-			// changes the flickr add button to "add more files from flickr" if necessary.
-			this.addFlickrFile.setLabel( mw.message( fmsg ).text() );
-			// jQuery likes to restore the wrong 'display' value when doing .show()
-			this.$flickrAddFileContainer.css( 'display', '' );
-		}
 	};
 
 	uw.ui.Upload.prototype.load = function ( uploads ) {
@@ -281,7 +172,6 @@
 			$( '<div>' )
 				.attr( 'id', 'mwe-upwiz-files' )
 				.append(
-					this.$flickrSelectListContainer,
 					this.$fileList,
 					this.$uploadCtrl
 				)
@@ -469,71 +359,6 @@
 	 */
 	uw.ui.Upload.prototype.showFilenameError = function ( message ) {
 		mw.errorDialog( message );
-	};
-
-	/**
-	 * Checks whether flickr import is enabled and the current user has the rights to use it
-	 *
-	 * @return {boolean}
-	 */
-	uw.ui.Upload.prototype.isFlickrImportEnabled = function () {
-		return this.config.UploadFromUrl && this.config.flickrApiKey !== '';
-	};
-
-	/**
-	 * Initiates the Interface to upload media from Flickr.
-	 * Called when the user clicks on the 'Add images from Flickr' button.
-	 */
-	uw.ui.Upload.prototype.flickrInterfaceInit = function () {
-		// Hide containers for selecting files, and show the flickr interface instead
-		this.$addFileContainer.hide();
-		this.$flickrAddFileContainer.hide();
-		this.$flickrContainer.show();
-		this.flickrSelectButton.$element.show();
-		this.flickrButton.setDisabled( false );
-
-		// Insert form into the page
-		this.$div.find( '#mwe-upwiz-files' ).prepend( this.$flickrContainer );
-
-		this.flickrInput.focus();
-	};
-
-	/**
-	 * Responsible for fetching license of the provided media.
-	 *
-	 * @param {mw.FlickrChecker} checker
-	 */
-	uw.ui.Upload.prototype.flickrChecker = function ( checker ) {
-		var flickrInputUrl = this.flickrInput.getValue();
-
-		checker.getLicenses().done( function () {
-			checker.checkFlickr( flickrInputUrl );
-		} );
-	};
-
-	/**
-	 * Reset the interface if there is a problem while fetching the images from
-	 * the URL entered by the user.
-	 */
-	uw.ui.Upload.prototype.flickrInterfaceReset = function () {
-		// first destroy it completely, then reshow the add button
-		this.flickrInterfaceDestroy();
-		this.flickrButton.setDisabled( false );
-		this.$flickrContainer.show();
-		this.flickrSelectButton.$element.show();
-	};
-
-	/**
-	 * Removes the flickr interface.
-	 */
-	uw.ui.Upload.prototype.flickrInterfaceDestroy = function () {
-		this.flickrInput.setValue( '' );
-		this.$flickrSelectList.empty();
-		this.$flickrSelectListContainer.off();
-		this.$flickrSelectListContainer.hide();
-		this.$flickrContainer.hide();
-		this.flickrButton.setDisabled( true );
-		this.flickrSelectButton.$element.hide();
 	};
 
 }( mw.uploadWizard ) );

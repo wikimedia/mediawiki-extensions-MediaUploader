@@ -260,6 +260,7 @@
 				// Show the appropriate message.
 				$mvCtaCheckboxSection.append( $( '<p>' )
 					.addClass( 'mwe-upwiz-mv-cta-confirmation' )
+					// eslint-disable-next-line mediawiki/msg-doc
 					.msg( message )
 				);
 				mw.user.options.set( key, value );
@@ -268,6 +269,7 @@
 				message = 'mwe-upwiz-mv-cta-user-preference-set-failed';
 				$mvCtaCheckboxSection.append( $( '<p>' )
 					.addClass( 'mwe-upwiz-mv-cta-confirmation' )
+					// eslint-disable-next-line mediawiki/msg-doc
 					.msg( message )
 				);
 			} )
@@ -293,6 +295,10 @@
 		} );
 
 		if ( useEditFont ) {
+			// The following classes are used here:
+			// * mw-editfont-monospace
+			// * mw-editfont-sans-serif
+			// * mw-editfont-serif
 			copyText.textInput.$element.addClass( 'mw-editfont-' + mw.user.options.get( 'editfont' ) );
 		}
 

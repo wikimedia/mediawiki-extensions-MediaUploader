@@ -347,7 +347,6 @@
 		}
 
 		// make sure the file isn't too large
-		// TODO need a way to find the size of the Flickr image
 		if ( upload.file.size ) {
 			upload.transportWeight = upload.file.size;
 			if ( upload.transportWeight > actualMaxSize ) {

@@ -106,6 +106,7 @@
 
 		this.$form = $( '<form>' );
 
+		/* eslint-disable mediawiki/msg-doc */
 		$standardDiv = $( '<div>' ).addClass( 'mwe-upwiz-standard' ).append(
 			$( '<p>' ).msg(
 				defaultLicenseMsg,
@@ -120,6 +121,7 @@
 			)
 		);
 		$crossfader = $( '<div>' ).addClass( 'mwe-upwiz-crossfader' ).append( $standardDiv );
+		/* eslint-enable mediawiki/msg-doc */
 
 		if ( this.showCustomDiv ) {
 			$customDiv = $( '<div>' ).addClass( 'mwe-upwiz-custom' ).append(

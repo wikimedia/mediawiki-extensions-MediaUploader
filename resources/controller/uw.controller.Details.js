@@ -65,7 +65,7 @@
 			serialized = upload.details ? upload.details.getSerialized() : null;
 
 			controller.createDetails( upload );
-			if ( upload.file.fromURL || ( upload.deedChooser && upload.deedChooser.deed.name === 'custom' ) ) {
+			if ( upload.deedChooser && upload.deedChooser.deed.name === 'custom' ) {
 				upload.details.useCustomDeedChooser();
 			}
 			upload.details.attach();
@@ -244,8 +244,8 @@
 		} );
 
 		// omit duplicates
-		warnings = warnings.filter( function ( warning, i, warnings ) {
-			return warnings.indexOf( warning ) === i;
+		warnings = warnings.filter( function ( warning, j, warningsOld ) {
+			return warningsOld.indexOf( warning ) === j;
 		} );
 
 		for ( i = 0; i < warnings.length; i++ ) {

@@ -3,7 +3,6 @@
 	 * Create an interface fragment corresponding to a file input, suitable for Upload Wizard.
 	 *
 	 * @class mw.UploadWizardUploadInterface
-	 * @mixins OO.EventEmitter
 	 * @constructor
 	 * @param {mw.UploadWizardUpload} upload
 	 */
@@ -98,6 +97,7 @@
 	mw.UploadWizardUploadInterface.prototype.setStatus = function ( msgKey, args ) {
 		// get the status line for our upload
 		var $status = this.$div.find( '.mwe-upwiz-file-status' );
+		// eslint-disable-next-line mediawiki/msg-doc
 		$status.msg( msgKey, args || [] ).show();
 	};
 

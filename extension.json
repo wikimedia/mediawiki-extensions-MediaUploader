@@ -83,9 +83,6 @@
 			]
 		}
 	},
-	"APIModules": {
-		"flickrblacklist": "ApiFlickrBlacklist"
-	},
 	"APIListModules": {
 		"allcampaigns": {
 			"class": "MediaWiki\\Extension\\MediaUploader\\Api\\QueryAllCampaigns",
@@ -109,9 +106,7 @@
 		"includes/ServiceWiring.php"
 	],
 	"AutoloadClasses": {
-		"UploadWizardFlickrBlacklist": "includes/UploadWizardFlickrBlacklist.php",
-		"CampaignPageFormatter": "includes/CampaignPageFormatter.php",
-		"ApiFlickrBlacklist": "includes/ApiFlickrBlacklist.php"
+		"CampaignPageFormatter": "includes/CampaignPageFormatter.php"
 	},
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\MediaUploader\\": "includes/",
@@ -205,7 +200,6 @@
 				"resources/uw.units.js",
 				"resources/transports/mw.FormDataTransport.js",
 				"resources/handlers/mw.ApiUploadHandler.js",
-				"resources/handlers/mw.ApiUploadPostHandler.js",
 				"resources/handlers/mw.ApiUploadFormDataHandler.js",
 				"resources/ui/uw.ui.base.js",
 				"resources/ui/uw.ui.Wizard.js",
@@ -255,7 +249,6 @@
 				"resources/mw.Escaper.js",
 				"resources/mw.DestinationChecker.js",
 				"resources/mw.QuickTitleChecker.js",
-				"resources/mw.FlickrChecker.js",
 				"resources/mw.GroupProgressBar.js",
 				"resources/mw.UploadWizardDeedChooser.js",
 				"resources/mw.UploadWizardLicenseInput.js",
@@ -298,12 +291,6 @@
 				"mwe-upwiz-api-warning-was-deleted",
 				"mwe-upwiz-api-warning-exists",
 				"mwe-upwiz-multi-file-select2",
-				"mwe-upwiz-flickr-input-placeholder",
-				"mwe-upwiz-add-flickr-or",
-				"mwe-upwiz-add-flickr",
-				"mwe-upwiz-select-flickr",
-				"mwe-upwiz-flickr-disclaimer1",
-				"mwe-upwiz-flickr-disclaimer2",
 				"mwe-upwiz-uploading",
 				"mwe-upwiz-queued",
 				"mwe-upwiz-assembling",
@@ -411,11 +398,6 @@
 				"mwe-upwiz-license-custom-preview",
 				"mwe-upwiz-license-confirm-remove",
 				"mwe-upwiz-license-confirm-remove-title",
-				"mwe-upwiz-license-external",
-				"mwe-upwiz-license-external-invalid",
-				"mwe-upwiz-license-photoset-invalid",
-				"mwe-upwiz-url-invalid",
-				"mwe-upwiz-user-blacklisted",
 				"mwe-upwiz-categories",
 				"mwe-upwiz-categories-missing",
 				"mwe-upwiz-thumbnail-failed",
@@ -464,8 +446,6 @@
 				"prefs-upwiz-interface",
 				"mwe-upwiz-add-file-n",
 				"mwe-upwiz-add-file-0-free",
-				"mwe-upwiz-add-file-flickr-n",
-				"mwe-upwiz-add-file-flickr",
 				"mwe-upwiz-tooltip-sign",
 				"mwe-upwiz-source-ownwork-assert",
 				"mwe-upwiz-source-ownwork-assert-custom",
@@ -520,7 +500,6 @@
 			"uw.ConcurrentQueue.test.js",
 			"mw.UploadWizardUpload.test.js",
 			"mw.UploadWizardLicenseInput.test.js",
-			"mw.FlickrChecker.test.js",
 			"uw.TitleDetailsWidget.test.js",
 			"mw.fileApi.test.js"
 		],
@@ -538,7 +517,6 @@
 		"EditFilterMergedContent": "campaign",
 		"EditPage::showEditForm:initial": "campaignContent",
 		"GetPreferences": "general",
-		"IsUploadAllowedFromUrl": "general",
 		"LinksUpdateComplete": "campaign",
 		"ListDefinedTags": "registration",
 		"LoadExtensionSchemaUpdates": "registration",

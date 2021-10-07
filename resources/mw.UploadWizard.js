@@ -91,9 +91,9 @@
 			steps[ steps.length - 1 ].setNextStep( uploadStep );
 
 			return $.Deferred().resolve( steps ).promise()
-				.always( function ( steps ) {
-					self.steps = steps;
-					self.ui.initialiseSteps( steps );
+				.always( function ( stepsInner ) {
+					self.steps = stepsInner;
+					self.ui.initialiseSteps( stepsInner );
 				} );
 		},
 

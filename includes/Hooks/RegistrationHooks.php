@@ -23,10 +23,7 @@ class RegistrationHooks implements
 	/**
 	 * Change tags used in the extension.
 	 */
-	public const CHANGE_TAGS = [
-		'uploadwizard',
-		'uploadwizard-flickr',
-	];
+	public const CHANGE_TAGS = [ 'uploadwizard' ];
 
 	/**
 	 * Sets up constants.

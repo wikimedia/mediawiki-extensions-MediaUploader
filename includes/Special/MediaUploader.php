@@ -27,7 +27,6 @@ use PermissionsError;
 use SpecialPage;
 use Title;
 use UploadBase;
-use UploadFromUrl;
 use User;
 use UserBlockedError;
 
@@ -256,13 +255,6 @@ class MediaUploader extends SpecialPage {
 				}
 			}
 		}
-		// UploadFromUrl parameter set to true only if the user is allowed to upload a file
-		// from a URL which we need to check in our Javascript implementation.
-		if ( UploadFromUrl::isEnabled() && UploadFromUrl::isAllowed( $this->getUser() ) === true ) {
-			$config['UploadFromUrl'] = true;
-		} else {
-			$config['UploadFromUrl'] = false;
-		}
 
 		// Get the user's default license. This will usually be 'default', but
 		// can be a specific license like 'ownwork-cc-zero'.
@@ -326,17 +318,12 @@ class MediaUploader extends SpecialPage {
 				->inContentLanguage()->plain()
 		];
 
-		// maxUploads and maxFlickrUploads depend on the user's rights
+		// maxUploads depends on the user's rights
 		$canMassUpload = $this->getUser()->isAllowed( 'mass-upload' );
 		$config['maxUploads'] = $this->getMaxUploads(
 			$config['maxUploads'],
 			$canMassUpload,
 			50
-		);
-		$config['maxFlickrUploads'] = $this->getMaxUploads(
-			$config['maxFlickrUploads'],
-			$canMassUpload,
-			4
 		);
 
 		$bitmapHandler = new BitmapHandler();
@@ -349,7 +336,7 @@ class MediaUploader extends SpecialPage {
 	}
 
 	/**
-	 * Returns the value for maxUploads and maxFlickrUpload settings, based on
+	 * Returns the value for the maxUploads setting, based on
 	 * whether the user has the mass-upload user right.
 	 *
 	 * @param mixed $setting

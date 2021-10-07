@@ -101,28 +101,9 @@
 	 * @param {mw.UploadWizardUpload[]} uploads
 	 */
 	uw.controller.Deed.prototype.load = function ( uploads ) {
-		var customDeed, previousDeed, fromStepName, showDeed;
-
-		showDeed = uploads.some( function ( upload ) {
-			fromStepName = upload.state;
-			return !upload.file.fromURL;
-		} );
+		var customDeed, previousDeed;
 
 		uw.controller.Step.prototype.load.call( this, uploads );
-
-		// If all of the uploads are from URLs, then we know the licenses
-		// already, we don't need this step.
-		if ( !showDeed ) {
-			// this is a bit of a hack: when images from flickr are uploaded, we
-			// don't get to choose the license anymore, and this step will be
-			// skipped ... but we could reach this step from either direction
-			if ( fromStepName === 'details' ) {
-				this.movePrevious();
-			} else {
-				this.moveNext();
-			}
-			return;
-		}
 
 		// grab a serialized copy of previous deeds' details (if any)
 		if ( this.deedChooser ) {
@@ -151,9 +132,7 @@
 
 		uploads.forEach( function ( upload ) {
 			// Add previews and details to the DOM
-			if ( !upload.file.fromURL ) {
-				upload.deedPreview = new uw.ui.DeedPreview( upload );
-			}
+			upload.deedPreview = new uw.ui.DeedPreview( upload );
 		} );
 
 		this.deedChooser.onLayoutReady();

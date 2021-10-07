@@ -87,6 +87,7 @@
 			code = error.code;
 			$content = $( $.parseHTML( error.html ) );
 		}
+		// eslint-disable-next-line mediawiki/class-doc
 		$listItem = OO.ui.FieldLayout.prototype.makeMessage.call( this, kind, $content )
 			.addClass( 'mwe-upwiz-fieldLayout-' + kind + '-' + code );
 		return $listItem;

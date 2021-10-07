@@ -17,7 +17,6 @@
 	 * this fileInput gets a file, this upload becomes 'filled'.
 	 *
 	 * @class mw.UploadWizardUpload
-	 * @mixins OO.EventEmitter
 	 * @constructor
 	 * @param {uw.controller.Step} controller
 	 * @param {File} file
@@ -449,7 +448,7 @@
 	/**
 	 * Get the upload handler per browser capabilities
 	 *
-	 * @return {mw.ApiUploadFormDataHandler|mw.ApiUploadPostHandler} upload handler object
+	 * @return {mw.ApiUploadFormDataHandler} upload handler object
 	 */
 	mw.UploadWizardUpload.prototype.getUploadHandler = function () {
 		var constructor; // must be the name of a function in 'mw' namespace
@@ -458,9 +457,6 @@
 			constructor = 'ApiUploadFormDataHandler';
 			if ( mw.UploadWizard.config.debug ) {
 				mw.log( 'mw.UploadWizard::getUploadHandler> ' + constructor );
-			}
-			if ( this.file.fromURL ) {
-				constructor = 'ApiUploadPostHandler';
 			}
 			this.uploadHandler = new mw[ constructor ]( this, this.api );
 		}
