@@ -170,81 +170,6 @@ return [
 			'url' => '//creativecommons.org/licenses/by-sa/3.0/',
 			'languageCodePrefix' => 'deed.'
 		],
-		'cc-by-sa-3.0-gfdl' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0-gfdl',
-			'templates' => [ 'GFDL', 'cc-by-sa-3.0' ],
-			'icons' => [ 'cc-by', 'cc-sa' ]
-		],
-		'cc-by-sa-3.0-at' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0-at',
-			'templates' => [ 'cc-by-sa-3.0-at' ],
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/3.0/at/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-sa-3.0-de' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0-de',
-			'templates' => [ 'cc-by-sa-3.0-de' ],
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/3.0/de/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-sa-3.0-ee' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0-ee',
-			'templates' => [ 'cc-by-sa-3.0-ee' ],
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/3.0/ee/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-sa-3.0-es' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0-es',
-			'templates' => [ 'cc-by-sa-3.0-es' ],
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/3.0/es/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-sa-3.0-hr' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0-hr',
-			'templates' => [ 'cc-by-sa-3.0-hr' ],
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/3.0/hr/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-sa-3.0-lu' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0-lu',
-			'templates' => [ 'cc-by-sa-3.0-lu' ],
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/3.0/lu/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-sa-3.0-nl' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0-nl',
-			'templates' => [ 'cc-by-sa-3.0-nl' ],
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/3.0/nl/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-sa-3.0-no' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0-no',
-			'templates' => [ 'cc-by-sa-3.0-no' ],
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/3.0/no/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-sa-3.0-pl' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0-pl',
-			'templates' => [ 'cc-by-sa-3.0-pl' ],
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/3.0/pl/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-sa-3.0-ro' => [
-			'msg' => 'mwe-upwiz-license-cc-by-sa-3.0-ro',
-			'templates' => [ 'cc-by-sa-3.0-ro' ],
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/3.0/ro/',
-			'languageCodePrefix' => 'deed.'
-		],
 		'cc-by-4.0' => [
 			'msg' => 'mwe-upwiz-license-cc-by-4.0',
 			'icons' => [ 'cc-by' ],
@@ -296,41 +221,12 @@ return [
 			'msg' => 'mwe-upwiz-license-fal',
 			'templates' => [ 'FAL' ]
 		],
-		'pd-old-100' => [
-			'msg' => 'mwe-upwiz-license-pd-old-100',
-			'templates' => [ 'PD-old-100' ]
-		],
 		'pd-old' => [
 			'msg' => 'mwe-upwiz-license-pd-old',
 			'templates' => [ 'PD-old' ]
 		],
-		'pd-art' => [
-			'msg' => 'mwe-upwiz-license-pd-art-70',
-			'templates' => [ 'PD-Art|PD-old-70' ],
-			'url' => '//commons.wikimedia.org/wiki/Commons:Licensing#Material_in_the_public_domain',
-		],
-		'pd-us' => [
-			'msg' => 'mwe-upwiz-license-pd-us',
-			'templates' => [ 'PD-US-expired' ]
-		],
-		'pd-old-70-expired' => [
-			'msg' => 'mwe-upwiz-license-pd-old-70-1923',
-			'templates' => [ 'PD-old-70-expired' ],
-		],
-		'pd-usgov' => [
-			'msg' => 'mwe-upwiz-license-pd-usgov',
-			'templates' => [ 'PD-USGov' ]
-		],
-		'pd-usgov-nasa' => [
-			'msg' => 'mwe-upwiz-license-pd-usgov-nasa',
-			'templates' => [ 'PD-USGov-NASA' ]
-		],
 		'pd-ineligible' => [
 			'msg' => 'mwe-upwiz-license-pd-ineligible'
-		],
-		'pd-textlogo' => [
-			'msg' => 'mwe-upwiz-license-pd-textlogo',
-			'templates' => [ 'trademarked', 'PD-textlogo' ]
 		],
 		'attribution' => [
 			'msg' => 'mwe-upwiz-license-attribution'
@@ -353,6 +249,7 @@ return [
 		]
 	],
 
+	// TODO: prepare reasonable defaults for this section
 	'licensing' => [
 		// Default license type.
 		// Possible values: ownwork, thirdparty, choice.
@@ -393,22 +290,6 @@ return [
 						'cc-by-3.0',
 						'cc-by-2.5',
 						'cc-zero'
-					]
-				],
-				[
-					'head' => 'mwe-upwiz-license-public-domain-usa-head',
-					'subhead' => 'mwe-upwiz-license-public-domain-usa-subhead',
-					'licenses' => [
-						'pd-us',
-						'pd-art',
-					]
-				],
-				[
-					// omitted navy because it is believed only MultiChil uses it heavily. Could add it back
-					'head' => 'mwe-upwiz-license-usgov-head',
-					'licenses' => [
-						'pd-usgov',
-						'pd-usgov-nasa'
 					]
 				],
 				[

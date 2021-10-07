@@ -27,9 +27,9 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 			[
 				// Taken from the default config
 				'licenses' => [
-					'pd-textlogo' => [
-						'msg' => 'mwe-upwiz-license-pd-textlogo',
-						'templates' => [ 'trademarked', 'PD-textlogo' ]
+					'pd-old' => [
+						'msg' => 'mwe-upwiz-license-pd-old',
+						'templates' => [ 'PD-old' ]
 					],
 					'attribution' => [
 						'msg' => 'mwe-upwiz-license-attribution'
@@ -41,7 +41,7 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 				]
 			],
 			[
-				'mwe-upwiz-license-pd-textlogo',
+				'mwe-upwiz-license-pd-old',
 				'mwe-upwiz-license-attribution',
 				'mwe-upwiz-license-gfdl',
 			]
@@ -136,9 +136,9 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 			[
 				'additionalMessages' => [ 'k1', 'k2' ],
 				'licenses' => [
-					'pd-textlogo' => [
-						'msg' => 'mwe-upwiz-license-pd-textlogo',
-						'templates' => [ 'trademarked', 'PD-textlogo' ]
+					'pd-old' => [
+						'msg' => 'mwe-upwiz-license-pd-old',
+						'templates' => [ 'PD-old' ]
 					],
 					'attribution' => [
 						'msg' => 'mwe-upwiz-license-attribution'
@@ -178,7 +178,7 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 				'k1',
 				'k2',
 				// Licenses
-				'mwe-upwiz-license-pd-textlogo',
+				'mwe-upwiz-license-pd-old',
 				'mwe-upwiz-license-attribution',
 				'mwe-upwiz-license-gfdl',
 				// Head and subhead messages

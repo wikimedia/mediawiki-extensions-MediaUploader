@@ -124,7 +124,8 @@
 			dateVal = Date.parse( this.dateInputWidget.getValue().trim() ),
 			licenses = this.getLicenses(),
 			// licenses that likely mean the image date is some time in the past
-			warnLicenses = [ 'pd-usgov', 'pd-usgov-nasa', 'pd-art' ],
+			// TODO: this shouldn't be hardcoded!
+			warnLicenses = [ 'pd-old' ],
 			now = new Date(),
 			date = new Date( this.dateInputWidget.getValue() );
 
@@ -163,24 +164,15 @@
 			licenses = this.getLicenses(),
 			now = new Date(),
 			old = new Date( now.getFullYear() - 70, now.getMonth(), now.getDate() ),
-			old100 = new Date( now.getFullYear() - 100, now.getMonth(), now.getDate() ),
 			date = new Date( this.dateInputWidget.getValue() );
 
+		// TODO: This shouldn't be hardcoded!
 		if ( this.dateInputWidget.getValue().trim() === '' ) {
 			errors.push( mw.message( 'mwe-upwiz-error-blank' ) );
-		} else if ( 'pd-us' in licenses && date.getFullYear() >= new Date().getFullYear() - 95 ) {
-			// if the license stated the work is public domain, it must've been
-			// created a really long time ago
-			// eslint-disable-next-line mediawiki/msg-doc
-			errors.push( mw.message( 'mwe-upwiz-error-date-license-mismatch', mw.message( licenses[ 'pd-us' ].msg ).parseDom() ) );
 		} else if ( 'pd-old' in licenses && date > old ) {
 			// if the author died 70 years ago, the timestamp should reflect that
 			// eslint-disable-next-line mediawiki/msg-doc
 			errors.push( mw.message( 'mwe-upwiz-error-date-license-mismatch', mw.message( licenses[ 'pd-old' ].msg ).parseDom() ) );
-		} else if ( 'pd-old-100' in licenses && date > old100 ) {
-			// if the author died 100 years ago, the timestamp should reflect that
-			// eslint-disable-next-line mediawiki/msg-doc
-			errors.push( mw.message( 'mwe-upwiz-error-date-license-mismatch', mw.message( licenses[ 'pd-old-100' ].msg ).parseDom() ) );
 		}
 
 		return $.Deferred().resolve( errors ).promise();
