@@ -28,15 +28,15 @@
 
 		this.name = name;
 
-		this.$buttons = $( '<div>' ).addClass( 'mwe-upwiz-buttons' );
+		this.$buttons = $( '<div>' ).addClass( 'mediauploader-buttons' );
 
 		this.$div = $( '<div>' )
-			.attr( 'id', 'mwe-upwiz-stepdiv-' + this.name )
-			.addClass( 'mwe-upwiz-stepdiv' )
+			.attr( 'id', 'mediauploader-stepdiv-' + this.name )
+			.addClass( 'mediauploader-stepdiv' )
 			.hide();
 
 		// eslint-disable-next-line no-jquery/no-global-selector
-		$( '#mwe-upwiz-content' ).append( this.$div );
+		$( '#mediauploader-content' ).append( this.$div );
 
 		// this will make sure that buttons will only be added if they've been
 		// set in the controller, otherwise there's nowhere to go...
@@ -91,8 +91,8 @@
 		var ui = this;
 
 		this.nextButton = new OO.ui.ButtonWidget( {
-			classes: [ 'mwe-upwiz-button-next' ],
-			label: mw.message( 'mwe-upwiz-next' ).text(),
+			classes: [ 'mediauploader-button-next' ],
+			label: mw.message( 'mediauploader-next' ).text(),
 			flags: [ 'progressive', 'primary' ]
 		} ).on( 'click', function () {
 			ui.emit( 'next-step' );
@@ -110,8 +110,8 @@
 		var ui = this;
 
 		this.previousButton = new OO.ui.ButtonWidget( {
-			classes: [ 'mwe-upwiz-button-previous' ],
-			label: mw.message( 'mwe-upwiz-previous' ).text()
+			classes: [ 'mediauploader-button-previous' ],
+			label: mw.message( 'mediauploader-previous' ).text()
 		} ).on( 'click', function () {
 			ui.emit( 'previous-step' );
 		} );

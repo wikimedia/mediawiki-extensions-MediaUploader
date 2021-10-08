@@ -31,15 +31,15 @@ class Hooks implements GetPreferencesHook {
 		if ( $this->config->getSetting( 'tutorial' ) ) {
 			$preferences['upwiz_skiptutorial'] = [
 				'type' => 'check',
-				'label-message' => 'mwe-upwiz-prefs-skiptutorial',
+				'label-message' => 'mediauploader-prefs-skiptutorial',
 				'section' => 'uploads/upwiz-interface'
 			];
 		}
 
 		$preferences['upwiz_licensename'] = [
 			'type' => 'text',
-			'label-message' => 'mwe-upwiz-prefs-license-name',
-			'help-message' => 'mwe-upwiz-prefs-license-name-help',
+			'label-message' => 'mediauploader-prefs-license-name',
+			'help-message' => 'mediauploader-prefs-license-name-help',
 			'section' => 'uploads/upwiz-licensing'
 		];
 
@@ -51,7 +51,7 @@ class Hooks implements GetPreferencesHook {
 			$ownWork = $licensingOptions['ownWork'];
 			foreach ( $ownWork['licenses'] as $license ) {
 				$licenseMessage = $this->getLicenseMessage( $license ) ?: '';
-				$licenseKey = wfMessage( 'mwe-upwiz-prefs-license-own' )
+				$licenseKey = wfMessage( 'mediauploader-prefs-license-own' )
 					->rawParams( $licenseMessage )->escaped();
 				$licenseValue = htmlspecialchars( 'ownwork-' . $license, ENT_QUOTES, 'UTF-8', false );
 				$licenses[$licenseKey] = $licenseValue;
@@ -62,7 +62,7 @@ class Hooks implements GetPreferencesHook {
 			foreach ( $thirdParty as $license ) {
 				if ( $license !== 'custom' ) {
 					$licenseMessage = $this->getLicenseMessage( $license ) ?: '';
-					$licenseKey = wfMessage( 'mwe-upwiz-prefs-license-thirdparty' )
+					$licenseKey = wfMessage( 'mediauploader-prefs-license-thirdparty' )
 						->rawParams( $licenseMessage )->escaped();
 					$licenseValue = htmlspecialchars( 'thirdparty-' . $license, ENT_QUOTES, 'UTF-8', false );
 					$licenses[$licenseKey] = $licenseValue;
@@ -73,7 +73,7 @@ class Hooks implements GetPreferencesHook {
 
 			$licenses = array_merge(
 				[
-					wfMessage( 'mwe-upwiz-prefs-def-license-def' )->escaped() => 'default'
+					wfMessage( 'mediauploader-prefs-def-license-def' )->escaped() => 'default'
 				],
 				$licenses
 			);
@@ -82,14 +82,14 @@ class Hooks implements GetPreferencesHook {
 				// The "custom license" option must be last, otherwise the text referring to "following
 				// wikitext" and "last option above" makes no sense.
 				$licenseMessage = $this->getLicenseMessage( 'custom' ) ?: '';
-				$licenseKey = wfMessage( 'mwe-upwiz-prefs-license-thirdparty' )
+				$licenseKey = wfMessage( 'mediauploader-prefs-license-thirdparty' )
 					->rawParams( $licenseMessage )->escaped();
 				$licenses[$licenseKey] = 'thirdparty-custom';
 			}
 
 			$preferences['upwiz_deflicense'] = [
 				'type' => 'radio',
-				'label-message' => 'mwe-upwiz-prefs-def-license',
+				'label-message' => 'mediauploader-prefs-def-license',
 				'section' => 'uploads/upwiz-licensing',
 				'options' => $licenses
 			];
@@ -97,8 +97,8 @@ class Hooks implements GetPreferencesHook {
 			if ( $hasCustom ) {
 				$preferences['upwiz_deflicense_custom'] = [
 					'type' => 'text',
-					'label-message' => 'mwe-upwiz-prefs-def-license-custom',
-					'help-message' => 'mwe-upwiz-prefs-def-license-custom-help',
+					'label-message' => 'mediauploader-prefs-def-license-custom',
+					'help-message' => 'mediauploader-prefs-def-license-custom-help',
 					'section' => 'uploads/upwiz-licensing',
 				];
 			}
@@ -112,7 +112,7 @@ class Hooks implements GetPreferencesHook {
 
 			$preferences['upwiz_maxsimultaneous'] = [
 				'type' => 'select',
-				'label-message' => 'mwe-upwiz-prefs-maxsimultaneous-upload',
+				'label-message' => 'mediauploader-prefs-maxsimultaneous-upload',
 				'section' => 'uploads/upwiz-experimental',
 				'options' => $range
 			];

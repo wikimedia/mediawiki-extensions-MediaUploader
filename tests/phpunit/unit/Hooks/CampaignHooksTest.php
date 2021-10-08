@@ -292,7 +292,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 		$status = $this->createMock( Status::class );
 		$status->expects( $this->once() )
 			->method( 'fatal' )
-			->with( 'mwe-upwiz-global-config-anchor' );
+			->with( 'mediauploader-global-config-anchor' );
 
 		$hooks = $this->getCampaignHooks();
 

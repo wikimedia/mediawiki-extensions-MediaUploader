@@ -1,4 +1,4 @@
-form.mwe-upwiz-form {
+form.mediauploader-form {
 	display: inline;
 }
 
@@ -8,7 +8,7 @@ form.mwe-upwiz-form {
 	max-width: 900px; /* wild guess */
 }
 
-#mwe-upwiz-steps {
+#mediauploader-steps {
 	margin: 0;
 	padding: 0;
 	font-size: 1em;
@@ -17,25 +17,25 @@ form.mwe-upwiz-form {
 	border: 0;
 }
 
-.mwe-upwiz-clearing {
+.mediauploader-clearing {
 	clear: left;
 	width: 100%;
 }
 
-#mwe-upwiz-content {
+#mediauploader-content {
 	margin-top: 1em;
 }
 
-.mwe-upwiz-add-files-0,
-#mwe-upwiz-files {
+.mediauploader-add-files-0,
+#mediauploader-files {
 	margin-top: 3em;
 	margin-bottom: 1em;
 }
 
-.mwe-upwiz-add-files-0 {
+.mediauploader-add-files-0 {
 	text-align: center;
 
-	.mwe-upwiz-add-file {
+	.mediauploader-add-file {
 		font-size: large;
 		margin-right: 0;
 
@@ -46,8 +46,8 @@ form.mwe-upwiz-form {
 	}
 }
 
-#mwe-upwiz-add-file-container:not( .mwe-upwiz-add-files-0 ) {
-	.mwe-upwiz-add-file {
+#mediauploader-add-file-container:not( .mediauploader-add-files-0 ) {
+	.mediauploader-add-file {
 		display: inline-block;
 		width: auto;
 		height: auto;
@@ -60,21 +60,21 @@ form.mwe-upwiz-form {
 	}
 }
 
-.mwe-upwiz-file {
+.mediauploader-file {
 	&.filled {
 		position: relative;
 	}
 
-	&.odd .mwe-upwiz-visible-file {
+	&.odd .mediauploader-visible-file {
 		background: #f8f9fa;
 	}
 
-	&:hover .mwe-upwiz-visible-file {
+	&:hover .mediauploader-visible-file {
 		background: #e0f0ff !important; /* stylelint-disable-line declaration-no-important */
 	}
 }
 
-.mwe-upwiz-file-indicator {
+.mediauploader-file-indicator {
 	float: right;
 	padding: 1.5em 1.5em 0 0;
 
@@ -83,57 +83,57 @@ form.mwe-upwiz-form {
 	}
 }
 
-.mwe-upwiz-count {
+.mediauploader-count {
 	padding: 0.5em;
 }
 
-.mwe-upwiz-visible-file {
+.mediauploader-visible-file {
 	display: none;
 	position: relative;
 	z-index: 2;
-	width: 100%; /* of containing mwe-upwiz-file */
+	width: 100%; /* of containing mediauploader-file */
 	overflow: hidden;
 
-	.mwe-upwiz-file-indicator {
+	.mediauploader-file-indicator {
 		visibility: hidden;
 	}
 
-	.mwe-upwiz-file-indicator-visible {
+	.mediauploader-file-indicator-visible {
 		visibility: visible;
 	}
 }
 
-#mwe-upwiz-files {
+#mediauploader-files {
 	margin-right: 8em;
 	margin-left: 8em;
 }
 
-.mwe-upwiz-file.filled .mwe-upwiz-visible-file {
+.mediauploader-file.filled .mediauploader-visible-file {
 	display: block;
 }
 
-.mwe-upwiz-visible-file-filename {
+.mediauploader-visible-file-filename {
 	padding: 1.5em;
 	margin-right: 40px;
 	overflow: hidden;
 }
 
-#mwe-upwiz-filelist {
-	/* We rely on the margin collapsing with that on #mwe-upwiz-files */
+#mediauploader-filelist {
+	/* We rely on the margin collapsing with that on #mediauploader-files */
 	margin-top: 3em;
 }
 
-.mwe-upwiz-file-status {
+.mediauploader-file-status {
 	display: none;
 	color: #72777d;
 }
 
-.mwe-upwiz-file-status-line ul {
+.mediauploader-file-status-line ul {
 	margin-top: 0;
 	margin-bottom: 0;
 }
 
-.mwe-upwiz-file-preview {
+.mediauploader-file-preview {
 	float: left;
 	width: 120px;
 	/*
@@ -148,23 +148,23 @@ form.mwe-upwiz-form {
 	background: url( images/32px-Blank-document.svg.png ) no-repeat center center;
 }
 
-.mwe-upwiz-file-texts {
+.mediauploader-file-texts {
 	/* This also create a new block formatting context, resulting in the whole block
 	   displaying next to image thumbnail, rather than wrapping the lines of text around it */
 	overflow: hidden;
 }
 
-.mwe-upwiz-file-preview-broken {
+.mediauploader-file-preview-broken {
 	/* @embed */
 	background: url( images/32px-Blank-document-broken.svg.png ) no-repeat center center !important; /* stylelint-disable-line declaration-no-important */
 }
 
-.mwe-upwiz-add-files-n {
+.mediauploader-add-files-n {
 	float: left;
 }
 
-#mwe-upwiz-add-file-container.mwe-upwiz-add-files-n,
-.mwe-upwiz-progress-bar-etr {
+#mediauploader-add-file-container.mediauploader-add-files-n,
+.mediauploader-progress-bar-etr {
 	width: 300px;
 }
 
@@ -172,57 +172,57 @@ form.mwe-upwiz-form {
 	border-top: 1px solid #c8ccd1;
 }
 
-#mwe-upwiz-upload-ctrls {
+#mediauploader-upload-ctrls {
 	margin-top: 1em;
 }
 
-#mwe-upwiz-stepdiv-file .mwe-upwiz-buttons .mwe-upwiz-file-endchoice {
+#mediauploader-stepdiv-file .mediauploader-buttons .mediauploader-file-endchoice {
 	display: none;
 }
 
-.mwe-upwiz-license-icon {
+.mediauploader-license-icon {
 	height: 18px;
 	margin-left: 6px;
 	padding: 9px;
 	width: 18px;
 }
 
-.mwe-upwiz-cc-zero-icon {
+.mediauploader-cc-zero-icon {
 	/* @embed */
 	background: url( images/18px-Cc-zero.svg.png ) no-repeat center center;
 }
 
-.mwe-upwiz-cc-sa-icon {
+.mediauploader-cc-sa-icon {
 	/* @embed */
 	background: url( images/18px-Share_Alike.svg.png ) no-repeat center center;
 }
 
-.mwe-upwiz-cc-by-icon {
+.mediauploader-cc-by-icon {
 	/* @embed */
 	background: url( images/18px-Cc-by_new_white.svg.png ) no-repeat center center;
 }
 
-.mwe-upwiz-progress {
+.mediauploader-progress {
 	margin-top: 15px;
 }
 
-.mwe-upwiz-progress-bar-etr {
+.mediauploader-progress-bar-etr {
 	float: left;
 }
 
-.mwe-upwiz-etr {
+.mediauploader-etr {
 	text-align: center;
 }
 
-.mwe-upwiz-thumbnail {
+.mediauploader-thumbnail {
 	background-color: #fff;
 	text-align: center;
 }
 
 /* thumbs in deed & thanks should not grow too high */
-#mwe-upwiz-stepdiv-deeds,
-#mwe-upwiz-stepdiv-thanks {
-	.mwe-upwiz-thumbnail {
+#mediauploader-stepdiv-deeds,
+#mediauploader-stepdiv-thanks {
+	.mediauploader-thumbnail {
 		max-width: 230px;
 		max-height: 230px;
 	}
@@ -233,12 +233,12 @@ form.mwe-upwiz-form {
  * them with a uniform width in the left column; it doesn't matter too much if they're
  * tall, there's plenty of content on the right hand side...
  */
-#mwe-upwiz-stepdiv-details .mwe-upwiz-thumbnail {
+#mediauploader-stepdiv-details .mediauploader-thumbnail {
 	text-align: left;
 	max-width: 230px;
 }
 
-.mwe-upwiz-thumbnail-link {
+.mediauploader-thumbnail-link {
 	display: block;
 	margin: 0 auto;
 
@@ -248,55 +248,55 @@ form.mwe-upwiz-form {
 	}
 }
 
-.mwe-upwiz-thumbnail-side {
+.mediauploader-thumbnail-side {
 	float: left;
 	margin-bottom: 1em;
 	margin-right: 2.5em;
 }
 
-#mwe-upwiz-stepdiv-details .mwe-upwiz-thumbnail-side {
+#mediauploader-stepdiv-details .mediauploader-thumbnail-side {
 	width: 230px;
 }
 
-#mwe-upwiz-stepdiv-thanks .mwe-upwiz-thumbnail-side {
+#mediauploader-stepdiv-thanks .mediauploader-thumbnail-side {
 	width: 120px;
 }
 
-.mwe-upwiz-remove-upload {
+.mediauploader-remove-upload {
 	margin-left: -0.5em;
 	margin-top: 0.5em;
 }
 
-#mwe-upwiz-deeds-thumbnails {
+#mediauploader-deeds-thumbnails {
 	background-color: #f8f9fa;
 	border-radius: 2px;
 	text-align: center;
 	margin: 1em 0;
 
-	.mwe-upwiz-thumbnail {
+	.mediauploader-thumbnail {
 		display: inline-block;
 		margin: 1em;
 		vertical-align: middle;
 	}
 }
 
-.mwe-upwiz-data {
+.mediauploader-data {
 	float: left;
 }
 
 /* I don't like that this has to have width, to ensure that all the floats work out correctly. */
-#mwe-upwiz-stepdiv-details .mwe-upwiz-data {
+#mediauploader-stepdiv-details .mediauploader-data {
 	/* 230px + 2.5em is width of thumbnail on the left */
 	width: ~'calc( 100% - 230px - 2.5em )';
 }
 
-#mwe-upwiz-stepdiv-thanks .mwe-upwiz-data {
+#mediauploader-stepdiv-thanks .mediauploader-data {
 	/* 120px + 2.5em is width of thumbnail on the left */
 	/* 0.5em is padding inside text input (2 * 0.25), 4px is border (2 x 2px) */
 	width: ~'calc( 100% - 120px - 2.5em - 0.5em - 4px )';
 }
 
-.mwe-upwiz-stepdiv {
+.mediauploader-stepdiv {
 	position: relative;
 }
 
@@ -304,30 +304,30 @@ form.mwe-upwiz-form {
 	font-size: x-small;
 }
 
-.mwe-upwiz-deed.selected .mwe-upwiz-deed-name {
+.mediauploader-deed.selected .mediauploader-deed-name {
 	font-weight: bold;
 }
 
 .mwe-more-options,
-.mwe-upwiz-macro-deeds-return,
-.mwe-upwiz-deed-header-link {
+.mediauploader-macro-deeds-return,
+.mediauploader-deed-header-link {
 	cursor: pointer;
 }
 
-.mwe-upwiz-deed-license {
+.mediauploader-deed-license {
 	margin-left: 1.5em;
 }
 
-.mwe-upwiz-info-file {
+.mediauploader-info-file {
 	padding-top: 2em;
 	padding-bottom: 2em;
 }
 
-.mwe-upwiz-info-file .oo-ui-fieldLayout-body {
+.mediauploader-info-file .oo-ui-fieldLayout-body {
 	margin-bottom: 1em;
 }
 
-.mwe-upwiz-details-fieldname {
+.mediauploader-details-fieldname {
 	font-size: 14px;
 	font-weight: bold;
 }
@@ -338,19 +338,19 @@ form.mwe-upwiz-form {
 	width: 100%;
 }
 
-.mwe-upwiz-details-fieldname-input {
+.mediauploader-details-fieldname-input {
 	margin-bottom: 1em;
 }
 
-.mwe-upwiz-thirdparty-license {
+.mediauploader-thirdparty-license {
 	margin-top: 8px;
 }
 
-.mwe-upwiz-deed-form-internal {
+.mediauploader-deed-form-internal {
 	padding: 0.5em 0 1em 2em;
 }
 
-label.mwe-upwiz-copyright-info {
+label.mediauploader-copyright-info {
 	display: inline-block;
 	padding-left: 3px;
 	text-indent: 0;
@@ -358,55 +358,55 @@ label.mwe-upwiz-copyright-info {
 	width: 93%;
 }
 
-.mwe-upwiz-custom-deed {
+.mediauploader-custom-deed {
 	margin-top: 5px;
 }
 
-.mwe-upwiz-buttons {
+.mediauploader-buttons {
 	margin-top: 1em;
 	text-align: right;
 }
 
-.mwe-upwiz-button-previous {
+.mediauploader-button-previous {
 	float: left;
 }
 
-a.mwe-upwiz-tooltip-link {
+a.mediauploader-tooltip-link {
 	cursor: pointer;
 }
 
-input[ type='radio' ].mwe-upwiz-copyright-info-radio {
+input[ type='radio' ].mediauploader-copyright-info-radio {
 	vertical-align: top;
 }
 
-.mwe-upwiz-details-more-options,
-.mwe-upwiz-details-copy-metadata,
-.mwe-upwiz-deed-license-group-head {
+.mediauploader-details-more-options,
+.mediauploader-details-copy-metadata,
+.mediauploader-deed-license-group-head {
 	padding-left: 1.5em;
 	cursor: pointer;
 	outline: 0;
 	display: block;
 }
 
-.mwe-upwiz-deed-license-group-head.mw-collapsible-arrow,
-.mwe-upwiz-details-more-options.mw-collapsible-toggle,
-.mwe-upwiz-details-copy-metadata.mw-collapsible-toggle,
-.mwe-upwiz-deed-license-group-head.mw-collapsible-toggle {
+.mediauploader-deed-license-group-head.mw-collapsible-arrow,
+.mediauploader-details-more-options.mw-collapsible-toggle,
+.mediauploader-details-copy-metadata.mw-collapsible-toggle,
+.mediauploader-deed-license-group-head.mw-collapsible-toggle {
 	/* Override jquery.makeCollapsible styles */
 	float: none;
 	/* Override mediawiki.icon styles */
 	background-position: left center;
 }
 
-.mwe-upwiz-deed-license-group-head {
+.mediauploader-deed-license-group-head {
 	margin-top: 10px;
 }
 
-.mwe-upwiz-deed-license-group-body {
+.mediauploader-deed-license-group-body {
 	padding-left: 3em;
 }
 
-.mwe-upwiz-license-custom {
+.mediauploader-license-custom {
 	overflow: hidden;
 
 	.oo-ui-buttonElement {
@@ -422,11 +422,11 @@ input[ type='radio' ].mwe-upwiz-copyright-info-radio {
 	}
 }
 
-.mwe-upwiz-license-custom .oo-ui-textInputWidget textarea {
+.mediauploader-license-custom .oo-ui-textInputWidget textarea {
 	font-family: monospace, monospace;
 }
 
-.mwe-upwiz-thanks {
+.mediauploader-thanks {
 	margin-bottom: 2em;
 }
 
@@ -454,18 +454,18 @@ input[ type='radio' ].mwe-upwiz-copyright-info-radio {
 	border-radius: 2px;
 }
 
-.mwe-upwiz-deed-license-group-subhead {
+.mediauploader-deed-license-group-subhead {
 	color: #72777d;
 	margin-top: 0;
 	margin-bottom: 0;
 	margin-left: 1.5em;
 }
 
-.mwe-upwiz-details-texts {
+.mediauploader-details-texts {
 	padding: 0.5em;
 }
 
-.mwe-upwiz-sign {
+.mediauploader-sign {
 	max-width: 20em;
 	display: inline-block;
 	margin-right: 0;

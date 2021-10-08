@@ -46,7 +46,7 @@
 		if ( !isCompatible() ) {
 			// Display the same error message as for grade-C browsers
 			// eslint-disable-next-line no-jquery/no-global-selector
-			$( '.mwe-upwiz-unavailable' ).show();
+			$( '.mediauploader-unavailable' ).show();
 			return;
 		}
 

@@ -21,12 +21,12 @@
 
 		if ( config.type === 'text' ) {
 			this.input = new OO.ui.TextInputWidget( {
-				classes: [ 'mwe-idfield', 'mwe-upwiz-campaignDetailsWidget-input' ],
+				classes: [ 'mwe-idfield', 'mediauploader-campaignDetailsWidget-input' ],
 				maxLength: config.maxLength
 			} );
 		} else if ( config.type === 'select' ) {
 			this.input = new OO.ui.DropdownInputWidget( {
-				classes: [ 'mwe-idfield', 'mwe-upwiz-campaignDetailsWidget-input' ],
+				classes: [ 'mwe-idfield', 'mediauploader-campaignDetailsWidget-input' ],
 				options: Object.keys( config.options ).map( function ( key ) {
 					return { data: key, label: config.options[ key ] };
 				} )
@@ -39,7 +39,7 @@
 		// (but do not flash warnings in the user's face while they're typing)
 		this.input.on( 'change', OO.ui.debounce( this.emit.bind( this, 'change' ), 500 ) );
 
-		this.$element.addClass( 'mwe-id-field mwe-upwiz-campaignDetailsWidget' );
+		this.$element.addClass( 'mwe-id-field mediauploader-campaignDetailsWidget' );
 		this.$element.append(
 			this.input.$element
 		);
@@ -52,7 +52,7 @@
 	uw.CampaignDetailsWidget.prototype.getErrors = function () {
 		var errors = [];
 		if ( this.required && this.input.getValue().trim() === '' ) {
-			errors.push( mw.message( 'mwe-upwiz-error-blank' ) );
+			errors.push( mw.message( 'mediauploader-error-blank' ) );
 		}
 		return $.Deferred().resolve( errors ).promise();
 	};

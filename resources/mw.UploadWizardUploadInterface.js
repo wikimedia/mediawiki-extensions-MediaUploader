@@ -15,7 +15,7 @@
 
 		// May need to collaborate with the particular upload type sometimes
 		// for the interface, as well as the uploadwizard. OY.
-		this.$div = $( '<div>' ).addClass( 'mwe-upwiz-file' );
+		this.$div = $( '<div>' ).addClass( 'mediauploader-file' );
 
 		this.isFilled = false;
 
@@ -23,27 +23,27 @@
 		this.statusMessage.toggle( false );
 		this.$spinner = $.createSpinner( { size: 'small', type: 'inline' } );
 		this.$spinner.hide();
-		this.$indicator = $( '<div>' ).addClass( 'mwe-upwiz-file-indicator' ).append(
+		this.$indicator = $( '<div>' ).addClass( 'mediauploader-file-indicator' ).append(
 			this.$spinner,
 			this.statusMessage.$element
 		);
 
-		this.$visibleFilenameDiv = $( '<div>' ).addClass( 'mwe-upwiz-visible-file' ).append(
+		this.$visibleFilenameDiv = $( '<div>' ).addClass( 'mediauploader-visible-file' ).append(
 			this.$indicator,
-			$( '<div>' ).addClass( 'mwe-upwiz-visible-file-filename' ).append(
-				$( '<div>' ).addClass( 'mwe-upwiz-file-preview' ),
-				$( '<div>' ).addClass( 'mwe-upwiz-file-texts' ).append(
-					$( '<div>' ).addClass( 'mwe-upwiz-visible-file-filename-text' ),
-					$( '<div>' ).addClass( 'mwe-upwiz-file-status-line' ).append(
-						$( '<div>' ).addClass( 'mwe-upwiz-file-status' )
+			$( '<div>' ).addClass( 'mediauploader-visible-file-filename' ).append(
+				$( '<div>' ).addClass( 'mediauploader-file-preview' ),
+				$( '<div>' ).addClass( 'mediauploader-file-texts' ).append(
+					$( '<div>' ).addClass( 'mediauploader-visible-file-filename-text' ),
+					$( '<div>' ).addClass( 'mediauploader-file-status-line' ).append(
+						$( '<div>' ).addClass( 'mediauploader-file-status' )
 					)
 				)
 			)
 		);
 
 		this.removeCtrl = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-remove' ).text(),
-			title: mw.message( 'mwe-upwiz-remove-upload' ).text(),
+			label: mw.message( 'mediauploader-remove' ).text(),
+			title: mw.message( 'mediauploader-remove-upload' ).text(),
 			flags: 'destructive',
 			icon: 'trash',
 			framed: false
@@ -51,11 +51,11 @@
 			ui.emit( 'upload-removed' );
 		} );
 
-		this.$visibleFilenameDiv.find( '.mwe-upwiz-file-status-line' )
+		this.$visibleFilenameDiv.find( '.mediauploader-file-status-line' )
 			.append( this.removeCtrl.$element );
 
 		this.$form = $( '<form>' )
-			.addClass( 'mwe-upwiz-form' )
+			.addClass( 'mediauploader-form' )
 			.append( this.$visibleFilenameDiv );
 
 		this.$div.append( this.$form );
@@ -85,7 +85,7 @@
 		} else if ( status ) {
 			this.statusMessage.toggle( true ).setType( status );
 		}
-		this.$indicator.toggleClass( 'mwe-upwiz-file-indicator-visible', !!status );
+		this.$indicator.toggleClass( 'mediauploader-file-indicator-visible', !!status );
 	};
 
 	/**
@@ -96,7 +96,7 @@
 	 */
 	mw.UploadWizardUploadInterface.prototype.setStatus = function ( msgKey, args ) {
 		// get the status line for our upload
-		var $status = this.$div.find( '.mwe-upwiz-file-status' );
+		var $status = this.$div.find( '.mediauploader-file-status' );
 		// eslint-disable-next-line mediawiki/msg-doc
 		$status.msg( msgKey, args || [] ).show();
 	};
@@ -107,7 +107,7 @@
 	 * @param {string} html
 	 */
 	mw.UploadWizardUploadInterface.prototype.setStatusString = function ( html ) {
-		this.$div.find( '.mwe-upwiz-file-status' ).html( html ).show();
+		this.$div.find( '.mediauploader-file-status' ).html( html ).show();
 	};
 
 	/**
@@ -121,7 +121,7 @@
 		}
 		this.$additionalStatus = $status;
 		if ( this.$additionalStatus ) {
-			this.$div.find( '.mwe-upwiz-file-status' ).after( this.$additionalStatus );
+			this.$div.find( '.mediauploader-file-status' ).after( this.$additionalStatus );
 		}
 	};
 
@@ -129,7 +129,7 @@
 	 * Clear the status line for this upload (hide it, in case there are paddings and such which offset other things.)
 	 */
 	mw.UploadWizardUploadInterface.prototype.clearStatus = function () {
-		this.$div.find( '.mwe-upwiz-file-status' ).hide();
+		this.$div.find( '.mediauploader-file-status' ).hide();
 		this.setAdditionalStatus( null );
 	};
 
@@ -141,7 +141,7 @@
 	mw.UploadWizardUploadInterface.prototype.showTransportProgress = function () {
 		// if fraction available, update individual progress bar / estimates, etc.
 		this.showIndicator( 'progress' );
-		this.setStatus( 'mwe-upwiz-uploading' );
+		this.setStatus( 'mediauploader-uploading' );
 		this.setAdditionalStatus( null );
 	};
 
@@ -150,7 +150,7 @@
 	 */
 	mw.UploadWizardUploadInterface.prototype.showStashed = function () {
 		this.showIndicator( 'success' );
-		this.setStatus( 'mwe-upwiz-stashed-upload' );
+		this.setStatus( 'mediauploader-stashed-upload' );
 		this.setAdditionalStatus( null );
 	};
 
@@ -200,9 +200,9 @@
 	 *     fails
 	 */
 	mw.UploadWizardUploadInterface.prototype.showThumbnail = function () {
-		var $preview = this.$div.find( '.mwe-upwiz-file-preview' ),
+		var $preview = this.$div.find( '.mediauploader-file-preview' ),
 			deferred = $.Deferred();
-		// This must match the CSS dimensions of .mwe-upwiz-file-preview
+		// This must match the CSS dimensions of .mediauploader-file-preview
 		this.upload.getThumbnail( 120, 120 ).done( function ( thumb ) {
 			mw.UploadWizard.placeThumbnail( $preview, thumb );
 			deferred.resolve();
@@ -222,7 +222,7 @@
 		var path = this.upload.getFilename();
 
 		// visible filename
-		this.$form.find( '.mwe-upwiz-visible-file-filename-text' )
+		this.$form.find( '.mediauploader-visible-file-filename-text' )
 			.text( path );
 
 		if ( !this.isFilled ) {

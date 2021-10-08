@@ -4,7 +4,7 @@
 			mw.UploadWizard.config = {
 				licenses: {
 					'cc-by-sa-3.0': {
-						msg: 'mwe-upwiz-license-cc-by-sa-3.0',
+						msg: 'mediauploader-license-cc-by-sa-3.0',
 						icons: [ 'cc-by', 'cc-sa' ],
 						url: '//creativecommons.org/licenses/by-sa/3.0/',
 						languageCodePrefix: 'deed.'
@@ -48,8 +48,8 @@
 				type: 'or',
 				licenseGroups: [
 					{
-						head: 'mwe-upwiz-license-cc-head',
-						subhead: 'mwe-upwiz-license-cc-subhead',
+						head: 'mediauploader-license-cc-head',
+						subhead: 'mediauploader-license-cc-subhead',
 						licenses: [ 'cc-by-sa-3.0' ]
 					}
 				]
@@ -61,13 +61,13 @@
 		$fixture.append( uwLicenseInput.$element );
 
 		// Check license group is there
-		assert.strictEqual( $fixture.find( '.mwe-upwiz-deed-license-group' ).length, 1, 'License group created.' );
+		assert.strictEqual( $fixture.find( '.mediauploader-deed-license-group' ).length, 1, 'License group created.' );
 
 		// Check subheader is there
-		assert.strictEqual( $fixture.find( '.mwe-upwiz-deed-license-group-subhead' ).length, 1, 'License subheader created.' );
+		assert.strictEqual( $fixture.find( '.mediauploader-deed-license-group-subhead' ).length, 1, 'License subheader created.' );
 
 		// Check license is there
-		assert.strictEqual( $fixture.find( '.mwe-upwiz-deed-license-group .oo-ui-fieldsetLayout-group' ).length, 1, 'License created.' );
+		assert.strictEqual( $fixture.find( '.mediauploader-deed-license-group .oo-ui-fieldsetLayout-group' ).length, 1, 'License created.' );
 	} );
 
 }() );

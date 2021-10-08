@@ -28,22 +28,22 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 				// Taken from the default config
 				'licenses' => [
 					'pd-old' => [
-						'msg' => 'mwe-upwiz-license-pd-old',
+						'msg' => 'mediauploader-license-pd-old',
 						'templates' => [ 'PD-old' ]
 					],
 					'attribution' => [
-						'msg' => 'mwe-upwiz-license-attribution'
+						'msg' => 'mediauploader-license-attribution'
 					],
 					'gfdl' => [
-						'msg' => 'mwe-upwiz-license-gfdl',
+						'msg' => 'mediauploader-license-gfdl',
 						'templates' => [ 'GFDL' ]
 					],
 				]
 			],
 			[
-				'mwe-upwiz-license-pd-old',
-				'mwe-upwiz-license-attribution',
-				'mwe-upwiz-license-gfdl',
+				'mediauploader-license-pd-old',
+				'mediauploader-license-attribution',
+				'mediauploader-license-gfdl',
 			]
 		];
 
@@ -56,12 +56,12 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 						'defaults' => 'cc-by-sa-4.0',
 						'licenseGroups' => [
 							[
-								'head' => 'mwe-upwiz-license-cc-head',
-								'subhead' => 'mwe-upwiz-license-cc-subhead',
+								'head' => 'mediauploader-license-cc-head',
+								'subhead' => 'mediauploader-license-cc-subhead',
 								'licenses' => [ 'cc-by-sa-4.0' ]
 							],
 							[
-								'head' => 'mwe-upwiz-license-custom-head',
+								'head' => 'mediauploader-license-custom-head',
 								'special' => 'custom',
 								'licenses' => [ 'custom' ],
 							],
@@ -77,12 +77,12 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 			],
 			[
 				// Head and subhead messages
-				'mwe-upwiz-license-cc-head',
-				'mwe-upwiz-license-cc-subhead',
-				'mwe-upwiz-license-custom-head',
+				'mediauploader-license-cc-head',
+				'mediauploader-license-cc-subhead',
+				'mediauploader-license-custom-head',
 				// Default license assertions for own work uploads
-				'mwe-upwiz-source-ownwork-assert-cc-by-sa-4.0',
-				'mwe-upwiz-source-ownwork-cc-by-sa-4.0-explain',
+				'mediauploader-source-ownwork-assert-cc-by-sa-4.0',
+				'mediauploader-source-ownwork-cc-by-sa-4.0-explain',
 			]
 		];
 
@@ -98,8 +98,8 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 						'defaults' => 'cc-by-sa-3.0',
 						'licenseGroups' => [
 							[
-								'head' => 'mwe-upwiz-license-self-free-head',
-								'subhead' => 'mwe-upwiz-license-self-free-subhead',
+								'head' => 'mediauploader-license-self-free-head',
+								'subhead' => 'mediauploader-license-self-free-subhead',
 								'template' => 'self',
 								'licenses' => [
 									'cc-by-sa-4.0',
@@ -107,8 +107,8 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 								]
 							],
 							[
-								'head' => 'mwe-upwiz-license-self-copydown-head',
-								'subhead' => 'mwe-upwiz-license-self-copydown-subhead',
+								'head' => 'mediauploader-license-self-copydown-head',
+								'subhead' => 'mediauploader-license-self-copydown-subhead',
 								'template' => 'self',
 								'licenses' => [ 'cc-by-sa-4.0-copydown' ]
 							],
@@ -118,17 +118,17 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 			],
 			[
 				// Head and subhead messages
-				'mwe-upwiz-license-self-free-head',
-				'mwe-upwiz-license-self-free-subhead',
-				'mwe-upwiz-license-self-copydown-head',
-				'mwe-upwiz-license-self-copydown-subhead',
+				'mediauploader-license-self-free-head',
+				'mediauploader-license-self-free-subhead',
+				'mediauploader-license-self-copydown-head',
+				'mediauploader-license-self-copydown-subhead',
 				// Default license assertions for own work uploads
-				'mwe-upwiz-source-ownwork-assert-cc-by-sa-4.0',
-				'mwe-upwiz-source-ownwork-cc-by-sa-4.0-explain',
-				'mwe-upwiz-source-ownwork-assert-cc-by-sa-3.0',
-				'mwe-upwiz-source-ownwork-cc-by-sa-3.0-explain',
-				'mwe-upwiz-source-ownwork-assert-cc-by-sa-4.0-copydown',
-				'mwe-upwiz-source-ownwork-cc-by-sa-4.0-copydown-explain',
+				'mediauploader-source-ownwork-assert-cc-by-sa-4.0',
+				'mediauploader-source-ownwork-cc-by-sa-4.0-explain',
+				'mediauploader-source-ownwork-assert-cc-by-sa-3.0',
+				'mediauploader-source-ownwork-cc-by-sa-3.0-explain',
+				'mediauploader-source-ownwork-assert-cc-by-sa-4.0-copydown',
+				'mediauploader-source-ownwork-cc-by-sa-4.0-copydown-explain',
 			]
 		];
 
@@ -137,14 +137,14 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 				'additionalMessages' => [ 'k1', 'k2' ],
 				'licenses' => [
 					'pd-old' => [
-						'msg' => 'mwe-upwiz-license-pd-old',
+						'msg' => 'mediauploader-license-pd-old',
 						'templates' => [ 'PD-old' ]
 					],
 					'attribution' => [
-						'msg' => 'mwe-upwiz-license-attribution'
+						'msg' => 'mediauploader-license-attribution'
 					],
 					'gfdl' => [
-						'msg' => 'mwe-upwiz-license-gfdl',
+						'msg' => 'mediauploader-license-gfdl',
 						'templates' => [ 'GFDL' ]
 					],
 				],
@@ -154,12 +154,12 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 						'defaults' => 'cc-by-sa-4.0',
 						'licenseGroups' => [
 							[
-								'head' => 'mwe-upwiz-license-cc-head',
-								'subhead' => 'mwe-upwiz-license-cc-subhead',
+								'head' => 'mediauploader-license-cc-head',
+								'subhead' => 'mediauploader-license-cc-subhead',
 								'licenses' => [ 'cc-by-sa-4.0' ]
 							],
 							[
-								'head' => 'mwe-upwiz-license-custom-head',
+								'head' => 'mediauploader-license-custom-head',
 								'special' => 'custom',
 								'licenses' => [ 'custom' ],
 							],
@@ -178,16 +178,16 @@ class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
 				'k1',
 				'k2',
 				// Licenses
-				'mwe-upwiz-license-pd-old',
-				'mwe-upwiz-license-attribution',
-				'mwe-upwiz-license-gfdl',
+				'mediauploader-license-pd-old',
+				'mediauploader-license-attribution',
+				'mediauploader-license-gfdl',
 				// Head and subhead messages
-				'mwe-upwiz-license-cc-head',
-				'mwe-upwiz-license-cc-subhead',
-				'mwe-upwiz-license-custom-head',
+				'mediauploader-license-cc-head',
+				'mediauploader-license-cc-subhead',
+				'mediauploader-license-custom-head',
 				// Default license assertions for own work uploads
-				'mwe-upwiz-source-ownwork-assert-cc-by-sa-4.0',
-				'mwe-upwiz-source-ownwork-cc-by-sa-4.0-explain',
+				'mediauploader-source-ownwork-assert-cc-by-sa-4.0',
+				'mediauploader-source-ownwork-cc-by-sa-4.0-explain',
 			]
 		];
 	}

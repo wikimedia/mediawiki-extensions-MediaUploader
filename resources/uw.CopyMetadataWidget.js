@@ -25,13 +25,13 @@
 			if ( Object.prototype.hasOwnProperty.call( uw.CopyMetadataWidget.static.copyMetadataTypes, metadataType ) ) {
 				defaultStatus = uw.CopyMetadataWidget.static.copyMetadataTypes[ metadataType ];
 				// Messages that can be used here:
-				// * mwe-upwiz-copy-title
-				// * mwe-upwiz-copy-description
-				// * mwe-upwiz-copy-date
-				// * mwe-upwiz-copy-categories
-				// * mwe-upwiz-copy-location
-				// * mwe-upwiz-copy-other
-				copyMetadataMsg = mw.message( 'mwe-upwiz-copy-' + metadataType ).text();
+				// * mediauploader-copy-title
+				// * mediauploader-copy-description
+				// * mediauploader-copy-date
+				// * mediauploader-copy-categories
+				// * mediauploader-copy-location
+				// * mediauploader-copy-other
+				copyMetadataMsg = mw.message( 'mediauploader-copy-' + metadataType ).text();
 
 				checkboxes.push( new OO.ui.CheckboxMultioptionWidget( {
 					data: metadataType,
@@ -46,11 +46,11 @@
 			items: checkboxes
 		} );
 		this.copyButton = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-copy-metadata-button' ).text(),
+			label: mw.message( 'mediauploader-copy-metadata-button' ).text(),
 			flags: [ 'progressive' ]
 		} );
 		this.undoButton = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-copy-metadata-button-undo' ).text()
+			label: mw.message( 'mediauploader-copy-metadata-button-undo' ).text()
 		} );
 
 		this.checkboxesWidget.connect( this, {
@@ -73,14 +73,14 @@
 
 		$copyMetadataWrapperDiv
 			.append(
-				$( '<a>' ).text( mw.msg( 'mwe-upwiz-copy-metadata' ) )
-					.addClass( 'mwe-upwiz-details-copy-metadata mw-collapsible-toggle mw-collapsible-arrow' ),
+				$( '<a>' ).text( mw.msg( 'mediauploader-copy-metadata' ) )
+					.addClass( 'mediauploader-details-copy-metadata mw-collapsible-toggle mw-collapsible-arrow' ),
 				$copyMetadataDiv.addClass( 'mw-collapsible-content' )
 			)
 			.makeCollapsible( { collapsed: true } );
 
 		this.$element
-			.addClass( 'mwe-upwiz-copyMetadataWidget' )
+			.addClass( 'mediauploader-copyMetadataWidget' )
 			.append( $copyMetadataWrapperDiv );
 	};
 	OO.inheritClass( uw.CopyMetadataWidget, OO.ui.Widget );
@@ -124,7 +124,7 @@
 		// FIXME: Use CSS transition
 		// eslint-disable-next-line no-jquery/no-fade
 		this.$success
-			.text( mw.message( 'mwe-upwiz-copied-metadata' ).text() )
+			.text( mw.message( 'mediauploader-copied-metadata' ).text() )
 			.show()
 			.fadeOut( 5000, 'linear' );
 	};
@@ -141,7 +141,7 @@
 		// FIXME: Use CSS transition
 		// eslint-disable-next-line no-jquery/no-fade
 		this.$success
-			.text( mw.message( 'mwe-upwiz-undid-metadata' ).text() )
+			.text( mw.message( 'mediauploader-undid-metadata' ).text() )
 			.show()
 			.fadeOut( 5000, 'linear' );
 	};

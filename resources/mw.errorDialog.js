@@ -13,11 +13,11 @@
 	mw.errorDialog = function ( errorMessage, title ) {
 		OO.ui.getWindowManager().openWindow( 'upwizErrorDialog', {
 			message: errorMessage,
-			title: title || mw.message( 'mwe-upwiz-errordialog-title' ).text(),
+			title: title || mw.message( 'mediauploader-errordialog-title' ).text(),
 			verbose: true,
 			actions: [
 				{
-					label: mw.message( 'mwe-upwiz-errordialog-ok' ).text(),
+					label: mw.message( 'mediauploader-errordialog-ok' ).text(),
 					action: 'accept'
 				}
 			]

@@ -24,14 +24,14 @@
 	 * @param {mw.UploadWizardUpload} upload
 	 */
 	uw.ui.DeedPreview = function UWUIDeedPreview( upload ) {
-		var $thumbnailDiv = $( '<div>' ).addClass( 'mwe-upwiz-thumbnail' );
+		var $thumbnailDiv = $( '<div>' ).addClass( 'mediauploader-thumbnail' );
 		this.$thumbnailDiv = $thumbnailDiv;
-		// This must match the CSS dimensions of .mwe-upwiz-thumbnail
+		// This must match the CSS dimensions of .mediauploader-thumbnail
 		upload.getThumbnail( 120, 120 ).done( function ( thumb ) {
 			mw.UploadWizard.placeThumbnail( $thumbnailDiv, thumb );
 		} );
 		// eslint-disable-next-line no-jquery/no-global-selector
-		$( '#mwe-upwiz-deeds-thumbnails' ).append( this.$thumbnailDiv );
+		$( '#mediauploader-deeds-thumbnails' ).append( this.$thumbnailDiv );
 	};
 
 	uw.ui.DeedPreview.prototype.remove = function () {

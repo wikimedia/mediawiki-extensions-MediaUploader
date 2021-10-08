@@ -131,7 +131,7 @@
 		this.state = 'transported';
 		this.transportProgress = 1;
 
-		this.ui.setStatus( 'mwe-upwiz-getting-metadata' );
+		this.ui.setStatus( 'mediauploader-getting-metadata' );
 
 		this.extractUploadInfo( result.upload );
 		this.state = 'stashed';
@@ -755,7 +755,7 @@
 		 */
 		function imageCallback( image ) {
 			if ( image === null ) {
-				upload.ui.setStatus( 'mwe-upwiz-thumbnail-failed' );
+				upload.ui.setStatus( 'mediauploader-thumbnail-failed' );
 				deferred.resolve( image );
 				return;
 			}

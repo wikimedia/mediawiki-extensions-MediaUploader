@@ -44,10 +44,10 @@
 		$( document.body ).append( this.windowManager.$element );
 
 		if ( this.type === 'radio' ) {
-			this.group = this.createRadioGroup( [ 'mwe-upwiz-deed-license-group-body' ] );
+			this.group = this.createRadioGroup( [ 'mediauploader-deed-license-group-body' ] );
 			this.group.connect( this, { choose: [ 'emit', 'change', this ] } );
 		} else if ( this.type === 'checkbox' ) {
-			this.group = this.createCheckboxGroup( [ 'mwe-upwiz-deed-license-group-body' ] );
+			this.group = this.createCheckboxGroup( [ 'mediauploader-deed-license-group-body' ] );
 			this.group.connect( this, { select: [ 'emit', 'change', this ] } );
 		}
 
@@ -81,15 +81,15 @@
 	uw.LicenseGroup.prototype.createFieldset = function ( group ) {
 		/* eslint-disable mediawiki/msg-doc */
 		var $head = this.config.head && $( '<a>' )
-				.addClass( 'mwe-upwiz-deed-license-group-head mw-collapsible-arrow' )
+				.addClass( 'mediauploader-deed-license-group-head mw-collapsible-arrow' )
 				.msg( this.config.head, this.count ),
 			$subhead = this.config.subhead && $( '<div>' )
-				.addClass( 'mwe-upwiz-deed-license-group-subhead' )
+				.addClass( 'mediauploader-deed-license-group-subhead' )
 				.msg( this.config.subhead, this.count ),
 			fieldset = new OO.ui.FieldsetLayout( {
 				label: $head,
 				items: [ group ],
-				classes: [ 'mwe-upwiz-deed-license-group' ]
+				classes: [ 'mediauploader-deed-license-group' ]
 			} );
 		/* eslint-enable mediawiki/msg-doc */
 
@@ -351,14 +351,14 @@
 		if ( licenseInfo.props.icons !== undefined ) {
 			licenseInfo.props.icons.forEach( function ( icon ) {
 				// eslint-disable-next-line mediawiki/class-doc
-				$icons.append( $( '<span>' ).addClass( 'mwe-upwiz-license-icon mwe-upwiz-' + icon + '-icon' ) );
+				$icons.append( $( '<span>' ).addClass( 'mediauploader-license-icon mediauploader-' + icon + '-icon' ) );
 			} );
 		}
 
 		// eslint-disable-next-line mediawiki/msg-doc
 		$label = $( '<label>' )
 			.msg( messageKey, this.count || 0, $licenseLink )
-			.append( $icons ).addClass( 'mwe-upwiz-copyright-info' );
+			.append( $icons ).addClass( 'mediauploader-copyright-info' );
 
 		if ( this.config.special === 'custom' ) {
 			$label.append( this.createCustom( name, licenseInfo.props.defaultText ) );
@@ -386,13 +386,13 @@
 		this.textareas[ name ].on( 'change', OO.ui.debounce( this.emit.bind( this, 'change', this ), 500 ) );
 
 		button = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-license-custom-preview' ).text(),
+			label: mw.message( 'mediauploader-license-custom-preview' ).text(),
 			flags: [ 'progressive' ]
 		} ).on( 'click', function () {
 			self.showPreview( self.textareas[ name ].getValue() );
 		} );
 
-		return $( '<div>' ).addClass( 'mwe-upwiz-license-custom' ).append(
+		return $( '<div>' ).addClass( 'mediauploader-license-custom' ).append(
 			button.$element,
 			this.textareas[ name ].$element
 		);

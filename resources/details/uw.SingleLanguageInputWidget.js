@@ -16,7 +16,7 @@
 	uw.SingleLanguageInputWidget = function UWSingleLanguageInputWidget( config ) {
 		this.config = $.extend( {
 			inputWidgetConstructor: OO.ui.MultilineTextInputWidget.bind( null, {
-				classes: [ 'mwe-upwiz-singleLanguageInputWidget-text' ],
+				classes: [ 'mediauploader-singleLanguageInputWidget-text' ],
 				autosize: true,
 				rows: 2
 			} ),
@@ -31,12 +31,12 @@
 		if ( mw.loader.getState( 'ext.uls.mediawiki' ) === 'ready' ) {
 			this.languageSelector = new uw.UlsWidget( {
 				languages: config.languages,
-				classes: [ 'mwe-upwiz-singleLanguageInputWidget-language' ]
+				classes: [ 'mediauploader-singleLanguageInputWidget-language' ]
 			} );
 		} else {
 			this.languageSelector = new uw.LanguageDropdownWidget( {
 				languages: config.languages,
-				classes: [ 'mwe-upwiz-singleLanguageInputWidget-language' ]
+				classes: [ 'mediauploader-singleLanguageInputWidget-language' ]
 			} );
 		}
 		this.languageSelector.setValue( config.defaultLanguage || this.getDefaultLanguage() );
@@ -44,7 +44,7 @@
 		// eslint-disable-next-line new-cap
 		this.textInput = new this.config.inputWidgetConstructor();
 		this.removeButton = new OO.ui.ButtonWidget( {
-			classes: [ 'mwe-upwiz-singleLanguageInputWidget-removeItem' ],
+			classes: [ 'mediauploader-singleLanguageInputWidget-removeItem' ],
 			icon: 'trash',
 			framed: false,
 			flags: [ 'destructive' ],
@@ -60,7 +60,7 @@
 		// (but do not flash warnings in the user's face while they're typing)
 		this.textInput.on( 'change', OO.ui.debounce( this.emit.bind( this, 'change' ), 500 ) );
 
-		this.$element.addClass( 'mwe-upwiz-singleLanguageInputWidget' );
+		this.$element.addClass( 'mediauploader-singleLanguageInputWidget' );
 		this.$element.append( this.languageSelector.getElement() );
 		// HACK: ValidationMessageElement will append messages after this.$body
 		this.$body = this.textInput.$element;
@@ -158,10 +158,10 @@
 
 		if ( text.length !== 0 && text.length < this.config.minLength ) {
 			// Empty input is allowed
-			errors.push( mw.message( 'mwe-upwiz-error-too-short', this.config.minLength ) );
+			errors.push( mw.message( 'mediauploader-error-too-short', this.config.minLength ) );
 		}
 		if ( text.length > this.config.maxLength ) {
-			errors.push( mw.message( 'mwe-upwiz-error-too-long', this.config.maxLength ) );
+			errors.push( mw.message( 'mediauploader-error-too-long', this.config.maxLength ) );
 		}
 
 		return $.Deferred().resolve( errors ).promise();

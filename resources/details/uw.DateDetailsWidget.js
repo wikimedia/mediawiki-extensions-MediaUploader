@@ -14,17 +14,17 @@
 		this.upload = config.upload;
 		this.dateInputWidgetMode = null; // or: 'calendar', 'arbitrary'
 		this.dateInputWidgetToggler = new OO.ui.ButtonSelectWidget( {
-			classes: [ 'mwe-upwiz-dateDetailsWidget-toggler' ],
+			classes: [ 'mediauploader-dateDetailsWidget-toggler' ],
 			items: [
 				new OO.ui.ButtonOptionWidget( {
 					data: 'calendar',
 					icon: 'calendar',
-					title: mw.msg( 'mwe-upwiz-calendar-date' )
+					title: mw.msg( 'mediauploader-calendar-date' )
 				} ),
 				new OO.ui.ButtonOptionWidget( {
 					data: 'arbitrary',
 					icon: 'edit',
-					title: mw.msg( 'mwe-upwiz-custom-date' )
+					title: mw.msg( 'mediauploader-custom-date' )
 				} )
 			]
 		} )
@@ -34,7 +34,7 @@
 				this.dateInputWidget.focus();
 			}.bind( this ) );
 
-		this.$element.addClass( 'mwe-upwiz-dateDetailsWidget' );
+		this.$element.addClass( 'mediauploader-dateDetailsWidget' );
 		this.$element.append(
 			this.dateInputWidgetToggler.$element
 			// this.dateInputWidget.$element goes here after setupDateInput() runs
@@ -61,13 +61,13 @@
 
 		if ( mode === 'arbitrary' ) {
 			this.dateInputWidget = new OO.ui.TextInputWidget( {
-				classes: [ 'mwe-date', 'mwe-upwiz-dateDetailsWidget-date' ],
-				placeholder: mw.msg( 'mwe-upwiz-select-date' )
+				classes: [ 'mwe-date', 'mediauploader-dateDetailsWidget-date' ],
+				placeholder: mw.msg( 'mediauploader-select-date' )
 			} );
 		} else {
 			this.dateInputWidget = new mw.widgets.DateInputWidget( {
-				classes: [ 'mwe-date', 'mwe-upwiz-dateDetailsWidget-date' ],
-				placeholderLabel: mw.msg( 'mwe-upwiz-select-date' )
+				classes: [ 'mwe-date', 'mediauploader-dateDetailsWidget-date' ],
+				placeholderLabel: mw.msg( 'mediauploader-select-date' )
 			} );
 			// If the user types '{{', assume that they are trying to input template wikitext and switch
 			// to 'arbitrary' mode. This might help confused power-users (T110026#1567714).
@@ -135,7 +135,7 @@
 		// avoid giving false warnings.
 		if ( this.dateInputWidgetMode === 'calendar' &&
 			dateVal > now.getTime() + 14 * 60 * 60 ) {
-			warnings.push( mw.message( 'mwe-upwiz-warning-postdate' ) );
+			warnings.push( mw.message( 'mediauploader-warning-postdate' ) );
 		}
 
 		// doublecheck that we've actually selected a valid date
@@ -147,7 +147,7 @@
 						license = licenses[ warnLicenses[ i ] ];
 						// eslint-disable-next-line mediawiki/msg-doc
 						licenseMsg = mw.message( license.msg, 0, license.url ? license.url : '#missing license URL' );
-						warnings.push( mw.message( 'mwe-upwiz-error-date-license-unlikely', licenseMsg.parseDom() ) );
+						warnings.push( mw.message( 'mediauploader-error-date-license-unlikely', licenseMsg.parseDom() ) );
 					}
 				}
 			}
@@ -168,11 +168,11 @@
 
 		// TODO: This shouldn't be hardcoded!
 		if ( this.dateInputWidget.getValue().trim() === '' ) {
-			errors.push( mw.message( 'mwe-upwiz-error-blank' ) );
+			errors.push( mw.message( 'mediauploader-error-blank' ) );
 		} else if ( 'pd-old' in licenses && date > old ) {
 			// if the author died 70 years ago, the timestamp should reflect that
 			// eslint-disable-next-line mediawiki/msg-doc
-			errors.push( mw.message( 'mwe-upwiz-error-date-license-mismatch', mw.message( licenses[ 'pd-old' ].msg ).parseDom() ) );
+			errors.push( mw.message( 'mediauploader-error-date-license-mismatch', mw.message( licenses[ 'pd-old' ].msg ).parseDom() ) );
 		}
 
 		return $.Deferred().resolve( errors ).promise();

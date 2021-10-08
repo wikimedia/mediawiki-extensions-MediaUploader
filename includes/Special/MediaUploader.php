@@ -117,8 +117,8 @@ class MediaUploader extends SpecialPage {
 		$out = $this->getOutput();
 
 		// fallback for non-JS
-		$out->addHTML( '<div class="mwe-upwiz-unavailable">' );
-		$out->addHTML( '<p class="errorbox">' . $this->msg( 'mwe-upwiz-unavailable' )->parse() . '</p>' );
+		$out->addHTML( '<div class="mediauploader-unavailable">' );
+		$out->addHTML( '<p class="errorbox">' . $this->msg( 'mediauploader-unavailable' )->parse() . '</p>' );
 		// create a simple form for non-JS fallback, which targets the old Special:Upload page.
 		// at some point, if we completely subsume its functionality, change that to point here again,
 		// but then we'll need to process non-JS uploads in the same way Special:Upload does.
@@ -188,14 +188,14 @@ class MediaUploader extends SpecialPage {
 		// Handle all possible cases where we should reject this campaign
 		if ( $record === null ) {
 			$this->displayError(
-				$this->msg( 'mwe-upwiz-error-nosuchcampaign', $campaignName )->text()
+				$this->msg( 'mediauploader-error-nosuchcampaign', $campaignName )->text()
 			);
 			return;
 		}
 
 		if ( !$record->isEnabled() ) {
 			$this->displayError(
-				$this->msg( 'mwe-upwiz-error-campaigndisabled', $campaignName )->text()
+				$this->msg( 'mediauploader-error-campaigndisabled', $campaignName )->text()
 			);
 			return;
 		}
@@ -312,9 +312,9 @@ class MediaUploader extends SpecialPage {
 
 		// Upload comment should be localized with respect to the wiki's language
 		$config['uploadComment'] = [
-			'ownWork' => $this->msg( 'mwe-upwiz-upload-comment-own-work' )
+			'ownWork' => $this->msg( 'mediauploader-upload-comment-own-work' )
 				->inContentLanguage()->plain(),
-			'thirdParty' => $this->msg( 'mwe-upwiz-upload-comment-third-party' )
+			'thirdParty' => $this->msg( 'mediauploader-upload-comment-third-party' )
 				->inContentLanguage()->plain()
 		];
 
@@ -445,7 +445,7 @@ class MediaUploader extends SpecialPage {
 				Html::element(
 					'p',
 					[ 'style' => 'text-align: center' ],
-					$this->msg( 'mwe-upwiz-extension-disabled' )->text()
+					$this->msg( 'mediauploader-extension-disabled' )->text()
 				) . $linkHtml
 			);
 		}
@@ -453,7 +453,7 @@ class MediaUploader extends SpecialPage {
 		// TODO move this into UploadWizard.js or some other javascript resource so the upload wizard
 		// can be dynamically included ( for example the add media wizard )
 		return '<div id="upload-wizard" class="upload-section">' .
-			'<div id="mwe-upwiz-tutorial-html" style="display:none;">' .
+			'<div id="mediauploader-tutorial-html" style="display:none;">' .
 				$config['tutorial']['html'] .
 			'</div>' .
 			'<div class="mwe-first-spinner">' .

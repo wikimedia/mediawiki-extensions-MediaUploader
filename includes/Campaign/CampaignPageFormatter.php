@@ -79,7 +79,7 @@ class CampaignPageFormatter {
 			$urlParams = [ 'returnto' => $this->record->getTitle()->getPrefixedText() ];
 			$createAccountUrl = Skin::makeSpecialUrlSubpage( 'Userlogin', 'signup', $urlParams );
 			$uploadLink = new \OOUI\ButtonWidget( [
-				'label' => $this->context->msg( 'mwe-upwiz-campaign-create-account-button' )->text(),
+				'label' => $this->context->msg( 'mediauploader-campaign-create-account-button' )->text(),
 				'flags' => [ 'progressive', 'primary' ],
 				'href' => $createAccountUrl
 			] );
@@ -88,7 +88,7 @@ class CampaignPageFormatter {
 				'MediaUploader', [ 'campaign' => $this->record->getTitle()->getDBkey() ]
 			);
 			$uploadLink = new \OOUI\ButtonWidget( [
-				'label' => $this->context->msg( 'mwe-upwiz-campaign-upload-button' )->text(),
+				'label' => $this->context->msg( 'mediauploader-campaign-upload-button' )->text(),
 				'flags' => [ 'progressive', 'primary' ],
 				'href' => $uploadUrl
 			] );
@@ -98,7 +98,7 @@ class CampaignPageFormatter {
 			$body = Html::element(
 				'div',
 				[ 'id' => 'mw-campaign-no-uploads-yet' ],
-				$this->context->msg( 'mwe-upwiz-campaign-no-uploads-yet' )->plain()
+				$this->context->msg( 'mediauploader-campaign-no-uploads-yet' )->plain()
 			);
 		} else {
 			foreach ( $images as $image ) {
@@ -113,7 +113,7 @@ class CampaignPageFormatter {
 						'span',
 						[ 'class' => 'mw-campaign-chevron mw-campaign-float-left' ], '&nbsp;'
 					) .
-					$this->context->msg( 'mwe-upwiz-campaign-view-all-media' )->escaped() .
+					$this->context->msg( 'mediauploader-campaign-view-all-media' )->escaped() .
 					Html::rawElement(
 						'span',
 						[ 'class' => 'mw-campaign-chevron mw-campaign-float-right' ], '&nbsp;'
@@ -128,7 +128,7 @@ class CampaignPageFormatter {
 					$this->context->getLanguage()->formatNum( $contributorsCount ) ) .
 				Html::element( 'span',
 					[ 'class' => 'mw-campaign-number-desc' ],
-					$this->context->msg( 'mwe-upwiz-campaign-contributors-count-desc' )
+					$this->context->msg( 'mediauploader-campaign-contributors-count-desc' )
 					->numParams( $contributorsCount )
 					->text()
 				)
@@ -153,7 +153,7 @@ class CampaignPageFormatter {
 							) .
 							Html::element( 'span',
 								[ 'class' => 'mw-campaign-number-desc' ],
-								$this->context->msg( 'mwe-upwiz-campaign-media-count-desc' )
+								$this->context->msg( 'mediauploader-campaign-media-count-desc' )
 								->numParams( $uploadCount )
 								->text()
 							)

@@ -33,7 +33,7 @@
 		} );
 		this.categoriesWidget.setValue( categories );
 
-		this.$element.addClass( 'mwe-upwiz-categoriesDetailsWidget' );
+		this.$element.addClass( 'mediauploader-categoriesDetailsWidget' );
 		this.$element.append( this.categoriesWidget.$element );
 
 		// Aggregate 'change' event
@@ -54,12 +54,12 @@
 	uw.CategoriesDetailsWidget.prototype.getWarnings = function () {
 		var warnings = [];
 		if ( mw.UploadWizard.config.enableCategoryCheck && this.categoriesWidget.getItems().length === 0 ) {
-			warnings.push( mw.message( 'mwe-upwiz-warning-categories-missing' ) );
+			warnings.push( mw.message( 'mediauploader-warning-categories-missing' ) );
 		}
 		if ( this.categoriesWidget.getItems().some( function ( item ) {
 			return item.missing;
 		} ) ) {
-			warnings.push( mw.message( 'mwe-upwiz-categories-missing' ) );
+			warnings.push( mw.message( 'mediauploader-categories-missing' ) );
 		}
 		return $.Deferred().resolve( warnings ).promise();
 	};

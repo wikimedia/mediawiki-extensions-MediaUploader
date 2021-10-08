@@ -25,17 +25,17 @@
 				radio = new OO.ui.RadioSelectWidget( {
 					items: [ new OO.ui.RadioOptionWidget( {
 						// eslint-disable-next-line mediawiki/msg-doc
-						label: mw.message( 'mwe-upwiz-source-' + deed.name, chooser.uploads.length ).text()
+						label: mw.message( 'mediauploader-source-' + deed.name, chooser.uploads.length ).text()
 					} ) ]
 				} ),
 				// eslint-disable-next-line mediawiki/class-doc
-				$deedInterface = $( '<div>' ).addClass( 'mwe-upwiz-deed mwe-upwiz-deed-' + deed.name ).append(
-					$( '<div>' ).addClass( 'mwe-upwiz-deed-option-title' ).append(
-						$( '<span>' ).addClass( 'mwe-upwiz-deed-header' ).append(
+				$deedInterface = $( '<div>' ).addClass( 'mediauploader-deed mediauploader-deed-' + deed.name ).append(
+					$( '<div>' ).addClass( 'mediauploader-deed-option-title' ).append(
+						$( '<span>' ).addClass( 'mediauploader-deed-header' ).append(
 							radio.$element
 						)
 					),
-					$( '<div>' ).addClass( 'mwe-upwiz-deed-form' ).hide()
+					$( '<div>' ).addClass( 'mediauploader-deed-form' ).hide()
 				);
 
 			// Set the name attribute manually. We can't use RadioInputWidget which has
@@ -45,7 +45,7 @@
 
 			chooser.$selector.append( $deedInterface );
 
-			deed.setFormFields( $deedInterface.find( '.mwe-upwiz-deed-form' ) );
+			deed.setFormFields( $deedInterface.find( '.mediauploader-deed-form' ) );
 
 			if ( Object.keys( chooser.deeds ).length === 1 ) {
 				chooser.onLayoutReady = chooser.selectDeed.bind( chooser, deed );
@@ -60,7 +60,7 @@
 		} );
 
 		// deselect all deeds
-		this.deselectDeedInterface( this.$selector.find( '.mwe-upwiz-deed' ) );
+		this.deselectDeedInterface( this.$selector.find( '.mediauploader-deed' ) );
 	};
 
 	mw.UploadWizardDeedChooser.prototype = {
@@ -84,11 +84,11 @@
 		uploads: [],
 
 		selectDeed: function ( deed ) {
-			var $deedInterface = this.$selector.find( '.mwe-upwiz-deed.mwe-upwiz-deed-' + deed.name );
+			var $deedInterface = this.$selector.find( '.mediauploader-deed.mediauploader-deed-' + deed.name );
 
 			this.choose( deed );
 			this.selectDeedInterface( $deedInterface );
-			$deedInterface.find( 'span.mwe-upwiz-deed-header input' ).prop( 'checked', true );
+			$deedInterface.find( 'span.mediauploader-deed-header input' ).prop( 'checked', true );
 		},
 
 		choose: function ( deed ) {
@@ -101,7 +101,7 @@
 			} );
 
 			// eslint-disable-next-line no-jquery/no-global-selector
-			$( '#mwe-upwiz-stepdiv-deeds .mwe-upwiz-button-next' ).show();
+			$( '#mediauploader-stepdiv-deeds .mediauploader-button-next' ).show();
 		},
 
 		/**
@@ -111,7 +111,7 @@
 		 */
 		deselectDeedInterface: function ( $deedSelector ) {
 			$deedSelector.removeClass( 'selected' );
-			$deedSelector.find( '.mwe-upwiz-deed-form' ).each( function () {
+			$deedSelector.find( '.mediauploader-deed-form' ).each( function () {
 				var $form = $( this );
 				// Prevent validation of deselected deeds by disabling all form inputs
 				// TODO: Use a tag selector
@@ -134,12 +134,12 @@
 		 * @param {jQuery} $deedSelector
 		 */
 		selectDeedInterface: function ( $deedSelector ) {
-			var $otherDeeds = $deedSelector.siblings().filter( '.mwe-upwiz-deed' );
+			var $otherDeeds = $deedSelector.siblings().filter( '.mediauploader-deed' );
 			this.deselectDeedInterface( $otherDeeds );
 			// FIXME: Use CSS transition
 			// eslint-disable-next-line no-jquery/no-fade
 			$deedSelector.addClass( 'selected' ).fadeTo( 'fast', 1.0 );
-			$deedSelector.find( '.mwe-upwiz-deed-form' ).each( function () {
+			$deedSelector.find( '.mediauploader-deed-form' ).each( function () {
 				var $form = $( this );
 				// (Re-)enable all form inputs
 				// TODO: Use a tag selector

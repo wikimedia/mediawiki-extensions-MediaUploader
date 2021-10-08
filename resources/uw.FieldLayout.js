@@ -24,19 +24,19 @@
 
 		this.required = null;
 		this.optionalMarker = new OO.ui.LabelWidget( {
-			classes: [ 'mwe-upwiz-fieldLayout-indicator' ],
-			label: mw.msg( 'mwe-upwiz-label-optional' )
+			classes: [ 'mediauploader-fieldLayout-indicator' ],
+			label: mw.msg( 'mediauploader-label-optional' )
 		} );
 
-		this.$element.addClass( 'mwe-upwiz-fieldLayout' );
+		this.$element.addClass( 'mediauploader-fieldLayout' );
 
-		this.$element.addClass( 'mwe-upwiz-details-fieldname-input' );
-		this.$label.addClass( 'mwe-upwiz-details-fieldname' );
-		this.$field.addClass( 'mwe-upwiz-details-input' );
+		this.$element.addClass( 'mediauploader-details-fieldname-input' );
+		this.$label.addClass( 'mediauploader-details-fieldname' );
+		this.$field.addClass( 'mediauploader-details-input' );
 
 		if ( help ) {
 			this.help = new OO.ui.LabelWidget( { label: help } );
-			this.$header.after( this.help.$element.addClass( 'mwe-upwiz-details-help' ) );
+			this.$header.after( this.help.$element.addClass( 'mediauploader-details-help' ) );
 		}
 
 		this.setRequired( config.required );

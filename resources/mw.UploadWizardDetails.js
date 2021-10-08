@@ -19,7 +19,7 @@
 		this.deedChooserDetails = new uw.DeedChooserDetailsWidget();
 		this.customDeedChooser = false;
 
-		this.$div = $( '<div>' ).addClass( 'mwe-upwiz-info-file ui-helper-clearfix filled' );
+		this.$div = $( '<div>' ).addClass( 'mediauploader-info-file ui-helper-clearfix filled' );
 	};
 
 	mw.UploadWizardDetails.prototype = {
@@ -36,9 +36,9 @@
 				details = this,
 				config = mw.UploadWizard.config;
 
-			this.$thumbnailDiv = $( '<div>' ).addClass( 'mwe-upwiz-thumbnail mwe-upwiz-thumbnail-side' );
+			this.$thumbnailDiv = $( '<div>' ).addClass( 'mediauploader-thumbnail mediauploader-thumbnail-side' );
 
-			this.$dataDiv = $( '<div>' ).addClass( 'mwe-upwiz-data' );
+			this.$dataDiv = $( '<div>' ).addClass( 'mediauploader-data' );
 
 			this.titleDetails = new uw.TitleDetailsWidget( {
 				// Normalize file extension, e.g. 'JPEG' to 'jpg'
@@ -47,8 +47,8 @@
 				maxLength: config.maxTitleLength
 			} );
 			this.titleDetailsField = new uw.FieldLayout( this.titleDetails, {
-				label: mw.message( 'mwe-upwiz-title' ).text(),
-				help: mw.message( 'mwe-upwiz-tooltip-title' ).text(),
+				label: mw.message( 'mediauploader-title' ).text(),
+				help: mw.message( 'mediauploader-tooltip-title' ).text(),
 				required: true
 			} );
 			this.mainFields.push( this.titleDetailsField );
@@ -63,22 +63,22 @@
 			);
 			this.descriptionsDetails = new uw.MultipleLanguageInputWidget( {
 				required: descriptionRequired,
-				// Messages: mwe-upwiz-desc-add-0, mwe-upwiz-desc-add-n
-				label: mw.message( 'mwe-upwiz-desc-add' ),
-				error: mw.message( 'mwe-upwiz-error-bad-descriptions' ),
-				remove: mw.message( 'mwe-upwiz-remove-description' ),
+				// Messages: mediauploader-desc-add-0, mediauploader-desc-add-n
+				label: mw.message( 'mediauploader-desc-add' ),
+				error: mw.message( 'mediauploader-error-bad-descriptions' ),
+				remove: mw.message( 'mediauploader-remove-description' ),
 				minLength: config.minDescriptionLength,
 				maxLength: config.maxDescriptionLength
 			} );
 			this.descriptionsDetailsField = new uw.FieldLayout( this.descriptionsDetails, {
 				required: descriptionRequired,
-				label: mw.message( 'mwe-upwiz-desc' ).text(),
-				help: mw.message( 'mwe-upwiz-tooltip-description' ).text()
+				label: mw.message( 'mediauploader-description' ).text(),
+				help: mw.message( 'mediauploader-tooltip-description' ).text()
 			} );
 			this.mainFields.push( this.descriptionsDetailsField );
 
 			this.deedChooserDetailsField = new uw.FieldLayout( this.deedChooserDetails, {
-				label: mw.message( 'mwe-upwiz-copyright-info' ).text(),
+				label: mw.message( 'mediauploader-copyright-info' ).text(),
 				required: true
 			} );
 			this.deedChooserDetailsField.toggle( this.customDeedChooser ); // See useCustomDeedChooser()
@@ -86,9 +86,9 @@
 
 			this.categoriesDetails = new uw.CategoriesDetailsWidget();
 			this.categoriesDetailsField = new uw.FieldLayout( this.categoriesDetails, {
-				label: mw.message( 'mwe-upwiz-categories' ).text(),
+				label: mw.message( 'mediauploader-categories' ).text(),
 				help: new OO.ui.HtmlSnippet(
-					mw.message( 'mwe-upwiz-tooltip-categories', $( '<a>' ).attr( {
+					mw.message( 'mediauploader-tooltip-categories', $( '<a>' ).attr( {
 						target: '_blank',
 						href: config.allCategoriesLink
 					} ) ).parse()
@@ -98,27 +98,27 @@
 
 			this.dateDetails = new uw.DateDetailsWidget( { upload: this.upload } );
 			this.dateDetailsField = new uw.FieldLayout( this.dateDetails, {
-				label: mw.message( 'mwe-upwiz-date-created' ).text(),
-				help: mw.message( 'mwe-upwiz-tooltip-date' ).text(),
+				label: mw.message( 'mediauploader-date-created' ).text(),
+				help: mw.message( 'mediauploader-tooltip-date' ).text(),
 				required: true
 			} );
 			this.mainFields.push( this.dateDetailsField );
 
 			this.otherDetails = new uw.OtherDetailsWidget();
 			this.otherDetailsField = new uw.FieldLayout( this.otherDetails, {
-				label: mw.message( 'mwe-upwiz-other' ).text(),
-				help: mw.message( 'mwe-upwiz-tooltip-other' ).text()
+				label: mw.message( 'mediauploader-other' ).text(),
+				help: mw.message( 'mediauploader-tooltip-other' ).text()
 			} );
 			this.mainFields.push( this.otherDetailsField );
 
 			this.locationInput = new uw.LocationDetailsWidget( { showHeading: true } );
 			this.locationInputField = new uw.FieldLayout( this.locationInput, {
-				label: mw.message( 'mwe-upwiz-location' ).text()
+				label: mw.message( 'mediauploader-location' ).text()
 			} );
 			this.mainFields.push( this.locationInputField );
 
 			/* Build the form for the file upload */
-			this.$form = $( '<form id="mwe-upwiz-detailsform' + this.upload.index + '"></form>' ).addClass( 'detailsForm' );
+			this.$form = $( '<form id="mediauploader-detailsform' + this.upload.index + '"></form>' ).addClass( 'detailsForm' );
 			this.$form.append(
 				this.titleDetailsField.$element,
 				this.descriptionsDetailsField.$element,
@@ -162,8 +162,8 @@
 
 			$moreDetailsWrapperDiv
 				.append(
-					$( '<a>' ).text( mw.msg( 'mwe-upwiz-more-options' ) )
-						.addClass( 'mwe-upwiz-details-more-options mw-collapsible-toggle mw-collapsible-arrow' ),
+					$( '<a>' ).text( mw.msg( 'mediauploader-more-options' ) )
+						.addClass( 'mediauploader-details-more-options mw-collapsible-toggle mw-collapsible-arrow' ),
 					$moreDetailsDiv.addClass( 'mw-collapsible-content' )
 				)
 				.makeCollapsible( { collapsed: true } );
@@ -182,15 +182,15 @@
 
 			// Add in remove control to form
 			this.removeCtrl = new OO.ui.ButtonWidget( {
-				label: mw.message( 'mwe-upwiz-remove' ).text(),
-				title: mw.message( 'mwe-upwiz-remove-upload' ).text(),
-				classes: [ 'mwe-upwiz-remove-upload' ],
+				label: mw.message( 'mediauploader-remove' ).text(),
+				title: mw.message( 'mediauploader-remove-upload' ).text(),
+				classes: [ 'mediauploader-remove-upload' ],
 				flags: 'destructive',
 				icon: 'trash',
 				framed: false
 			} ).on( 'click', function () {
-				OO.ui.confirm( mw.message( 'mwe-upwiz-license-confirm-remove' ).text(), {
-					title: mw.message( 'mwe-upwiz-license-confirm-remove-title' ).text()
+				OO.ui.confirm( mw.message( 'mediauploader-license-confirm-remove' ).text(), {
+					title: mw.message( 'mediauploader-license-confirm-remove-title' ).text()
 				} ).done( function ( confirmed ) {
 					if ( confirmed ) {
 						details.upload.emit( 'remove-upload' );
@@ -204,17 +204,17 @@
 			this.statusMessage.toggle( false );
 			this.$spinner = $.createSpinner( { size: 'small', type: 'inline' } );
 			this.$spinner.hide();
-			this.$indicator = $( '<div>' ).addClass( 'mwe-upwiz-file-indicator' ).append(
+			this.$indicator = $( '<div>' ).addClass( 'mediauploader-file-indicator' ).append(
 				this.$spinner,
 				this.statusMessage.$element
 			);
 
-			this.$submittingDiv = $( '<div>' ).addClass( 'mwe-upwiz-submitting' )
+			this.$submittingDiv = $( '<div>' ).addClass( 'mediauploader-submitting' )
 				.append(
 					this.$indicator,
-					$( '<div>' ).addClass( 'mwe-upwiz-details-texts' ).append(
-						$( '<div>' ).addClass( 'mwe-upwiz-visible-file-filename-text' ),
-						$( '<div>' ).addClass( 'mwe-upwiz-file-status-line' )
+					$( '<div>' ).addClass( 'mediauploader-details-texts' ).append(
+						$( '<div>' ).addClass( 'mediauploader-visible-file-filename-text' ),
+						$( '<div>' ).addClass( 'mediauploader-file-status-line' )
 					)
 				);
 
@@ -309,7 +309,7 @@
 		 */
 		setDuplicateTitleError: function () {
 			// TODO This should give immediate response, not only when submitting the form
-			this.titleDetailsField.setErrors( [ mw.message( 'mwe-upwiz-error-title-duplicate' ) ] );
+			this.titleDetailsField.setErrors( [ mw.message( 'mediauploader-error-title-duplicate' ) ] );
 			return this;
 		},
 
@@ -394,7 +394,7 @@
 		 */
 		populate: function () {
 			var $thumbnailDiv = this.$thumbnailDiv;
-			// This must match the CSS dimensions of .mwe-upwiz-thumbnail
+			// This must match the CSS dimensions of .mediauploader-thumbnail
 			this.upload.getThumbnail( 230 ).done( function ( thumb ) {
 				mw.UploadWizard.placeThumbnail( $thumbnailDiv, thumb );
 			} );
@@ -783,7 +783,7 @@
 
 			this.upload.title = this.getTitle();
 			this.upload.state = 'submitting-details';
-			this.setStatus( mw.message( 'mwe-upwiz-submitting-details' ).text() );
+			this.setStatus( mw.message( 'mediauploader-submitting-details' ).text() );
 			this.showIndicator( 'progress' );
 
 			wikitext = this.getWikiText();
@@ -791,7 +791,7 @@
 
 			return promise.then( function () {
 				details.showIndicator( 'success' );
-				details.setStatus( mw.message( 'mwe-upwiz-published' ).text() );
+				details.setStatus( mw.message( 'mediauploader-published' ).text() );
 			} );
 		},
 
@@ -822,11 +822,11 @@
 				comment = config.uploadComment.ownWork;
 			} else {
 				mw.messages.set(
-					'mwe-upwiz-upload-comment-third-party',
+					'mediauploader-upload-comment-third-party',
 					config.uploadComment.thirdParty
 				);
 				comment = mw.message(
-					'mwe-upwiz-upload-comment-third-party',
+					'mediauploader-upload-comment-third-party',
 					deed.getAuthorWikiText(),
 					deed.getSourceWikiText()
 				).plain();
@@ -919,10 +919,10 @@
 						} ] } );
 					} else {
 						// Messages that can be returned:
-						// * mwe-upwiz-queued
-						// * mwe-upwiz-publish
-						// * mwe-upwiz-assembling
-						this.setStatus( mw.message( 'mwe-upwiz-' + result.upload.stage ).text() );
+						// * mediauploader-queued
+						// * mediauploader-publish
+						// * mediauploader-assembling
+						this.setStatus( mw.message( 'mediauploader-' + result.upload.stage ).text() );
 						setTimeout( function () {
 							if ( details.upload.state !== 'aborted' ) {
 								details.submitWikiTextInternal( {
@@ -972,20 +972,20 @@
 			} else if ( result && result.upload && result.upload.warnings ) {
 				if ( warnings.thumb || warnings[ 'thumb-name' ] ) {
 					code = 'error-title-thumbnail';
-					message = mw.message( 'mwe-upwiz-error-title-thumbnail' ).parse();
+					message = mw.message( 'mediauploader-error-title-thumbnail' ).parse();
 				} else if ( warnings.badfilename ) {
 					code = 'title-invalid';
-					message = mw.message( 'mwe-upwiz-error-title-invalid' ).parse();
+					message = mw.message( 'mediauploader-error-title-invalid' ).parse();
 				} else if ( warnings[ 'bad-prefix' ] ) {
 					code = 'title-senselessimagename';
-					message = mw.message( 'mwe-upwiz-error-title-senselessimagename' ).parse();
+					message = mw.message( 'mediauploader-error-title-senselessimagename' ).parse();
 				} else if ( existingFile ) {
 					existingFileUrl = mw.config.get( 'wgServer' ) + mw.Title.makeTitle( NS_FILE, existingFile ).getUrl();
 					code = 'api-warning-exists';
-					message = mw.message( 'mwe-upwiz-api-warning-exists', existingFileUrl ).parse();
+					message = mw.message( 'mediauploader-api-warning-exists', existingFileUrl ).parse();
 				} else if ( warnings.duplicate ) {
 					code = 'upload-error-duplicate';
-					message = mw.message( 'mwe-upwiz-upload-error-duplicate' ).parse();
+					message = mw.message( 'mediauploader-upload-error-duplicate' ).parse();
 				} else if ( warnings[ 'duplicate-archive' ] !== undefined ) {
 					// warnings[ 'duplicate-archive' ] may be '' (empty string) for revdeleted files
 					if ( this.upload.handler.isIgnoredWarning( 'duplicate-archive' ) ) {
@@ -996,7 +996,7 @@
 					} else {
 						// This should _never_ happen, but just in case....
 						code = 'upload-error-duplicate-archive';
-						message = mw.message( 'mwe-upwiz-upload-error-duplicate-archive' ).parse();
+						message = mw.message( 'mediauploader-upload-error-duplicate-archive' ).parse();
 					}
 				} else {
 					warningsKeys = Object.keys( warnings );
@@ -1086,7 +1086,7 @@
 		},
 
 		setStatus: function ( s ) {
-			this.$div.find( '.mwe-upwiz-file-status-line' ).html( s ).show();
+			this.$div.find( '.mediauploader-file-status-line' ).html( s ).show();
 		},
 
 		// TODO: De-duplicate with code form mw.UploadWizardUploadInterface.js
@@ -1099,12 +1099,12 @@
 			} else if ( status ) {
 				this.statusMessage.toggle( true ).setType( status );
 			}
-			this.$indicator.toggleClass( 'mwe-upwiz-file-indicator-visible', !!status );
+			this.$indicator.toggleClass( 'mediauploader-file-indicator-visible', !!status );
 		},
 
 		setVisibleTitle: function ( s ) {
 			$( this.$submittingDiv )
-				.find( '.mwe-upwiz-visible-file-filename-text' )
+				.find( '.mediauploader-visible-file-filename-text' )
 				.text( s );
 		}
 	};

@@ -30,6 +30,7 @@
 			.addClass( 'oo-ui-dropdownWidget' )
 			.addClass( 'oo-ui-widget-enabled' );
 		for ( i = 0; i < config.classes.length; i++ ) {
+			// eslint-disable-next-line mediawiki/class-doc
 			this.$element.addClass( config.classes[ i ] );
 		}
 

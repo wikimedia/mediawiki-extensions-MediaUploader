@@ -36,29 +36,29 @@
 		);
 
 		this.$errorCount = $( '<div>' )
-			.attr( 'id', 'mwe-upwiz-details-error-count' );
+			.attr( 'id', 'mediauploader-details-error-count' );
 		this.$warningCount = $( '<div>' )
-			.attr( 'id', 'mwe-upwiz-details-warning-count' );
+			.attr( 'id', 'mediauploader-details-warning-count' );
 
 		this.nextButton = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-publish-details' ).text(),
+			label: mw.message( 'mediauploader-publish-details' ).text(),
 			flags: [ 'progressive', 'primary' ]
 		} ).on( 'click', startDetails );
 
 		this.nextButtonDespiteFailures = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-next-file-despite-failures' ).text(),
+			label: mw.message( 'mediauploader-next-file-despite-failures' ).text(),
 			flags: [ 'progressive' ]
 		} ).on( 'click', function () {
 			details.emit( 'finalize-details-after-removal' );
 		} );
 
 		this.retryButtonSomeFailed = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-file-retry' ).text(),
+			label: mw.message( 'mediauploader-file-retry' ).text(),
 			flags: [ 'progressive', 'primary' ]
 		} ).on( 'click', startDetails );
 
 		this.retryButtonAllFailed = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-file-retry' ).text(),
+			label: mw.message( 'mediauploader-file-retry' ).text(),
 			flags: [ 'progressive', 'primary' ]
 		} ).on( 'click', startDetails );
 
@@ -74,14 +74,14 @@
 
 		this.$div.prepend(
 			$( '<div>' )
-				.attr( 'id', 'mwe-upwiz-macro-files' )
-				.addClass( 'mwe-upwiz-filled-filelist ui-corner-all' )
+				.attr( 'id', 'mediauploader-macro-files' )
+				.addClass( 'mediauploader-filled-filelist ui-corner-all' )
 		);
 
 		// set default buttons visibility (can be altered in controller later)
-		this.$div.find( '.mwe-upwiz-file-next-some-failed' ).hide();
-		this.$div.find( '.mwe-upwiz-file-next-all-failed' ).hide();
-		this.$div.find( '.mwe-upwiz-file-next-all-ok' ).show();
+		this.$div.find( '.mediauploader-file-next-some-failed' ).hide();
+		this.$div.find( '.mediauploader-file-next-all-failed' ).hide();
+		this.$div.find( '.mediauploader-file-next-all-ok' ).show();
 	};
 
 	uw.ui.Details.prototype.addNextButton = function () {
@@ -90,18 +90,18 @@
 		this.nextButtonPromise.done( function () {
 			ui.$buttons.append(
 				$( '<div>' )
-					.addClass( 'mwe-upwiz-file-next-all-ok mwe-upwiz-file-endchoice' )
+					.addClass( 'mediauploader-file-next-all-ok mediauploader-file-endchoice' )
 					.append( ui.nextButton.$element )
 			);
 
 			ui.$buttons.append(
 				$( '<div>' )
-					.addClass( 'mwe-upwiz-file-next-some-failed mwe-upwiz-file-endchoice' )
+					.addClass( 'mediauploader-file-next-some-failed mediauploader-file-endchoice' )
 					.append(
 						new OO.ui.HorizontalLayout( {
 							items: [
 								new OO.ui.LabelWidget( {
-									label: mw.message( 'mwe-upwiz-file-some-failed' ).text()
+									label: mw.message( 'mediauploader-file-some-failed' ).text()
 								} ),
 								ui.nextButtonDespiteFailures,
 								ui.retryButtonSomeFailed
@@ -112,12 +112,12 @@
 
 			ui.$buttons.append(
 				$( '<div>' )
-					.addClass( 'mwe-upwiz-file-next-all-failed mwe-upwiz-file-endchoice' )
+					.addClass( 'mediauploader-file-next-all-failed mediauploader-file-endchoice' )
 					.append(
 						new OO.ui.HorizontalLayout( {
 							items: [
 								new OO.ui.LabelWidget( {
-									label: mw.message( 'mwe-upwiz-file-all-failed' ).text()
+									label: mw.message( 'mediauploader-file-all-failed' ).text()
 								} ),
 								ui.retryButtonAllFailed
 							]
@@ -134,7 +134,7 @@
 		this.$errorCount.empty();
 		this.$warningCount.empty();
 		this.$div
-			.find( '.mwe-upwiz-buttons .mwe-upwiz-file-endchoice' )
+			.find( '.mediauploader-buttons .mediauploader-file-endchoice' )
 			.hide();
 	};
 
@@ -143,8 +143,8 @@
 	 */
 	uw.ui.Details.prototype.disableEdits = function () {
 		this.$div
-			.find( '.mwe-upwiz-data' )
-			.morphCrossfade( '.mwe-upwiz-submitting' );
+			.find( '.mediauploader-data' )
+			.morphCrossfade( '.mediauploader-submitting' );
 
 		this.previousButton.$element.hide();
 	};
@@ -183,7 +183,7 @@
 			$( 'html, body' ).stop();
 
 			this.$errorCount
-				.msg( 'mwe-upwiz-details-error-count', errorCount, this.uploads.length )
+				.msg( 'mediauploader-details-error-count', errorCount, this.uploads.length )
 				// TODO The IconWidget and 'warning' flag is specific to MediaWiki theme, looks weird in Apex
 				.prepend( new OO.ui.IconWidget( { icon: 'alert', flags: [ 'warning' ] } ).$element, ' ' );
 			// Scroll to the first error
@@ -214,7 +214,7 @@
 
 		if ( warningCount > 0 ) {
 			this.$warningCount
-				.msg( 'mwe-upwiz-details-warning-count', warningCount, this.uploads.length )
+				.msg( 'mediauploader-details-warning-count', warningCount, this.uploads.length )
 				// TODO The IconWidget is specific to MediaWiki theme, looks weird in Apex
 				.prepend( new OO.ui.IconWidget( { icon: 'info' } ).$element, ' ' );
 			// Scroll to the first warning

@@ -60,11 +60,11 @@
 
 		// 'Skip tutorial' checkbox
 		this.skipCheckbox = new PopupCheckboxInputWidget( {
-			id: 'mwe-upwiz-skip',
+			id: 'mediauploader-skip',
 			// Add a friendly "Here's how to get it back" tooltip for users who check the "Skip next time" checkbox
 			popup: {
 				$content: $( '<p>' ).msg(
-					'mwe-upwiz-tooltip-skiptutorial',
+					'mediauploader-tooltip-skiptutorial',
 					mw.config.get( 'wgServer' ) + mw.util.getUrl( 'Special:Preferences' ) + '#mw-prefsection-uploads',
 					mw.message( 'prefs-uploads' ).text(),
 					mw.message( 'prefs-upwiz-interface' ).text()
@@ -75,7 +75,7 @@
 		} );
 		this.skipCheckboxLabel = new OO.ui.LabelWidget( {
 			input: this.skipCheckbox,
-			label: mw.message( 'mwe-upwiz-skip-tutorial-future' ).text()
+			label: mw.message( 'mediauploader-skip-tutorial-future' ).text()
 		} );
 
 		this.skipCheckbox.on( 'change', function () {
@@ -84,7 +84,7 @@
 
 		// grab the tutorial HTML that was injected into this document
 		// eslint-disable-next-line no-jquery/no-global-selector
-		this.$tutorialHtml = $( '#mwe-upwiz-tutorial-html' );
+		this.$tutorialHtml = $( '#mediauploader-tutorial-html' );
 
 		this.addPreviousButton();
 		this.addNextButton();
@@ -101,7 +101,7 @@
 
 		this.$div.prepend(
 			$( '<div>' )
-				.attr( 'id', 'mwe-upwiz-tutorial' )
+				.attr( 'id', 'mediauploader-tutorial' )
 				.append(
 					// TODO move this to JavaScript, too.
 					this.$tutorialHtml.show()
@@ -115,8 +115,8 @@
 		var ui = this;
 
 		this.nextButton = new OO.ui.ButtonWidget( {
-			classes: [ 'mwe-upwiz-button-next' ],
-			label: mw.message( 'mwe-upwiz-next' ).text(),
+			classes: [ 'mediauploader-button-next' ],
+			label: mw.message( 'mediauploader-next' ).text(),
 			flags: [ 'progressive', 'primary' ]
 		} ).on( 'click', function () {
 			ui.emit( 'next-step' );

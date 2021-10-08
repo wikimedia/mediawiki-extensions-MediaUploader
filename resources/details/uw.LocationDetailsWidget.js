@@ -13,7 +13,7 @@
 
 		uw.LocationDetailsWidget.parent.call( this );
 
-		this.$element.addClass( 'mwe-upwiz-locationDetailsWidget' );
+		this.$element.addClass( 'mediauploader-locationDetailsWidget' );
 
 		this.latitudeInput = new OO.ui.TextInputWidget();
 		this.longitudeInput = new OO.ui.TextInputWidget();
@@ -21,7 +21,7 @@
 		this.$map = $( '<div>' ).css( { width: 500, height: 300 } );
 		this.mapButton = new OO.ui.PopupButtonWidget( {
 			icon: 'mapPin',
-			title: mw.message( 'mwe-upwiz-location-button' ).text(),
+			title: mw.message( 'mediauploader-location-button' ).text(),
 			popup: {
 				$content: this.$map,
 				width: 500,
@@ -32,11 +32,11 @@
 		this.$element.append(
 			new OO.ui.FieldLayout( this.latitudeInput, {
 				align: 'top',
-				label: mw.message( 'mwe-upwiz-location-lat' ).text()
+				label: mw.message( 'mediauploader-location-lat' ).text()
 			} ).$element,
 			new OO.ui.FieldLayout( this.longitudeInput, {
 				align: 'top',
-				label: mw.message( 'mwe-upwiz-location-lon' ).text()
+				label: mw.message( 'mediauploader-location-lon' ).text()
 			} ).$element
 		);
 
@@ -44,7 +44,7 @@
 			this.$element.append(
 				new OO.ui.FieldLayout( this.headingInput, {
 					align: 'top',
-					label: mw.message( 'mwe-upwiz-location-heading' ).text()
+					label: mw.message( 'mediauploader-location-heading' ).text()
 				} ).$element
 			);
 		}
@@ -119,16 +119,16 @@
 		// being present in the input
 		if ( latInput || lonInput ) {
 			if ( latNum > 90 || latNum < -90 || ( latNum === 0 && latInput.indexOf( '0' ) < 0 ) || isNaN( latNum ) ) {
-				errors.push( mw.message( 'mwe-upwiz-error-latitude' ) );
+				errors.push( mw.message( 'mediauploader-error-latitude' ) );
 			}
 
 			if ( lonNum > 180 || lonNum < -180 || ( lonNum === 0 && lonInput.indexOf( '0' ) < 0 ) || isNaN( lonNum ) ) {
-				errors.push( mw.message( 'mwe-upwiz-error-longitude' ) );
+				errors.push( mw.message( 'mediauploader-error-longitude' ) );
 			}
 		}
 
 		if ( headInput !== '' && ( headInput > 360 || headInput < 0 || isNaN( headNum ) ) ) {
-			errors.push( mw.message( 'mwe-upwiz-error-heading' ) );
+			errors.push( mw.message( 'mediauploader-error-heading' ) );
 		}
 
 		return $.Deferred().resolve( errors );

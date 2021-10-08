@@ -35,20 +35,20 @@
 		);
 
 		this.$addFileContainer = $( '<div>' )
-			.attr( 'id', 'mwe-upwiz-add-file-container' )
-			.addClass( 'mwe-upwiz-add-files-0' );
+			.attr( 'id', 'mediauploader-add-file-container' )
+			.addClass( 'mediauploader-add-files-0' );
 
 		this.$uploadCtrl = $( '<div>' )
-			.attr( 'id', 'mwe-upwiz-upload-ctrls' )
-			.addClass( 'mwe-upwiz-file ui-helper-clearfix' )
+			.attr( 'id', 'mediauploader-upload-ctrls' )
+			.addClass( 'mediauploader-file ui-helper-clearfix' )
 			.append( this.$addFileContainer );
 
 		this.addFile = new OO.ui.SelectFileWidget( {
-			classes: [ 'mwe-upwiz-add-file' ],
+			classes: [ 'mediauploader-add-file' ],
 			multiple: true,
 			showDropTarget: true,
 			button: {
-				label: mw.message( 'mwe-upwiz-add-file-0-free' ).text(),
+				label: mw.message( 'mediauploader-add-file-0-free' ).text(),
 				flags: [ 'progressive', 'primary' ]
 			}
 		} );
@@ -56,14 +56,14 @@
 		this.$addFileContainer.append( this.addFile.$element );
 
 		this.nextStepButtonAllOk = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-next-file' ).text(),
+			label: mw.message( 'mediauploader-next-file' ).text(),
 			flags: [ 'progressive', 'primary' ]
 		} ).on( 'click', function () {
 			upload.emit( 'next-step' );
 		} );
 
 		this.retryButtonSomeFailed = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-file-retry' ).text(),
+			label: mw.message( 'mediauploader-file-retry' ).text(),
 			flags: [ 'progressive' ]
 		} ).on( 'click', function () {
 			upload.hideEndButtons();
@@ -71,14 +71,14 @@
 		} );
 
 		this.nextStepButtonSomeFailed = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-next-file-despite-failures' ).text(),
+			label: mw.message( 'mediauploader-next-file-despite-failures' ).text(),
 			flags: [ 'progressive', 'primary' ]
 		} ).on( 'click', function () {
 			upload.emit( 'next-step' );
 		} );
 
 		this.retryButtonAllFailed = new OO.ui.ButtonWidget( {
-			label: mw.message( 'mwe-upwiz-file-retry' ).text(),
+			label: mw.message( 'mediauploader-file-retry' ).text(),
 			flags: [ 'progressive' ]
 		} ).on( 'click', function () {
 			upload.hideEndButtons();
@@ -86,11 +86,11 @@
 		} );
 
 		this.$fileList = $( '<div>' )
-			.attr( 'id', 'mwe-upwiz-filelist' )
+			.attr( 'id', 'mediauploader-filelist' )
 			.addClass( 'ui-corner-all' );
 
 		this.$progress = $( '<div>' )
-			.attr( 'id', 'mwe-upwiz-progress' )
+			.attr( 'id', 'mediauploader-progress' )
 			.addClass( 'ui-helper-clearfix' );
 
 		this.addPreviousButton();
@@ -110,8 +110,8 @@
 	 * @param {boolean} fewerThanMax Whether we can add more uploads.
 	 */
 	uw.ui.Upload.prototype.updateFileCounts = function ( haveUploads, fewerThanMax ) {
-		this.$fileList.toggleClass( 'mwe-upwiz-filled-filelist', haveUploads );
-		this.$addFileContainer.toggleClass( 'mwe-upwiz-add-files-0', !haveUploads );
+		this.$fileList.toggleClass( 'mediauploader-filled-filelist', haveUploads );
+		this.$addFileContainer.toggleClass( 'mediauploader-add-files-0', !haveUploads );
 
 		this.setAddButtonText( haveUploads );
 
@@ -123,7 +123,7 @@
 			// we want them to be rounded only when their edge touched the top or bottom of the filelist.
 			this.$fileListings = this.$fileList.find( '.filled' );
 
-			this.$visibleFileListings = this.$fileListings.find( '.mwe-upwiz-visible-file' );
+			this.$visibleFileListings = this.$fileListings.find( '.mediauploader-visible-file' );
 			this.$visibleFileListings.removeClass( 'ui-corner-top ui-corner-bottom' );
 			this.$visibleFileListings.first().addClass( 'ui-corner-top' );
 			this.$visibleFileListings.last().addClass( 'ui-corner-bottom' );
@@ -145,7 +145,7 @@
 	 * @param {boolean} more
 	 */
 	uw.ui.Upload.prototype.setAddButtonText = function ( more ) {
-		var msg = 'mwe-upwiz-add-file-';
+		var msg = 'mediauploader-add-file-';
 
 		if ( more ) {
 			msg += 'n';
@@ -154,8 +154,8 @@
 		}
 
 		// Messages that can be used here:
-		// * mwe-upwiz-add-file-0-free
-		// * mwe-upwiz-add-file-n
+		// * mediauploader-add-file-0-free
+		// * mediauploader-add-file-n
 		this.addFile.selectButton.setLabel( mw.message( msg ).text() );
 	};
 
@@ -165,12 +165,12 @@
 		uw.ui.Step.prototype.load.call( this, uploads );
 
 		if ( uploads.length === 0 ) {
-			this.$fileList.removeClass( 'mwe-upwiz-filled-filelist' );
+			this.$fileList.removeClass( 'mediauploader-filled-filelist' );
 		}
 
 		this.$div.prepend(
 			$( '<div>' )
-				.attr( 'id', 'mwe-upwiz-files' )
+				.attr( 'id', 'mediauploader-files' )
 				.append(
 					this.$fileList,
 					this.$uploadCtrl
@@ -222,12 +222,12 @@
 		this.nextButtonPromise.done( function () {
 			ui.$buttons.append(
 				$( '<div>' )
-					.addClass( 'mwe-upwiz-file-next-all-ok mwe-upwiz-file-endchoice' )
+					.addClass( 'mediauploader-file-next-all-ok mediauploader-file-endchoice' )
 					.append(
 						new OO.ui.HorizontalLayout( {
 							items: [
 								new OO.ui.LabelWidget( {
-									label: mw.message( 'mwe-upwiz-file-all-ok' ).text()
+									label: mw.message( 'mediauploader-file-all-ok' ).text()
 								} ),
 								ui.nextStepButtonAllOk
 							]
@@ -237,12 +237,12 @@
 
 			ui.$buttons.append(
 				$( '<div>' )
-					.addClass( 'mwe-upwiz-file-next-some-failed mwe-upwiz-file-endchoice' )
+					.addClass( 'mediauploader-file-next-some-failed mediauploader-file-endchoice' )
 					.append(
 						new OO.ui.HorizontalLayout( {
 							items: [
 								new OO.ui.LabelWidget( {
-									label: mw.message( 'mwe-upwiz-file-some-failed' ).text()
+									label: mw.message( 'mediauploader-file-some-failed' ).text()
 								} ),
 								ui.retryButtonSomeFailed,
 								ui.nextStepButtonSomeFailed
@@ -253,12 +253,12 @@
 
 			ui.$buttons.append(
 				$( '<div>' )
-					.addClass( 'mwe-upwiz-file-next-all-failed mwe-upwiz-file-endchoice' )
+					.addClass( 'mediauploader-file-next-all-failed mediauploader-file-endchoice' )
 					.append(
 						new OO.ui.HorizontalLayout( {
 							items: [
 								new OO.ui.LabelWidget( {
-									label: mw.message( 'mwe-upwiz-file-all-failed' ).text()
+									label: mw.message( 'mediauploader-file-all-failed' ).text()
 								} ),
 								ui.retryButtonAllFailed
 							]
@@ -275,7 +275,7 @@
 	 */
 	uw.ui.Upload.prototype.hideEndButtons = function () {
 		this.$div
-			.find( '.mwe-upwiz-buttons .mwe-upwiz-file-endchoice' )
+			.find( '.mediauploader-buttons .mediauploader-file-endchoice' )
 			.hide();
 	};
 
@@ -288,11 +288,11 @@
 	uw.ui.Upload.prototype.showTooManyFilesError = function ( filesUploaded ) {
 		mw.errorDialog(
 			mw.message(
-				'mwe-upwiz-too-many-files-text',
+				'mediauploader-too-many-files-text',
 				this.config.maxUploads,
 				filesUploaded
 			).text(),
-			mw.message( 'mwe-upwiz-too-many-files' ).text()
+			mw.message( 'mediauploader-too-many-files' ).text()
 		);
 	};
 
@@ -306,11 +306,11 @@
 	uw.ui.Upload.prototype.showFileTooLargeError = function ( maxSize, size ) {
 		mw.errorDialog(
 			mw.message(
-				'mwe-upwiz-file-too-large-text',
+				'mediauploader-file-too-large-text',
 				uw.units.bytes( maxSize ),
 				uw.units.bytes( size )
 			).text(),
-			mw.message( 'mwe-upwiz-file-too-large' ).text()
+			mw.message( 'mediauploader-file-too-large' ).text()
 		);
 	};
 
@@ -319,16 +319,16 @@
 	 * @param {string} extension
 	 */
 	uw.ui.Upload.prototype.showBadExtensionError = function ( filename, extension ) {
-		var $errorMessage = $( '<p>' ).msg( 'mwe-upwiz-upload-error-bad-filename-extension', extension );
+		var $errorMessage = $( '<p>' ).msg( 'mediauploader-upload-error-bad-filename-extension', extension );
 		this.showFilenameError( $errorMessage );
 	};
 
 	uw.ui.Upload.prototype.showMissingExtensionError = function () {
-		var $errorMessage = $( '<p>' ).msg( 'mwe-upwiz-upload-error-bad-filename-no-extension' );
+		var $errorMessage = $( '<p>' ).msg( 'mediauploader-upload-error-bad-filename-no-extension' );
 		this.showFilenameError(
 			$( '<div>' ).append(
 				$errorMessage,
-				$( '<p>' ).msg( 'mwe-upwiz-allowed-filename-extensions' ),
+				$( '<p>' ).msg( 'mediauploader-allowed-filename-extensions' ),
 				$( '<blockquote>' ).append( $( '<tt>' ).append(
 					mw.UploadWizard.config.fileExtensions.join( ' ' )
 				) )
@@ -341,14 +341,14 @@
 	 * @param {string} basename
 	 */
 	uw.ui.Upload.prototype.showDuplicateError = function ( filename, basename ) {
-		this.showFilenameError( $( '<p>' ).msg( 'mwe-upwiz-upload-error-duplicate-filename-error', basename ) );
+		this.showFilenameError( $( '<p>' ).msg( 'mediauploader-upload-error-duplicate-filename-error', basename ) );
 	};
 
 	/**
 	 * @param {string} filename
 	 */
 	uw.ui.Upload.prototype.showUnparseableFilenameError = function ( filename ) {
-		this.showFilenameError( mw.message( 'mwe-upwiz-unparseable-filename', filename ).escaped() );
+		this.showFilenameError( mw.message( 'mediauploader-unparseable-filename', filename ).escaped() );
 	};
 
 	/**

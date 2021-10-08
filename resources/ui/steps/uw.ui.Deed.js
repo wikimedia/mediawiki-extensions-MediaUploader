@@ -42,13 +42,13 @@
 
 		this.$div.prepend(
 			$( '<div>' )
-				.attr( 'id', 'mwe-upwiz-deeds-thumbnails' )
+				.attr( 'id', 'mediauploader-deeds-thumbnails' )
 				.addClass( 'ui-helper-clearfix' ),
 			$( '<div>' )
-				.attr( 'id', 'mwe-upwiz-deeds' )
+				.attr( 'id', 'mediauploader-deeds' )
 				.addClass( 'ui-helper-clearfix' ),
 			$( '<div>' )
-				.attr( 'id', 'mwe-upwiz-deeds-custom' )
+				.attr( 'id', 'mediauploader-deeds-custom' )
 				.addClass( 'ui-helper-clearfix' )
 		);
 
