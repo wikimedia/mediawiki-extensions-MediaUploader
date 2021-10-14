@@ -9,9 +9,10 @@ use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParser;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParserFactory;
 use MediaWiki\Extension\MediaUploader\Config\RequestConfig;
+use MediaWiki\Page\PageReferenceValue;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
-use TitleValue;
+use ParserOptions;
 use WANObjectCache;
 
 /**
@@ -26,24 +27,23 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 	private const HOUR = 3600;
 
 	public function testGetName() {
-		$linkTarget = new TitleValue( NS_CAMPAIGN, 'Dummy campaign' );
+		$page = PageReferenceValue::localReference( NS_CAMPAIGN, 'Dummy' );
 
 		$config = new CampaignParsedConfig(
 			$this->createNoOpMock( WANObjectCache::class ),
 			$this->createNoOpMock( UserOptionsLookup::class ),
 			$this->createNoOpMock( ConfigCacheInvalidator::class ),
-			$this->createNoOpMock( Language::class ),
-			$this->createNoOpMock( UserIdentity::class ),
+			$this->createNoOpMock( ParserOptions::class ),
 			$this->createNoOpMock( ConfigParserFactory::class ),
 			$this->createNoOpMock( RequestConfig::class ),
 			[],
 			$this->createNoOpMock( CampaignRecord::class ),
-			$linkTarget,
+			$page,
 			$this->getParsedConfigServiceOptions()
 		);
 
 		$this->assertSame(
-			'Dummy_campaign',
+			'Dummy',
 			$config->getName(),
 			'getName()'
 		);
@@ -188,16 +188,24 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 		array $expectedConfig
 	) {
 		$user = $this->createNoOpMock( UserIdentity::class );
+		$language = $this->createMock( Language::class );
+		$language->expects( $this->once() )
+			->method( 'getCode' )
+			->willReturn( 'lang' );
+
 		$userOptionsLookup = $this->createMock( UserOptionsLookup::class );
 		$userOptionsLookup->expects( $this->once() )
 			->method( 'getOption' )
 			->with( $user, 'gender' )
 			->willReturn( 'test gender' );
 
-		$language = $this->createMock( Language::class );
-		$language->expects( $this->once() )
-			->method( 'getCode' )
-			->willReturn( 'lang' );
+		$parserOptions = $this->createMock( ParserOptions::class );
+		$parserOptions->expects( $this->once() )
+			->method( 'getUserIdentity' )
+			->willReturn( $user );
+		$parserOptions->expects( $this->once() )
+			->method( 'getTargetLanguage' )
+			->willReturn( $language );
 
 		$requestConfig = $this->createMock( RequestConfig::class );
 		$requestConfig->expects( $this->once() )
@@ -220,8 +228,7 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 					'k' => 'rawConfig',
 					'someKey' => 'v',
 				],
-				$user,
-				$language
+				$parserOptions
 			)
 			->willReturn( $configParser );
 
@@ -237,19 +244,18 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 		$invalidator->expects( $this->never() )
 			->method( 'invalidate' );
 
-		$linkTarget = new TitleValue( NS_CAMPAIGN, 'Dummy' );
+		$page = PageReferenceValue::localReference( NS_CAMPAIGN, 'Dummy' );
 
 		$gConfig = new CampaignParsedConfig(
 			WANObjectCache::newEmpty(),
 			$userOptionsLookup,
 			$invalidator,
-			$language,
-			$user,
+			$parserOptions,
 			$configParserFactory,
 			$requestConfig,
 			$urlOverrides,
 			$record,
-			$linkTarget,
+			$page,
 			$this->getParsedConfigServiceOptions()
 		);
 
@@ -284,6 +290,8 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 		array $urlOverrides,
 		array $expectedConfig
 	) {
+		$parserOptions = $this->createNoOpMock( ParserOptions::class );
+
 		$requestConfig = $this->createMock( RequestConfig::class );
 		$requestConfig->expects( $this->once() )
 			->method( 'getConfigArray' )
@@ -297,9 +305,6 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 			->method( 'getTemplates' )
 			->willReturn( [ 'k' => 'templates' ] );
 
-		$user = $this->createNoOpMock( UserIdentity::class );
-		$language = $this->createNoOpMock( Language::class );
-
 		$configParserFactory = $this->createMock( ConfigParserFactory::class );
 		$configParserFactory->expects( $this->once() )
 			->method( 'newConfigParser' )
@@ -308,8 +313,7 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 					'k' => 'rawConfig',
 					'someKey' => 'v',
 				],
-				$user,
-				$language
+				$parserOptions
 			)
 			->willReturn( $configParser );
 
@@ -318,19 +322,18 @@ class CampaignParsedConfigTest extends ConfigUnitTestCase {
 			->method( 'getContent' )
 			->willReturn( [ 'someKey' => 'v' ] );
 
-		$linkTarget = new TitleValue( NS_CAMPAIGN, 'Dummy' );
+		$page = PageReferenceValue::localReference( NS_CAMPAIGN, 'Dummy' );
 
 		$gConfig = new CampaignParsedConfig(
 			$this->createNoOpMock( WANObjectCache::class ),
 			$this->createNoOpMock( UserOptionsLookup::class ),
 			$this->createNoOpMock( ConfigCacheInvalidator::class ),
-			$language,
-			$user,
+			$parserOptions,
 			$configParserFactory,
 			$requestConfig,
 			$urlOverrides,
 			$record,
-			$linkTarget,
+			$page,
 			$this->getParsedConfigServiceOptions( true )
 		);
 

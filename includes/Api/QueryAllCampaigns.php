@@ -78,15 +78,19 @@ class QueryAllCampaigns extends ApiQueryBase {
 		$basePath = [ 'query', $this->getModuleName() ];
 
 		foreach ( $recordsUnfiltered as $record ) {
+			/** @var CampaignRecord $record */
 			if ( ++$count > $limit ) {
 				// We have more results than $limit. Set continue
-				$this->setContinueEnumParameter( 'continue', $record->getPageId() );
+				$this->setContinueEnumParameter(
+					'continue',
+					$record->getPageId() ?: 0
+				);
 				break;
 			}
 
 			try {
 				$record->assertValid(
-					$record->getTitle()->getDBkey(),
+					$record->getPage()->getDBkey(),
 					CampaignStore::SELECT_TITLE
 				);
 			} catch ( BaseCampaignException $e ) {
@@ -94,7 +98,7 @@ class QueryAllCampaigns extends ApiQueryBase {
 					$basePath,
 					$record->getPageId(),
 					[
-						'name' => $record->getTitle()->getDBkey(),
+						'name' => $record->getPage()->getDBkey(),
 						'enabled' => $record->isEnabled(),
 						'error' => $e->getMessage(),
 					]
@@ -114,7 +118,7 @@ class QueryAllCampaigns extends ApiQueryBase {
 			$result->addValue(
 				$campaignPath,
 				'name',
-				$record->getTitle()->getDBkey()
+				$record->getPage()->getDBkey()
 			);
 			$result->addValue(
 				$campaignPath,
@@ -122,7 +126,7 @@ class QueryAllCampaigns extends ApiQueryBase {
 				$record->isEnabled()
 			);
 
-			$statsRecord = $stats[$record->getPageId()] ?? [];
+			$statsRecord = $stats[$record->getPageId() ?: -1] ?? [];
 			if ( array_key_exists( 'trackingCategory', $statsRecord ) ) {
 				$result->addValue(
 					$campaignPath,

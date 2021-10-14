@@ -2,20 +2,14 @@
 
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
-use Html;
-use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
-use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
-use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\Linker\LinkTarget;
+use MediaWiki\Page\PageReference;
 use MWException;
-use ParserOptions;
-use ParserOutput;
 use Status;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 use TextContent;
-use Title;
 use TitleValue;
 
 /**
@@ -32,12 +26,11 @@ class CampaignContent extends TextContent {
 	 */
 	public const GLOBAL_CONFIG_ANCHOR_DBKEY = '-';
 
+	public const MODEL_ID = 'Campaign';
+
 	public static function getGlobalConfigAnchorLinkTarget(): LinkTarget {
 		return new TitleValue( NS_CAMPAIGN, self::GLOBAL_CONFIG_ANCHOR_DBKEY );
 	}
-
-	/** @var ConfigFactory */
-	private $configFactory;
 
 	/** @var Validator */
 	private $validator;
@@ -91,10 +84,7 @@ class CampaignContent extends TextContent {
 		$content->realValidationStatus = $this->realValidationStatus;
 
 		// And the services as well
-		$content->setServices(
-			$this->configFactory,
-			$this->validator
-		);
+		$content->setServices( $this->validator );
 		return $content;
 	}
 
@@ -111,14 +101,9 @@ class CampaignContent extends TextContent {
 	/**
 	 * Set services for unit testing purposes.
 	 *
-	 * @param ConfigFactory|null $configFactory
 	 * @param Validator|null $validator
 	 */
-	public function setServices(
-		ConfigFactory $configFactory = null,
-		Validator $validator = null
-	) {
-		$this->configFactory = $configFactory;
+	public function setServices( Validator $validator = null ) {
 		$this->validator = $validator;
 		$this->initializedServices = true;
 	}
@@ -132,7 +117,6 @@ class CampaignContent extends TextContent {
 		}
 
 		$this->setServices(
-			MediaUploaderServices::getConfigFactory(),
 			MediaUploaderServices::getCampaignValidator()
 		);
 	}
@@ -168,110 +152,6 @@ class CampaignContent extends TextContent {
 	 */
 	public function isValid() {
 		return $this->getValidationStatus()->isGood();
-	}
-
-	/**
-	 * Override to generate appropriate ParserOutput.
-	 *
-	 * @param Title $title
-	 * @param int $revId
-	 * @param ParserOptions $options
-	 * @param bool $generateHtml
-	 * @param ParserOutput &$output
-	 *
-	 * @throws MWException
-	 */
-	protected function fillParserOutput(
-		Title $title,
-		$revId,
-		ParserOptions $options,
-		$generateHtml,
-		ParserOutput &$output
-	) {
-		$this->initServices();
-
-		if ( $title->getDBkey() === self::GLOBAL_CONFIG_ANCHOR_DBKEY ) {
-			// Handle the case of the global config anchor.
-			// We ignore config cache as this function may have been called by a
-			// recursive LinksUpdate, which means there are probably some templates
-			// that this config depends on that have changed. It's also possible
-			// that this was caused by a null edit by GlobalConfigAnchorUpdateJob,
-			// but then it still is safer to reparse the config than rely on cache
-			// that may be out of date.
-			$config = $this->configFactory->newGlobalConfig(
-				$options->getUserIdentity(),
-				$options->getUserLangObj(),
-				[],
-				true
-			);
-
-			$this->registerTemplates( $config, $output );
-
-			if ( $generateHtml ) {
-				$output->setText(
-					wfMessage( 'mediauploader-global-config-anchor' )->parseAsBlock()
-				);
-			}
-			return;
-		}
-
-		// Handle a regular campaign.
-		$record = $this->newCampaignRecord( $title );
-
-		try {
-			// Title and content will always be set, no need to check that.
-			$record->assertValid( $title->getDBkey() );
-		} catch ( BaseCampaignException $e ) {
-			// TODO: this is really ugly.
-			$output->setText(
-				Html::element( 'pre', [], $e->getText() )
-			);
-			return;
-		}
-
-		// Here we also ignore the cache, as there's no way to tell whether
-		// it's just someone viewing the page and parser cache has expired, or there
-		// was an actual edit or a LinksUpdate. We can't defer this until later
-		// (like PageSaveComplete or LinksUpdateComplete), because we can't modify
-		// ParserOutput at those points. We need an up-to-date list of templates here
-		// and now.
-		$campaignConfig = $this->configFactory->newCampaignConfig(
-			$options->getUserIdentity(),
-			$options->getTargetLanguage(),
-			$record,
-			$title,
-			[],
-			true
-		);
-
-		if ( $generateHtml ) {
-			$formatter = new CampaignPageFormatter( $record, $campaignConfig );
-			$formatter->fillParserOutput( $output );
-		}
-
-		$this->registerTemplates( $campaignConfig, $output );
-
-		// Add some styles
-		$output->addModuleStyles( 'ext.uploadWizard.uploadCampaign.display' );
-	}
-
-	/**
-	 * Registers templates used in a ParsedConfig with a ParserOutput.
-	 *
-	 * @param ParsedConfig $parsedConfig
-	 * @param ParserOutput $parserOutput
-	 */
-	private function registerTemplates(
-		ParsedConfig $parsedConfig,
-		ParserOutput $parserOutput
-	): void {
-		// FIXME: should we be registering other stuff??
-		foreach ( $parsedConfig->getTemplates() as $ns => $templates ) {
-			foreach ( $templates as $dbk => $ids ) {
-				$title = Title::makeTitle( $ns, $dbk );
-				$parserOutput->addTemplate( $title, $ids[0], $ids[1] );
-			}
-		}
 	}
 
 	/**
@@ -312,11 +192,12 @@ class CampaignContent extends TextContent {
 	}
 
 	/**
-	 * @param Title $title
+	 * @param PageReference $page
+	 * @param int|null $pageId
 	 *
 	 * @return CampaignRecord
 	 */
-	public function newCampaignRecord( Title $title ): CampaignRecord {
+	public function newCampaignRecord( PageReference $page, int $pageId = null ): CampaignRecord {
 		$yamlParse = $this->realYamlParse ?: $this->getData();
 		if ( !$yamlParse->isGood() ) {
 			$validity = CampaignRecord::CONTENT_INVALID_FORMAT;
@@ -338,11 +219,11 @@ class CampaignContent extends TextContent {
 		}
 
 		return new CampaignRecord(
-			$title->getId(),
+			$pageId,
 			( $content ?: [] )['enabled'] ?? false,
 			$validity,
 			$content,
-			$title
+			$page
 		);
 	}
 }

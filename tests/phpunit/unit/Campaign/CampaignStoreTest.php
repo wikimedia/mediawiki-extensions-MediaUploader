@@ -145,26 +145,26 @@ class CampaignStoreTest extends MediaWikiUnitTestCase {
 		if ( $shouldHaveTitle ) {
 			$this->assertInstanceOf(
 				Title::class,
-				$record->getTitle(),
+				$record->getPage(),
 				'CampaignRecord::getTitle()'
 			);
 			$this->assertSame(
 				321,
-				$record->getTitle()->getNamespace(),
+				$record->getPage()->getNamespace(),
 				'Title::getNamespace()'
 			);
 			$this->assertSame(
 				123,
-				$record->getTitle()->getId(),
+				$record->getPage()->getId(),
 				'Title::getId()'
 			);
 			$this->assertSame(
 				'aaa',
-				$record->getTitle()->getDBkey(),
+				$record->getPage()->getDBkey(),
 				'Title::getDBkey()'
 			);
 		} else {
-			$this->assertNull( $record->getTitle(), 'CampaignRecord::getTitle()' );
+			$this->assertNull( $record->getPage(), 'CampaignRecord::getTitle()' );
 		}
 	}
 }

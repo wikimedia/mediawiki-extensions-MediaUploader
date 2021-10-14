@@ -11,6 +11,7 @@ use MediaWiki\Extension\MediaUploader\Config\GlobalParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\RequestConfig;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
+use ParserOptions;
 use WANObjectCache;
 
 /**
@@ -75,6 +76,14 @@ class GlobalParsedConfigTest extends ConfigUnitTestCase {
 			->method( 'getCode' )
 			->willReturn( 'lang' );
 
+		$parserOptions = $this->createMock( ParserOptions::class );
+		$parserOptions->expects( $this->once() )
+			->method( 'getUserIdentity' )
+			->willReturn( $user );
+		$parserOptions->expects( $this->once() )
+			->method( 'getTargetLanguage' )
+			->willReturn( $language );
+
 		$requestConfig = $this->createMock( RequestConfig::class );
 		$requestConfig->expects( $this->once() )
 			->method( 'getConfigArray' )
@@ -93,8 +102,7 @@ class GlobalParsedConfigTest extends ConfigUnitTestCase {
 			->method( 'newConfigParser' )
 			->with(
 				[ 'k' => 'rawConfig' ],
-				$user,
-				$language
+				$parserOptions
 			)
 			->willReturn( $configParser );
 
@@ -114,8 +122,7 @@ class GlobalParsedConfigTest extends ConfigUnitTestCase {
 			WANObjectCache::newEmpty(),
 			$userOptionsLookup,
 			$invalidator,
-			$language,
-			$user,
+			$parserOptions,
 			$configParserFactory,
 			$requestConfig,
 			$jobQueueGroup,
@@ -169,14 +176,14 @@ class GlobalParsedConfigTest extends ConfigUnitTestCase {
 
 		$user = $this->createNoOpMock( UserIdentity::class );
 		$language = $this->createNoOpMock( Language::class );
+		$parserOptions = $this->createNoOpMock( ParserOptions::class );
 
 		$configParserFactory = $this->createMock( ConfigParserFactory::class );
 		$configParserFactory->expects( $this->once() )
 			->method( 'newConfigParser' )
 			->with(
 				[ 'k' => 'rawConfig' ],
-				$user,
-				$language
+				$parserOptions
 			)
 			->willReturn( $configParser );
 
@@ -184,8 +191,7 @@ class GlobalParsedConfigTest extends ConfigUnitTestCase {
 			$this->createNoOpMock( WANObjectCache::class ),
 			$this->createNoOpMock( UserOptionsLookup::class ),
 			$this->createNoOpMock( ConfigCacheInvalidator::class ),
-			$language,
-			$user,
+			$parserOptions,
 			$configParserFactory,
 			$requestConfig,
 			$this->createNoOpMock( JobQueueGroup::class ),

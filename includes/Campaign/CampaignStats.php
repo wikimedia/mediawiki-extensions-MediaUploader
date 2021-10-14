@@ -52,7 +52,7 @@ class CampaignStats {
 	 */
 	public function getStatsForRecord( CampaignRecord $record ): ?array {
 		$stats = $this->getStatsForRecords( [ $record ] );
-		return $stats[$record->getPageId()] ?? null;
+		return $stats[$record->getPageId() ?: -1] ?? null;
 	}
 
 	/**
@@ -70,7 +70,9 @@ class CampaignStats {
 	public function getStatsForRecords( array $records ): array {
 		$recordMap = [];
 		foreach ( $records as $record ) {
-			$recordMap[$record->getPageId()] = $record;
+			// Note: the page ID won't actually ever be null, but it's hard to
+			// convince Phan to this.
+			$recordMap[$record->getPageId() ?: -1] = $record;
 		}
 
 		$cache = $this->cache;

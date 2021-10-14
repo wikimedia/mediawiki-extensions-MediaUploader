@@ -7,6 +7,7 @@ use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
+use ParserOptions;
 use WANObjectCache;
 
 /**
@@ -42,7 +43,7 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 			array_push( $expectedCallParams, ...$makeCacheKeyArg );
 		}
 
-		$dummyUser = $this->createNoOpMock( UserIdentity::class );
+		$user = $this->createNoOpMock( UserIdentity::class );
 		$cache = $this->createMock( WANObjectCache::class );
 		$cache->expects( $this->once() )
 			->method( 'makeKey' )
@@ -51,19 +52,26 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 		$userOptionsLookup = $this->createMock( UserOptionsLookup::class );
 		$userOptionsLookup->expects( $this->once() )
 			->method( 'getOption' )
-			->with( $dummyUser, 'gender' )
+			->with( $user, 'gender' )
 			->willReturn( 'testGender' );
 		$language = $this->createMock( Language::class );
 		$language->expects( $this->once() )
 			->method( 'getCode' )
 			->willReturn( 'testCode' );
 
+		$parserOptions = $this->createMock( ParserOptions::class );
+		$parserOptions->expects( $this->once() )
+			->method( 'getUserIdentity' )
+			->willReturn( $user );
+		$parserOptions->expects( $this->once() )
+			->method( 'getTargetLanguage' )
+			->willReturn( $language );
+
 		$params = [
 			$cache,
 			$userOptionsLookup,
 			$this->createNoOpMock( ConfigCacheInvalidator::class ),
-			$language,
-			$dummyUser,
+			$parserOptions,
 			$this->getParsedConfigServiceOptions(),
 		];
 
@@ -91,8 +99,7 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 			$this->createNoOpMock( WANObjectCache::class ),
 			$this->createNoOpMock( UserOptionsLookup::class ),
 			$this->createNoOpMock( ConfigCacheInvalidator::class ),
-			$this->createNoOpMock( Language::class ),
-			$this->createNoOpMock( UserIdentity::class ),
+			$this->createNoOpMock( ParserOptions::class ),
 			$this->getParsedConfigServiceOptions(),
 		];
 
@@ -141,8 +148,7 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 			$this->createNoOpMock( WANObjectCache::class ),
 			$this->createNoOpMock( UserOptionsLookup::class ),
 			$this->createNoOpMock( ConfigCacheInvalidator::class ),
-			$this->createNoOpMock( Language::class ),
-			$this->createNoOpMock( UserIdentity::class ),
+			$this->createNoOpMock( ParserOptions::class ),
 			$this->getParsedConfigServiceOptions(),
 		];
 

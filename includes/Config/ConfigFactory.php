@@ -10,9 +10,9 @@ use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
 use MediaWiki\Languages\LanguageNameUtils;
-use MediaWiki\Linker\LinkTarget;
-use MediaWiki\User\UserIdentity;
+use MediaWiki\Page\PageReference;
 use MediaWiki\User\UserOptionsLookup;
+use ParserOptions;
 use WANObjectCache;
 
 /**
@@ -100,8 +100,7 @@ class ConfigFactory {
 	/**
 	 * Returns the global parsed config.
 	 *
-	 * @param UserIdentity $user
-	 * @param Language|null $language will fallback to wiki's content language
+	 * @param ParserOptions $parserOptions
 	 * @param array $urlOverrides URL parameter overrides in the form of an
 	 *   associative array. Use with caution and do not pass unvalidated user
 	 *   input.
@@ -110,18 +109,16 @@ class ConfigFactory {
 	 * @return GlobalParsedConfig
 	 */
 	public function newGlobalConfig(
-		UserIdentity $user,
-		?Language $language,
+		ParserOptions $parserOptions,
 		array $urlOverrides = [],
 		bool $noCache = false
 	): GlobalParsedConfig {
-		$language = $language ?: $this->contentLanguage;
+		$language = $parserOptions->getTargetLanguage() ?: $this->contentLanguage;
 		return new GlobalParsedConfig(
 			$this->cache,
 			$this->userOptionsLookup,
 			$this->configCacheInvalidator,
-			$language,
-			$user,
+			$parserOptions,
 			$this->configParserFactory,
 			$this->newRequestConfig( $language ),
 			$this->jobQueueGroup,
@@ -136,10 +133,9 @@ class ConfigFactory {
 	/**
 	 * Returns the parsed config of a campaign.
 	 *
-	 * @param UserIdentity $user
-	 * @param Language|null $language will fallback to wiki's content language
+	 * @param ParserOptions $parserOptions
 	 * @param CampaignRecord $campaignRecord
-	 * @param LinkTarget $campaignLinkTarget
+	 * @param PageReference $campaignPage
 	 * @param array $urlOverrides URL parameter overrides in the form of an
 	 *   associative array. Use with caution and do not pass unvalidated user
 	 *   input.
@@ -149,30 +145,28 @@ class ConfigFactory {
 	 * @throws BaseCampaignException
 	 */
 	public function newCampaignConfig(
-		UserIdentity $user,
-		?Language $language,
+		ParserOptions $parserOptions,
 		CampaignRecord $campaignRecord,
-		LinkTarget $campaignLinkTarget,
+		PageReference $campaignPage,
 		array $urlOverrides = [],
 		bool $noCache = false
 	): CampaignParsedConfig {
 		$campaignRecord->assertValid(
-			$campaignLinkTarget->getDBkey(),
+			$campaignPage->getDBkey(),
 			CampaignStore::SELECT_CONTENT
 		);
 
-		$language = $language ?: $this->contentLanguage;
+		$language = $parserOptions->getTargetLanguage() ?: $this->contentLanguage;
 		return new CampaignParsedConfig(
 			$this->cache,
 			$this->userOptionsLookup,
 			$this->configCacheInvalidator,
-			$language,
-			$user,
+			$parserOptions,
 			$this->configParserFactory,
 			$this->newRequestConfig( $language ),
 			$urlOverrides,
 			$campaignRecord,
-			$campaignLinkTarget,
+			$campaignPage,
 			new ServiceOptions(
 				ParsedConfig::CONSTRUCTOR_OPTIONS,
 				[ ParsedConfig::NO_CACHE => $noCache ]

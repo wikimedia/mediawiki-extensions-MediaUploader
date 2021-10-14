@@ -2,6 +2,7 @@
 
 namespace MediaWiki\Extension\MediaUploader\Config;
 
+use MediaWiki\Page\PageReference;
 use Parser;
 use ParserFactory;
 use ParserOptions;
@@ -21,7 +22,7 @@ class ConfigParser {
 	private $parserOptions;
 
 	/** @var Title */
-	private $title;
+	private $pageRef;
 
 	/** @var array */
 	private $unparsedConfig;
@@ -33,7 +34,7 @@ class ConfigParser {
 	private $templates = [];
 
 	/**
-	 * @param Title $title Title of the campaign or title of Special:MediaUploader
+	 * @param PageReference $pageRef campaign page or title of Special:MediaUploader
 	 *   if not parsing a campaign.
 	 * @param ParserFactory $parserFactory
 	 * @param ParserOptions $parserOptions
@@ -42,12 +43,12 @@ class ConfigParser {
 	 * @internal Only for use by ConfigParserFactory
 	 */
 	public function __construct(
-		Title $title,
+		PageReference $pageRef,
 		ParserFactory $parserFactory,
 		ParserOptions $parserOptions,
 		array $configToParse
 	) {
-		$this->title = $title;
+		$this->pageRef = $pageRef;
 		$this->parserFactory = $parserFactory;
 		$this->parserOptions = $parserOptions;
 		$this->unparsedConfig = $configToParse;
@@ -182,7 +183,7 @@ class ConfigParser {
 	 */
 	private function parseValue( string $value ): string {
 		$output = $this->parserFactory->create()->parse(
-			$value, $this->title, $this->parserOptions
+			$value, $this->pageRef, $this->parserOptions
 		);
 		$parsed = $output->getText( [
 			'enableSectionEditLinks' => false,

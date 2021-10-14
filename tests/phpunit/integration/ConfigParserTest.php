@@ -5,6 +5,7 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParser;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWikiIntegrationTestCase;
+use ParserOptions;
 use RequestContext;
 
 /**
@@ -48,8 +49,7 @@ class ConfigParserTest extends MediaWikiIntegrationTestCase {
 
 		return $configParserFactory->newConfigParser(
 			$configToParse,
-			$requestContext->getUser(),
-			$requestContext->getLanguage()
+			ParserOptions::newFromContext( $requestContext )
 		);
 	}
 

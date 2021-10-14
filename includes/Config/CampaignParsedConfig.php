@@ -2,12 +2,11 @@
 
 namespace MediaWiki\Extension\MediaUploader\Config;
 
-use Language;
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
-use MediaWiki\Linker\LinkTarget;
-use MediaWiki\User\UserIdentity;
+use MediaWiki\Page\PageReference;
 use MediaWiki\User\UserOptionsLookup;
+use ParserOptions;
 use WANObjectCache;
 
 /**
@@ -29,20 +28,19 @@ class CampaignParsedConfig extends ParsedConfig {
 	/** @var CampaignRecord */
 	private $campaignRecord;
 
-	/** @var LinkTarget */
-	private $campaignLinkTarget;
+	/** @var PageReference */
+	private $campaignPage;
 
 	/**
 	 * @param WANObjectCache $cache
 	 * @param UserOptionsLookup $userOptionsLookup
 	 * @param ConfigCacheInvalidator $cacheInvalidator
-	 * @param Language $language
-	 * @param UserIdentity $user
+	 * @param ParserOptions $parserOptions
 	 * @param ConfigParserFactory $configParserFactory
 	 * @param RequestConfig $requestConfig
 	 * @param array $urlOverrides
 	 * @param CampaignRecord $campaignRecord assumed to be valid
-	 * @param LinkTarget $campaignLinkTarget
+	 * @param PageReference $campaignPage
 	 * @param ServiceOptions $options
 	 *
 	 * @internal Only for use by ConfigFactory
@@ -51,21 +49,19 @@ class CampaignParsedConfig extends ParsedConfig {
 		WANObjectCache $cache,
 		UserOptionsLookup $userOptionsLookup,
 		ConfigCacheInvalidator $cacheInvalidator,
-		Language $language,
-		UserIdentity $user,
+		ParserOptions $parserOptions,
 		ConfigParserFactory $configParserFactory,
 		RequestConfig $requestConfig,
 		array $urlOverrides,
 		CampaignRecord $campaignRecord,
-		LinkTarget $campaignLinkTarget,
+		PageReference $campaignPage,
 		ServiceOptions $options
 	) {
 		parent::__construct(
 			$cache,
 			$userOptionsLookup,
 			$cacheInvalidator,
-			$language,
-			$user,
+			$parserOptions,
 			$options
 		);
 
@@ -73,7 +69,7 @@ class CampaignParsedConfig extends ParsedConfig {
 		$this->requestConfig = $requestConfig;
 		$this->urlOverrides = $urlOverrides;
 		$this->campaignRecord = $campaignRecord;
-		$this->campaignLinkTarget = $campaignLinkTarget;
+		$this->campaignPage = $campaignPage;
 	}
 
 	/**
@@ -82,7 +78,7 @@ class CampaignParsedConfig extends ParsedConfig {
 	 * @return string
 	 */
 	public function getName(): string {
-		return $this->campaignLinkTarget->getDBkey();
+		return $this->campaignPage->getDBkey();
 	}
 
 	/**
@@ -130,9 +126,8 @@ class CampaignParsedConfig extends ParsedConfig {
 				$this->requestConfig->getConfigArray(),
 				$this->campaignRecord->getContent() ?: []
 			),
-			$this->user,
-			$this->language,
-			$this->campaignLinkTarget
+			$this->parserOptions,
+			$this->campaignPage
 		);
 
 		return [

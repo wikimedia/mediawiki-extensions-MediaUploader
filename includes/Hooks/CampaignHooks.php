@@ -195,7 +195,7 @@ class CampaignHooks implements
 	 * @param CampaignContent $content
 	 */
 	public function doCampaignUpdate( WikiPage $wikiPage, CampaignContent $content ): void {
-		$campaignRecord = $content->newCampaignRecord( $wikiPage->getTitle() );
+		$campaignRecord = $content->newCampaignRecord( $wikiPage, $wikiPage->getId() );
 		$this->campaignStore->upsertCampaign( $campaignRecord );
 	}
 
