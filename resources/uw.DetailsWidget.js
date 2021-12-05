@@ -8,9 +8,11 @@
 	 *
 	 * @extends OO.ui.Widget
 	 * @abstract
+	 * @param {Object} config
 	 */
-	uw.DetailsWidget = function UWDetailsWidget() {
-		uw.DetailsWidget.parent.call( this );
+	uw.DetailsWidget = function UWDetailsWidget( config ) {
+		this.config = config;
+		uw.DetailsWidget.parent.call( this, config || {} );
 	};
 	OO.inheritClass( uw.DetailsWidget, OO.ui.Widget );
 
@@ -52,6 +54,23 @@
 	 */
 	uw.DetailsWidget.prototype.getWarnings = function () {
 		return $.Deferred().resolve( [] ).promise();
+	};
+
+	/**
+	 * If `isEmpty` and the field is recommended, adds an appropriate warning to `warnings` and
+	 * return true. Returns false otherwise.
+	 *
+	 * @method
+	 * @param {boolean} isEmpty
+	 * @param {mw.Message[]} warnings
+	 * @return {boolean}
+	 */
+	uw.DetailsWidget.prototype.getEmptyWarning = function ( isEmpty, warnings ) {
+		if ( this.config.recommended && isEmpty ) {
+			warnings.push( mw.message( 'mediauploader-warning-value-missing', this.config.fieldName ) );
+			return true;
+		}
+		return false;
 	};
 
 	/**

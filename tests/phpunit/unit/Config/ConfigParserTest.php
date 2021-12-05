@@ -85,7 +85,10 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 			->method( 'create' )
 			->willReturn( $parser );
 
-		$parserOptions = $this->createNoOpMock( ParserOptions::class );
+		$parserOptions = $this->createMock( ParserOptions::class );
+		$parserOptions->expects( $this->atLeastOnce() )
+			->method( 'setOption' )
+			->willReturn( '' );
 		$title = $this->createNoOpMock( Title::class );
 
 		// test
@@ -208,7 +211,9 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 				'fields' => [
 					[
 						'label' => 'toParse',
+						'help' => 'toParse',
 						'type' => 'select',
+						'order' => 1,
 						'options' => [
 							'v1' => 'toParse1',
 							'v2' => 'toParse2'
@@ -216,6 +221,7 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 					],
 					[
 						'label' => 'toParse',
+						'order' => 2,
 						'maxLength' => 25,
 						'type' => 'text'
 					]
@@ -225,7 +231,9 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 				'fields' => [
 					[
 						'label' => self::PARSED_TEXT,
+						'help' => self::PARSED_TEXT,
 						'type' => 'select',
+						'order' => 1,
 						'options' => [
 							'v1' => self::PARSED_TEXT,
 							'v2' => self::PARSED_TEXT
@@ -233,6 +241,7 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 					],
 					[
 						'label' => self::PARSED_TEXT,
+						'order' => 2,
 						'maxLength' => 25,
 						'type' => 'text'
 					]
@@ -316,7 +325,9 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 				'fields' => [
 					[
 						'label' => 'toParse',
+						'help' => 'toParse',
 						'type' => 'select',
+						'order' => 1,
 						'options' => [
 							'v1' => 'toParse1',
 							'v2' => 'toParse2'
@@ -324,6 +335,7 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 					],
 					[
 						'label' => 'toParse',
+						'order' => 2,
 						'maxLength' => 25,
 						'type' => 'text'
 					]
@@ -338,7 +350,9 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 				'fields' => [
 					[
 						'label' => self::PARSED_TEXT,
+						'help' => self::PARSED_TEXT,
 						'type' => 'select',
+						'order' => 1,
 						'options' => [
 							'v1' => self::PARSED_TEXT,
 							'v2' => self::PARSED_TEXT
@@ -346,6 +360,7 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 					],
 					[
 						'label' => self::PARSED_TEXT,
+						'order' => 2,
 						'maxLength' => 25,
 						'type' => 'text'
 					]
@@ -386,7 +401,10 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 		$parserFactory->method( 'create' )
 			->willReturn( $parser );
 
-		$parserOptions = $this->createNoOpMock( ParserOptions::class );
+		$parserOptions = $this->createMock( ParserOptions::class );
+		$parserOptions->expects( $this->atLeastOnce() )
+			->method( 'setOption' )
+			->willReturn( '' );
 		$title = $this->createNoOpMock( Title::class );
 
 		// test
@@ -477,7 +495,10 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 		$parserFactory->method( 'create' )
 			->willReturn( $parser );
 
-		$parserOptions = $this->createNoOpMock( ParserOptions::class );
+		$parserOptions = $this->createMock( ParserOptions::class );
+		$parserOptions->expects( $this->atLeastOnce() )
+			->method( 'setOption' )
+			->willReturn( '' );
 		$title = $this->createNoOpMock( Title::class );
 
 		$toParse = [

@@ -9,15 +9,19 @@
 	 * @cfg {boolean} [showHeading=true] Whether to show the 'heading' field
 	 */
 	uw.LocationDetailsWidget = function UWLocationDetailsWidget( config ) {
-		this.config = config || {};
+		this.config = $.extend( {
+			fields: [ 'latitude', 'longitude' ]
+		}, config );
 
-		uw.LocationDetailsWidget.parent.call( this );
+		// TODO: implement subfield show/hide (T275274)
+		// TODO: implement altitude field
+		uw.LocationDetailsWidget.parent.call( this, this.config );
 
 		this.$element.addClass( 'mediauploader-locationDetailsWidget' );
 
-		this.latitudeInput = new OO.ui.TextInputWidget();
-		this.longitudeInput = new OO.ui.TextInputWidget();
-		this.headingInput = new OO.ui.TextInputWidget();
+		this.latitudeInput = new OO.ui.TextInputWidget( { disabled: config.disabled } );
+		this.longitudeInput = new OO.ui.TextInputWidget( { disabled: config.disabled } );
+		this.headingInput = new OO.ui.TextInputWidget( { disabled: config.disabled } );
 		this.$map = $( '<div>' ).css( { width: 500, height: 300 } );
 		this.mapButton = new OO.ui.PopupButtonWidget( {
 			icon: 'mapPin',
@@ -26,17 +30,20 @@
 				$content: this.$map,
 				width: 500,
 				height: 300
-			}
+			},
+			disabled: config.disabled
 		} );
 
 		this.$element.append(
 			new OO.ui.FieldLayout( this.latitudeInput, {
 				align: 'top',
-				label: mw.message( 'mediauploader-location-lat' ).text()
+				label: mw.message( 'mediauploader-location-lat' ).text(),
+				disabled: config.disabled
 			} ).$element,
 			new OO.ui.FieldLayout( this.longitudeInput, {
 				align: 'top',
-				label: mw.message( 'mediauploader-location-lon' ).text()
+				label: mw.message( 'mediauploader-location-lon' ).text(),
+				disabled: config.disabled
 			} ).$element
 		);
 
@@ -44,7 +51,8 @@
 			this.$element.append(
 				new OO.ui.FieldLayout( this.headingInput, {
 					align: 'top',
-					label: mw.message( 'mediauploader-location-heading' ).text()
+					label: mw.message( 'mediauploader-location-heading' ).text(),
+					disabled: config.disabled
 				} ).$element
 			);
 		}
@@ -106,6 +114,8 @@
 	 * @inheritdoc
 	 */
 	uw.LocationDetailsWidget.prototype.getErrors = function () {
+		// TODO: take 'required' into account and the configured fields (T275274)
+		// TODO: empty warnings
 		var errors = [],
 			latInput = this.latitudeInput.getValue(),
 			lonInput = this.longitudeInput.getValue(),
@@ -160,6 +170,7 @@
 	 * @inheritdoc
 	 */
 	uw.LocationDetailsWidget.prototype.getWikiText = function () {
+		// TODO: rewrite
 		var locationParts,
 			latInput = this.latitudeInput.getValue(),
 			lonInput = this.longitudeInput.getValue(),

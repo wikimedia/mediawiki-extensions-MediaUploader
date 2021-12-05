@@ -84,58 +84,70 @@ return [
 		'campaign' => 'Uploaded_via_Campaign:$1'
 	],
 
+	// TODO: add link to a documentation page about this
 	'fields' => [
-		// Field via which an ID can be provided.
-		[
-			// When non empty, this field will be shown, and $1 will be replaced by it's value.
-			'wikitext' => '',
-
-			// Label text to display with the field. Is parsed as wikitext.
-			'label' => '',
-
-			// The maximum length of the id field.
-			'maxLength' => 25,
-
-			// Initial value for the id field.
-			'initialValue' => '',
-
-			// Set to true if this field is required
-			'required' => false,
-
-			// Define the type of widget that will be rendered,
-			// pick between text and select
-			'type' => "text",
-
-			// If the type above is select, provide a dictionary of
-			// value -> label associations to display as options
-			'options' => [ /* 'value' => 'label' */ ]
-		]
+		'title' => [
+			'order' => 0,
+			'type' => 'title',
+			'label' => '{{MediaWiki:mediauploader-title}}',
+			'help' => '{{MediaWiki:mediauploader-tooltip-title}}',
+			'required' => 'required',
+			'autoFill' => true,
+			'minLength' => 5,
+			'maxLength' => 240,
+		],
+		'description' => [
+			'order' => 1,
+			'type' => 'textarea',
+			'label' => '{{MediaWiki:mediauploader-description}}',
+			'help' => '{{MediaWiki:mediauploader-tooltip-description}}',
+			'required' => 'required',
+			'autoFill' => true,
+			'minLength' => 5,
+			'maxLength' => 10000,
+		],
+		'date' => [
+			'order' => 2,
+			'type' => 'date',
+			'label' => '{{MediaWiki:mediauploader-date-created}}',
+			'help' => '{{MediaWiki:mediauploader-tooltip-date}}',
+			'required' => 'recommended',
+			'autoFill' => true,
+		],
+		'categories' => [
+			'order' => 3,
+			'type' => 'categories',
+			'label' => '{{MediaWiki:mediauploader-categories}}',
+			'help' => '{{MediaWiki:mediauploader-tooltip-categories}}',
+			'required' => 'recommended',
+		],
+		'location' => [
+			'order' => 4,
+			'type' => 'location',
+			'label' => '{{MediaWiki:mediauploader-location}}',
+			'help' => '{{MediaWiki:mediauploader-tooltip-location}}',
+			// Other available fields: altitude, heading
+			'fields' => [ 'latitude', 'longitude' ],
+			'auxiliary' => true,
+			'autoFill' => true,
+		],
+		'other' => [
+			'order' => 4,
+			'type' => 'text',
+			'label' => '{{MediaWiki:mediauploader-other}}',
+			'help' => '{{MediaWiki:mediauploader-tooltip-other}}',
+			'maxLength' => 10000,
+			'auxiliary' => true,
+		],
 	],
 
-	'defaults' => [
-		// Categories to list by default in the list of cats to add.
-		'categories' => [],
-
-		// Initial value for the description field.
-		'description' => '',
-
-		// These values are commented out by default, so they can be undefined
-		// Define them here if you want defaults.
-		// This is required, because the JsonSchema for these defines them to be type number
-		// But we can't have them to be NULL, because that's not a number.
-		// This is a technical limitation of JsonSchema, I think.
-
-		//// Initial value for the latitude field.
-		//'lat' => 0,
-
-		//// Initial value for the longitude field.
-		//'lon' => 0,
-
-		//// Initial value for the altitude field. (unused)
-		//'alt' => 0,
-
-		//// Initial value for the heading field.
-		//'heading' => 0,
+	// How to transform the data from the fields into something useful
+	'content' => [
+		// The key of the field with the title of the uploaded file. It must be of type 'title'.
+		'titleField' => 'title',
+		// The field with the caption that will be used by default for the uploaded file.
+		// It must be one of the types: text, textarea, singlelang, multilang
+		'captionField' => 'description'
 	],
 
 	// 'languages' is a list of languages and codes, for use in the description step.
@@ -325,21 +337,6 @@ return [
 	// Min source string length
 	'minSourceLength' => 5,
 
-	// Max file title string length
-	'maxTitleLength' => 240,
-
-	// Min file title string length
-	'minTitleLength' => 5,
-
-	// Max file description length
-	'maxDescriptionLength' => 10000,
-
-	// Min file description length
-	'minDescriptionLength' => 5,
-
-	// Max length for other file information:
-	'maxOtherInformationLength' => 10000,
-
 	// Max number of simultaneous upload requests
 	'maxSimultaneousConnections' => 3,
 
@@ -384,10 +381,6 @@ return [
 	// for example 'Commons:Upload wizard feedback'
 	'feedbackPage' => '',
 
-	// Link to page containing a list of categories that the user can use for uploaded files.
-	// Shown on the Details stage, above the category selection field.
-	'allCategoriesLink' => 'https://commons.wikimedia.org/wiki/Commons:Categories',
-
 	// Title of page for alternative uploading form, e.g.:
 	//   'altUploadForm' => 'Special:Upload',
 	//
@@ -411,8 +404,4 @@ return [
 
 	// Should feature to copy metadata across a batch of uploads be enabled?
 	'copyMetadataFeature' => true,
-
-	// Should we pester the user with a confirmation step when submitting a file without assigning it
-	// to any categories?
-	'enableCategoryCheck' => true,
 ];

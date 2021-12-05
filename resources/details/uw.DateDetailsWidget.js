@@ -9,9 +9,10 @@
 	 * @cfg {mw.UploadWizardUpload} upload
 	 */
 	uw.DateDetailsWidget = function UWDateDetailsWidget( config ) {
-		uw.DateDetailsWidget.parent.call( this );
+		uw.DateDetailsWidget.parent.call( this, config );
 
-		this.upload = config.upload;
+		this.config = config;
+		this.upload = this.config.upload;
 		this.dateInputWidgetMode = null; // or: 'calendar', 'arbitrary'
 		this.dateInputWidgetToggler = new OO.ui.ButtonSelectWidget( {
 			classes: [ 'mediauploader-dateDetailsWidget-toggler' ],
@@ -26,7 +27,8 @@
 					icon: 'edit',
 					title: mw.msg( 'mediauploader-custom-date' )
 				} )
-			]
+			],
+			disabled: this.config.disabled
 		} )
 			.selectItemByData( 'calendar' )
 			.on( 'choose', function ( selectedItem ) {
@@ -62,12 +64,14 @@
 		if ( mode === 'arbitrary' ) {
 			this.dateInputWidget = new OO.ui.TextInputWidget( {
 				classes: [ 'mwe-date', 'mediauploader-dateDetailsWidget-date' ],
-				placeholder: mw.msg( 'mediauploader-select-date' )
+				placeholder: mw.msg( 'mediauploader-select-date' ),
+				disabled: this.config.disabled
 			} );
 		} else {
 			this.dateInputWidget = new mw.widgets.DateInputWidget( {
 				classes: [ 'mwe-date', 'mediauploader-dateDetailsWidget-date' ],
-				placeholderLabel: mw.msg( 'mediauploader-select-date' )
+				placeholderLabel: mw.msg( 'mediauploader-select-date' ),
+				disabled: this.config.disabled
 			} );
 			// If the user types '{{', assume that they are trying to input template wikitext and switch
 			// to 'arbitrary' mode. This might help confused power-users (T110026#1567714).
@@ -117,17 +121,11 @@
 	 * @inheritdoc
 	 */
 	uw.DateDetailsWidget.prototype.getWarnings = function () {
-		var i,
-			license,
-			licenseMsg,
-			warnings = [],
+		var warnings = [],
 			dateVal = Date.parse( this.dateInputWidget.getValue().trim() ),
-			licenses = this.getLicenses(),
-			// licenses that likely mean the image date is some time in the past
-			// TODO: this shouldn't be hardcoded!
-			warnLicenses = [ 'pd-old' ],
-			now = new Date(),
-			date = new Date( this.dateInputWidget.getValue() );
+			now = new Date();
+
+		this.getEmptyWarning( this.dateInputWidget.getValue().trim() === '', warnings );
 
 		// We don't really know what timezone this datetime is in. It could be the user's timezone, or
 		// it could be the camera's timezone for data imported from EXIF, and we don't know what
@@ -138,21 +136,6 @@
 			warnings.push( mw.message( 'mediauploader-warning-postdate' ) );
 		}
 
-		// doublecheck that we've actually selected a valid date
-		if ( !isNaN( date.getTime() ) ) {
-			// it's unlikely for public domain images to have been published today
-			if ( now.toISOString().slice( 0, 10 ) === date.toISOString().slice( 0, 10 ) ) {
-				for ( i in warnLicenses ) {
-					if ( warnLicenses[ i ] in licenses ) {
-						license = licenses[ warnLicenses[ i ] ];
-						// eslint-disable-next-line mediawiki/msg-doc
-						licenseMsg = mw.message( license.msg, 0, license.url ? license.url : '#missing license URL' );
-						warnings.push( mw.message( 'mediauploader-error-date-license-unlikely', licenseMsg.parseDom() ) );
-					}
-				}
-			}
-		}
-
 		return $.Deferred().resolve( warnings ).promise();
 	};
 
@@ -160,19 +143,10 @@
 	 * @inheritdoc
 	 */
 	uw.DateDetailsWidget.prototype.getErrors = function () {
-		var errors = [],
-			licenses = this.getLicenses(),
-			now = new Date(),
-			old = new Date( now.getFullYear() - 70, now.getMonth(), now.getDate() ),
-			date = new Date( this.dateInputWidget.getValue() );
+		var errors = [];
 
-		// TODO: This shouldn't be hardcoded!
-		if ( this.dateInputWidget.getValue().trim() === '' ) {
+		if ( this.config.required && this.dateInputWidget.getValue().trim() === '' ) {
 			errors.push( mw.message( 'mediauploader-error-blank' ) );
-		} else if ( 'pd-old' in licenses && date > old ) {
-			// if the author died 70 years ago, the timestamp should reflect that
-			// eslint-disable-next-line mediawiki/msg-doc
-			errors.push( mw.message( 'mediauploader-error-date-license-mismatch', mw.message( licenses[ 'pd-old' ].msg ).parseDom() ) );
 		}
 
 		return $.Deferred().resolve( errors ).promise();
@@ -198,11 +172,19 @@
 
 	/**
 	 * @inheritdoc
-	 * @param {Object} serialized
+	 * @param {Object|string} serialized
 	 * @param {string} serialized.mode Date input mode ('calendar' or 'arbitrary')
 	 * @param {string} serialized.value Date value for given mode
 	 */
 	uw.DateDetailsWidget.prototype.setSerialized = function ( serialized ) {
+		if ( typeof serialized === 'string' ) {
+			this.setSerialized( {
+				mode: 'arbitrary',
+				value: serialized
+			} );
+			return;
+		}
+
 		this.setupDateInput( serialized.mode );
 		this.dateInputWidget.setValue( serialized.value );
 	};

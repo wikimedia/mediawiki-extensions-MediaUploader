@@ -8,47 +8,48 @@
 	 * @param {Object} config
 	 * @param {Object} config.languages { langcode: text } map of languages
 	 * @param {Object} [config.defaultLanguage]
+	 * @param {Object} [config.required]
 	 * @param {boolean} [config.canBeRemoved=true]
-	 * @param {mw.Message} [config.remove] Title text for remove icon
 	 * @param {number} [config.minLength=0] Minimum input length
 	 * @param {number} [config.maxLength=99999] Maximum input length
 	 */
 	uw.SingleLanguageInputWidget = function UWSingleLanguageInputWidget( config ) {
 		this.config = $.extend( {
-			inputWidgetConstructor: OO.ui.MultilineTextInputWidget.bind( null, {
-				classes: [ 'mediauploader-singleLanguageInputWidget-text' ],
-				autosize: true,
-				rows: 2
-			} ),
-			remove: mw.message( '' ),
 			minLength: 0,
 			maxLength: 99999
 		}, config );
 
-		uw.SingleLanguageInputWidget.parent.call( this );
+		uw.SingleLanguageInputWidget.parent.call( this, this.config );
 		uw.ValidationMessageElement.call( this );
 
 		if ( mw.loader.getState( 'ext.uls.mediawiki' ) === 'ready' ) {
 			this.languageSelector = new uw.UlsWidget( {
 				languages: config.languages,
-				classes: [ 'mediauploader-singleLanguageInputWidget-language' ]
+				classes: [ 'mediauploader-singleLanguageInputWidget-language' ],
+				disabled: this.config.disabled
 			} );
 		} else {
 			this.languageSelector = new uw.LanguageDropdownWidget( {
 				languages: config.languages,
-				classes: [ 'mediauploader-singleLanguageInputWidget-language' ]
+				classes: [ 'mediauploader-singleLanguageInputWidget-language' ],
+				disabled: this.config.disabled
 			} );
 		}
 		this.languageSelector.setValue( config.defaultLanguage || this.getDefaultLanguage() );
 
-		// eslint-disable-next-line new-cap
-		this.textInput = new this.config.inputWidgetConstructor();
+		this.textInput = new OO.ui.MultilineTextInputWidget( {
+			classes: [ 'mediauploader-singleLanguageInputWidget-text' ],
+			autosize: true,
+			rows: 2,
+			disabled: this.config.disabled
+		} );
 		this.removeButton = new OO.ui.ButtonWidget( {
 			classes: [ 'mediauploader-singleLanguageInputWidget-removeItem' ],
 			icon: 'trash',
 			framed: false,
 			flags: [ 'destructive' ],
-			title: this.config.remove.exists() ? this.config.remove.text() : ''
+			title: mw.message( 'mediauploader-multilang-remove' ).text(),
+			disabled: this.config.disabled
 		} );
 
 		this.removeButton.connect( this, {
@@ -151,10 +152,24 @@
 	/**
 	 * @inheritdoc
 	 */
+	uw.SingleLanguageInputWidget.prototype.getWarnings = function () {
+		var warnings = [];
+		this.getEmptyWarning( this.textInput.getValue().trim() === '', warnings );
+
+		return $.Deferred().resolve( warnings ).promise();
+	};
+
+	/**
+	 * @inheritdoc
+	 */
 	uw.SingleLanguageInputWidget.prototype.getErrors = function () {
 		var
 			errors = [],
 			text = this.textInput.getValue().trim();
+
+		if ( this.config.required && text.length === 0 ) {
+			errors.push( mw.message( 'mediauploader-error-blank' ) );
+		}
 
 		if ( text.length !== 0 && text.length < this.config.minLength ) {
 			// Empty input is allowed
@@ -234,13 +249,26 @@
 
 	/**
 	 * @inheritdoc
-	 * @param {Object} serialized
-	 * @param {string} serialized.language Language code
+	 * @param {Object|string} serialized
+	 * @param {string} [serialized.language] Language code
 	 * @param {string} serialized.text Text
 	 */
 	uw.SingleLanguageInputWidget.prototype.setSerialized = function ( serialized ) {
+		if ( typeof serialized === 'string' ) {
+			this.setSerialized( { text: serialized } );
+			return;
+		}
 		this.setLanguage( serialized.language );
 		this.setText( serialized.text );
+	};
+
+	/**
+	 * Returns the value of the field which can be used as a caption.
+	 *
+	 * @return {string}
+	 */
+	uw.SingleLanguageInputWidget.prototype.getCaption = function () {
+		return this.textInput.getValue().trim();
 	};
 
 }( mw.uploadWizard ) );
