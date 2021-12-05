@@ -8,8 +8,8 @@ use MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidFormatException;
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidSchemaException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigBase;
 
+use MediaWiki\Page\PageReference;
 use MWException;
-use Title;
 
 /**
  * Represents a row in the mu_campaign table.
@@ -24,7 +24,7 @@ class CampaignRecord {
 	public const CONTENT_INVALID_FORMAT = 2;
 	public const CONTENT_INVALID_SCHEMA = 3;
 
-	/** @var int */
+	/** @var null|int */
 	private $pageId;
 
 	/** @var bool */
@@ -36,37 +36,39 @@ class CampaignRecord {
 	/** @var null|array */
 	private $content;
 
-	/** @var null|Title */
-	private $title;
+	/** @var null|PageReference */
+	private $pageReference;
 
 	/** @var false|null|string */
 
 	/**
-	 * @param int $pageId
+	 * @param null|int $pageId can be null for unsaved pages
 	 * @param bool $enabled
 	 * @param int $validity
 	 * @param null|array $content optional
-	 * @param null|Title $title the title of the corresponding page, optional
+	 * @param null|PageReference $pageReference the corresponding page, optional
 	 */
 	public function __construct(
-		int $pageId,
+		?int $pageId,
 		bool $enabled,
 		int $validity,
 		array $content = null,
-		Title $title = null
+		PageReference $pageReference = null
 	) {
 		$this->pageId = $pageId;
 		$this->enabled = $enabled;
 		$this->validity = $validity;
 		$this->content = $content;
-		$this->title = $title;
+		$this->pageReference = $pageReference;
 	}
 
 	/**
 	 * The ID of the page this campaign is stored on.
-	 * @return int
+	 * Can be null for unsaved pages.
+	 *
+	 * @return int|null
 	 */
-	public function getPageId(): int {
+	public function getPageId(): ?int {
 		return $this->pageId;
 	}
 
@@ -96,11 +98,11 @@ class CampaignRecord {
 	}
 
 	/**
-	 * The title of the page this campaign is on.
-	 * @return Title|null
+	 * Reference to the page this campaign is on.
+	 * @return PageReference|null
 	 */
-	public function getTitle(): ?Title {
-		return $this->title;
+	public function getPage(): ?PageReference {
+		return $this->pageReference;
 	}
 
 	/**
@@ -122,7 +124,7 @@ class CampaignRecord {
 		if ( $requiredFields & CampaignStore::SELECT_CONTENT && $this->content === null ) {
 			throw new IncompleteRecordException( $name, 'content' );
 		}
-		if ( $requiredFields & CampaignStore::SELECT_TITLE && $this->title === null ) {
+		if ( $requiredFields & CampaignStore::SELECT_TITLE && $this->pageReference === null ) {
 			throw new IncompleteRecordException( $name, 'title' );
 		}
 	}
@@ -136,7 +138,7 @@ class CampaignRecord {
 	 * @throws MWException
 	 */
 	public function getTrackingCategoryName( ConfigBase $config ): ?string {
-		if ( $this->title === null ) {
+		if ( $this->pageReference === null ) {
 			throw new MWException( "The title of the campaign was not fetched." );
 		}
 
@@ -145,7 +147,7 @@ class CampaignRecord {
 		if ( $catTemplate !== null && strpos( $catTemplate, '$1' ) !== false ) {
 			return str_replace(
 				'$1',
-				$this->title->getText(),
+				$this->pageReference->getDBkey(),
 				$catTemplate
 			);
 		}

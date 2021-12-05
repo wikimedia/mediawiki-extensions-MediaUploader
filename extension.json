@@ -64,7 +64,10 @@
 	],
 	"callback": "MediaWiki\\Extension\\MediaUploader\\Hooks\\RegistrationHooks::registerExtension",
 	"ContentHandlers": {
-		"Campaign": "MediaWiki\\Extension\\MediaUploader\\Campaign\\CampaignContentHandler"
+		"Campaign": {
+			"class": "MediaWiki\\Extension\\MediaUploader\\Campaign\\CampaignContentHandler",
+			"services": [ "MediaUploaderConfigFactory" ]
+		}
 	},
 	"SpecialPages": {
 		"MediaUploader": {

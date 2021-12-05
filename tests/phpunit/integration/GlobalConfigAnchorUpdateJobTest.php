@@ -3,7 +3,6 @@
 namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
 
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
-use MediaWiki\Extension\MediaUploader\Campaign\CampaignContentHandler;
 use MediaWiki\Extension\MediaUploader\Config\GlobalConfigAnchorUpdateJob;
 use MediaWiki\Storage\EditResult;
 use MediaWiki\Storage\RevisionRecord;
@@ -32,7 +31,9 @@ class GlobalConfigAnchorUpdateJobTest extends MediaWikiIntegrationTestCase {
 	}
 
 	public function testNullEditAnchorPageOnConfigChange() {
-		$contentHandler = new CampaignContentHandler();
+		$contentHandler = $this->getServiceContainer()
+			->getContentHandlerFactory()
+			->getContentHandler( CampaignContent::MODEL_ID );
 
 		// Edit the anchor page to ensure it exists
 		$this->editPage(

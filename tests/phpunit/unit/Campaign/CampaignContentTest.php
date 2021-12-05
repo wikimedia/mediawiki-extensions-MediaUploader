@@ -5,10 +5,10 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Campaign;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\Validator;
+use MediaWiki\Page\PageReferenceValue;
 use MediaWikiUnitTestCase;
 use Status;
 use Symfony\Component\Yaml\Yaml;
-use Title;
 
 /**
  * @ingroup Upload
@@ -68,7 +68,7 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 			->method( 'validate' )
 			->willReturn( Status::newGood() );
 
-		$content->setServices( null, $validator );
+		$content->setServices( $validator );
 
 		$this->assertTrue(
 			$content->getValidationStatus()->isGood(),
@@ -99,7 +99,6 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 		$content = new CampaignContent( $text );
 
 		$content->setServices(
-			null,
 			$this->createNoOpMock( Validator::class )
 		);
 
@@ -130,7 +129,7 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 			->method( 'validate' )
 			->willReturn( Status::newFatal( 'dummy-message' ) );
 
-		$content->setServices( null, $validator );
+		$content->setServices( $validator );
 
 		$status = $content->getValidationStatus();
 		$this->assertFalse( $status->isGood(), 'Status::isGood()' );
@@ -202,13 +201,10 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 		}
 
 		$content = new CampaignContent( $contentText );
-		$content->setServices( null, $validator );
-		$title = $this->createMock( Title::class );
-		$title->expects( $this->once() )
-			->method( 'getId' )
-			->willReturn( 123 );
+		$content->setServices( $validator );
+		$pageRef = PageReferenceValue::localReference( NS_CAMPAIGN, 'dummy' );
 
-		$record = $content->newCampaignRecord( $title );
+		$record = $content->newCampaignRecord( $pageRef, 123 );
 
 		$this->assertSame(
 			123,
@@ -216,9 +212,9 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 			'CampaignRecord::getPageId()'
 		);
 		$this->assertSame(
-			$title,
-			$record->getTitle(),
-			'CampaignRecord::getTitle()'
+			$pageRef,
+			$record->getPage(),
+			'CampaignRecord::getPage()'
 		);
 		$this->assertSame(
 			$expectedEnabled,
@@ -254,11 +250,8 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 			->willReturn( Status::newFatal( 'dummy message' ) );
 
 		$content = new CampaignContent( 'garbled: input' );
-		$content->setServices( null, $validator );
-		$title = $this->createMock( Title::class );
-		$title->expects( $this->once() )
-			->method( 'getId' )
-			->willReturn( 123 );
+		$content->setServices( $validator );
+		$pageRef = PageReferenceValue::localReference( NS_CAMPAIGN, 'dummy' );
 
 		// We are a system user, so override the checks
 		$content->overrideValidationStatus();
@@ -274,7 +267,7 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 		);
 
 		// Make a CampaignRecord. It should bear the real validation status.
-		$record = $content->newCampaignRecord( $title );
+		$record = $content->newCampaignRecord( $pageRef, 123 );
 
 		$this->assertSame(
 			CampaignRecord::CONTENT_INVALID_SCHEMA,
@@ -290,16 +283,13 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 			->willReturn( Status::newGood() );
 
 		$content = new CampaignContent( 'enabled: true' );
-		$content->setServices( null, $validator );
-		$title = $this->createMock( Title::class );
-		$title->expects( $this->once() )
-			->method( 'getId' )
-			->willReturn( 123 );
+		$content->setServices( $validator );
+		$pageRef = PageReferenceValue::localReference( NS_CAMPAIGN, 'dummy' );
 
 		// We are a system user, so override the checks
 		$content->overrideValidationStatus();
 
-		$record = $content->newCampaignRecord( $title );
+		$record = $content->newCampaignRecord( $pageRef );
 
 		$this->assertSame(
 			CampaignRecord::CONTENT_VALID,

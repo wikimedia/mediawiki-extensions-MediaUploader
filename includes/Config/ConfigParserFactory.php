@@ -2,13 +2,10 @@
 
 namespace MediaWiki\Extension\MediaUploader\Config;
 
-use Language;
-use MediaWiki\Linker\LinkTarget;
-use MediaWiki\User\UserIdentity;
+use MediaWiki\Page\PageReference;
+use MediaWiki\Page\PageReferenceValue;
 use ParserFactory;
 use ParserOptions;
-use SpecialPage;
-use Title;
 
 /**
  * Constructs ConfigParser objects.
@@ -31,9 +28,8 @@ class ConfigParserFactory {
 
 	/**
 	 * @param array $rawConfig
-	 * @param UserIdentity $user
-	 * @param Language $language
-	 * @param LinkTarget|null $linkTarget This should correspond to the campaign's
+	 * @param ParserOptions $parserOptions
+	 * @param PageReference|null $pageRef This should correspond to the campaign's
 	 *  page title, or Special:MediaUploader in case it's not a campaign. Default
 	 *  is Special:MediaUploader.
 	 *
@@ -41,22 +37,16 @@ class ConfigParserFactory {
 	 */
 	public function newConfigParser(
 		array $rawConfig,
-		UserIdentity $user,
-		Language $language,
-		LinkTarget $linkTarget = null
+		ParserOptions $parserOptions,
+		PageReference $pageRef = null
 	): ConfigParser {
-		if ( $linkTarget === null ) {
-			$title = SpecialPage::getTitleFor( 'MediaUploader' );
-		} else {
-			$title = Title::newFromLinkTarget( $linkTarget );
+		if ( $pageRef === null ) {
+			$pageRef = PageReferenceValue::localReference( NS_SPECIAL, 'MediaUploader' );
 		}
 
-		$parserOptions = ParserOptions::newFromUserAndLang( $user, $language );
-		$parserOptions->setTargetLanguage( $language );
 		$parserOptions->setInterfaceMessage( true );
-
 		return new ConfigParser(
-			$title,
+			$pageRef,
 			$this->parserFactory,
 			$parserOptions,
 			$rawConfig

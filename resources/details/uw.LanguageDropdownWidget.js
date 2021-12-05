@@ -11,10 +11,10 @@
 
 		uw.LanguageDropdownWidget.parent.call( this );
 
+		// The following classes are used here:
+		// * mediauploader-singleLanguageInputWidget-language
 		this.languageDropdown = new OO.ui.DropdownWidget( {
 			menu: { items: this.getLanguageMenuOptionWidgets( config.languages ) },
-			// The following classes are used here:
-			// * mediauploader-singleLanguageInputWidget-language
 			classes: config.classes
 		} );
 		this.languageDropdown.getMenu().connect( this, { select: [ 'emit', 'select' ] } );

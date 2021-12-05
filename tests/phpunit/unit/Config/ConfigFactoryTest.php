@@ -12,10 +12,10 @@ use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ConfigParserFactory;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use MediaWiki\Languages\LanguageNameUtils;
-use MediaWiki\User\UserIdentity;
+use MediaWiki\Page\PageReferenceValue;
 use MediaWiki\User\UserOptionsLookup;
 use MediaWikiUnitTestCase;
-use TitleValue;
+use ParserOptions;
 use WANObjectCache;
 
 /**
@@ -44,10 +44,9 @@ class ConfigFactoryTest extends MediaWikiUnitTestCase {
 		$this->assertInstanceOf(
 			CampaignParsedConfig::class,
 			$factory->newCampaignConfig(
-				$this->createNoOpMock( UserIdentity::class ),
-				$this->createNoOpMock( Language::class ),
+				$this->createMock( ParserOptions::class ),
 				$content,
-				new TitleValue( NS_CAMPAIGN, 'Camp name' )
+				PageReferenceValue::localReference( NS_CAMPAIGN, 'Camp name' )
 			)
 		);
 	}

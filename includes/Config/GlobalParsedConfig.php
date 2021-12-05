@@ -3,10 +3,9 @@
 namespace MediaWiki\Extension\MediaUploader\Config;
 
 use JobQueueGroup;
-use Language;
 use MediaWiki\Config\ServiceOptions;
-use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
+use ParserOptions;
 use WANObjectCache;
 
 /**
@@ -33,8 +32,7 @@ class GlobalParsedConfig extends ParsedConfig {
 	 * @param WANObjectCache $cache
 	 * @param UserOptionsLookup $userOptionsLookup
 	 * @param ConfigCacheInvalidator $cacheInvalidator
-	 * @param Language $language
-	 * @param UserIdentity $user
+	 * @param ParserOptions $parserOptions
 	 * @param ConfigParserFactory $configParserFactory
 	 * @param RequestConfig $requestConfig
 	 * @param JobQueueGroup $jobQueueGroup
@@ -47,8 +45,7 @@ class GlobalParsedConfig extends ParsedConfig {
 		WANObjectCache $cache,
 		UserOptionsLookup $userOptionsLookup,
 		ConfigCacheInvalidator $cacheInvalidator,
-		Language $language,
-		UserIdentity $user,
+		ParserOptions $parserOptions,
 		ConfigParserFactory $configParserFactory,
 		RequestConfig $requestConfig,
 		JobQueueGroup $jobQueueGroup,
@@ -59,8 +56,7 @@ class GlobalParsedConfig extends ParsedConfig {
 			$cache,
 			$userOptionsLookup,
 			$cacheInvalidator,
-			$language,
-			$user,
+			$parserOptions,
 			$options
 		);
 
@@ -118,8 +114,7 @@ class GlobalParsedConfig extends ParsedConfig {
 	private function parseConfig(): void {
 		$configParser = $this->configParserFactory->newConfigParser(
 			$this->requestConfig->getConfigArray(),
-			$this->user,
-			$this->language
+			$this->parserOptions
 		);
 
 		$this->parsedConfig = $configParser->getParsedConfig();

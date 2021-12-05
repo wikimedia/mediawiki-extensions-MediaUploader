@@ -8,9 +8,9 @@ use MediaWiki\Extension\MediaUploader\Campaign\Exception\IncompleteRecordExcepti
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidFormatException;
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidSchemaException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigBase;
+use MediaWiki\Page\PageReferenceValue;
 use MediaWikiUnitTestCase;
 use MWException;
-use Title;
 
 /**
  * @ingroup Upload
@@ -86,26 +86,26 @@ class CampaignRecordTest extends MediaWikiUnitTestCase {
 
 	public function provideGetTrackingCategoryName(): iterable {
 		yield 'valid replacement' => [
-			[ 'trackingCategory' => [ 'campaign' => 'Campaign $1' ] ],
-			'Wiki Loves PHP',
-			'Campaign Wiki Loves PHP',
+			[ 'trackingCategory' => [ 'campaign' => 'Campaign_$1' ] ],
+			'Wiki_Loves_PHP',
+			'Campaign_Wiki_Loves_PHP',
 		];
 
 		yield 'missing $1 in category template' => [
 			[ 'trackingCategory' => [ 'campaign' => 'Campaign' ] ],
-			'Wiki Loves PHP',
+			'Wiki_Loves_PHP',
 			null,
 		];
 
 		yield 'category template is null' => [
 			[ 'trackingCategory' => [ 'campaign' => null ] ],
-			'Wiki Loves PHP',
+			'Wiki_Loves_PHP',
 			null,
 		];
 
 		yield 'missing setting' => [
 			[],
-			'Wiki Loves PHP',
+			'Wiki_Loves_PHP',
 			null,
 		];
 	}
@@ -122,10 +122,7 @@ class CampaignRecordTest extends MediaWikiUnitTestCase {
 		string $campaignName,
 		?string $expectedResult
 	) {
-		$title = $this->createMock( Title::class );
-		$title->expects( $this->atMost( 1 ) )
-			->method( 'getText' )
-			->willReturn( $campaignName );
+		$pageRef = PageReferenceValue::localReference( NS_CAMPAIGN, $campaignName );
 		$config = $this->createMock( ConfigBase::class );
 		$config->expects( $this->once() )
 			->method( 'getConfigArray' )
@@ -136,7 +133,7 @@ class CampaignRecordTest extends MediaWikiUnitTestCase {
 			false,
 			CampaignRecord::CONTENT_VALID,
 			[],
-			$title
+			$pageRef
 		);
 
 		$this->assertSame(

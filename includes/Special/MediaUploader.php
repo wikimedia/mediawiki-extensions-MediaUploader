@@ -153,9 +153,9 @@ class MediaUploader extends SpecialPage {
 		// This is not a campaign or the campaign failed to load
 		// Either way, we fall back to the global config
 		if ( $this->loadedConfig === null ) {
+
 			$this->loadedConfig = $this->configFactory->newGlobalConfig(
-				$this->getUser(),
-				$this->getLanguage(),
+				$this->getOutput()->parserOptions(),
 				$urlOverrides
 			);
 		}
@@ -203,8 +203,7 @@ class MediaUploader extends SpecialPage {
 		// Load the config
 		try {
 			$this->loadedConfig = $this->configFactory->newCampaignConfig(
-				$this->getUser(),
-				$this->getLanguage(),
+				$this->getOutput()->parserOptions(),
 				$record,
 				$campaignTitle,
 				$urlOverrides

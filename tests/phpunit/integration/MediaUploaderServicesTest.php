@@ -4,6 +4,7 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
 
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWikiIntegrationTestCase;
+use ParserOptions;
 
 /**
  * Besides testing the whole service shebang, this also tests some basic code
@@ -34,8 +35,10 @@ class MediaUploaderServicesTest extends MediaWikiIntegrationTestCase {
 
 		$configParser = $configParserFactory->newConfigParser(
 			[],
-			$this->getTestUser()->getUser(),
-			$this->getServiceContainer()->getLanguageFactory()->getLanguage( 'en' )
+			ParserOptions::newFromUserAndLang(
+				$this->getTestUser()->getUser(),
+				$this->getServiceContainer()->getLanguageFactory()->getLanguage( 'en' )
+			)
 		);
 		$configParser->getParsedConfig();
 	}
@@ -46,8 +49,10 @@ class MediaUploaderServicesTest extends MediaWikiIntegrationTestCase {
 		$configFactory = MediaUploaderServices::getConfigFactory();
 
 		$gConfig = $configFactory->newGlobalConfig(
-			$this->getTestUser()->getUser(),
-			$this->getServiceContainer()->getLanguageFactory()->getLanguage( 'en' )
+			ParserOptions::newFromUserAndLang(
+				$this->getTestUser()->getUser(),
+				$this->getServiceContainer()->getLanguageFactory()->getLanguage( 'en' )
+			)
 		);
 		$gConfig->getConfigArray();
 	}

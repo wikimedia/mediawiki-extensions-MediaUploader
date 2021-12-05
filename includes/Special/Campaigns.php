@@ -8,7 +8,9 @@ use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
+use ParserOptions;
 use SpecialPage;
+use Title;
 
 class Campaigns extends SpecialPage {
 
@@ -82,16 +84,19 @@ class Campaigns extends SpecialPage {
 	 * @return string
 	 */
 	private function getHtmlForCampaign( CampaignRecord $record ): string {
-		$title = $record->getTitle();
-		if ( $title === null ) {
+		$pageRef = $record->getPage();
+		if ( $pageRef === null ) {
 			// Should never happen. The 'if' is here to make Phan happy.
 			throw new LogicException( 'Title for Campaign was expected to be set.' );
 		}
+		$title = Title::makeTitle( NS_CAMPAIGN, $pageRef->getDBkey() );
 
 		try {
 			$campaignConfig = $this->configFactory->newCampaignConfig(
-				$this->getUser(),
-				$this->getLanguage(),
+				ParserOptions::newFromUserAndLang(
+					$this->getUser(),
+					$this->getLanguage()
+				),
 				$record,
 				$title
 			);

@@ -2,10 +2,9 @@
 
 namespace MediaWiki\Extension\MediaUploader\Config;
 
-use Language;
 use MediaWiki\Config\ServiceOptions;
-use MediaWiki\User\UserIdentity;
 use MediaWiki\User\UserOptionsLookup;
+use ParserOptions;
 use WANObjectCache;
 
 /**
@@ -38,11 +37,8 @@ abstract class ParsedConfig extends ConfigBase {
 	/** @var ConfigCacheInvalidator */
 	protected $invalidator;
 
-	/** @var Language */
-	protected $language;
-
-	/** @var UserIdentity */
-	protected $user;
+	/** @var ParserOptions */
+	protected $parserOptions;
 
 	/** @var ServiceOptions */
 	private $options;
@@ -51,16 +47,14 @@ abstract class ParsedConfig extends ConfigBase {
 	 * @param WANObjectCache $cache
 	 * @param UserOptionsLookup $userOptionsLookup
 	 * @param ConfigCacheInvalidator $cacheInvalidator
-	 * @param Language $language
-	 * @param UserIdentity $user
+	 * @param ParserOptions $parserOptions
 	 * @param ServiceOptions $options
 	 */
 	protected function __construct(
 		WANObjectCache $cache,
 		UserOptionsLookup $userOptionsLookup,
 		ConfigCacheInvalidator $cacheInvalidator,
-		Language $language,
-		UserIdentity $user,
+		ParserOptions $parserOptions,
 		ServiceOptions $options
 	) {
 		$options->assertRequiredOptions( self::CONSTRUCTOR_OPTIONS );
@@ -68,8 +62,7 @@ abstract class ParsedConfig extends ConfigBase {
 		$this->cache = $cache;
 		$this->userOptionsLookup = $userOptionsLookup;
 		$this->invalidator = $cacheInvalidator;
-		$this->language = $language;
-		$this->user = $user;
+		$this->parserOptions = $parserOptions;
 		$this->options = $options;
 	}
 
@@ -81,11 +74,21 @@ abstract class ParsedConfig extends ConfigBase {
 	 * @return string
 	 */
 	final protected function makeCacheKey( string ...$additionalComponents ): string {
-		$gender = $this->userOptionsLookup->getOption( $this->user, 'gender' );
+		// We build a cache key manually instead of relying on popts
+		// because its algorithm for cache key generation is a mountain
+		// of duct tape to make Parser.php (tm) work properly. Including
+		// just the gender and language is probably not exhaustive, but
+		// will be enough for 99% of use cases.
+		$gender = $this->userOptionsLookup->getOption(
+			$this->parserOptions->getUserIdentity(),
+			'gender'
+		);
+		$lang = $this->parserOptions->getTargetLanguage();
+
 		return $this->cache->makeKey(
 			'mediauploader',
 			'parsed-config',
-			$this->language->getCode(),
+			$lang ? $lang->getCode() : '-',
 			$gender,
 			...$additionalComponents
 		);

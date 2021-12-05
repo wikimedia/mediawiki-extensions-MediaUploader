@@ -50,10 +50,15 @@ class CampaignPageFormatter {
 	 * @throws MWException
 	 */
 	public function fillParserOutput( ParserOutput $output ): void {
-		$campaignTitle = $this->config->getSetting(
-			'title',
-			$this->record->getTitle()->getText()
+		$campaignTitle = Title::makeTitle(
+			NS_CAMPAIGN,
+			$this->record->getPage()->getDBkey()
 		);
+		$campaignName = $this->config->getSetting(
+			'title',
+			$campaignTitle->getText()
+		);
+
 		$campaignDescription = $this->config->getSetting( 'description', '' );
 		$trackingCat = Title::newFromText(
 			$this->record->getTrackingCategoryName( $this->config ),
@@ -76,7 +81,7 @@ class CampaignPageFormatter {
 		$images = $stats['uploadedMedia'] ?? [];
 
 		if ( $this->context->getUser()->isAnon() ) {
-			$urlParams = [ 'returnto' => $this->record->getTitle()->getPrefixedText() ];
+			$urlParams = [ 'returnto' => $campaignTitle->getPrefixedText() ];
 			$createAccountUrl = Skin::makeSpecialUrlSubpage( 'Userlogin', 'signup', $urlParams );
 			$uploadLink = new \OOUI\ButtonWidget( [
 				'label' => $this->context->msg( 'mediauploader-campaign-create-account-button' )->text(),
@@ -85,7 +90,7 @@ class CampaignPageFormatter {
 			] );
 		} else {
 			$uploadUrl = Skin::makeSpecialUrl(
-				'MediaUploader', [ 'campaign' => $this->record->getTitle()->getDBkey() ]
+				'MediaUploader', [ 'campaign' => $this->record->getPage()->getDBkey() ]
 			);
 			$uploadLink = new \OOUI\ButtonWidget( [
 				'label' => $this->context->msg( 'mediauploader-campaign-upload-button' )->text(),
@@ -141,7 +146,7 @@ class CampaignPageFormatter {
 					Html::rawElement( 'div', [ 'id' => 'mw-campaign-primary-info' ],
 						// No need to escape these, since they are just parsed wikitext
 						// Any stripping that needed to be done should've been done by the parser
-						Html::rawElement( 'p', [ 'id' => 'mw-campaign-title' ], $campaignTitle ) .
+						Html::rawElement( 'p', [ 'id' => 'mw-campaign-title' ], $campaignName ) .
 						Html::rawElement( 'p', [ 'id' => 'mw-campaign-description' ], $campaignDescription ) .
 					$uploadLink
 					) .

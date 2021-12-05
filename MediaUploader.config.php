@@ -66,6 +66,8 @@ return [
 	],
 
 	// Tracking categories for various scenarios
+	// Category names should be specified without the namespace prefix and with
+	// underscores instead of spaces.
 	'trackingCategory' => [
 		// Category added no matter what
 		// Default to none because we don't know what categories
@@ -79,7 +81,7 @@ return [
 		// Tracking category added for campaigns. $1 is replaced with campaign page name
 		// Changing this to an invalid value will prevent MediaUploader from collecting
 		// statistics, such as the total number of uploads and contributors in a campaign.
-		'campaign' => 'Uploaded via Campaign:$1'
+		'campaign' => 'Uploaded_via_Campaign:$1'
 	],
 
 	'fields' => [

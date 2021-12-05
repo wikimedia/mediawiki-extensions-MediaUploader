@@ -7,7 +7,6 @@ use GenericParameterJob;
 use Job;
 use JobSpecification;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
-use MediaWiki\Extension\MediaUploader\Campaign\CampaignContentHandler;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\MediaWikiServices;
 use MWException;
@@ -43,14 +42,17 @@ class GlobalConfigAnchorUpdateJob extends Job implements GenericParameterJob {
 	 * @throws MWException
 	 */
 	public function run(): bool {
-		$wikiPageFactory = MediaWikiServices::getInstance()->getWikiPageFactory();
+		$services = MediaWikiServices::getInstance();
+		$wikiPageFactory = $services->getWikiPageFactory();
 		$anchor = $wikiPageFactory->newFromLinkTarget(
 			CampaignContent::getGlobalConfigAnchorLinkTarget()
 		);
 
 		$content = $anchor->getContent();
 		if ( !$content ) {
-			$contentHandler = new CampaignContentHandler();
+			$contentHandler = $services->getContentHandlerFactory()->getContentHandler(
+				CampaignContent::MODEL_ID
+			);
 			$content = $contentHandler->makeEmptyContent();
 		}
 
