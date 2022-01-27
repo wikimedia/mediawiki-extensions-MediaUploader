@@ -138,7 +138,7 @@ class CampaignContentHandler extends JsonContentHandler {
 		$this->registerTemplates( $campaignConfig, $output );
 
 		// Add some styles
-		$output->addModuleStyles( 'ext.uploadWizard.uploadCampaign.display' );
+		$output->addModuleStyles( [ 'ext.uploadWizard.uploadCampaign.display' ] );
 	}
 
 	/**
