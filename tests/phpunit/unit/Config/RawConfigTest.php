@@ -22,11 +22,12 @@ class RawConfigTest extends ConfigUnitTestCase {
 				],
 				'UploadWizardConfig' => [],
 				'PersistDuringRequest' => false,
+				'FileMaxUploadSize' => 1000,
 			],
 			[
 				'fileExtensions' => [ 'dummy' ],
 				'maxPhpUploadSize' => UploadBase::getMaxPhpUploadSize(),
-				// Do not test maxMwUploadSize, it relies on globals and breaks things
+				'maxMwUploadSize' => 1000,
 				'someKey' => 'value',
 				'chunkSize' => 5 * 1024 * 1024, // default setting
 			]
@@ -43,6 +44,7 @@ class RawConfigTest extends ConfigUnitTestCase {
 				],
 				'UploadWizardConfig' => [],
 				'PersistDuringRequest' => false,
+				'FileMaxUploadSize' => 1000,
 			],
 			[
 				'fileExtensions' => [ 'dummy' ],
@@ -64,6 +66,7 @@ class RawConfigTest extends ConfigUnitTestCase {
 					'key2' => 'value',
 				],
 				'PersistDuringRequest' => false,
+				'FileMaxUploadSize' => 1000,
 			],
 			[
 				'fileExtensions' => [ 'dummy' ],
@@ -89,6 +92,7 @@ class RawConfigTest extends ConfigUnitTestCase {
 					'key2' => 'value',
 				],
 				'PersistDuringRequest' => false,
+				'FileMaxUploadSize' => 1000,
 			],
 			[
 				'fileExtensions' => [ 'dummy' ],
@@ -127,11 +131,11 @@ class RawConfigTest extends ConfigUnitTestCase {
 				'FileExtensions' => [ 'dummy' ],
 				'MediaUploaderConfig' => [
 					'someKey' => 'value',
-					'maxMwUploadSize' => 123,
 					'chunkSize' => 1024 * 1024,
 				],
 				'UploadWizardConfig' => [],
 				'PersistDuringRequest' => false,
+				'FileMaxUploadSize' => 1000,
 			]
 		);
 
@@ -147,7 +151,7 @@ class RawConfigTest extends ConfigUnitTestCase {
 			[
 				'fileExtensions' => [ 'dummy' ],
 				'maxPhpUploadSize' => UploadBase::getMaxPhpUploadSize(),
-				'maxMwUploadSize' => 123,
+				'maxMwUploadSize' => 1000,
 				'someKey' => 'value',
 				'chunkSize' => 1024 * 1024,
 				'default1' => 'default',

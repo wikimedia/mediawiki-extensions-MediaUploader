@@ -30,6 +30,10 @@ class RawConfig extends ConfigBase {
 		// Whether to persist the merged config for the duration of the request.
 		// Should be always true. Can be disabled for unit testing.
 		'PersistDuringRequest',
+		// Return value of UploadBase::getMaxUploadSize( 'file' )
+		// Included here to avoid breaking unit tests – the aforementioned
+		// static method calls the service container, ugh.
+		'FileMaxUploadSize',
 	];
 
 	/**
@@ -69,7 +73,7 @@ class RawConfig extends ConfigBase {
 					$this->options->get( 'FileExtensions' ) :
 					null,
 			'maxPhpUploadSize' => UploadBase::getMaxPhpUploadSize(),
-			'maxMwUploadSize' => UploadBase::getMaxUploadSize( 'file' ),
+			'maxMwUploadSize' => $this->options->get( 'FileMaxUploadSize' ),
 		] + $config;
 	}
 

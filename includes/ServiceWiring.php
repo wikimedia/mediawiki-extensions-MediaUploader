@@ -60,7 +60,10 @@ return [
 		return new RawConfig(
 			new ServiceOptions(
 				RawConfig::CONSTRUCTOR_OPTIONS,
-				[ 'PersistDuringRequest' => true ],
+				[
+					'PersistDuringRequest' => true,
+					'FileMaxUploadSize' => UploadBase::getMaxUploadSize( 'file' ),
+				],
 				$services->getMainConfig()
 			)
 		);

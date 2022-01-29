@@ -51,7 +51,10 @@ class CampaignStatsTest extends MediaWikiIntegrationTestCase {
 					new ServiceOptions(
 						RawConfig::CONSTRUCTOR_OPTIONS,
 						$this->getServiceContainer()->getMainConfig(),
-						[ 'PersistDuringRequest' => false ]
+						[
+							'PersistDuringRequest' => false,
+							'FileMaxUploadSize' => 1000,
+						]
 					)
 				);
 			}
