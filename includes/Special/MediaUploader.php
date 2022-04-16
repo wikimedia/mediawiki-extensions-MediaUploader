@@ -132,10 +132,12 @@ class MediaUploader extends SpecialPage {
 		$this->addJsVars( $subPage );
 
 		// dependencies (css, js)
-		$out->addModules( 'ext.uploadWizard.page' );
-		$out->addModuleStyles( 'ext.uploadWizard.page.styles' );
-		// load spinner styles early
-		$out->addModuleStyles( 'jquery.spinner.styles' );
+		$out->addModules( [ 'ext.uploadWizard.page' ] );
+		$out->addModuleStyles( [
+			'ext.uploadWizard.page.styles',
+			// load spinner styles early
+			'jquery.spinner.styles'
+		] );
 
 		// where the uploader will go
 		// TODO import more from MediaUploader's createInterface call.

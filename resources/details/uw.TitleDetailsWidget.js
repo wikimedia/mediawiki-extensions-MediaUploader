@@ -13,14 +13,14 @@
 	 */
 	uw.TitleDetailsWidget = function UWTitleDetailsWidget( config ) {
 		config = config || {};
-		uw.TitleDetailsWidget.parent.call( this );
+		uw.TitleDetailsWidget.parent.call( this, config );
 
 		this.config = config;
-		this.extension = config.extension;
 		// We wouldn't want or use any of mw.widgets.TitleInputWidget functionality.
 		this.titleInput = new OO.ui.TextInputWidget( {
 			classes: [ 'mwe-title', 'mediauploader-titleDetailsWidget-title' ],
-			maxLength: config.maxLength
+			maxLength: config.maxLength,
+			disabled: this.config.disabled
 		} );
 
 		// Aggregate 'change' event (with delay)
@@ -83,10 +83,26 @@
 		if ( !value ) {
 			return null;
 		}
-		extRegex = new RegExp( '\\.' + this.extension + '$', 'i' );
-		cleaned = value.replace( extRegex, '' ).replace( /\.+$/g, '' ).trim();
-		title = uw.TitleDetailsWidget.static.makeTitleInFileNS( cleaned + '.' + this.extension );
+
+		if ( this.config.extension ) {
+			extRegex = new RegExp( '\\.' + this.extension + '$', 'i' );
+			cleaned = value.replace( extRegex, '' ).replace( /\.+$/g, '' ).trim();
+			cleaned = cleaned + '.' + this.config.extension;
+		} else {
+			cleaned = value;
+		}
+		title = uw.TitleDetailsWidget.static.makeTitleInFileNS( cleaned );
 		return title;
+	};
+
+	/**
+	 * @inheritdoc
+	 */
+	uw.TitleDetailsWidget.prototype.getWarnings = function () {
+		var warnings = [];
+		this.getEmptyWarning( this.titleInput.getValue().trim() === '', warnings );
+
+		return $.Deferred().resolve( warnings ).promise();
 	};
 
 	/**
@@ -101,12 +117,16 @@
 			// title length is dependent on DB column size and is bytes rather than characters
 			length = byteLength( value );
 
-		if ( value === '' ) {
+		if ( this.config.required && value === '' ) {
 			errors.push( mw.message( 'mediauploader-error-blank' ) );
 			return $.Deferred().resolve( errors ).promise();
 		}
 
-		if ( this.config.minLength && length < this.config.minLength ) {
+		if ( !this.config.required && value === '' ) {
+			return $.Deferred().resolve( [] ).promise();
+		}
+
+		if ( length !== 0 && this.config.minLength && length < this.config.minLength ) {
 			errors.push( mw.message( 'mediauploader-error-title-too-short', this.config.minLength ) );
 			return $.Deferred().resolve( errors ).promise();
 		}

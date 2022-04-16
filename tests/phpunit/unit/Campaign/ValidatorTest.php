@@ -76,6 +76,141 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 			true
 		];
 
+		// Fields
+		$textFieldTypes = [
+			'text', 'textarea', 'multilang', 'title', 'singlelang'
+		];
+		foreach ( $textFieldTypes as $fieldType ) {
+			yield "$fieldType field with all properties" => [
+				[
+					'enabled' => true,
+					'fields' => [
+						'f1' => [
+							'order' => 1,
+							'type' => $fieldType,
+							'label' => 'Nice label',
+							'help' => 'Help text',
+							'required' => 'recommended',
+							'hidden' => false,
+							'enabled' => false,
+							'auxiliary' => true,
+							'minLength' => 4,
+							'maxLength' => 10000,
+							'autoFill' => true
+						]
+					]
+				],
+				[],
+				true
+			];
+		}
+
+		yield 'text field with missing label' => [
+			[
+				'enabled' => true,
+				'fields' => [
+					'f1' => [
+						'order' => 1,
+						'type' => 'text',
+					]
+				]
+			],
+			[],
+			false
+		];
+
+		yield 'text field with extra property' => [
+			[
+				'enabled' => true,
+				'fields' => [
+					'f1' => [
+						'order' => 1,
+						'type' => 'text',
+						'label' => 'Nice label',
+						'badProperty' => 'that is bad',
+					]
+				]
+			],
+			[],
+			false
+		];
+
+		yield 'select field' => [
+			[
+				'enabled' => true,
+				'fields' => [
+					'f1' => [
+						'order' => 1,
+						'type' => 'select',
+						'label' => 'Nice label',
+						'default' => 'aaa',
+						'options' => [
+							'aaa' => 'A label',
+							'bbb' => 'B label',
+						]
+					]
+				]
+			],
+			[],
+			true
+		];
+
+		yield 'date field' => [
+			[
+				'enabled' => true,
+				'fields' => [
+					'f1' => [
+						'order' => 1,
+						'type' => 'date',
+						'label' => 'Nice label',
+						'default' => 'some date',
+					]
+				]
+			],
+			[],
+			true
+		];
+
+		yield 'categories field' => [
+			[
+				'enabled' => true,
+				'fields' => [
+					'f1' => [
+						'order' => 1,
+						'type' => 'categories',
+						'label' => 'Nice label',
+						'default' => [ 'a', 'b' ],
+					]
+				]
+			],
+			[],
+			true
+		];
+
+		yield 'location field' => [
+			[
+				'enabled' => true,
+				'fields' => [
+					'f1' => [
+						'order' => 1,
+						'type' => 'location',
+						'label' => 'Nice label',
+						'fields' => [
+							'altitude', 'latitude', 'longitude', 'heading'
+						],
+						'default' => [
+							'latitude' => 60.123,
+							'longitude' => 120,
+							'heading' => 280.123,
+							'altitude' => '123 m',
+						]
+					]
+				]
+			],
+			[],
+			true
+		];
+
 		// Licensing
 		yield 'licensing.ownWork referencing undefined licenses' => [
 			[

@@ -9,13 +9,15 @@
 	uw.LanguageDropdownWidget = function UWLanguageDropdownWidget( config ) {
 		config = config || {};
 
-		uw.LanguageDropdownWidget.parent.call( this );
+		uw.LanguageDropdownWidget.parent.call( this, config );
 
 		// The following classes are used here:
 		// * mediauploader-singleLanguageInputWidget-language
+		// eslint-disable-next-line mediawiki/class-doc
 		this.languageDropdown = new OO.ui.DropdownWidget( {
 			menu: { items: this.getLanguageMenuOptionWidgets( config.languages ) },
-			classes: config.classes
+			classes: config.classes,
+			disabled: config.disabled
 		} );
 		this.languageDropdown.getMenu().connect( this, { select: [ 'emit', 'select' ] } );
 	};

@@ -6,13 +6,17 @@
 	 * A categories field in UploadWizard's "Details" step form.
 	 *
 	 * @extends uw.DetailsWidget
+	 * @param {Object} config
 	 */
-	uw.CategoriesDetailsWidget = function UWCategoriesDetailsWidget() {
-		var categories, catDetails = this;
+	uw.CategoriesDetailsWidget = function UWCategoriesDetailsWidget( config ) {
+		var catDetails = this;
+		this.config = config;
 
-		uw.CategoriesDetailsWidget.parent.call( this );
+		uw.CategoriesDetailsWidget.parent.call( this, this.config );
 
-		this.categoriesWidget = new mw.widgets.CategoryMultiselectWidget();
+		this.categoriesWidget = new mw.widgets.CategoryMultiselectWidget( {
+			disabled: this.config.disabled
+		} );
 
 		this.categoriesWidget.createTagItemWidget = function ( data ) {
 			var widget = this.constructor.prototype.createTagItemWidget.call( this, data );
@@ -27,12 +31,6 @@
 			return widget;
 		};
 
-		categories = ( mw.UploadWizard.config.defaults.categories || [] ).filter( function ( cat ) {
-			// Keep only valid titles
-			return !!mw.Title.makeTitle( NS_CATEGORY, cat );
-		} );
-		this.categoriesWidget.setValue( categories );
-
 		this.$element.addClass( 'mediauploader-categoriesDetailsWidget' );
 		this.$element.append( this.categoriesWidget.$element );
 
@@ -45,7 +43,13 @@
 	 * @inheritdoc
 	 */
 	uw.CategoriesDetailsWidget.prototype.getErrors = function () {
-		return $.Deferred().resolve( [] ).promise();
+		var errors = [];
+
+		if ( this.config.required && this.categoriesWidget.getItems().length === 0 ) {
+			errors.push( mw.message( 'mediauploader-error-blank' ) );
+		}
+
+		return $.Deferred().resolve( errors ).promise();
 	};
 
 	/**
@@ -53,9 +57,8 @@
 	 */
 	uw.CategoriesDetailsWidget.prototype.getWarnings = function () {
 		var warnings = [];
-		if ( mw.UploadWizard.config.enableCategoryCheck && this.categoriesWidget.getItems().length === 0 ) {
-			warnings.push( mw.message( 'mediauploader-warning-categories-missing' ) );
-		}
+		this.getEmptyWarning( this.categoriesWidget.getItems().length === 0, warnings );
+
 		if ( this.categoriesWidget.getItems().some( function ( item ) {
 			return item.missing;
 		} ) ) {
@@ -119,20 +122,21 @@
 	 * @return {Object} See #setSerialized
 	 */
 	uw.CategoriesDetailsWidget.prototype.getSerialized = function () {
-		return {
-			value: this.categoriesWidget.getItems().map( function ( item ) {
-				return item.data;
-			} )
-		};
+		return this.categoriesWidget.getItems().map( function ( item ) {
+			return item.data;
+		} );
 	};
 
 	/**
 	 * @inheritdoc
-	 * @param {Object} serialized
-	 * @param {string[]} serialized.value List of categories
+	 * @param {string[]} serialized List of categories
 	 */
 	uw.CategoriesDetailsWidget.prototype.setSerialized = function ( serialized ) {
-		this.categoriesWidget.setValue( serialized.value );
+		var categories = ( serialized || [] ).filter( function ( cat ) {
+			// Keep only valid titles
+			return !!mw.Title.makeTitle( NS_CATEGORY, cat );
+		} );
+		this.categoriesWidget.setValue( categories );
 	};
 
 }( mw.uploadWizard ) );

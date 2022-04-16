@@ -11,7 +11,7 @@
 	uw.UlsWidget = function UWUlsWidget( config ) {
 		var i;
 
-		uw.UlsWidget.parent.call( this );
+		uw.UlsWidget.parent.call( this, config );
 
 		this.$element = $( '<div>' )
 			.append(

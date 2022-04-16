@@ -7,22 +7,14 @@
 	 * @extends uw.DetailsWidget
 	 * @constructor
 	 * @param {Object} [config]
-	 * @cfg {boolean} [required=true]
-	 * @cfg {mw.Message} [label] Text for label
-	 * @cfg {mw.Message} [placeholder] Placeholder text for input field
-	 * @cfg {mw.Message} [remove] Title text for remove icon
-	 * @cfg {mw.Message} [error] Error message
+	 * @cfg {boolean} [required=false]
 	 * @cfg {number} [minLength=0] Minimum input length
 	 * @cfg {number} [maxLength=99999] Maximum input length
 	 * @cfg {Object} [languages] { langcode: text } map of languages
 	 */
 	uw.MultipleLanguageInputWidget = function UWMultipleLanguageInputWidget( config ) {
-		this.config = $.extend( {
-			required: true,
-			label: mw.message( '' ),
-			languages: this.getLanguageOptions()
-		}, config );
-		uw.MultipleLanguageInputWidget.parent.call( this );
+		this.config = $.extend( {}, config );
+		uw.MultipleLanguageInputWidget.parent.call( this, this.config );
 		OO.ui.mixin.GroupElement.call( this );
 
 		this.required = !!this.config.required;
@@ -83,7 +75,10 @@
 			languages = unusedLanguages;
 		}
 
-		config = $.extend( {}, config, { languages: languages } );
+		config = $.extend( {}, config, {
+			languages: languages,
+			required: false
+		} );
 		item = new uw.SingleLanguageInputWidget( config );
 		item.setText( text || '' );
 
@@ -172,43 +167,27 @@
 	 * @return {string}
 	 */
 	uw.MultipleLanguageInputWidget.prototype.getLabelText = function () {
-		var text = '', msg;
-		if ( this.config.label.exists() ) {
-			// clone the original object: `.params` doesn't replace existing
-			// params so follow-up calls here would otherwise just keep adding
-			// to the params instead of setting a new value for the first param
-			// eslint-disable-next-line mediawiki/msg-doc
-			msg = mw.message( this.config.label.key ).params( this.config.label.parameters );
-			text = msg.params( [ this.items.length ] ).text();
-		}
-
-		return text;
+		return mw.message( 'mediauploader-multilang-add' ).params( [ this.items.length ] ).text();
 	};
 
 	/**
-	 * @return {Object}
+	 * @inheritdoc
 	 */
-	uw.MultipleLanguageInputWidget.prototype.getLanguageOptions = function () {
-		var languages, code;
+	uw.MultipleLanguageInputWidget.prototype.getWarnings = function () {
+		var warnings = [];
+		this.getEmptyWarning( this.getWikiText() === '', warnings );
 
-		languages = {};
-		for ( code in mw.UploadWizard.config.languages ) {
-			if ( Object.prototype.hasOwnProperty.call( mw.UploadWizard.config.languages, code ) ) {
-				languages[ code ] = mw.UploadWizard.config.languages[ code ];
-			}
-		}
-		return languages;
+		return $.Deferred().resolve( warnings ).promise();
 	};
 
 	/**
 	 * @inheritdoc
 	 */
 	uw.MultipleLanguageInputWidget.prototype.getErrors = function () {
-		var self = this,
-			// Gather errors from each item
-			errorPromises = this.getItems().map( function ( item ) {
-				return item.getErrors();
-			} );
+		// Gather errors from each item
+		var errorPromises = this.getItems().map( function ( item ) {
+			return item.getErrors();
+		} );
 
 		return $.when.apply( $, errorPromises ).then( function () {
 			var i, errors;
@@ -218,7 +197,7 @@
 			for ( i = 0; i < arguments.length; i++ ) {
 				if ( arguments[ i ].length ) {
 					// One of the items has errors
-					errors.push( self.config.error );
+					errors.push( mw.message( 'mediauploader-error-bad-multilang' ) );
 					break;
 				}
 			}
@@ -281,13 +260,18 @@
 
 	/**
 	 * @inheritdoc
-	 * @param {Object} serialized
+	 * @param {Object|string} serialized
 	 * @param {Object[]} serialized.inputs Array of serialized inputs,
 	 *   see uw.SingleLanguageInputWidget#setSerialized
 	 */
 	uw.MultipleLanguageInputWidget.prototype.setSerialized = function ( serialized ) {
 		var config = this.config,
 			i;
+
+		if ( typeof serialized === 'string' ) {
+			this.setSerialized( { inputs: [ { text: serialized } ] } );
+			return;
+		}
 
 		// remove all existing
 		this.removeItems( this.getItems() );
@@ -296,6 +280,21 @@
 			config = $.extend( {}, config, { defaultLanguage: serialized.inputs[ i ].language } );
 			this.addLanguageInput( config, serialized.inputs[ i ].text );
 		}
+	};
+
+	/**
+	 * Returns the value of the field which can be used as a caption.
+	 *
+	 * @return {string}
+	 */
+	uw.MultipleLanguageInputWidget.prototype.getCaption = function () {
+		var items = this.getItems();
+
+		if ( items.length > 0 ) {
+			return items[ 0 ].getCaption();
+		}
+
+		return '';
 	};
 
 }( mw.uploadWizard ) );

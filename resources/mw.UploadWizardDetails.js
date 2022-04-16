@@ -14,16 +14,15 @@
 		this.$containerDiv = $containerDiv;
 		this.api = upload.api;
 
-		this.mainFields = [];
-
-		this.deedChooserDetails = new uw.DeedChooserDetailsWidget();
-		this.customDeedChooser = false;
+		this.fieldList = [];
+		this.fieldMap = {};
+		this.fieldWrapperList = [];
+		this.fieldWrapperMap = {};
 
 		this.$div = $( '<div>' ).addClass( 'mediauploader-info-file ui-helper-clearfix filled' );
 	};
 
 	mw.UploadWizardDetails.prototype = {
-
 		// Has this details object been attached to the DOM already?
 		isAttached: false,
 
@@ -31,8 +30,8 @@
 		 * Build the interface and attach all elements - do this on demand.
 		 */
 		buildInterface: function () {
-			var descriptionRequired, uri,
-				$moreDetailsWrapperDiv, $moreDetailsDiv,
+			var $moreDetailsWrapperDiv, $moreDetailsDiv,
+				fKey, fSpec, fieldWidget, fieldWrapper, fConfigBase,
 				details = this,
 				config = mw.UploadWizard.config;
 
@@ -40,126 +39,133 @@
 
 			this.$dataDiv = $( '<div>' ).addClass( 'mediauploader-data' );
 
-			this.titleDetails = new uw.TitleDetailsWidget( {
-				// Normalize file extension, e.g. 'JPEG' to 'jpg'
-				extension: mw.Title.normalizeExtension( this.upload.title.getExtension() ),
-				minLength: config.minTitleLength,
-				maxLength: config.maxTitleLength
-			} );
-			this.titleDetailsField = new uw.FieldLayout( this.titleDetails, {
-				label: mw.message( 'mediauploader-title' ).text(),
-				help: mw.message( 'mediauploader-tooltip-title' ).text(),
-				required: true
-			} );
-			this.mainFields.push( this.titleDetailsField );
+			for ( fKey in config.fields ) {
+				fSpec = config.fields[ fKey ];
+				fSpec.key = fKey;
+				fSpec.enabled = fSpec.enabled === undefined ? true : fSpec.enabled;
+				// Override the label in case it wasn't set
+				fSpec.label = fSpec.label ? $( $.parseHTML( fSpec.label ) ) : fSpec.key;
 
-			// descriptions
-			// Description is not required if a campaign provides alternative wikitext fields,
-			// which are assumed to function like a description
-			descriptionRequired = !(
-				config.fields &&
-				config.fields.length &&
-				config.fields[ 0 ].wikitext
-			);
-			this.descriptionsDetails = new uw.MultipleLanguageInputWidget( {
-				required: descriptionRequired,
-				// Messages: mediauploader-desc-add-0, mediauploader-desc-add-n
-				label: mw.message( 'mediauploader-desc-add' ),
-				error: mw.message( 'mediauploader-error-bad-descriptions' ),
-				remove: mw.message( 'mediauploader-remove-description' ),
-				minLength: config.minDescriptionLength,
-				maxLength: config.maxDescriptionLength
-			} );
-			this.descriptionsDetailsField = new uw.FieldLayout( this.descriptionsDetails, {
-				required: descriptionRequired,
-				label: mw.message( 'mediauploader-description' ).text(),
-				help: mw.message( 'mediauploader-tooltip-description' ).text()
-			} );
-			this.mainFields.push( this.descriptionsDetailsField );
+				// Common settings for all fields
+				fConfigBase = {
+					required: fSpec.required === 'required',
+					recommended: fSpec.required === 'recommended',
+					fieldName: fSpec.label,
+					disabled: !fSpec.enabled
+				};
 
-			this.deedChooserDetailsField = new uw.FieldLayout( this.deedChooserDetails, {
-				label: mw.message( 'mediauploader-copyright-info' ).text(),
-				required: true
-			} );
-			this.deedChooserDetailsField.toggle( this.customDeedChooser ); // See useCustomDeedChooser()
-			this.mainFields.push( this.deedChooserDetailsField );
-
-			this.categoriesDetails = new uw.CategoriesDetailsWidget();
-			this.categoriesDetailsField = new uw.FieldLayout( this.categoriesDetails, {
-				label: mw.message( 'mediauploader-categories' ).text(),
-				help: new OO.ui.HtmlSnippet(
-					mw.message( 'mediauploader-tooltip-categories', $( '<a>' ).attr( {
-						target: '_blank',
-						href: config.allCategoriesLink
-					} ) ).parse()
-				)
-			} );
-			this.mainFields.push( this.categoriesDetailsField );
-
-			this.dateDetails = new uw.DateDetailsWidget( { upload: this.upload } );
-			this.dateDetailsField = new uw.FieldLayout( this.dateDetails, {
-				label: mw.message( 'mediauploader-date-created' ).text(),
-				help: mw.message( 'mediauploader-tooltip-date' ).text(),
-				required: true
-			} );
-			this.mainFields.push( this.dateDetailsField );
-
-			this.otherDetails = new uw.OtherDetailsWidget();
-			this.otherDetailsField = new uw.FieldLayout( this.otherDetails, {
-				label: mw.message( 'mediauploader-other' ).text(),
-				help: mw.message( 'mediauploader-tooltip-other' ).text()
-			} );
-			this.mainFields.push( this.otherDetailsField );
-
-			this.locationInput = new uw.LocationDetailsWidget( { showHeading: true } );
-			this.locationInputField = new uw.FieldLayout( this.locationInput, {
-				label: mw.message( 'mediauploader-location' ).text()
-			} );
-			this.mainFields.push( this.locationInputField );
-
-			/* Build the form for the file upload */
-			this.$form = $( '<form id="mediauploader-detailsform' + this.upload.index + '"></form>' ).addClass( 'detailsForm' );
-			this.$form.append(
-				this.titleDetailsField.$element,
-				this.descriptionsDetailsField.$element,
-				this.deedChooserDetailsField.$element,
-				this.dateDetailsField.$element,
-				this.categoriesDetailsField.$element
-			);
-
-			this.$form.on( 'submit', function ( e ) {
-				// Prevent actual form submission
-				e.preventDefault();
-			} );
-
-			this.campaignDetailsFields = [];
-			config.fields.forEach( function ( field ) {
-				var customDetails, customDetailsField;
-
-				if ( field.wikitext ) {
-					customDetails = new uw.CampaignDetailsWidget( field );
-					customDetailsField = new uw.FieldLayout( customDetails, {
-						label: $( $.parseHTML( field.label ) ),
-						required: !!field.required
-					} );
-
-					if ( field.initialValue ) {
-						customDetails.setSerialized( { value: field.initialValue } );
-					}
-
-					details.$form.append( customDetailsField.$element );
-					details.campaignDetailsFields.push( customDetailsField );
+				fieldWidget = null;
+				switch ( fSpec.type ) {
+					case 'title':
+						fieldWidget = new uw.TitleDetailsWidget( $.extend( {}, fConfigBase, {
+							// Normalize file extension, e.g. 'JPEG' to 'jpg'
+							extension: mw.UploadWizard.config.content.titleField === fKey ?
+								mw.Title.normalizeExtension( this.upload.title.getExtension() ) : '',
+							minLength: fSpec.minLength || 5,
+							maxLength: fSpec.maxLength || 240
+						} ) );
+						break;
+					case 'text':
+					case 'textarea':
+						fieldWidget = new uw.TextWidget( $.extend( {}, fConfigBase, {
+							disabled: !fSpec.enabled,
+							minLength: fSpec.minLength,
+							maxLength: fSpec.maxLength
+						} ) );
+						break;
+					case 'singlelang':
+						fieldWidget = new uw.SingleLanguageInputWidget( $.extend( {}, fConfigBase, {
+							canBeRemoved: false,
+							languages: this.getLanguageOptions(),
+							minLength: fSpec.minLength,
+							maxLength: fSpec.maxLength
+						} ) );
+						break;
+					case 'multilang':
+						fieldWidget = new uw.MultipleLanguageInputWidget( $.extend( {}, fConfigBase, {
+							languages: this.getLanguageOptions(),
+							minLength: fSpec.minLength,
+							maxLength: fSpec.maxLength
+						} ) );
+						break;
+					case 'select':
+						fieldWidget = new uw.DropdownWidget( $.extend( {}, fConfigBase, {
+							options: fSpec.options
+						} ) );
+						break;
+					case 'date':
+						fieldWidget = new uw.DateDetailsWidget( $.extend( {}, fConfigBase, {
+							upload: this.upload
+						} ) );
+						break;
+					case 'location':
+						fieldWidget = new uw.LocationDetailsWidget( $.extend( {}, fConfigBase, {
+							fields: fSpec.fields
+						} ) );
+						break;
+					case 'categories':
+						fieldWidget = new uw.CategoriesDetailsWidget(
+							$.extend( {}, fConfigBase, {} )
+						);
+						break;
+					default:
+						// Can't build the widget, ignore it
+						mw.error( "Can't build details widget", fSpec );
+						continue;
 				}
+
+				this.fieldList.push( fSpec );
+				this.fieldMap[ fKey ] = fieldWidget;
+			}
+
+			this.fieldList.sort( function ( a, b ) {
+				if ( a.order < b.order ) {
+					return -1;
+				}
+				if ( a.order > b.order ) {
+					return 1;
+				}
+				return 0;
 			} );
 
-			$moreDetailsWrapperDiv = $( '<div>' ).addClass( 'mwe-more-details' );
+			// Build the form for the file upload
+			this.$form = $( '<form id="mediauploader-detailsform' + this.upload.index + '"></form>' )
+				.addClass( 'detailsForm' );
 			$moreDetailsDiv = $( '<div>' );
 
-			$moreDetailsDiv.append(
-				this.locationInputField.$element,
-				this.otherDetailsField.$element
-			);
+			this.fieldList.forEach( function ( spec ) {
+				fieldWidget = this.fieldMap[ spec.key ];
+				fieldWrapper = new uw.FieldLayout( fieldWidget, {
+					required: spec.required === 'required',
+					label: spec.label,
+					help: spec.help ? $( $.parseHTML( spec.help ) ) : null
+				} );
+				if ( spec.hidden ) {
+					fieldWrapper.toggle( false );
+				}
 
+				// Apply field defaults
+				this.prefillField( spec, fieldWidget );
+
+				// List of fields for validation etc.
+				this.fieldWrapperList.push( fieldWrapper );
+				this.fieldWrapperMap[ spec.key ] = fieldWrapper;
+
+				// Add the field wrapper to HTML of the form
+				if ( spec.auxiliary ) {
+					$moreDetailsDiv.append( fieldWrapper.$element );
+					// If something changes the input "hidden" in the collapsed section,
+					// expand it.
+					fieldWidget.on( 'change', function () {
+						$moreDetailsWrapperDiv.data( 'mw-collapsible' ).expand();
+					} );
+				} else {
+					this.$form.append( fieldWrapper.$element );
+				}
+			}, this );
+
+			// Wrap the auxiliary fields in a dropdown
+			$moreDetailsWrapperDiv = $( '<div>' ).addClass( 'mwe-more-details' );
 			$moreDetailsWrapperDiv
 				.append(
 					$( '<a>' ).text( mw.msg( 'mediauploader-more-options' ) )
@@ -168,12 +174,9 @@
 				)
 				.makeCollapsible( { collapsed: true } );
 
-			// Expand collapsed sections if the fields within were changed (e.g. by metadata copier)
-			this.locationInput.on( 'change', function () {
-				$moreDetailsWrapperDiv.data( 'mw-collapsible' ).expand();
-			} );
-			this.otherDetails.on( 'change', function () {
-				$moreDetailsWrapperDiv.data( 'mw-collapsible' ).expand();
+			this.$form.on( 'submit', function ( e ) {
+				// Prevent actual form submission
+				e.preventDefault();
 			} );
 
 			this.$form.append(
@@ -228,23 +231,10 @@
 				this.$dataDiv
 			);
 
-			uri = new mw.Uri( location.href, { overrideKeys: true } );
-			if ( config.defaults.description || uri.query.descriptionlang ) {
-				this.descriptionsDetails.setSerialized( {
-					inputs: [
-						{
-							text: config.defaults.description || ''
-						}
-					]
-				} );
-				this.descriptionsDetails.getItems()[ 0 ].setLanguage(
-					uri.query.descriptionlang ?
-						this.descriptionsDetails.getItems()[ 0 ].getClosestAllowedLanguage( uri.query.descriptionlang ) :
-						this.descriptionsDetails.getItems()[ 0 ].getDefaultLanguage()
-				);
-			}
-
-			this.populate();
+			// This must match the CSS dimensions of .mediauploader-thumbnail
+			this.upload.getThumbnail( 230 ).done( function ( thumb ) {
+				mw.UploadWizard.placeThumbnail( this.$thumbnailDiv, thumb );
+			}, this );
 
 			this.interfaceBuilt = true;
 
@@ -291,9 +281,11 @@
 		 * @return {mw.Title|null}
 		 */
 		getTitle: function () {
+			var titleField = mw.UploadWizard.config.content.titleField;
+
 			// title will not be set until we've actually submitted the file
 			if ( this.title === undefined ) {
-				return this.titleDetails.getTitle();
+				return this.fieldMap[ titleField ].getTitle();
 			}
 
 			// once the file has been submitted, we'll have confirmation on
@@ -308,8 +300,11 @@
 		 * @chainable
 		 */
 		setDuplicateTitleError: function () {
+			var titleField = mw.UploadWizard.config.content.titleField;
 			// TODO This should give immediate response, not only when submitting the form
-			this.titleDetailsField.setErrors( [ mw.message( 'mediauploader-error-title-duplicate' ) ] );
+			this.fieldWrapperMap[ titleField ].setErrors(
+				[ mw.message( 'mediauploader-error-title-duplicate' ) ]
+			);
 			return this;
 		},
 
@@ -319,11 +314,7 @@
 		 * @return {uw.FieldLayout[]}
 		 */
 		getAllFields: function () {
-			return [].concat(
-				this.mainFields,
-				this.upload.deedChooser.deed ? this.upload.deedChooser.deed.getFields() : [],
-				this.campaignDetailsFields
-			);
+			return this.fieldWrapperList;
 		},
 
 		/**
@@ -372,36 +363,47 @@
 		 * @return {string}
 		 */
 		getThumbnailCaption: function () {
-			var captions = this.descriptionsDetails.getSerialized().inputs;
+			var captionField = mw.UploadWizard.config.content.captionField;
 
-			if ( captions.length > 0 ) {
-				return mw.Escaper.escapeForTemplate( captions[ 0 ].text.trim() );
-			} else {
-				return '';
+			// The caption field should be one of:
+			// TextWidget, SingleLanguageInputWidget, MultipleLanguageInputWidget
+			return this.fieldMap[ captionField ].getCaption();
+		},
+
+		/**
+		 * Prefills the statically (defaults) and dynamically available info
+		 * for the file (from EXIF etc.), for the given field.
+		 *
+		 * @param {Object} fSpec
+		 * @param {uw.DetailsWidget} widget
+		 */
+		prefillField: function ( fSpec, widget ) {
+			var dynPrefilled = false;
+
+			// Try dynamic prefilling, if requested and available for this type
+			if ( fSpec.autoFill ) {
+				switch ( fSpec.type ) {
+					case 'title':
+						dynPrefilled = this.prefillTitle( widget );
+						break;
+					case 'text':
+					case 'textarea':
+					case 'singlelang':
+					case 'multilang':
+						dynPrefilled = this.prefillDescription( fSpec.type, widget );
+						break;
+					case 'date':
+						dynPrefilled = this.prefillDate( widget );
+						break;
+					case 'location':
+						dynPrefilled = this.prefillLocation( widget );
+						break;
+				}
 			}
-		},
 
-		/**
-		 * toggles whether we use the 'macro' deed or our own
-		 */
-		useCustomDeedChooser: function () {
-			this.customDeedChooser = true;
-			this.deedChooserDetails.useCustomDeedChooser( this.upload );
-		},
-
-		/**
-		 * Pull some info into the form ( for instance, extracted from EXIF, desired filename )
-		 */
-		populate: function () {
-			var $thumbnailDiv = this.$thumbnailDiv;
-			// This must match the CSS dimensions of .mediauploader-thumbnail
-			this.upload.getThumbnail( 230 ).done( function ( thumb ) {
-				mw.UploadWizard.placeThumbnail( $thumbnailDiv, thumb );
-			} );
-			this.prefillDate();
-			this.prefillTitle();
-			this.prefillDescription();
-			this.prefillLocation();
+			if ( !dynPrefilled && fSpec.default !== undefined ) {
+				widget.setSerialized( fSpec.default );
+			}
 		},
 
 		/**
@@ -409,8 +411,11 @@
 		 * XXX We ought to be using date + time here...
 		 * EXIF examples tend to be in ISO 8601, but the separators are sometimes things like colons, and they have lots of trailing info
 		 * (which we should actually be using, such as time and timezone)
+		 *
+		 * @param {uw.DateDetailsWidget} widget
+		 * @return {boolean}
 		 */
-		prefillDate: function () {
+		prefillDate: function ( widget ) {
 			var dateObj, metadata, dateStr, saneTime,
 				dateMode = 'calendar',
 				yyyyMmDdRegex = /^(\d\d\d\d)[:/-](\d\d)[:/-](\d\d)\D.*/,
@@ -463,7 +468,7 @@
 			// XXX if we have FileAPI, it might be clever to look at file attrs, saved
 			// in the upload object for use here later, perhaps
 			if ( dateObj === undefined ) {
-				return;
+				return false;
 			}
 
 			dateStr = dateObj.getFullYear() + '-' + pad( dateObj.getMonth() + 1 ) + '-' + pad( dateObj.getDate() );
@@ -482,19 +487,25 @@
 			}
 
 			// ok by now we should definitely have a dateObj and a date string
-			this.dateDetails.setSerialized( {
+			widget.setSerialized( {
 				mode: dateMode,
 				value: dateStr
 			} );
+
+			return true;
 		},
 
 		/**
 		 * Set the title of the thing we just uploaded, visibly
+		 *
+		 * @param {uw.TitleDetailsWidget} widget
+		 * @return {boolean}
 		 */
-		prefillTitle: function () {
-			this.titleDetails.setSerialized( {
+		prefillTitle: function ( widget ) {
+			widget.setSerialized( {
 				title: this.upload.title.getNameText()
 			} );
+			return true;
 		},
 
 		/**
@@ -503,61 +514,66 @@
 		 * Note that this is not related to specifying the description from the query
 		 * string (that happens earlier). This is for when we have retrieved a
 		 * description from an upload_by_url upload or from the metadata.
+		 *
+		 * @param {string} type
+		 * @param {uw.TextWidget} widget
+		 * @return {boolean}
 		 */
-		prefillDescription: function () {
+		prefillDescription: function ( type, widget ) {
 			var m, descText;
 
 			if (
-				this.descriptionsDetails.getWikiText() === '' &&
+				widget.getWikiText() === '' &&
 				this.upload.file !== undefined
 			) {
 				m = this.upload.imageinfo.metadata;
 				descText = this.upload.file.description ||
 					( m && m.imagedescription && m.imagedescription[ 0 ] && m.imagedescription[ 0 ].value );
 
-				if ( descText ) {
-					// strip out any HTML tags
-					descText = descText.replace( /<[^>]+>/g, '' );
+				if ( !descText ) {
+					return false;
+				}
 
-					this.descriptionsDetails.setSerialized( {
-						inputs: [
-							{
-								text: descText.trim()
-							}
-						]
-					} );
-					// The language is probably wrong in many cases...
-					this.descriptionsDetails.getItems()[ 0 ].setLanguage(
-						this.descriptionsDetails.getItems()[ 0 ].getClosestAllowedLanguage( mw.config.get( 'wgContentLanguage' ) )
+				// strip out any HTML tags
+				descText = descText.replace( /<[^>]+>/g, '' );
+
+				// Set the text – both singlelang and multilang can fall back to
+				// a simple string serialization.
+				widget.setSerialized( descText.trim() );
+
+				// Set the language – probably wrong in many cases...
+				if ( type === 'singlelang' ) {
+					widget.setLanguage(
+						widget.getClosestAllowedLanguage( mw.config.get( 'wgContentLanguage' ) )
+					);
+				} else if ( type === 'multilang' ) {
+					widget.getItems()[ 0 ].setLanguage(
+						widget.getItems()[ 0 ].getClosestAllowedLanguage(
+							mw.config.get( 'wgContentLanguage' )
+						)
 					);
 				}
+
+				return true;
 			}
+
+			return false;
 		},
 
 		/**
 		 * Prefill location input from image info and metadata
 		 *
 		 * As of MediaWiki 1.18, the exif parser translates the rational GPS data tagged by the camera
-		 * to decimal format.  Let's just use that.
+		 * to decimal format. Let's just use that.
+		 *
+		 * @param {uw.LocationDetailsWidget} widget
+		 * @return {boolean}
 		 */
-		prefillLocation: function () {
+		prefillLocation: function ( widget ) {
 			var dir,
 				m = this.upload.imageinfo.metadata,
 				modified = false,
 				values = {};
-
-			if ( mw.UploadWizard.config.defaults.lat ) {
-				values.latitude = mw.UploadWizard.config.defaults.lat;
-				modified = true;
-			}
-			if ( mw.UploadWizard.config.defaults.lon ) {
-				values.longitude = mw.UploadWizard.config.defaults.lon;
-				modified = true;
-			}
-			if ( mw.UploadWizard.config.defaults.heading ) {
-				values.heading = mw.UploadWizard.config.defaults.heading;
-				modified = true;
-			}
 
 			if ( m ) {
 				dir = m.gpsimgdirection || m.gpsdestbearing;
@@ -592,12 +608,28 @@
 				}
 			}
 
-			this.locationInput.setSerialized( values );
-
 			if ( modified ) {
-				this.$form.find( '.mwe-more-details' )
-					.data( 'mw-collapsible' ).expand();
+				widget.setSerialized( values );
+				return true;
 			}
+			return false;
+		},
+
+		/**
+		 * Returns the language list to use in (Single|Multiple)LanguageInputWidget
+		 *
+		 * @return {Object}
+		 */
+		getLanguageOptions: function () {
+			var languages, code;
+
+			languages = {};
+			for ( code in mw.UploadWizard.config.languages ) {
+				if ( Object.prototype.hasOwnProperty.call( mw.UploadWizard.config.languages, code ) ) {
+					languages[ code ] = mw.UploadWizard.config.languages[ code ];
+				}
+			}
+			return languages;
 		},
 
 		/**
@@ -610,24 +642,20 @@
 		 * @return {Object.<string,Object>}
 		 */
 		getSerialized: function () {
+			var fieldWidget, serialized = {};
+
 			if ( !this.interfaceBuilt ) {
 				// We don't have the interface yet, but it'll get filled out as
 				// needed.
 				return;
 			}
 
-			return {
-				title: this.titleDetails.getSerialized(),
-				description: this.descriptionsDetails.getSerialized(),
-				date: this.dateDetails.getSerialized(),
-				categories: this.categoriesDetails.getSerialized(),
-				location: this.locationInput.getSerialized(),
-				other: this.otherDetails.getSerialized(),
-				campaigns: this.campaignDetailsFields.map( function ( field ) {
-					return field.fieldWidget.getSerialized();
-				} ),
-				deed: this.deedChooserDetails.getSerialized()
-			};
+			this.fieldList.forEach( function ( fSpec ) {
+				fieldWidget = this.fieldMap[ fSpec.key ];
+				serialized[ fSpec.key ] = fieldWidget.getSerialized();
+			}, this );
+
+			return serialized;
 		},
 
 		/**
@@ -639,8 +667,6 @@
 		 * @param {Object.<string,Object>} [serialized]
 		 */
 		setSerialized: function ( serialized ) {
-			var i;
-
 			if ( !this.interfaceBuilt ) {
 				// There's no interface yet! Don't load the data, just keep it
 				// around.
@@ -662,32 +688,11 @@
 				return;
 			}
 
-			if ( serialized.title ) {
-				this.titleDetails.setSerialized( serialized.title );
-			}
-			if ( serialized.description ) {
-				this.descriptionsDetails.setSerialized( serialized.description );
-			}
-			if ( serialized.date ) {
-				this.dateDetails.setSerialized( serialized.date );
-			}
-			if ( serialized.categories ) {
-				this.categoriesDetails.setSerialized( serialized.categories );
-			}
-			if ( serialized.location ) {
-				this.locationInput.setSerialized( serialized.location );
-			}
-			if ( serialized.other ) {
-				this.otherDetails.setSerialized( serialized.other );
-			}
-			if ( serialized.campaigns ) {
-				for ( i = 0; i < this.campaignDetailsFields.length; i++ ) {
-					this.campaignDetailsFields[ i ].fieldWidget.setSerialized( serialized.campaigns[ i ] );
+			this.fieldList.forEach( function ( fSpec ) {
+				if ( serialized[ fSpec.key ] ) {
+					this.fieldMap[ fSpec.key ].setSerialized( serialized[ fSpec.key ] );
 				}
-			}
-			if ( serialized.deed ) {
-				this.deedChooserDetails.setSerialized( serialized.deed );
-			}
+			}, this );
 		},
 
 		/**
@@ -698,7 +703,8 @@
 		 * @return {string} wikitext representing all details
 		 */
 		getWikiText: function () {
-			var deed, info, key,
+			// TODO: rewrite this (T275027)
+			/* var deed, info, key,
 				information,
 				wikiText = '';
 
@@ -723,7 +729,7 @@
 
 			this.campaignDetailsFields.forEach( function ( layout ) {
 				information.description += layout.fieldWidget.getWikiText();
-			} );
+			}, this );
 
 			information.date = this.dateDetails.getWikiText();
 
@@ -769,7 +775,8 @@
 			// remove too many newlines in a row
 			wikiText = wikiText.replace( /\n{3,}/g, '\n\n' );
 
-			return wikiText;
+			return wikiText; */
+			return 'placeholder';
 		},
 
 		/**
@@ -805,6 +812,7 @@
 		 * @return {jQuery.Promise}
 		 */
 		submitWikiText: function ( wikiText ) {
+			// TODO (T275027)
 			var params,
 				tags = [ 'uploadwizard' ],
 				deed = this.upload.deedChooser.deed,
@@ -1017,9 +1025,11 @@
 		 * @param {string} html Error message to show.
 		 */
 		recoverFromError: function ( code, html ) {
+			var titleField = mw.UploadWizard.config.content.titleField;
+
 			this.upload.state = 'recoverable-error';
 			this.$dataDiv.morphCrossfade( '.detailsForm' );
-			this.titleDetailsField.setErrors( [ { code: code, html: html } ] );
+			this.fieldWrapperMap[ titleField ].setErrors( [ { code: code, html: html } ] );
 		},
 
 		/**

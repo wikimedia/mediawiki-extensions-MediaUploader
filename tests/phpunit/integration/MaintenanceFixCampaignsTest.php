@@ -29,9 +29,6 @@ worse: worse
 display:
   headerLabel: valid label
   bad: [ 'a', 'b' ]
-fields:
-  - wikitext: some text
-    bad: bad
 YAML;
 
 	private const INVALID_YAML = '{';
@@ -45,11 +42,8 @@ worse: worse
 display:
   headerLabel: valid label
   bad: [ 'a', 'b' ]
-fields:
-  - wikitext: some text
-    bad: bad
-    # type mismatch
-    maxLength: aaa
+  thanksLabel:
+    - type mismatch
 YAML;
 
 	public function testNothingToFix() {
@@ -70,14 +64,14 @@ YAML;
 		$this->maintenance->loadWithArgv( [ '--force' ] );
 		$this->maintenance->execute();
 
-		$this->assertChange( 'Fixable', self::CHANGE_FIX, 4 );
+		$this->assertChange( 'Fixable', self::CHANGE_FIX, 3 );
 
 		// Re-run the script to check if the issues were really fixed
 		$this->maintenance->loadWithArgv( [ '--force', '--prettify' ] );
 		$this->maintenance->execute();
 
 		$this->expectOutputRegex(
-			'/Fixed 4 issue\(s\), 0 left to fix manually.*'
+			'/Fixed 3 issue\(s\), 0 left to fix manually.*'
 			. 'Fixed 0 issue\(s\), 0 left to fix manually/s'
 		);
 		$this->deleteCampaign( 'Fixable' );
@@ -133,8 +127,8 @@ YAML;
 		$this->maintenance->loadWithArgv( [ '--force' ] );
 		$this->maintenance->execute();
 
-		$this->expectOutputRegex( '/Fixed 4 issue\(s\), 1 left to fix manually/' );
-		$this->assertChange( 'Unfixable', self::CHANGE_FIX, 4, 1 );
+		$this->expectOutputRegex( '/Fixed 3 issue\(s\), 1 left to fix manually/' );
+		$this->assertChange( 'Unfixable', self::CHANGE_FIX, 3, 1 );
 		$this->deleteCampaign( 'Unfixable' );
 	}
 
@@ -149,9 +143,9 @@ YAML;
 		// Three campaigns should be present in output
 		$this->expectOutputRegex( '/----.*----.*----/s' );
 
-		$this->assertChange( 'Fixable', self::CHANGE_FIX, 4 );
+		$this->assertChange( 'Fixable', self::CHANGE_FIX, 3 );
 		$this->deleteCampaign( 'Fixable' );
-		$this->assertChange( 'Unfixable', self::CHANGE_FIX, 4, 1 );
+		$this->assertChange( 'Unfixable', self::CHANGE_FIX, 3, 1 );
 		$this->deleteCampaign( 'Unfixable' );
 		$this->assertChange( 'Valid', self::CHANGE_PRETTY );
 		$this->deleteCampaign( 'Valid' );

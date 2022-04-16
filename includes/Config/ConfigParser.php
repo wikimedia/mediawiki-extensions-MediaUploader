@@ -48,9 +48,13 @@ class ConfigParser {
 		ParserOptions $parserOptions,
 		array $configToParse
 	) {
+		$options = clone $parserOptions;
+		// Open links in a new tab for slightly better UX
+		$options->setOption( 'externalLinkTarget', '_blank' );
+
 		$this->pageRef = $pageRef;
 		$this->parserFactory = $parserFactory;
-		$this->parserOptions = $parserOptions;
+		$this->parserOptions = $options;
 		$this->unparsedConfig = $configToParse;
 	}
 
@@ -122,10 +126,10 @@ class ConfigParser {
 					break;
 				case 'fields':
 					$parsedConfig['fields'] = [];
-					foreach ( $value as $field ) {
-						$parsedConfig['fields'][] = $this->parseArrayValues(
+					foreach ( $value as $fieldName => $field ) {
+						$parsedConfig['fields'][$fieldName] = $this->parseArrayValues(
 							$field,
-							[ 'label', 'options' ]
+							[ 'label', 'help', 'options' ]
 						);
 					}
 					break;
