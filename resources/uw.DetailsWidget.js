@@ -75,9 +75,10 @@
 
 	/**
 	 * Get a wikitext snippet generated from current state of the widget.
+	 * Alternatively can return a map of string -> string, representing subfields of the field.
 	 *
 	 * @method
-	 * @return {string} Wikitext
+	 * @return {string|Object} Wikitext or map of subfield -> wikitext
 	 */
 	uw.DetailsWidget.prototype.getWikiText = null;
 

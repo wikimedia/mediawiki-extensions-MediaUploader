@@ -6,22 +6,49 @@
 	 * @extends uw.DetailsWidget
 	 * @constructor
 	 * @param {Object} [config] Configuration options
-	 * @cfg {boolean} [showHeading=true] Whether to show the 'heading' field
+	 * @cfg {string[]} [fields] List of fields to show in the widget
 	 */
 	uw.LocationDetailsWidget = function UWLocationDetailsWidget( config ) {
 		this.config = $.extend( {
 			fields: [ 'latitude', 'longitude' ]
 		}, config );
 
-		// TODO: implement subfield show/hide (T275274)
-		// TODO: implement altitude field
 		uw.LocationDetailsWidget.parent.call( this, this.config );
 
 		this.$element.addClass( 'mediauploader-locationDetailsWidget' );
 
-		this.latitudeInput = new OO.ui.TextInputWidget( { disabled: config.disabled } );
-		this.longitudeInput = new OO.ui.TextInputWidget( { disabled: config.disabled } );
-		this.headingInput = new OO.ui.TextInputWidget( { disabled: config.disabled } );
+		this.config.showField = {};
+		this.inputs = {};
+		this.allFields = [ 'latitude', 'longitude', 'altitude', 'heading' ];
+
+		this.config.fields.forEach( function ( field ) {
+			this.config.showField[ field ] = true;
+		}, this );
+
+		// Go over all available fields in order
+		this.allFields.forEach( function ( field ) {
+			if ( !this.config.showField[ field ] ) {
+				return;
+			}
+			this.inputs[ field ] = new OO.ui.TextInputWidget( { disabled: this.config.disabled } );
+
+			// Messages that can be used here:
+			// * mediauploader-location-latitude
+			// * mediauploader-location-longitude
+			// * mediauploader-location-altitude
+			// * mediauploader-location-heading
+			this.$element.append(
+				new OO.ui.FieldLayout( this.inputs[ field ], {
+					align: 'top',
+					label: mw.message( 'mediauploader-location-' + field ).text(),
+					disabled: this.config.disabled
+				} ).$element
+			);
+
+			// Aggregate 'change' events
+			this.inputs[ field ].connect( this, { change: [ 'emit', 'change' ] } );
+		}, this );
+
 		this.$map = $( '<div>' ).css( { width: 500, height: 300 } );
 		this.mapButton = new OO.ui.PopupButtonWidget( {
 			icon: 'mapPin',
@@ -31,39 +58,11 @@
 				width: 500,
 				height: 300
 			},
-			disabled: config.disabled
+			disabled: this.config.disabled
 		} );
-
-		this.$element.append(
-			new OO.ui.FieldLayout( this.latitudeInput, {
-				align: 'top',
-				label: mw.message( 'mediauploader-location-lat' ).text(),
-				disabled: config.disabled
-			} ).$element,
-			new OO.ui.FieldLayout( this.longitudeInput, {
-				align: 'top',
-				label: mw.message( 'mediauploader-location-lon' ).text(),
-				disabled: config.disabled
-			} ).$element
-		);
-
-		if ( this.config.showHeading ) {
-			this.$element.append(
-				new OO.ui.FieldLayout( this.headingInput, {
-					align: 'top',
-					label: mw.message( 'mediauploader-location-heading' ).text(),
-					disabled: config.disabled
-				} ).$element
-			);
-		}
 
 		this.mapButton.setDisabled( true );
 		this.$element.append( this.mapButton.$element );
-
-		// Aggregate 'change' events
-		this.latitudeInput.connect( this, { change: [ 'emit', 'change' ] } );
-		this.longitudeInput.connect( this, { change: [ 'emit', 'change' ] } );
-		this.headingInput.connect( this, { change: [ 'emit', 'change' ] } );
 
 		this.mapButton.connect( this, { click: 'onMapButtonClick' } );
 		this.connect( this, { change: 'onChange' } );
@@ -91,8 +90,7 @@
 	 * @private
 	 */
 	uw.LocationDetailsWidget.prototype.onMapButtonClick = function () {
-		var latitude = this.normalizeCoordinate( this.latitudeInput.getValue() ),
-			longitude = this.normalizeCoordinate( this.longitudeInput.getValue() );
+		var coords = this.getSerializedParsed();
 
 		// Disable clipping because it doesn't play nicely with the map
 		this.mapButton.getPopup().toggleClipping( false );
@@ -105,94 +103,77 @@
 		require( 'ext.kartographer.editing' ).getKartographerLayer( this.map ).setGeoJSON( {
 			type: 'Feature',
 			properties: {},
-			geometry: { type: 'Point', coordinates: [ longitude, latitude ] }
+			geometry: { type: 'Point', coordinates: [ coords.longitude, coords.latitude ] }
 		} );
-		this.map.setView( [ latitude, longitude ], 9 );
+		this.map.setView( [ coords.latitude, coords.longitude ], 9 );
 	};
 
 	/**
 	 * @inheritdoc
 	 */
 	uw.LocationDetailsWidget.prototype.getErrors = function () {
-		// TODO: take 'required' into account and the configured fields (T275274)
-		// TODO: empty warnings
 		var errors = [],
-			latInput = this.latitudeInput.getValue(),
-			lonInput = this.longitudeInput.getValue(),
-			headInput = this.headingInput.getValue(),
-			latNum = this.normalizeCoordinate( latInput ),
-			lonNum = this.normalizeCoordinate( lonInput ),
-			headNum = parseFloat( headInput );
+			serialized = this.getSerialized(),
+			parsed = this.getSerializedParsed(),
+			field;
+
+		// If the field is required and any of the subfields is empty
+		// -> throw an error
+		if ( this.config.required ) {
+			for ( field in this.config.showField ) {
+				if ( !serialized[ field ] ) {
+					errors.push( mw.message( 'mediauploader-error-blank' ) );
+					break;
+				}
+			}
+		}
 
 		// input is invalid if the coordinates are out of bounds, or if the
 		// coordinates that were derived from the input are 0, without a 0 even
 		// being present in the input
-		if ( latInput || lonInput ) {
-			if ( latNum > 90 || latNum < -90 || ( latNum === 0 && latInput.indexOf( '0' ) < 0 ) || isNaN( latNum ) ) {
+		if ( this.config.showField.latitude && serialized.latitude ) {
+			if ( isNaN( parsed.latitude ) || parsed.latitude > 90 || parsed.latitude < -90 || ( parsed.latitude === 0 && serialized.latitude.indexOf( '0' ) < 0 ) ) {
 				errors.push( mw.message( 'mediauploader-error-latitude' ) );
 			}
+		}
 
-			if ( lonNum > 180 || lonNum < -180 || ( lonNum === 0 && lonInput.indexOf( '0' ) < 0 ) || isNaN( lonNum ) ) {
+		if ( this.config.showField.longitude && serialized.longitude ) {
+			if ( isNaN( parsed.longitude ) || parsed.longitude > 180 || parsed.longitude < -180 || ( parsed.longitude === 0 && serialized.longitude.indexOf( '0' ) < 0 ) ) {
 				errors.push( mw.message( 'mediauploader-error-longitude' ) );
 			}
 		}
 
-		if ( headInput !== '' && ( headInput > 360 || headInput < 0 || isNaN( headNum ) ) ) {
-			errors.push( mw.message( 'mediauploader-error-heading' ) );
+		if ( this.config.showField.heading && serialized.heading !== '' ) {
+			if ( isNaN( parsed.heading ) || parsed.heading > 360 || parsed.heading < 0 ) {
+				errors.push( mw.message( 'mediauploader-error-heading' ) );
+			}
+		}
+
+		if ( this.config.showField.altitude && serialized.altitude !== '' && isNaN( parsed.altitude ) ) {
+			errors.push( mw.message( 'mediauploader-error-altitude' ) );
 		}
 
 		return $.Deferred().resolve( errors );
 	};
 
 	/**
-	 * Set up the input fields.
-	 *
-	 * @param {string} [lat] Latitude value to set.
-	 * @param {string} [lon] Longitude value to set.
-	 * @param {string} [head] Heading value to set.
-	 * @private
-	 */
-	uw.LocationDetailsWidget.prototype.setupInputs = function ( lat, lon, head ) {
-		if ( lat !== undefined ) {
-			this.latitudeInput.setValue( lat );
-		}
-
-		if ( lon !== undefined ) {
-			this.longitudeInput.setValue( lon );
-		}
-
-		if ( head !== undefined ) {
-			this.headingInput.setValue( head );
-		}
-	};
-
-	/**
 	 * @inheritdoc
 	 */
 	uw.LocationDetailsWidget.prototype.getWikiText = function () {
-		// TODO: rewrite
-		var locationParts,
-			latInput = this.latitudeInput.getValue(),
-			lonInput = this.longitudeInput.getValue(),
-			headInput = this.headingInput.getValue(),
-			latNum = this.normalizeCoordinate( latInput ),
-			lonNum = this.normalizeCoordinate( lonInput ),
-			headNum = parseFloat( headInput );
+		// TODO: I hope it makes sense... reexamine it in T275027
+		var field,
+			result = {},
+			serialized = this.getSerializedParsed();
 
-		// input is invalid if the coordinates are out of bounds, or if the
-		// coordinates that were derived from the input are 0, without a 0 even
-		// being present in the input
-		if ( latNum !== 0 || latInput.indexOf( '0' ) >= 0 || lonNum !== 0 || lonInput.indexOf( '0' ) >= 0 ) {
-			locationParts = [ '{{Location', latNum, lonNum ];
-
-			if ( !isNaN( headNum ) ) {
-				locationParts.push( 'heading:' + headNum );
+		for ( field in this.config.showField ) {
+			if ( isNaN( serialized[ field ] ) ) {
+				result[ field ] = null;
+			} else {
+				result[ field ] = serialized[ field ].toString();
 			}
-
-			return locationParts.join( '|' ) + '}}';
 		}
 
-		return '';
+		return this.getSerializedParsed();
 	};
 
 	/**
@@ -200,22 +181,53 @@
 	 * @return {Object} See #setSerialized
 	 */
 	uw.LocationDetailsWidget.prototype.getSerialized = function () {
-		return {
-			latitude: this.latitudeInput.getValue(),
-			longitude: this.longitudeInput.getValue(),
-			heading: this.headingInput.getValue()
-		};
+		var field,
+			result = {};
+
+		for ( field in this.config.showField ) {
+			result[ field ] = this.inputs[ field ].getValue();
+		}
+
+		return result;
+	};
+
+	/**
+	 * Returns a serialized representation of the subfields' values that were parsed to a number.
+	 *
+	 * @return {Object} Serialized, parsed values of the subfields (numbers)
+	 */
+	uw.LocationDetailsWidget.prototype.getSerializedParsed = function () {
+		var field,
+			result = {},
+			serialized = this.getSerialized();
+
+		for ( field in this.config.showField ) {
+			if ( field === 'latitude' || field === 'longitude' ) {
+				result[ field ] = this.normalizeCoordinate( serialized[ field ] );
+			} else {
+				result[ field ] = parseFloat( serialized[ field ] );
+			}
+		}
+
+		return result;
 	};
 
 	/**
 	 * @inheritdoc
 	 * @param {Object} serialized
-	 * @param {string} serialized.latitude Latitude value
-	 * @param {string} serialized.longitude Longitude value
+	 * @param {number} serialized.latitude Latitude value
+	 * @param {number} serialized.longitude Longitude value
+	 * @param {string} serialized.altitude Altitude value
 	 * @param {string} serialized.heading Heading value
 	 */
 	uw.LocationDetailsWidget.prototype.setSerialized = function ( serialized ) {
-		this.setupInputs( serialized.latitude, serialized.longitude, serialized.heading );
+		var field;
+
+		for ( field in this.config.showField ) {
+			if ( serialized[ field ] !== undefined ) {
+				this.inputs[ field ].setValue( serialized[ field ] );
+			}
+		}
 	};
 
 	/**

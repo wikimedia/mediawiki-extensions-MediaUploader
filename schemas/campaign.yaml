@@ -272,7 +272,7 @@ definitions:
                 minimum: 0
                 maximum: 360
               altitude:
-                type: string
+                type: number
           autoFill:
             type: boolean
           # # # # #

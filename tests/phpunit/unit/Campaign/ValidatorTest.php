@@ -202,7 +202,7 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 							'latitude' => 60.123,
 							'longitude' => 120,
 							'heading' => 280.123,
-							'altitude' => '123 m',
+							'altitude' => 123,
 						]
 					]
 				]
