@@ -75,7 +75,8 @@
 			"services": [
 				"MediaUploaderRawConfig",
 				"MediaUploaderConfigFactory",
-				"MediaUploaderCampaignStore"
+				"MediaUploaderCampaignStore",
+				"UserOptionsLookup"
 			]
 		},
 		"Campaigns": {

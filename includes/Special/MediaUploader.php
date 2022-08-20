@@ -22,6 +22,7 @@ use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use MediaWiki\Extension\MediaUploader\Hooks\RegistrationHooks;
+use MediaWiki\User\UserOptionsLookup;
 use MediaWiki\Widget\SpinnerWidget;
 use PermissionsError;
 use SpecialPage;
@@ -50,16 +51,21 @@ class MediaUploader extends SpecialPage {
 	/** @var CampaignStore */
 	private $campaignStore;
 
+	/** @var UserOptionsLookup */
+	private $userOptionsLookup;
+
 	public function __construct(
 		RawConfig $rawConfig,
 		ConfigFactory $configFactory,
-		CampaignStore $campaignStore
+		CampaignStore $campaignStore,
+		UserOptionsLookup $userOptionsLookup
 	) {
 		parent::__construct( 'MediaUploader', 'upload' );
 
 		$this->configFactory = $configFactory;
 		$this->rawConfig = $rawConfig;
 		$this->campaignStore = $campaignStore;
+		$this->userOptionsLookup = $userOptionsLookup;
 	}
 
 	/**
@@ -259,7 +265,7 @@ class MediaUploader extends SpecialPage {
 
 		// Get the user's default license. This will usually be 'default', but
 		// can be a specific license like 'ownwork-cc-zero'.
-		$userDefaultLicense = $this->getUser()->getOption( 'upwiz_deflicense' );
+		$userDefaultLicense = $this->userOptionsLookup->getOption( $this->getUser(), 'upwiz_deflicense' );
 
 		if ( $userDefaultLicense !== 'default' ) {
 			$licenseParts = explode( '-', $userDefaultLicense, 2 );
@@ -299,7 +305,7 @@ class MediaUploader extends SpecialPage {
 
 				if ( $userDefaultLicense === 'custom' ) {
 					$config['licenses']['custom']['defaultText'] =
-						$this->getUser()->getOption( 'upwiz_deflicense_custom' );
+						$this->userOptionsLookup->getOption( $this->getUser(), 'upwiz_deflicense_custom' );
 				}
 			}
 		}

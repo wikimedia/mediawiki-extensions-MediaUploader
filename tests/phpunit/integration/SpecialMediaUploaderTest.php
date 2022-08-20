@@ -17,10 +17,12 @@ class SpecialMediaUploaderTest extends SpecialPageTestBase {
 	 * @inheritDoc
 	 */
 	protected function newSpecialPage() {
+		$services = $this->getServiceContainer();
 		return new MediaUploader(
 			MediaUploaderServices::getRawConfig(),
 			MediaUploaderServices::getConfigFactory(),
-			MediaUploaderServices::getCampaignStore()
+			MediaUploaderServices::getCampaignStore(),
+			$services->getUserOptionsLookup()
 		);
 	}
 
