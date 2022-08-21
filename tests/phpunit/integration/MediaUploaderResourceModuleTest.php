@@ -1,16 +1,22 @@
 <?php
 
-namespace MediaWiki\Extension\MediaUploader\Tests\Unit;
+namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
 
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderResourceModule;
-use MediaWikiUnitTestCase;
+use MediaWikiIntegrationTestCase;
 
 /**
+ * This should be a unit test case, but someone bright decided to introduce
+ * the service container into the ResourceLoader\FileModule class, without
+ * using DI. Thank you, Wikimedia, for your efforts to make my life simpler.
+ *
+ * TODO: change it to a unit test when it becomes possible.
+ *
  * @group Upload
  * @covers \MediaWiki\Extension\MediaUploader\MediaUploaderResourceModule
  */
-class MediaUploaderResourceModuleTest extends MediaWikiUnitTestCase {
+class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 
 	public function provideGetMessages(): iterable {
 		yield 'empty config' => [
