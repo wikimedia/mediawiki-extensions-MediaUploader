@@ -147,7 +147,18 @@ return [
 		'titleField' => 'title',
 		// The field with the caption that will be used by default for the uploaded file.
 		// It must be one of the types: text, textarea, singlelang, multilang
-		'captionField' => 'description'
+		'captionField' => 'description',
+		// Wikitext template for building uploaded file description pages from user-provided information.
+		// Parameters are passed as pseudo-template arguments – {{{param_name}}}. The name of the parameter corresponds
+		// to the name of the field in the form. See the documentation for more information on this.
+		// Save transformations ({{subst: }}) are supported.
+		// When unspecified, the 'mediauploader-default-content-wikitext' message will be used instead.
+		'wikitext' => '',
+		// Wikitext to prepend before the 'wikitext' field. Useful in campaigns, when you want to include some extra
+		// information.
+		'prepend' => '',
+		// Wikitext to append after the 'wikitext' field.
+		'append' => '',
 	],
 
 	// 'languages' is a list of languages and codes, for use in the description step.

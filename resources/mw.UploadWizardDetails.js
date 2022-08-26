@@ -703,80 +703,75 @@
 		 * @return {string} wikitext representing all details
 		 */
 		getWikiText: function () {
-			// TODO: rewrite this (T275027)
-			/* var deed, info, key,
-				information,
-				wikiText = '';
+			var wikiText = mw.UploadWizard.config.content.wikitext,
+				substitutions = {}, substList = [],
+				deed = this.upload.deedChooser.deed,
+				fieldWidget, serialized, valueType, re, escapedKey, replaceValue;
 
-			// https://commons.wikimedia.org/wiki/Template:Information
-			// can we be more slick and do this with maps, applys, joins?
-			information = {
-				// {{lang|description in lang}}* (required)
-				description: '',
-				// YYYY, YYYY-MM, or YYYY-MM-DD (required) use jquery but allow editing, then double check for sane date.
-				date: '',
-				// {{own}} or wikitext (optional)
-				source: '',
-				// any wikitext, but particularly {{Creator:Name Surname}} (required)
-				author: '',
-				// leave blank unless OTRS pending; by default will be "see below" (optional)
-				permission: '',
-				// pipe separated list, other versions (optional)
-				'other versions': ''
-			};
+			if ( !wikiText ) {
+				wikiText = mw.message( 'mediauploader-default-content-wikitext' ).plain();
+			}
+			if ( mw.UploadWizard.config.content.prepend ) {
+				wikiText = mw.UploadWizard.config.content.prepend + '\n' + wikiText;
+			}
+			if ( mw.UploadWizard.config.content.append ) {
+				wikiText += '\n' + mw.UploadWizard.config.content.append;
+			}
 
-			information.description = this.descriptionsDetails.getWikiText();
+			function addSubstitution( key, value ) {
+				var v = value;
+				if ( key in substitutions ) {
+					return;
+				}
+				// Discard funny values that toString poorly
+				if ( v === undefined || v === null || ( typeof v === 'number' && isNaN( v ) ) ) {
+					v = '';
+				}
+				substList.push( key );
+				substitutions[ key ] = v.toString();
+			}
 
-			this.campaignDetailsFields.forEach( function ( layout ) {
-				information.description += layout.fieldWidget.getWikiText();
+			// Add hardcoded substitutions
+			addSubstitution( 'source', deed.getSourceWikiText( this.upload ) );
+			addSubstitution( 'author', deed.getAuthorWikiText( this.upload ) );
+			addSubstitution( 'license', deed.getLicenseWikiText() );
+
+			// Add substitutions for all the defined details fields
+			this.fieldList.forEach( function ( spec ) {
+				fieldWidget = this.fieldMap[ spec.key ];
+				addSubstitution( spec.key, fieldWidget.getWikiText() );
+				serialized = fieldWidget.getSerializedParsed();
+				if ( typeof serialized !== 'object' ) {
+					return;
+				}
+				// Also add "subfields" based on the serialized values. Just in case.
+				Object.keys( serialized ).forEach( function ( key ) {
+					replaceValue = serialized[ key ];
+					valueType = typeof replaceValue;
+					if ( valueType === 'string' || valueType === 'number' || valueType === 'boolean' ) {
+						addSubstitution( spec.key + '.' + key, replaceValue );
+					}
+				}, this );
 			}, this );
 
-			information.date = this.dateDetails.getWikiText();
-
-			deed = this.upload.deedChooser.deed;
-
-			information.source = deed.getSourceWikiText( this.upload );
-
-			information.author = deed.getAuthorWikiText( this.upload );
-
-			info = '';
-
-			for ( key in information ) {
-				if ( Object.prototype.hasOwnProperty.call( information, key ) ) {
-					info += '|' + key.replace( /:/g, '_' );
-					info += '=' + mw.Escaper.escapeForTemplate( information[ key ] ) + '\n';
-				}
-			}
-
-			wikiText += '=={{int:filedesc}}==\n';
-			wikiText += '{{Information\n' + info + '}}\n';
-
-			wikiText += this.locationInput.getWikiText() + '\n';
-
-			// add an "anything else" template if needed
-			wikiText += this.otherDetails.getWikiText() + '\n\n';
-
-			// add licensing information
-			wikiText += '\n=={{int:license-header}}==\n';
-			wikiText += deed.getLicenseWikiText() + '\n\n';
-
-			if ( mw.UploadWizard.config.autoAdd.wikitext !== undefined ) {
-				wikiText += mw.UploadWizard.config.autoAdd.wikitext + '\n';
-			}
-
-			// categories
-			wikiText += '\n' + this.categoriesDetails.getWikiText();
-
-			// sanitize wikitext if TextCleaner is defined (MediaWiki:TextCleaner.js)
-			if ( typeof window.TextCleaner !== 'undefined' && typeof window.TextCleaner.sanitizeWikiText === 'function' ) {
-				wikiText = window.TextCleaner.sanitizeWikiText( wikiText, true );
-			}
+			// Do the substitutions
+			substList.forEach( function ( substKey ) {
+				replaceValue = substitutions[ substKey ].trim();
+				escapedKey = substKey.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' );
+				re = new RegExp( '\\{\\{\\{ *' + escapedKey + ' *(\\|(.*?))?\\}\\}\\}', 'giu' );
+				wikiText = wikiText.replace( re, function ( match, _, defaultValue ) {
+					if ( !replaceValue ) {
+						return defaultValue || '';
+					} else {
+						return replaceValue;
+					}
+				} );
+			}, this );
 
 			// remove too many newlines in a row
 			wikiText = wikiText.replace( /\n{3,}/g, '\n\n' );
 
-			return wikiText; */
-			return 'placeholder';
+			return wikiText;
 		},
 
 		/**
@@ -812,7 +807,6 @@
 		 * @return {jQuery.Promise}
 		 */
 		submitWikiText: function ( wikiText ) {
-			// TODO (T275027)
 			var params,
 				tags = [ 'uploadwizard' ],
 				deed = this.upload.deedChooser.deed,

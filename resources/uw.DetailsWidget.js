@@ -92,6 +92,17 @@
 	uw.DetailsWidget.prototype.getSerialized = null;
 
 	/**
+	 * Same as getSerialized, but returns a version of the serialized fields that are suitable for
+	 * user display.
+	 *
+	 * @method
+	 * @return {Object}
+	 */
+	uw.DetailsWidget.prototype.getSerializedParsed = function () {
+		return this.getSerialized();
+	};
+
+	/**
 	 * Set the state of this widget from machine-readable representation, as returned by
 	 * #getSerialized.
 	 *

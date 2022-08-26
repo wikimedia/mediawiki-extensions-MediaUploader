@@ -277,5 +277,7 @@
 	"mediauploader-invalid-campaign-schema": "Error message shown when trying to access a campaign with content that does not validate against the campaign schema. $1 – name of the campaign.",
 	"mediauploader-fix-campaign-comment-fixed": "Edit comment informing that some schema issues were fixed in in a campaign definition. $1 – number of fixes applied. $2 – number of issues left to resolve manually (implementing it in the message is optional).",
 	"mediauploader-fix-campaign-comment-prettified": "Edit comment informing that a campaign definition was reformatted (prettified). $1 – number of fixes applied (always 0). $2 – number of issues left to resolve manually (implementing it in the message is optional).",
-	"mediauploader-incomplete-campaign-record": "Error message shown when trying to access an incomplete campaign record. $1 – name of the campaign. $2 – what is missing from the record."
+	"mediauploader-incomplete-campaign-record": "Error message shown when trying to access an incomplete campaign record. $1 – name of the campaign. $2 – what is missing from the record.",
+	"mediauploader-default-content-wikitext": "Default wikitext used for building the file description page. The triple-braced parameters here correspond to the fields present by default in MediaUploader. Do not translate what is inside triple curly braces.",
+	"mediauploader-content-source-ownwork": "Text in a file's description page informing that this work was created by the uploader."
 }
