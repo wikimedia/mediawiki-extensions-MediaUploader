@@ -259,13 +259,13 @@ $specialPageAliases['yue'] = [
 	'MediaUploader' => [ '上載精靈' ],
 ];
 
-/** Simplified Chinese (中文（简体）‎) */
+/** Simplified Chinese (中文（简体）) */
 $specialPageAliases['zh-hans'] = [
 	'Campaigns' => [ '活动' ],
 	'MediaUploader' => [ '上传向导', '上传精灵' ],
 ];
 
-/** Traditional Chinese (中文（繁體）‎) */
+/** Traditional Chinese (中文（繁體）) */
 $specialPageAliases['zh-hant'] = [
 	'MediaUploader' => [ '上載精靈' ],
 ];
