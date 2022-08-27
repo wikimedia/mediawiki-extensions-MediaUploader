@@ -469,6 +469,8 @@
 				"mediauploader-mv-cta-user-preference-set",
 				"mediauploader-mv-cta-user-preference-unset",
 				"mediauploader-mv-cta-user-preference-set-failed",
+				"mediauploader-default-content-wikitext",
+				"mediauploader-content-source-ownwork",
 				"size-gigabytes",
 				"size-megabytes",
 				"size-kilobytes",

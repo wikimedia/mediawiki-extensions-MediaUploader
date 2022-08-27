@@ -189,7 +189,7 @@
 	 * @inheritdoc
 	 */
 	uw.deed.OwnWork.prototype.getSourceWikiText = function () {
-		return '{{own}}';
+		return mw.message( 'mediauploader-content-source-ownwork' ).plain();
 	};
 
 	/**

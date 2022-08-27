@@ -60,6 +60,8 @@ definitions:
       # Not defined here:
       #  - type: it's defined as enum in each field type
       #  - default: has a different datatype in each field type
+      # No required fields because campaigns can modify only specific
+      # parameters of fields that exist in the main config.
       type: { type: string }
       order: { type: integer }
       label: { type: string }
@@ -73,10 +75,6 @@ definitions:
       hidden: { type: boolean }
       enabled: { type: boolean }
       auxiliary: { type: boolean }
-    required:
-      - order
-      - label
-      - type
 
   fieldText:
     allOf:
@@ -322,6 +320,9 @@ properties:
     properties:
       titleField: { type: string }
       captionField: { type: string }
+      wikitext: { type: string }
+      prepend: { type: string }
+      append: { type: string }
 
   # Labels and URLs on things
   display: { $ref: '#/definitions/displaySection' }

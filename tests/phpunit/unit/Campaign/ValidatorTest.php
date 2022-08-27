@@ -105,18 +105,18 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 			];
 		}
 
-		yield 'text field with missing label' => [
+		yield 'overriding one property of a field' => [
 			[
 				'enabled' => true,
 				'fields' => [
+					// This is an override of a location field
 					'f1' => [
-						'order' => 1,
-						'type' => 'text',
+						'fields' => [ 'latitude', 'longitude' ]
 					]
 				]
 			],
 			[],
-			false
+			true
 		];
 
 		yield 'text field with extra property' => [

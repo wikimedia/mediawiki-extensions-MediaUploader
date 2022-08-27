@@ -160,20 +160,29 @@
 	 * @inheritdoc
 	 */
 	uw.LocationDetailsWidget.prototype.getWikiText = function () {
-		// TODO: I hope it makes sense... reexamine it in T275027
 		var field,
-			result = {},
+			result = '',
 			serialized = this.getSerializedParsed();
 
-		for ( field in this.config.showField ) {
-			if ( isNaN( serialized[ field ] ) ) {
-				result[ field ] = null;
-			} else {
-				result[ field ] = serialized[ field ].toString();
+		if ( 'latitude' in this.config.showField &&
+			( !isNaN( serialized.latitude ) || !isNaN( serialized.longitude ) )
+		) {
+			result = ( isNaN( serialized.latitude ) ? '?' : serialized.latitude ).toString() +
+				'; ' + ( isNaN( serialized.longitude ) ? '?' : serialized.longitude ).toString();
+		}
+
+		for ( field in [ 'heading', 'altitude' ] ) {
+			if ( field in this.config.showField && serialized[ field ] && !isNaN( serialized[ field ] )
+			) {
+				// Messages that can be used here:
+				// * mediauploader-location-heading
+				// * mediauploader-location-altitude
+				result += ' ' + mw.msg( 'mediauploader-location-' + field ) + ': ' +
+					serialized[ field ].toString();
 			}
 		}
 
-		return this.getSerializedParsed();
+		return result.trim();
 	};
 
 	/**
@@ -202,7 +211,9 @@
 			serialized = this.getSerialized();
 
 		for ( field in this.config.showField ) {
-			if ( field === 'latitude' || field === 'longitude' ) {
+			if ( serialized[ field ] === '' || serialized[ field ] === undefined ) {
+				result[ field ] = NaN;
+			} else if ( field === 'latitude' || field === 'longitude' ) {
 				result[ field ] = this.normalizeCoordinate( serialized[ field ] );
 			} else {
 				result[ field ] = parseFloat( serialized[ field ] );
