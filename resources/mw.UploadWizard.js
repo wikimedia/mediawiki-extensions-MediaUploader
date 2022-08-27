@@ -172,23 +172,16 @@
 	 * @since 1.2
 	 * @param {mw.UploadWizardUpload[]} uploads
 	 * @param {Object} config The UW config object.
+	 * @param {string[]} [config.licensing.showTypes]
 	 * @return {mw.deed.Abstract[]}
 	 */
 	mw.UploadWizard.getLicensingDeeds = function ( uploads, config ) {
 		var deed, api,
 			deeds = {},
-			doOwnWork = false,
-			doThirdParty = false;
+			doOwnWork = config.licensing.showTypes.indexOf( 'ownWork' ) > -1,
+			doThirdParty = config.licensing.showTypes.indexOf( 'thirdParty' ) > -1;
 
 		api = this.prototype.getApi( { ajax: { timeout: 0 } } );
-
-		if ( config.licensing.ownWorkDefault === 'choice' ) {
-			doOwnWork = doThirdParty = true;
-		} else if ( config.licensing.ownWorkDefault === 'own' ) {
-			doOwnWork = true;
-		} else {
-			doThirdParty = true;
-		}
 
 		if ( doOwnWork ) {
 			deed = new uw.deed.OwnWork( config, uploads, api );

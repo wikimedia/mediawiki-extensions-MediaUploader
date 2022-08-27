@@ -2,6 +2,7 @@
 
 namespace MediaWiki\Extension\MediaUploader\Hooks;
 
+use MediaWiki\Extension\MediaUploader\Config\ConfigBase;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use MediaWiki\Preferences\Hook\GetPreferencesHook;
 use User;
@@ -47,34 +48,31 @@ class Hooks implements GetPreferencesHook {
 			$licenses = [];
 
 			$licensingOptions = $this->config->getSetting( 'licensing' );
-
-			$ownWork = $licensingOptions['ownWork'];
-			foreach ( $ownWork['licenses'] as $license ) {
-				$licenseMessage = $this->getLicenseMessage( $license ) ?: '';
-				$licenseKey = wfMessage( 'mediauploader-prefs-license-own' )
-					->rawParams( $licenseMessage )->escaped();
-				$licenseValue = htmlspecialchars( 'ownwork-' . $license, ENT_QUOTES, 'UTF-8', false );
-				$licenses[$licenseKey] = $licenseValue;
-			}
-
-			$thirdParty = $this->config->getThirdPartyLicenses();
+			$licenseTypes = [
+				[ 'configKey' => ConfigBase::LIC_OWN_WORK, 'msgKey' => 'ownwork' ],
+				[ 'configKey' => ConfigBase::LIC_THIRD_PARTY, 'msgKey' => 'thirdparty' ],
+			];
 			$hasCustom = false;
-			foreach ( $thirdParty as $license ) {
-				if ( $license !== 'custom' ) {
-					$licenseMessage = $this->getLicenseMessage( $license ) ?: '';
-					$licenseKey = wfMessage( 'mediauploader-prefs-license-thirdparty' )
-						->rawParams( $licenseMessage )->escaped();
-					$licenseValue = htmlspecialchars( 'thirdparty-' . $license, ENT_QUOTES, 'UTF-8', false );
-					$licenses[$licenseKey] = $licenseValue;
-				} else {
-					$hasCustom = true;
+
+			foreach ( $licenseTypes as $lType ) {
+				foreach ( $this->config->getAvailableLicenses( $lType['configKey'] ) as $license ) {
+					if ( $license === 'custom' ) {
+						$hasCustom = true;
+						continue;
+					}
+
+					$lMsg = $this->getLicenseMessage( $license ) ?: '';
+					$lKey = wfMessage( 'mediauploader-prefs-license-' . $lType['msgKey'] )
+						->rawParams( $lMsg )->escaped();
+					$lValue = htmlspecialchars(
+						$lType['configKey'] . '-' . $license, ENT_QUOTES, 'UTF-8', false
+					);
+					$licenses[$lKey] = $lValue;
 				}
 			}
 
 			$licenses = array_merge(
-				[
-					wfMessage( 'mediauploader-prefs-def-license-def' )->escaped() => 'default'
-				],
+				[ wfMessage( 'mediauploader-prefs-def-license-def' )->escaped() => 'default' ],
 				$licenses
 			);
 

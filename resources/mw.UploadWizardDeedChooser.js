@@ -50,7 +50,7 @@
 			if ( Object.keys( chooser.deeds ).length === 1 ) {
 				chooser.onLayoutReady = chooser.selectDeed.bind( chooser, deed );
 			} else {
-				if ( config.licensing.defaultType === deed.name ) {
+				if ( config.licensing.defaultType.toLowerCase() === deed.name ) {
 					chooser.onLayoutReady = chooser.selectDeed.bind( chooser, deed );
 				}
 				radio.on( 'choose', function () {

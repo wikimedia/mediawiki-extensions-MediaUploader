@@ -221,7 +221,7 @@
 	"mediauploader-prefs-def-license-custom-help": "This field is only used if you choose the last option above.",
 	"mediauploader-prefs-license-name": "Author's name",
 	"mediauploader-prefs-license-name-help": "Defaults to username if the field is left empty",
-	"mediauploader-prefs-license-own": "Own work – $1",
+	"mediauploader-prefs-license-ownwork": "Own work – $1",
 	"mediauploader-prefs-license-thirdparty": "Someone else's work – $1",
 	"mediauploader-prefs-skiptutorial": "Skip introductory licensing tutorial",
 	"mediauploader-prefs-maxsimultaneous-upload": "Maximum number of concurrent uploads",
@@ -248,5 +248,7 @@
 	"mediauploader-fix-campaign-comment-prettified": "Reformatted the campaign definition",
 	"mediauploader-incomplete-campaign-record": "The record for campaign \"$1\" is missing the following elements: $2",
 	"mediauploader-default-content-wikitext": "== Description ==\n{{{description}}}\n\n== Media information ==\n* '''Date:''' {{{date|''unknown''}}}\n* '''Source:''' {{{source|''unknown''}}}\n* '''Author:''' {{{author|''unknown''}}}\n* '''Location:''' {{{location|''unknown''}}}\n\n{{{other}}}\n\n== License ==\n{{{license}}}\n\n{{{categories}}}",
-	"mediauploader-content-source-ownwork": "own work"
+	"mediauploader-content-source-ownwork": "own work",
+	"mediauploader-content-license-ownwork": "I, the copyright holder of this work, hereby publish it under the following {{PLURAL:$1|license|licenses}}:",
+	"mediauploader-license-none-text": "No license specified"
 }

@@ -54,16 +54,13 @@
 		} );
 
 		// "use a different license"
-		this.showCustomDiv = this.config.licensing.ownWork.licenses.length > 1;
-		if ( this.showCustomDiv ) {
-			this.licenseInput = new mw.UploadWizardLicenseInput(
-				this.config.licensing.ownWork,
-				this.uploadCount,
-				api
-			);
-			this.licenseInput.$element.addClass( 'mediauploader-deed-license' );
-			this.licenseInputField = new uw.FieldLayout( this.licenseInput );
-		}
+		this.licenseInput = new mw.UploadWizardLicenseInput(
+			this.config.licensing.ownWork,
+			this.uploadCount,
+			api
+		);
+		this.licenseInput.$element.addClass( 'mediauploader-deed-license' );
+		this.licenseInputField = new uw.FieldLayout( this.licenseInput );
 	};
 
 	OO.inheritClass( uw.deed.OwnWork, uw.deed.Abstract );
@@ -79,11 +76,7 @@
 	 * @return {uw.FieldLayout[]} Fields that need validation
 	 */
 	uw.deed.OwnWork.prototype.getFields = function () {
-		var fields = [ this.authorInputField ];
-		if ( this.showCustomDiv ) {
-			fields.push( this.licenseInputField );
-		}
-		return fields;
+		return [ this.authorInputField, this.licenseInputField ];
 	};
 
 	uw.deed.OwnWork.prototype.setFormFields = function ( $selector ) {
@@ -95,7 +88,7 @@
 		deed = this;
 		languageCode = mw.config.get( 'wgUserLanguage' );
 
-		defaultLicense = this.getDefaultLicense();
+		defaultLicense = this.getDefaultLicenses()[ 0 ];
 
 		defaultLicenseURL = this.config.licenses[ defaultLicense ].url === undefined ?
 			'#missing license URL' :
@@ -123,15 +116,13 @@
 		$crossfader = $( '<div>' ).addClass( 'mediauploader-crossfader' ).append( $standardDiv );
 		/* eslint-enable mediawiki/msg-doc */
 
-		if ( this.showCustomDiv ) {
-			$customDiv = $( '<div>' ).addClass( 'mediauploader-custom' ).append(
-				$( '<p>' ).msg( 'mediauploader-source-ownwork-assert-custom',
-					this.uploadCount,
-					this.fakeAuthorInput.$element )
-			);
+		$customDiv = $( '<div>' ).addClass( 'mediauploader-custom' ).append(
+			$( '<p>' ).msg( 'mediauploader-source-ownwork-assert-custom',
+				this.uploadCount,
+				this.fakeAuthorInput.$element )
+		);
 
-			$crossfader.append( $customDiv );
-		}
+		$crossfader.append( $customDiv );
 
 		crossfaderWidget = new OO.ui.Widget();
 		crossfaderWidget.$element.append( $crossfader );
@@ -148,41 +139,34 @@
 		$formFields = $( '<div>' ).addClass( 'mediauploader-deed-form-internal' )
 			.append( this.authorInputField.$element );
 
-		if ( this.showCustomDiv ) {
-			// FIXME: Move CSS rule to CSS file
-			$toggler = $( '<p>' ).addClass( 'mwe-more-options' ).css( 'text-align', 'right' )
-				.append( $( '<a>' )
-					.msg( 'mediauploader-license-show-all' )
-					.on( 'click', function () {
-						if ( $crossfader.data( 'crossfadeDisplay' ).get( 0 ) === $customDiv.get( 0 ) ) {
-							deed.standardLicense();
-						} else {
-							deed.customLicense();
-						}
-					} ) );
+		// FIXME: Move CSS rule to CSS file
+		$toggler = $( '<p>' ).addClass( 'mwe-more-options' ).css( 'text-align', 'right' )
+			.append( $( '<a>' )
+				.msg( 'mediauploader-license-show-all' )
+				.on( 'click', function () {
+					if ( $crossfader.data( 'crossfadeDisplay' ).get( 0 ) === $customDiv.get( 0 ) ) {
+						deed.standardLicense();
+					} else {
+						deed.customLicense();
+					}
+				} ) );
 
-			$formFields.append( this.licenseInputField.$element.hide(), $toggler );
-		}
+		$formFields.append( this.licenseInputField.$element.hide(), $toggler );
 
 		this.$form.append( $formFields ).appendTo( $selector );
 
 		// done after added to the DOM, so there are true heights
 		$crossfader.morphCrossfader();
 
-		this.setDefaultLicense();
+		this.setDefaultLicenses();
 	};
 
-	/**
-	 * OwnWork's default value is different than the default LicenseInput defaults...
-	 * LicenseInput supports multiple default values, but this one does not, because
-	 * it may not even display a selection at first, just the 1 default value.
-	 */
-	uw.deed.OwnWork.prototype.setDefaultLicense = function () {
-		var defaultLicense = {};
-		if ( this.showCustomDiv ) {
-			defaultLicense[ this.getDefaultLicense() ] = true;
-			this.licenseInput.setValues( defaultLicense );
-		}
+	uw.deed.OwnWork.prototype.setDefaultLicenses = function () {
+		var defaultLicenses = {};
+		this.getDefaultLicenses().forEach( function ( licName ) {
+			defaultLicenses[ licName ] = true;
+		} );
+		this.licenseInput.setValues( defaultLicenses );
 	};
 
 	/**
@@ -212,34 +196,17 @@
 	 * @inheritdoc
 	 */
 	uw.deed.OwnWork.prototype.getLicenseWikiText = function () {
-		var wikitext = '';
-
-		if ( this.showCustomDiv && this.licenseInput.getWikiText() !== '' ) {
-			wikitext += this.licenseInput.getWikiText();
-		} else {
-			wikitext += '{{' +
-				this.config.licensing.ownWork.template +
-				'|' +
-				this.getDefaultLicense() +
-				'}}';
-		}
-
-		return wikitext;
+		return this.licenseInput.getWikiText();
 	};
 
 	/**
 	 * @return {Object}
 	 */
 	uw.deed.OwnWork.prototype.getSerialized = function () {
-		var serialized = $.extend( uw.deed.Abstract.prototype.getSerialized.call( this ), {
-			author: this.authorInput.getValue()
+		return $.extend( uw.deed.Abstract.prototype.getSerialized.call( this ), {
+			author: this.authorInput.getValue(),
+			license: this.licenseInput.getSerialized()
 		} );
-
-		if ( this.showCustomDiv ) {
-			serialized.license = this.licenseInput.getSerialized();
-		}
-
-		return serialized;
 	};
 
 	/**
@@ -252,13 +219,10 @@
 			this.authorInput.setValue( serialized.author );
 		}
 
-		if ( this.showCustomDiv && serialized.license ) {
-			// only need to set license if it's not the default license
-			if ( !( this.getDefaultLicense() in serialized.license ) ) {
-				// expand licenses container
-				this.customLicense();
-				this.licenseInput.setSerialized( serialized.license );
-			}
+		if ( serialized.license ) {
+			// expand licenses container
+			this.customLicense();
+			this.licenseInput.setSerialized( serialized.license );
 		}
 	};
 
@@ -275,13 +239,21 @@
 		parentB[ nextB ? 'insertBefore' : 'appendChild' ]( a, nextB );
 	};
 
-	uw.deed.OwnWork.prototype.getDefaultLicense = function () {
-		var license;
-		if ( this.config.licensing.defaultType === 'ownwork' ) {
-			license = this.config.licensing.ownWork.defaults;
-			return license instanceof Array ? license[ 0 ] : license;
+	/**
+	 * @return {string[]}
+	 */
+	uw.deed.OwnWork.prototype.getDefaultLicenses = function () {
+		var license, ownWork = this.config.licensing.ownWork;
+
+		if ( this.config.licensing.defaultType === 'ownWork' ) {
+			license = ownWork.defaults;
+			return license instanceof Array ? license : [ license ];
 		} else {
-			return this.config.licensing.ownWork.licenses[ 0 ];
+			if ( ownWork.licenses ) {
+				return [ ownWork.licenses[ 0 ] ];
+			} else {
+				return [ ownWork.licenseGroups[ 0 ].licenses[ 0 ] ];
+			}
 		}
 	};
 
@@ -291,7 +263,7 @@
 			$standardDiv = this.$selector.find( '.mediauploader-standard' ),
 			$toggler = this.$selector.find( '.mwe-more-options a' );
 
-		this.setDefaultLicense();
+		this.setDefaultLicenses();
 
 		$crossfader.morphCrossfade( $standardDiv )
 			.promise().done( function () {

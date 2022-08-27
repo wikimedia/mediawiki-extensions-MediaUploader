@@ -106,8 +106,16 @@ return [
 			'minLength' => 5,
 			'maxLength' => 10000,
 		],
-		'date' => [
+		// The license field is special: it is only used when the user uploads multiple
+		// files and wants to choose a license for each of them separately.
+		// All options besides 'order', 'label' and 'help' will be ignored here.
+		'license' => [
 			'order' => 2,
+			'type' => 'license',
+			'label' => '{{MediaWiki:mediauploader-copyright-info}}',
+		],
+		'date' => [
+			'order' => 3,
 			'type' => 'date',
 			'label' => '{{MediaWiki:mediauploader-date-created}}',
 			'help' => '{{MediaWiki:mediauploader-tooltip-date}}',
@@ -115,14 +123,14 @@ return [
 			'autoFill' => true,
 		],
 		'categories' => [
-			'order' => 3,
+			'order' => 4,
 			'type' => 'categories',
 			'label' => '{{MediaWiki:mediauploader-categories}}',
 			'help' => '{{MediaWiki:mediauploader-tooltip-categories}}',
 			'required' => 'recommended',
 		],
 		'location' => [
-			'order' => 4,
+			'order' => 5,
 			'type' => 'location',
 			'label' => '{{MediaWiki:mediauploader-location}}',
 			'help' => '{{MediaWiki:mediauploader-tooltip-location}}',
@@ -132,7 +140,7 @@ return [
 			'autoFill' => true,
 		],
 		'other' => [
-			'order' => 4,
+			'order' => 6,
 			'type' => 'text',
 			'label' => '{{MediaWiki:mediauploader-other}}',
 			'help' => '{{MediaWiki:mediauploader-tooltip-other}}',
@@ -177,117 +185,130 @@ return [
 	'languageTemplateFixups' => [],
 
 	// 'licenses' is a list of licenses you could possibly use elsewhere, for instance in
-	// licensesOwnWork or licensesThirdParty.
+	// licensing['ownWork'] or licensing['thirdParty'].
 	// It just describes what licenses go with what wikitext, and how to display them in
 	// a menu of license choices. There probably isn't any reason to delete any entry here.
-	// Under normal circumstances, the license name is the name of the wikitext template to insert.
-	// For those that aren't, there is a "templates" property.
+	// The 'wikitext' field tells the uploader how to mark this license on the file description page.
+	// By default, this is just the name of the license, but if you want, you can put template names here.
+	// See also the 'licensing' section, it allows you to wrap this wikitext into more complex stuff.
 	'licenses' => [
 		'cc-by-sa-4.0' => [
 			'msg' => 'mediauploader-license-cc-by-sa-4.0',
 			'icons' => [ 'cc-by', 'cc-sa' ],
 			'url' => '//creativecommons.org/licenses/by-sa/4.0/',
-			'languageCodePrefix' => 'deed.'
+			'languageCodePrefix' => 'deed.',
+			'wikitext' => '{{subst:int:mediauploader-license-cc-by-sa-4.0||//creativecommons.org/licenses/by-sa/4.0/}}'
 		],
 		'cc-by-sa-3.0' => [
 			'msg' => 'mediauploader-license-cc-by-sa-3.0',
 			'icons' => [ 'cc-by', 'cc-sa' ],
 			'url' => '//creativecommons.org/licenses/by-sa/3.0/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-4.0' => [
-			'msg' => 'mediauploader-license-cc-by-4.0',
-			'icons' => [ 'cc-by' ],
-			'url' => '//creativecommons.org/licenses/by/4.0/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-3.0' => [
-			'msg' => 'mediauploader-license-cc-by-3.0',
-			'icons' => [ 'cc-by' ],
-			'url' => '//creativecommons.org/licenses/by/3.0/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-zero' => [
-			'msg' => 'mediauploader-license-cc-zero',
-			'icons' => [ 'cc-zero' ],
-			'url' => '//creativecommons.org/publicdomain/zero/1.0/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'own-pd' => [
-			'msg' => 'mediauploader-license-own-pd',
-			'icons' => [ 'cc-zero' ],
-			'templates' => [ 'cc-zero' ]
+			'languageCodePrefix' => 'deed.',
+			'wikitext' => '{{subst:int:mediauploader-license-cc-by-sa-3.0||//creativecommons.org/licenses/by-sa/3.0/}}'
 		],
 		'cc-by-sa-2.5' => [
 			'msg' => 'mediauploader-license-cc-by-sa-2.5',
 			'icons' => [ 'cc-by', 'cc-sa' ],
 			'url' => '//creativecommons.org/licenses/by-sa/2.5/',
-			'languageCodePrefix' => 'deed.'
-		],
-		'cc-by-2.5' => [
-			'msg' => 'mediauploader-license-cc-by-2.5',
-			'icons' => [ 'cc-by' ],
-			'url' => '//creativecommons.org/licenses/by/2.5/',
-			'languageCodePrefix' => 'deed.'
+			'languageCodePrefix' => 'deed.',
+			'wikitext' => '{{subst:int:mediauploader-license-cc-by-sa-2.5||//creativecommons.org/licenses/by-sa/2.5/}}'
 		],
 		'cc-by-sa-2.0' => [
 			'msg' => 'mediauploader-license-cc-by-sa-2.0',
 			'icons' => [ 'cc-by', 'cc-sa' ],
 			'url' => '//creativecommons.org/licenses/by-sa/2.0/',
-			'languageCodePrefix' => 'deed.'
+			'languageCodePrefix' => 'deed.',
+			'wikitext' => '{{subst:int:mediauploader-license-cc-by-sa-2.0||//creativecommons.org/licenses/by-sa/2.0/}}'
+		],
+		'cc-by-4.0' => [
+			'msg' => 'mediauploader-license-cc-by-4.0',
+			'icons' => [ 'cc-by' ],
+			'url' => '//creativecommons.org/licenses/by/4.0/',
+			'languageCodePrefix' => 'deed.',
+			'wikitext' => '{{subst:int:mediauploader-license-cc-by-4.0||//creativecommons.org/licenses/by/4.0/}}'
+		],
+		'cc-by-3.0' => [
+			'msg' => 'mediauploader-license-cc-by-3.0',
+			'icons' => [ 'cc-by' ],
+			'url' => '//creativecommons.org/licenses/by/3.0/',
+			'languageCodePrefix' => 'deed.',
+			'wikitext' => '{{subst:int:mediauploader-license-cc-by-3.0||//creativecommons.org/licenses/by/3.0/}}'
+		],
+		'cc-by-2.5' => [
+			'msg' => 'mediauploader-license-cc-by-2.5',
+			'icons' => [ 'cc-by' ],
+			'url' => '//creativecommons.org/licenses/by/2.5/',
+			'languageCodePrefix' => 'deed.',
+			'wikitext' => '{{subst:int:mediauploader-license-cc-by-2.5||//creativecommons.org/licenses/by/2.5/}}'
 		],
 		'cc-by-2.0' => [
 			'msg' => 'mediauploader-license-cc-by-2.0',
 			'icons' => [ 'cc-by' ],
 			'url' => '//creativecommons.org/licenses/by/2.0/',
-			'languageCodePrefix' => 'deed.'
+			'languageCodePrefix' => 'deed.',
+			'wikitext' => '{{subst:int:mediauploader-license-cc-by-2.0||//creativecommons.org/licenses/by/2.0/}}'
+		],
+		'cc-zero' => [
+			'msg' => 'mediauploader-license-cc-zero',
+			'icons' => [ 'cc-zero' ],
+			'url' => '//creativecommons.org/publicdomain/zero/1.0/',
+			'languageCodePrefix' => 'deed.',
+			'wikitext' => '{{subst:int:mediauploader-license-cc-zero||//creativecommons.org/publicdomain/zero/1.0/}}'
 		],
 		'fal' => [
 			'msg' => 'mediauploader-license-fal',
-			'templates' => [ 'FAL' ]
+			'wikitext' => '{{subst:int:mediauploader-license-fal}}'
 		],
 		'pd-old' => [
 			'msg' => 'mediauploader-license-pd-old',
-			'templates' => [ 'PD-old' ]
+			'wikitext' => '{{subst:int:mediauploader-license-pd-old}}'
 		],
 		'pd-ineligible' => [
-			'msg' => 'mediauploader-license-pd-ineligible'
+			'msg' => 'mediauploader-license-pd-ineligible',
+			'wikitext' => '{{subst:int:mediauploader-license-pd-ineligible}}'
 		],
 		'attribution' => [
-			'msg' => 'mediauploader-license-attribution'
+			'msg' => 'mediauploader-license-attribution',
+			'wikitext' => '{{subst:int:mediauploader-license-attribution}}'
 		],
 		'gfdl' => [
 			'msg' => 'mediauploader-license-gfdl',
-			'templates' => [ 'GFDL' ]
+			'wikitext' => '{{subst:int:mediauploader-license-gfdl}}'
 		],
 		'none' => [
 			'msg' => 'mediauploader-license-none',
-			'templates' => [ 'subst:uwl' ]
+			'wikitext' => '{{subst:int:mediauploader-license-none-text}}'
 		],
 		'custom' => [
 			'msg' => 'mediauploader-license-custom',
-			'templates' => [ 'subst:Custom license marker added by UW' ]
+			'wikitext' => ''
 		],
 		'generic' => [
 			'msg' => 'mediauploader-license-generic',
-			'templates' => [ 'Generic' ]
+			'wikitext' => '{{subst:int:mediauploader-license-generic|1}}'
 		]
 	],
 
-	// TODO: prepare reasonable defaults for this section
 	'licensing' => [
 		// Default license type.
-		// Possible values: ownwork, thirdparty, choice.
+		// Possible values: ownWork, thirdParty, choice.
 		'defaultType' => 'choice',
 
-		// Should the own work option be shown, and if not, what option should be set?
-		// Possible values:  own, notown, choice.
-		'ownWorkDefault' => 'choice',
+		// Which license type options should be shown?
+		// Possible values: ownWork, thirdParty.
+		'showTypes' => [ 'ownWork', 'thirdParty' ],
 
 		// radio button selection of some licenses
 		'ownWork' => [
-			'type' => 'or',
-			'template' => 'self',
+			// License formatting fields:
+			//  - licenseWikitext – wraps the wikitext of ONE license, $1 is the license. '$1' by default.
+			//  - licenseSeparator – used for joining several licenses wrapped by 'licenseWikitext'. ' ' by default
+			//  - wrapper – wraps the list of licenses. $1 – licenses, $2 – number of licenses. '$1' by default.
+
+			// Possible values: radio, checkbox
+			'type' => 'radio',
+			'wrapper' => '{{subst:int:mediauploader-content-license-ownwork|$2}} $1',
+			// Either a name of a single license or an array of them
 			'defaults' => 'cc-by-sa-4.0',
 			'licenses' => [
 				'cc-by-sa-4.0',
@@ -298,9 +319,9 @@ return [
 			]
 		],
 
-		// checkbox selection of all licenses
 		'thirdParty' => [
-			'type' => 'or',
+			'type' => 'radio',
+			// Either a name of a single license or an array of them
 			'defaults' => 'cc-by-sa-4.0',
 			'licenseGroups' => [
 				[
@@ -370,17 +391,10 @@ return [
 	'maxMwUploadSize' => null,
 
 	// Minimum length of custom wikitext for a license, if used.
-	// It is 6 because at minimum it needs four chars for opening and closing
-	// braces, then two chars for a license, e.g. {{xx}}
-	'minCustomLicenseLength' => 6,
+	'minCustomLicenseLength' => 5,
 
 	// Maximum length of custom wikitext for a license
 	'maxCustomLicenseLength' => 10000,
-
-	// License template custom licenses should transclude (if any)
-	// This is the prefixed db key (e.g. Template:License_template_tag), or
-	// false to disable this check
-	'customLicenseTemplate' => false,
 
 	// Link to page where users can leave feedback or bug reports.
 	// Defaults to MediaUploader's bug tracker.

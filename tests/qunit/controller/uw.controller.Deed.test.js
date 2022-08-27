@@ -28,7 +28,11 @@
 	QUnit.test( 'load', function ( assert ) {
 		var step = new uw.controller.Deed(
 				new mw.Api(),
-				{ licensing: { thirdParty: { type: 'test', licenses: [] } } }
+				{ licensing: {
+					thirdParty: { type: 'radio', licenses: [] },
+					showTypes: [ 'thirdParty' ],
+					defaultType: 'thirdParty'
+				} }
 			),
 			ststub = this.sandbox.stub().returns( $.Deferred().promise() ),
 			uploads = [

@@ -11,10 +11,12 @@
 	 *   licenses will be collapsed and this will be the clickable title to expand the group)
 	 * @param {string} [config.subhead] Subtitle for the group of licenses
 	 * @param {string} [config.special] 'custom' if a text input field should be added
-	 * @param {string} [config.template] Filter templates. If 'filterTemplate' was 'filter',
-	 *   then  [ 'fooLicense', 'barLicense' ] -> {{filter|fooLicense|barLicense}}
-	 * @param {Array} [config.prependTemplates] Array of templates to prepend. If prependTemplates
-	 *   were [ 'pre', 'pended' ], then [ 'fooLicense' ] -> "{{pre}}{{pended}}{{fooLicense}}"
+	 * @param {string} [config.licenseWikitext] Wraps the wikitext of ONE license, $1 is the license.
+	 *   '$1' by default.
+	 * @param {string} [config.licenseSeparator] Used for joining several licenses wrapped by
+	 *   'licenseWikitext'. ' ' by default.
+	 * @param {string} [config.wrapper] Wraps the list of licenses. $1 – licenses, $2 – number of licenses.
+	 *   '$1' by default.
 	 * @param {string} type 'radio' or 'checkbox'
 	 * @param {mw.Api} api API object, used for wikitext previews
 	 * @param {number} count Number of the things we are licensing (it matters to some texts)
@@ -32,11 +34,15 @@
 			throw new Error( 'Invalid type: ' + type );
 		}
 
-		this.config = config;
+		this.config = $.extend( {
+			licenseWikitext: '$1',
+			licenseSeparator: ' ',
+			wrapper: '$1'
+		}, config );
 		this.type = type;
 		this.api = api;
 		this.count = count;
-		this.collapsible = !!config.head;
+		this.collapsible = !!this.config.head;
 		this.textareas = {};
 		this.previewDialog = new uw.LicensePreviewDialog();
 		this.windowManager = new OO.ui.WindowManager();
@@ -185,16 +191,18 @@
 			values = this.getValue();
 
 		wikiTexts = Object.keys( values ).map( function ( name ) {
-			var wikiText = self.getLicenceWikiText( name ),
+			var wikiText = self.getLicenseWikiText( name ),
 				value = values[ name ];
 			if ( typeof value === 'string' ) {
 				// `value` is custom input
 				wikiText += '\n' + value.trim();
 			}
-			return wikiText;
+			return wikiText.trim();
 		} );
 
-		return wikiTexts.join( '' ).trim();
+		return this.config.wrapper
+			.replace( '$1', wikiTexts.join( this.config.licenseSeparator ).trim() )
+			.replace( '$2', Object.keys( values ).length.toString() );
 	};
 
 	/**
@@ -283,45 +291,20 @@
 	};
 
 	/**
-	 * @private
-	 * @param {string} name
-	 * @return {string[]}
-	 */
-	uw.LicenseGroup.prototype.getTemplates = function ( name ) {
-		var licenseInfo = this.getLicenseInfo( name );
-		return licenseInfo.props.templates === undefined ?
-			[ licenseInfo.name ] :
-			licenseInfo.props.templates.slice( 0 );
-	};
-
-	/**
-	 * License templates are these abstract ideas like cc-by-sa. In general they map directly to a license template.
-	 * However, configuration for a particular option can add other templates or transform the templates,
-	 * such as wrapping templates in an outer "self" template for own-work
+	 * License templates are these abstract ideas like cc-by-sa.
+	 * The 'license' and 'licensing' configs define how to translate them into wikitext.
 	 *
 	 * @private
 	 * @param {string} name license template name
 	 * @return {string} of wikitext
 	 */
-	uw.LicenseGroup.prototype.getLicenceWikiText = function ( name ) {
-		var templates = this.getTemplates( name ),
-			wikiTexts;
+	uw.LicenseGroup.prototype.getLicenseWikiText = function ( name ) {
+		var licenseInfo = this.getLicenseInfo( name ),
+			licenseText;
 
-		if ( this.config.prependTemplates !== undefined ) {
-			this.config.prependTemplates.forEach( function ( template ) {
-				templates.unshift( template );
-			} );
-		}
-
-		if ( this.config.template !== undefined ) {
-			templates.unshift( this.config.template );
-			templates = [ templates.join( '|' ) ];
-		}
-
-		wikiTexts = templates.map( function ( t ) {
-			return '{{' + t + '}}';
-		} );
-		return wikiTexts.join( '' );
+		licenseText = licenseInfo.props.wikitext !== undefined ?
+			licenseInfo.props.wikitext : licenseInfo.name;
+		return this.config.licenseWikitext.replace( '$1', licenseText );
 	};
 
 	/**

@@ -32,8 +32,7 @@
 			throw new Error( 'improper initialization' );
 		}
 
-		this.type = config.type === 'or' ? 'radio' : 'checkbox';
-
+		this.type = config.type;
 		this.defaults = [];
 		if ( config.defaults ) {
 			this.defaults = config.defaults instanceof Array ? config.defaults : [ config.defaults ];
@@ -153,7 +152,7 @@
 		},
 
 		/**
-		 * Gets the wikitext associated with all selected inputs. Some inputs also have associated textareas so we append their contents too.
+		 * Gets the wikitext associated with all selected inputs.
 		 *
 		 * @return {string} of wikitext (empty string if no inputs set)
 		 */
@@ -208,8 +207,7 @@
 		 * @return {jQuery.Promise}
 		 */
 		getErrors: function () {
-			var input = this,
-				errors = $.Deferred().resolve( [] ).promise(),
+			var errors = $.Deferred().resolve( [] ).promise(),
 				addError = function ( message ) {
 					errors = errors.then( function ( errorsCopy ) {
 						// eslint-disable-next-line mediawiki/msg-doc
@@ -241,24 +239,6 @@
 						addError( 'mediauploader-error-license-wikitext-too-short' );
 					} else if ( wikitext.length > mw.UploadWizard.config.maxCustomLicenseLength ) {
 						addError( 'mediauploader-error-license-wikitext-too-long' );
-					} else if ( wikitext.match( /\{\{(.+?)\}\}/g ) === null ) {
-						// if text doesn't contain a template, we don't even
-						// need to validate it any further...
-						addError( 'mediauploader-error-license-wikitext-missing-template' );
-					} else if ( mw.UploadWizard.config.customLicenseTemplate !== false ) {
-						// now do a thorough test to see if the text actually
-						// includes a license template
-						errors = $.when(
-							errors, // array of existing errors
-							input.getUsedTemplates( wikitext )
-						).then( function ( errorsCopy, usedTemplates ) {
-							if ( usedTemplates.indexOf( mw.UploadWizard.config.customLicenseTemplate ) < 0 ) {
-								// no license template found, add another error
-								errorsCopy.push( mw.message( 'mediauploader-error-license-wikitext-missing-template' ) );
-							}
-
-							return errorsCopy;
-						} );
 					}
 				} );
 			}
