@@ -7,6 +7,8 @@ namespace MediaWiki\Extension\MediaUploader\Config;
  * and protected utility functions.
  */
 abstract class ConfigBase {
+	public const LIC_OWN_WORK = 'ownWork';
+	public const LIC_THIRD_PARTY = 'thirdParty';
 
 	/**
 	 * Returns the entire configuration array.
@@ -28,16 +30,18 @@ abstract class ConfigBase {
 	}
 
 	/**
-	 * Get a list of available third party licenses from the config.
+	 * Get a list of available licenses for a given deed type (own work or third party)
+	 * from the config.
+	 *
+	 * @param string $type one of ConfigBase::LIC_* constants
 	 *
 	 * @return array
 	 */
-	public function getThirdPartyLicenses(): array {
-		$licensing = $this->getSetting( 'licensing', [] );
-		$thirdParty = $licensing['thirdParty'] ?? [];
-		$licenses = [];
+	public function getAvailableLicenses( string $type ): array {
+		$licensing = $this->getSetting( 'licensing', [] )[$type] ?? [];
+		$licenses = $licensing['licenses'] ?? [];
 
-		foreach ( $thirdParty['licenseGroups'] ?? [] as $group ) {
+		foreach ( $licensing['licenseGroups'] ?? [] as $group ) {
 			$licenses = array_merge( $licenses, $group['licenses'] );
 		}
 
@@ -60,6 +64,8 @@ abstract class ConfigBase {
 	 * It treats 'normal' integer indexed arrays as scalars, and does
 	 * not recurse into them. Associative arrays are recursed into.
 	 *
+	 * Null values in the second array will result in unset keys.
+	 *
 	 * @param array $array
 	 * @param array $array1
 	 *
@@ -70,16 +76,21 @@ abstract class ConfigBase {
 
 		foreach ( $array as $key => $value ) {
 			if ( array_key_exists( $key, $array1 ) ) {
-				if ( is_array( $value ) && $this->isAssoc( $array[$key] ) ) {
-					$newArray[$key] = $this->arrayReplaceSanely( $array[$key], $array1[$key] );
+				$value1 = $array1[$key];
+				if ( $value1 === null ) {
+					// Special case: if the new array has this value as null, unset it entirely.
+					// This is useful for removing parts of the config in campaigns.
+					continue;
+				} if ( is_array( $value ) && is_array( $value1 ) && $this->isAssoc( $value ) ) {
+					$newArray[$key] = $this->arrayReplaceSanely( $value, $value1 );
 				} else {
-					$newArray[$key] = $array1[$key];
+					$newArray[$key] = $value1;
 				}
 			} else {
-				$newArray[$key] = $array[$key];
+				$newArray[$key] = $value;
 			}
 		}
-		$newArray = array_merge( $newArray, array_diff_key( $array1, $array ) );
-		return $newArray;
+
+		return array_merge( $newArray, array_diff_key( $array1, $array ) );
 	}
 }

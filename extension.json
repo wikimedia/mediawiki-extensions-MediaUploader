@@ -237,6 +237,7 @@
 				"resources/details/uw.TitleDetailsWidget.js",
 				"resources/details/uw.DateDetailsWidget.js",
 				"resources/details/uw.CategoriesDetailsWidget.js",
+				"resources/details/uw.DeedChooserDetailsWidget.js",
 				"resources/details/uw.LanguageDropdownWidget.js",
 				"resources/details/uw.UlsWidget.js",
 				"resources/details/uw.SingleLanguageInputWidget.js",

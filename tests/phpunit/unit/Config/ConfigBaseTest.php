@@ -45,7 +45,9 @@ class ConfigBaseTest extends MediaWikiUnitTestCase {
 			->method( 'getConfigArray' )
 			->willReturn( [
 				'licensing' => [
-					'ownWork' => [ 'something' ],
+					'ownWork' => [
+						'licenses' => [ 'e', 'f', 'f' ]
+					],
 					'thirdParty' => [
 						'type' => 'or',
 						'defaults' => 'cc-by-sa-4.0',
@@ -59,11 +61,19 @@ class ConfigBaseTest extends MediaWikiUnitTestCase {
 			] );
 
 		$this->assertArrayEquals(
+			[ 'e', 'f' ],
+			$config->getAvailableLicenses( ConfigBase::LIC_OWN_WORK ),
+			false,
+			false,
+			'getAvailableLicenses() – own work'
+		);
+
+		$this->assertArrayEquals(
 			[ 'a', 'b', 'c', 'd' ],
-			$config->getThirdPartyLicenses(),
+			$config->getAvailableLicenses( ConfigBase::LIC_THIRD_PARTY ),
 			false,
 			false,
-			'getThirdPartyLicenses()'
+			'getAvailableLicenses() – third party'
 		);
 	}
 
@@ -78,6 +88,20 @@ class ConfigBaseTest extends MediaWikiUnitTestCase {
 			[ 'key' => 'value', 'k2' => 'value2' ],
 			[ 'k2' => [ 'v1', 'v2' ] ],
 			[ 'key' => 'value', 'k2' => [ 'v1', 'v2' ] ]
+		];
+
+		// This is a case used in campaign configs when disabling parts
+		// of the original config.
+		yield 'replacement with null in 2D associative array' => [
+			[
+				'key' => 'value',
+				'k2' => [
+					'k21' => 'value21',
+					'k22' => 'value22',
+				]
+			],
+			[ 'k2' => null ],
+			[ 'key' => 'value' ]
 		];
 
 		yield 'multiple replacements in 1D associative array' => [

@@ -19,6 +19,11 @@
 		this.fieldWrapperList = [];
 		this.fieldWrapperMap = {};
 
+		// This widget has to be initialized early for
+		// useCustomDeedChooser() to work.
+		this.deedChooserDetails = new uw.DeedChooserDetailsWidget();
+		this.customDeedChooser = false;
+
 		this.$div = $( '<div>' ).addClass( 'mediauploader-info-file ui-helper-clearfix filled' );
 	};
 
@@ -40,7 +45,8 @@
 			this.$dataDiv = $( '<div>' ).addClass( 'mediauploader-data' );
 
 			for ( fKey in config.fields ) {
-				fSpec = config.fields[ fKey ];
+				// Make a deep copy
+				fSpec = $.extend( {}, config.fields[ fKey ] );
 				fSpec.key = fKey;
 				fSpec.enabled = fSpec.enabled === undefined ? true : fSpec.enabled;
 				// Override the label in case it wasn't set
@@ -93,6 +99,9 @@
 							options: fSpec.options
 						} ) );
 						break;
+					case 'license':
+						fieldWidget = this.deedChooserDetails;
+						break;
 					case 'date':
 						fieldWidget = new uw.DateDetailsWidget( $.extend( {}, fConfigBase, {
 							upload: this.upload
@@ -136,11 +145,13 @@
 			this.fieldList.forEach( function ( spec ) {
 				fieldWidget = this.fieldMap[ spec.key ];
 				fieldWrapper = new uw.FieldLayout( fieldWidget, {
-					required: spec.required === 'required',
+					required: spec.type === 'license' || spec.required === 'required',
 					label: spec.label,
 					help: spec.help ? $( $.parseHTML( spec.help ) ) : null
 				} );
-				if ( spec.hidden ) {
+				if ( spec.type === 'license' ) {
+					fieldWrapper.toggle( this.customDeedChooser ); // See useCustomDeedChooser()
+				} else if ( spec.hidden ) {
 					fieldWrapper.toggle( false );
 				}
 
@@ -309,12 +320,23 @@
 		},
 
 		/**
+		 * Toggles whether we use the 'macro' deed or our own.
+		 */
+		useCustomDeedChooser: function () {
+			this.customDeedChooser = true;
+			this.deedChooserDetails.useCustomDeedChooser( this.upload );
+		},
+
+		/**
 		 * @private
 		 *
 		 * @return {uw.FieldLayout[]}
 		 */
 		getAllFields: function () {
-			return this.fieldWrapperList;
+			return [].concat(
+				this.fieldWrapperList,
+				this.upload.deedChooser.deed ? this.upload.deedChooser.deed.getFields() : []
+			);
 		},
 
 		/**
@@ -738,6 +760,11 @@
 
 			// Add substitutions for all the defined details fields
 			this.fieldList.forEach( function ( spec ) {
+				if ( spec.type === 'license' ) {
+					// Skip the license input... it is handled separately above.
+					return;
+				}
+
 				fieldWidget = this.fieldMap[ spec.key ];
 				addSubstitution( spec.key, fieldWidget.getWikiText() );
 				serialized = fieldWidget.getSerializedParsed();

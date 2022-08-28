@@ -14,7 +14,7 @@ QUnit.module( 'ext.uploadWizardLicenseInput', QUnit.newMwEnvironment( {
 } ) );
 
 QUnit.test( 'Smoke test', function ( assert ) {
-	var config = { type: 'or', licenses: [] },
+	var config = { type: 'radio', licenses: [] },
 		$fixture = $( '<div>' ),
 		uwLicenseInput;
 
@@ -24,7 +24,7 @@ QUnit.test( 'Smoke test', function ( assert ) {
 } );
 
 QUnit.test( 'createInputs()', function ( assert ) {
-	var config = { type: 'or', licenses: [ 'cc-by-sa-3.0' ] },
+	var config = { type: 'radio', licenses: [ 'cc-by-sa-3.0' ] },
 		$fixture = $( '<div>' ),
 		uwLicenseInput,
 		$input,
@@ -44,7 +44,7 @@ QUnit.test( 'createInputs()', function ( assert ) {
 
 QUnit.test( 'createGroupedInputs()', function ( assert ) {
 	var config = {
-			type: 'or',
+			type: 'checkbox',
 			licenseGroups: [
 				{
 					head: 'mediauploader-license-cc-head',

@@ -252,7 +252,7 @@
 	"mediauploader-prefs-def-license-custom-help": "Additional label of preference used to input wikitext for custom license, if selected. The text of 'last option above' is {{msg-mw|mediauploader-license-custom}}",
 	"mediauploader-prefs-license-name": "Label of preference used to input default name to use for licensing own work.",
 	"mediauploader-prefs-license-name-help": "Additional label of preference used to input default name to use for licensing own work. This indicates the default name if the preference field is empty.",
-	"mediauploader-prefs-license-own": "Parameters:\n* $1 - license message. e.g. {{msg-mw|mediauploader-license-cc-by-sa-3.0}}\nSee also:\n* {{msg-mw|mediauploader-prefs-license-thirdparty}}",
+	"mediauploader-prefs-license-ownwork": "Parameters:\n* $1 - license message. e.g. {{msg-mw|mediauploader-license-cc-by-sa-3.0}}\nSee also:\n* {{msg-mw|mediauploader-prefs-license-thirdparty}}",
 	"mediauploader-prefs-license-thirdparty": "Parameters:\n* $1 - license message. e.g. {{msg-mw|mediauploader-license-cc-by-sa-3.0}}\nSee also:\n* {{msg-mw|mediauploader-prefs-license-own}}",
 	"mediauploader-prefs-skiptutorial": "Preference which enables the user to permanently skip the licensing tutorial at the beginning. This is the same licensing tutorial as is mentioned in {{msg-mw|mediauploader-campaign-conf-skipTutorial}}",
 	"mediauploader-prefs-maxsimultaneous-upload": "Preference which sets the maximum number of concurrent upload requests",
@@ -279,5 +279,7 @@
 	"mediauploader-fix-campaign-comment-prettified": "Edit comment informing that a campaign definition was reformatted (prettified). $1 – number of fixes applied (always 0). $2 – number of issues left to resolve manually (implementing it in the message is optional).",
 	"mediauploader-incomplete-campaign-record": "Error message shown when trying to access an incomplete campaign record. $1 – name of the campaign. $2 – what is missing from the record.",
 	"mediauploader-default-content-wikitext": "Default wikitext used for building the file description page. The triple-braced parameters here correspond to the fields present by default in MediaUploader. Do not translate what is inside triple curly braces.",
-	"mediauploader-content-source-ownwork": "Text in a file's description page informing that this work was created by the uploader."
+	"mediauploader-content-source-ownwork": "Text in a file's description page informing that this work was created by the uploader.",
+	"mediauploader-content-license-ownwork": "Text in a file's description page stating that this file is the author's original work. $1 – number of licenses applied by the author.",
+	"mediauploader-license-none-text": "Text in a file's description page informing that the uploader did not specify the license for this work."
 }

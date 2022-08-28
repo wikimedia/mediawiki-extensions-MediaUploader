@@ -114,7 +114,7 @@
 
 		// if we have multiple uploads, also give them the option to set
 		// licenses individually
-		if ( this.uploads.length > 1 && this.shouldShowIndividualDeed( this.config ) ) {
+		if ( this.uploads.length > 1 ) {
 			customDeed = new uw.deed.Custom( this.config );
 			this.deeds[ customDeed.name ] = customDeed;
 		}
@@ -140,27 +140,6 @@
 		// restore the previous input (if any) for all deeds
 		if ( previousDeed ) {
 			this.deedChooser.setSerialized( previousDeed );
-		}
-	};
-
-	/**
-	 * Check whether we should give the user the option to choose licenses for
-	 * individual files on the details step.
-	 *
-	 * @private
-	 * @param {Object} config
-	 * @return {boolean}
-	 */
-	uw.controller.Deed.prototype.shouldShowIndividualDeed = function ( config ) {
-		var ownWork;
-
-		if ( config.licensing.ownWorkDefault === 'choice' ) {
-			return true;
-		} else if ( config.licensing.ownWorkDefault === 'own' ) {
-			ownWork = config.licensing.ownWork;
-			return ownWork.licenses.length > 1;
-		} else {
-			return true; // TODO: might want to have similar behaviour here
 		}
 	};
 

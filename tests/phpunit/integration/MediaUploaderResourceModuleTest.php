@@ -33,23 +33,24 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 			[
 				// Taken from the default config
 				'licenses' => [
-					'pd-old' => [
-						'msg' => 'mediauploader-license-pd-old',
-						'templates' => [ 'PD-old' ]
-					],
-					'attribution' => [
-						'msg' => 'mediauploader-license-attribution'
+					'fal' => [
+						'msg' => 'mediauploader-license-fal',
+						'wikitext' => '{{subst:int:mediauploader-license-fal}}'
 					],
 					'gfdl' => [
 						'msg' => 'mediauploader-license-gfdl',
-						'templates' => [ 'GFDL' ]
+						'wikitext' => '{{subst:int:mediauploader-license-gfdl}}'
+					],
+					'none' => [
+						'msg' => 'mediauploader-license-none',
+						'wikitext' => '{{subst:int:mediauploader-license-none-text}}'
 					],
 				]
 			],
 			[
-				'mediauploader-license-pd-old',
-				'mediauploader-license-attribution',
+				'mediauploader-license-fal',
 				'mediauploader-license-gfdl',
+				'mediauploader-license-none',
 			]
 		];
 
@@ -58,7 +59,7 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 				// Taken from the default config, edited for brevity
 				'licensing' => [
 					'thirdParty' => [
-						'type' => 'or',
+						'type' => 'radio',
 						'defaults' => 'cc-by-sa-4.0',
 						'licenseGroups' => [
 							[
@@ -74,7 +75,7 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 						]
 					],
 					'ownWork' => [
-						'type' => 'or',
+						'type' => 'radio',
 						'template' => 'self',
 						'defaults' => 'cc-by-sa-4.0',
 						'licenses' => [ 'cc-by-sa-4.0' ]
@@ -99,14 +100,13 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 				// edited for brevity.
 				'licensing' => [
 					'ownWork' => [
-						'type' => 'or',
+						'type' => 'checkbox',
 						'template' => 'self',
 						'defaults' => 'cc-by-sa-3.0',
 						'licenseGroups' => [
 							[
 								'head' => 'mediauploader-license-self-free-head',
 								'subhead' => 'mediauploader-license-self-free-subhead',
-								'template' => 'self',
 								'licenses' => [
 									'cc-by-sa-4.0',
 									'cc-by-sa-3.0'
@@ -115,7 +115,6 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 							[
 								'head' => 'mediauploader-license-self-copydown-head',
 								'subhead' => 'mediauploader-license-self-copydown-subhead',
-								'template' => 'self',
 								'licenses' => [ 'cc-by-sa-4.0-copydown' ]
 							],
 						],
@@ -142,21 +141,22 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 			[
 				'additionalMessages' => [ 'k1', 'k2' ],
 				'licenses' => [
-					'pd-old' => [
-						'msg' => 'mediauploader-license-pd-old',
-						'templates' => [ 'PD-old' ]
-					],
-					'attribution' => [
-						'msg' => 'mediauploader-license-attribution'
+					'fal' => [
+						'msg' => 'mediauploader-license-fal',
+						'wikitext' => '{{subst:int:mediauploader-license-fal}}'
 					],
 					'gfdl' => [
 						'msg' => 'mediauploader-license-gfdl',
-						'templates' => [ 'GFDL' ]
+						'wikitext' => '{{subst:int:mediauploader-license-gfdl}}'
+					],
+					'none' => [
+						'msg' => 'mediauploader-license-none',
+						'wikitext' => '{{subst:int:mediauploader-license-none-text}}'
 					],
 				],
 				'licensing' => [
 					'thirdParty' => [
-						'type' => 'or',
+						'type' => 'radio',
 						'defaults' => 'cc-by-sa-4.0',
 						'licenseGroups' => [
 							[
@@ -172,7 +172,7 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 						]
 					],
 					'ownWork' => [
-						'type' => 'or',
+						'type' => 'choice',
 						'template' => 'self',
 						'defaults' => 'cc-by-sa-4.0',
 						'licenses' => [ 'cc-by-sa-4.0' ]
@@ -184,9 +184,9 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 				'k1',
 				'k2',
 				// Licenses
-				'mediauploader-license-pd-old',
-				'mediauploader-license-attribution',
+				'mediauploader-license-fal',
 				'mediauploader-license-gfdl',
+				'mediauploader-license-none',
 				// Head and subhead messages
 				'mediauploader-license-cc-head',
 				'mediauploader-license-cc-subhead',

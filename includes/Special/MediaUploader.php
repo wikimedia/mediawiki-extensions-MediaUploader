@@ -15,7 +15,6 @@ use BitmapHandler;
 use ChangeTags;
 use DerivativeContext;
 use Html;
-use LogicException;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
@@ -273,34 +272,16 @@ class MediaUploader extends SpecialPage {
 			$userDefaultLicense = $licenseParts[1];
 
 			// Determine if the user's default license is valid for this campaign
-			switch ( $config['licensing']['ownWorkDefault'] ) {
-				case "own":
-					$defaultInAllowedLicenses = in_array(
-						$userDefaultLicense, $config['licensing']['ownWork']['licenses']
-					);
-					break;
-				case "notown":
-					$defaultInAllowedLicenses = in_array(
-						$userDefaultLicense, $this->loadedConfig->getThirdPartyLicenses()
-					);
-					break;
-				case "choice":
-					$defaultInAllowedLicenses = ( in_array(
-							$userDefaultLicense, $config['licensing']['ownWork']['licenses']
-						) ||
-						in_array( $userDefaultLicense, $this->loadedConfig->getThirdPartyLicenses() ) );
-					break;
-				default:
-					throw new LogicException( 'Bad ownWorkDefault config' );
-			}
+			$defaultInAllowedLicenses = in_array(
+				$userLicenseType,
+				$config['licensing']['showTypes']
+			) && in_array(
+				$userDefaultLicense,
+				$this->loadedConfig->getAvailableLicenses( $userLicenseType )
+			);
 
 			if ( $defaultInAllowedLicenses ) {
-				if ( $userLicenseType === 'ownwork' ) {
-					$userLicenseGroup = 'ownWork';
-				} else {
-					$userLicenseGroup = 'thirdParty';
-				}
-				$config['licensing'][$userLicenseGroup]['defaults'] = [ $userDefaultLicense ];
+				$config['licensing'][$userLicenseType]['defaults'] = [ $userDefaultLicense ];
 				$config['licensing']['defaultType'] = $userLicenseType;
 
 				if ( $userDefaultLicense === 'custom' ) {

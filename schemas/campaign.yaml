@@ -23,6 +23,67 @@ definitions:
       - type: array
         items: { $ref: '#/definitions/licenseName' }
 
+  # One abstract group of licenses
+  licenseGroup:
+    type: object
+    properties:
+      licenses:
+        type: array
+        items: { $ref: '#/definitions/licenseName' }
+      licenseWikitext: { type: string }
+      licenseSeparator: { type: string }
+      wrapper: { type: string }
+
+  # Licensing – plain list of licenses
+  licensingList:
+    allOf:
+      - $ref: '#/definitions/licenseGroup'
+      - type: object
+        additionalProperties: false
+        properties:
+          type:
+            type: string
+            enum:
+              - radio
+              - checkbox
+          defaults: { $ref: '#/definitions/defaultLicensesField' }
+          # For overriding the base config with groups of licenses
+          licenseGroups: { type: 'null' }
+          # # # # #
+          licenses: {}
+          licenseWikitext: {}
+          licenseSeparator: {}
+          wrapper: {}
+
+  # Licensing – grouped licenses
+  licensingGroups:
+    type: object
+    additionalProperties: false
+    properties:
+      defaults: { $ref: '#/definitions/defaultLicensesField' }
+      type:
+        type: string
+        enum:
+          - radio
+          - checkbox
+      # For overriding the base config with a list of licenses
+      licenses: { type: 'null' }
+      licenseGroups:
+        type: array
+        items:
+          allOf:
+            - $ref: '#/definitions/licenseGroup'
+            - type: object
+              additionalProperties: false
+              properties:
+                head: { type: string }
+                subhead: { type: string }
+                # # # # #
+                licenses: { }
+                licenseWikitext: { }
+                licenseSeparator: { }
+                wrapper: { }
+
   # The "display" section of the config
   displaySection:
     type: object
@@ -194,6 +255,24 @@ definitions:
         required:
           - options
 
+  fieldLicense:
+    allOf:
+      - $ref: '#/definitions/fieldBase'
+      - type: object
+        properties:
+          type:
+            enum:
+              - license
+          # # # # #
+          order: { }
+          label: { }
+          help: { }
+          required: { }
+          hidden: { }
+          enabled: { }
+          auxiliary: { }
+        additionalProperties: false
+
   fieldDate:
     allOf:
       - $ref: '#/definitions/fieldBase'
@@ -332,41 +411,27 @@ properties:
     type: object
     additionalProperties: false
     properties:
-      defaultType: { type: string }
-      ownWorkDefault: { type: string }
-
-      # TODO: This is all wrong. ownWork should allow for license groups
-      # Resolve this in T278871
-      # Refactor common code from these two and make it readable
+      defaultType:
+        type: string
+        enum:
+          - ownWork
+          - thirdParty
+          - choice
+      showTypes:
+        type: array
+        items:
+          type: string
+          enum:
+            - ownWork
+            - thirdParty
       ownWork:
-        type: object
-        additionalProperties: false
-        properties:
-          defaults: { $ref: '#/definitions/defaultLicensesField' }
-          licenses:
-            type: array
-            items: { $ref: '#/definitions/licenseName' }
-          template: { type: string }
-          type: { type: string }
-
-      # TODO: thirdParty should allow for licenses without groups
+        oneOf:
+          - $ref: '#/definitions/licensingList'
+          - $ref: '#/definitions/licensingGroups'
       thirdParty:
-        type: object
-        additionalProperties: false
-        properties:
-          defaults: { $ref: '#/definitions/defaultLicensesField' }
-          licenseGroups:
-            type: array
-            items:
-              type: object
-              additionalProperties: false
-              properties:
-                head: { type: string }
-                licenses:
-                  type: array
-                  items: { $ref: '#/definitions/licenseName' }
-                subhead: { type: string }
-          type: { type: string }
+        oneOf:
+          - $ref: '#/definitions/licensingList'
+          - $ref: '#/definitions/licensingGroups'
 
   # The tutorial
   tutorial:

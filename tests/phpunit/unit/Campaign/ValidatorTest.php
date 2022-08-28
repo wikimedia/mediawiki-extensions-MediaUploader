@@ -254,6 +254,30 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 			true
 		];
 
+		yield 'licensing.ownWork has license groups' => [
+			[
+				'enabled' => true,
+				'licensing' => [
+					'ownWork' => [
+						'defaults' => 'lic1',
+						'licenseGroups' => [
+							[
+								'head' => 'aaa',
+								'wrapper' => 'wrapper $1',
+								'licenseSeparator' => '; ',
+								'licenseWikitext' => '{{$1}}',
+								'licenses' => [ 'lic1', 'lic2' ],
+							],
+							[ 'licenses' => [ 'lic3' ] ]
+						],
+
+					]
+				]
+			],
+			[ 'lic1' => [], 'lic2' => [], 'lic3' => [] ],
+			true
+		];
+
 		yield 'licensing.thirdParty referencing undefined licenses' => [
 			[
 				'enabled' => true,
@@ -285,6 +309,20 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 								'licenses' => [ 'lic1', 'lic2' ]
 							]
 						]
+					]
+				]
+			],
+			[ 'lic1' => [], 'lic2' => [] ],
+			true
+		];
+
+		yield 'licensing.thirdParty has just a license list' => [
+			[
+				'enabled' => true,
+				'licensing' => [
+					'thirdParty' => [
+						'defaults' => 'lic1',
+						'licenses' => [ 'lic1', 'lic2' ],
 					]
 				]
 			],
