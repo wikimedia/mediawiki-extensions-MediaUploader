@@ -63,7 +63,7 @@
 	"mediauploader-finished": "Finished!",
 	"mediauploader-deeds-macro-prompt": "This site requires {{GENDER:$2|you}} to provide copyright information for {{PLURAL:$1|this work|these works}}, to make sure everyone can legally reuse {{PLURAL:$1|it|them}}.",
 	"mediauploader-source-ownwork": "{{PLURAL:$1|This file is|These files are}} my own work.",
-	"mediauploader-source-ownwork-assert": "I, $2, {{GENDER:$4|the copyright holder}} of {{PLURAL:$1|this work|these works}}, hereby irrevocably grant anyone the right to use {{PLURAL:$1|this work|these works}} for any purpose, as long as they credit me and share derivative work under the same terms.",
+	"mediauploader-source-ownwork-assert": "I, $2, {{GENDER:$4|the copyright holder}} of {{PLURAL:$1|this work|these works}}, irrevocably grant anyone the right to use {{PLURAL:$1|this work|these works}} under the following license:",
 	"mediauploader-source-permission": "Their author gave you explicit permission to upload them",
 	"mediauploader-source-thirdparty": "{{PLURAL:$1|This file is|These files are}} not my own work.",
 	"mediauploader-source-thirdparty-intro": "Please enter the address where you found each file.",

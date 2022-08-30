@@ -191,63 +191,56 @@ return [
 	// The 'wikitext' field tells the uploader how to mark this license on the file description page.
 	// By default, this is just the name of the license, but if you want, you can put template names here.
 	// See also the 'licensing' section, it allows you to wrap this wikitext into more complex stuff.
-	'licenses' => [
-		'cc-by-sa-4.0' => [
-			'msg' => 'mediauploader-license-cc-by-sa-4.0',
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/4.0/',
-			'languageCodePrefix' => 'deed.',
-			'wikitext' => '{{subst:int:mediauploader-license-cc-by-sa-4.0||//creativecommons.org/licenses/by-sa/4.0/}}'
-		],
-		'cc-by-sa-3.0' => [
-			'msg' => 'mediauploader-license-cc-by-sa-3.0',
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/3.0/',
-			'languageCodePrefix' => 'deed.',
-			'wikitext' => '{{subst:int:mediauploader-license-cc-by-sa-3.0||//creativecommons.org/licenses/by-sa/3.0/}}'
-		],
-		'cc-by-sa-2.5' => [
-			'msg' => 'mediauploader-license-cc-by-sa-2.5',
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/2.5/',
-			'languageCodePrefix' => 'deed.',
-			'wikitext' => '{{subst:int:mediauploader-license-cc-by-sa-2.5||//creativecommons.org/licenses/by-sa/2.5/}}'
-		],
-		'cc-by-sa-2.0' => [
-			'msg' => 'mediauploader-license-cc-by-sa-2.0',
-			'icons' => [ 'cc-by', 'cc-sa' ],
-			'url' => '//creativecommons.org/licenses/by-sa/2.0/',
-			'languageCodePrefix' => 'deed.',
-			'wikitext' => '{{subst:int:mediauploader-license-cc-by-sa-2.0||//creativecommons.org/licenses/by-sa/2.0/}}'
-		],
-		'cc-by-4.0' => [
-			'msg' => 'mediauploader-license-cc-by-4.0',
-			'icons' => [ 'cc-by' ],
-			'url' => '//creativecommons.org/licenses/by/4.0/',
-			'languageCodePrefix' => 'deed.',
-			'wikitext' => '{{subst:int:mediauploader-license-cc-by-4.0||//creativecommons.org/licenses/by/4.0/}}'
-		],
-		'cc-by-3.0' => [
-			'msg' => 'mediauploader-license-cc-by-3.0',
-			'icons' => [ 'cc-by' ],
-			'url' => '//creativecommons.org/licenses/by/3.0/',
-			'languageCodePrefix' => 'deed.',
-			'wikitext' => '{{subst:int:mediauploader-license-cc-by-3.0||//creativecommons.org/licenses/by/3.0/}}'
-		],
-		'cc-by-2.5' => [
-			'msg' => 'mediauploader-license-cc-by-2.5',
-			'icons' => [ 'cc-by' ],
-			'url' => '//creativecommons.org/licenses/by/2.5/',
-			'languageCodePrefix' => 'deed.',
-			'wikitext' => '{{subst:int:mediauploader-license-cc-by-2.5||//creativecommons.org/licenses/by/2.5/}}'
-		],
-		'cc-by-2.0' => [
-			'msg' => 'mediauploader-license-cc-by-2.0',
-			'icons' => [ 'cc-by' ],
-			'url' => '//creativecommons.org/licenses/by/2.0/',
-			'languageCodePrefix' => 'deed.',
-			'wikitext' => '{{subst:int:mediauploader-license-cc-by-2.0||//creativecommons.org/licenses/by/2.0/}}'
-		],
+	// TODO: write down the docs about the optional parameters: assertMsg, explainMsg
+	//
+	// Messages used here:
+	// * mediauploader-license-cc-by-4.0
+	// * mediauploader-license-cc-by-3.0
+	// * mediauploader-license-cc-by-2.5
+	// * mediauploader-license-cc-by-2.0
+	// * mediauploader-license-cc-by-nc-4.0
+	// * mediauploader-license-cc-by-nc-3.0
+	// * mediauploader-license-cc-by-nc-2.5
+	// * mediauploader-license-cc-by-nc-2.0
+	// * mediauploader-license-cc-by-nd-4.0
+	// * mediauploader-license-cc-by-nd-3.0
+	// * mediauploader-license-cc-by-nd-2.5
+	// * mediauploader-license-cc-by-nd-2.0
+	// * mediauploader-license-cc-by-nc-nd-4.0
+	// * mediauploader-license-cc-by-nc-nd-3.0
+	// * mediauploader-license-cc-by-nc-nd-2.5
+	// * mediauploader-license-cc-by-nc-nd-2.0
+	// * mediauploader-license-cc-by-nc-sa-4.0
+	// * mediauploader-license-cc-by-nc-sa-3.0
+	// * mediauploader-license-cc-by-nc-sa-2.5
+	// * mediauploader-license-cc-by-nc-sa-2.0
+	// * mediauploader-license-cc-by-sa-4.0
+	// * mediauploader-license-cc-by-sa-3.0
+	// * mediauploader-license-cc-by-sa-2.5
+	// * mediauploader-license-cc-by-sa-2.0
+	'licenses' => ( static function () {
+		// Generate Creative Commons license variants
+		$ccLicenses = [];
+		foreach ( [ '2.0', '2.5', '3.0', '4.0' ] as $ccVer ) {
+			foreach ( [ 'by', 'by-nc', 'by-nd', 'by-nc-nd', 'by-nc-sa', 'by-sa' ] as $ccType ) {
+				$ccLicenses["cc-$ccType-$ccVer"] = [
+					'msg' => "mediauploader-license-cc-$ccType-$ccVer",
+					'icons' => array_map(
+						static function ( $t ) {
+							return "cc-$t";
+						},
+						explode( '-', $ccType )
+					),
+					'url' => "//creativecommons.org/licenses/$ccType/$ccVer/",
+					'languageCodePrefix' => 'deed.',
+					'wikitext' => "{{subst:int:mediauploader-license-cc-$ccType-$ccVer" .
+						"||//creativecommons.org/licenses/$ccType/$ccVer/}}",
+					'explainMsg' => "mediauploader-source-ownwork-cc-$ccType-explain"
+				];
+			}
+		}
+		return $ccLicenses;
+	} )() + [
 		'cc-zero' => [
 			'msg' => 'mediauploader-license-cc-zero',
 			'icons' => [ 'cc-zero' ],
@@ -274,6 +267,23 @@ return [
 		'gfdl' => [
 			'msg' => 'mediauploader-license-gfdl',
 			'wikitext' => '{{subst:int:mediauploader-license-gfdl}}'
+		],
+		'beerware' => [
+			'msg' => 'mediauploader-license-beerware',
+			'explainMsg' => 'mediauploader-source-ownwork-beerware-explain',
+			'url' => 'https://fedoraproject.org/wiki/Licensing/Beerware',
+			'wikitext' => '{{subst:int:mediauploader-license-beerware}}'
+		],
+		'wtfpl' => [
+			'msg' => 'mediauploader-license-wtfpl',
+			'explainMsg' => 'mediauploader-source-ownwork-wtfpl-explain',
+			'url' => 'http://www.wtfpl.net/about/',
+			'wikitext' => '{{subst:int:mediauploader-license-wtfpl}}'
+		],
+		'copyright' => [
+			'msg' => 'mediauploader-license-copyright',
+			'icons' => [ 'copyright' ],
+			'wikitext' => '{{subst:int:mediauploader-license-copyright}}'
 		],
 		'none' => [
 			'msg' => 'mediauploader-license-none',
@@ -325,7 +335,6 @@ return [
 			'defaults' => 'cc-by-sa-4.0',
 			'licenseGroups' => [
 				[
-					// This should be a list of all CC licenses we can reasonably expect to find around the web
 					'head' => 'mediauploader-license-cc-head',
 					'subhead' => 'mediauploader-license-cc-subhead',
 					'licenses' => [

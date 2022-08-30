@@ -33,6 +33,15 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 			[
 				// Taken from the default config
 				'licenses' => [
+					[
+						'msg' => 'mediauploader-license-cc-by-nc-nd-2.0',
+						'icons' => [ 'cc-by', 'cc-nc', 'cc-nd' ],
+						'url' => '//creativecommons.org/licenses/by-nc-nd/2.0/',
+						'languageCodePrefix' => 'deed.',
+						'wikitext' => '{{subst:int:mediauploader-license-cc-by-nc-nd-2.0' .
+							'||//creativecommons.org/licenses/by-nc-nd/2.0/}}',
+						'explainMsg' => 'mediauploader-source-ownwork-cc-by-nc-nd-explain'
+					],
 					'fal' => [
 						'msg' => 'mediauploader-license-fal',
 						'wikitext' => '{{subst:int:mediauploader-license-fal}}'
@@ -48,6 +57,8 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 				]
 			],
 			[
+				'mediauploader-license-cc-by-nc-nd-2.0',
+				'mediauploader-source-ownwork-cc-by-nc-nd-explain',
 				'mediauploader-license-fal',
 				'mediauploader-license-gfdl',
 				'mediauploader-license-none',
@@ -87,9 +98,6 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 				'mediauploader-license-cc-head',
 				'mediauploader-license-cc-subhead',
 				'mediauploader-license-custom-head',
-				// Default license assertions for own work uploads
-				'mediauploader-source-ownwork-assert-cc-by-sa-4.0',
-				'mediauploader-source-ownwork-cc-by-sa-4.0-explain',
 			]
 		];
 
@@ -127,13 +135,6 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 				'mediauploader-license-self-free-subhead',
 				'mediauploader-license-self-copydown-head',
 				'mediauploader-license-self-copydown-subhead',
-				// Default license assertions for own work uploads
-				'mediauploader-source-ownwork-assert-cc-by-sa-4.0',
-				'mediauploader-source-ownwork-cc-by-sa-4.0-explain',
-				'mediauploader-source-ownwork-assert-cc-by-sa-3.0',
-				'mediauploader-source-ownwork-cc-by-sa-3.0-explain',
-				'mediauploader-source-ownwork-assert-cc-by-sa-4.0-copydown',
-				'mediauploader-source-ownwork-cc-by-sa-4.0-copydown-explain',
 			]
 		];
 
@@ -141,6 +142,15 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 			[
 				'additionalMessages' => [ 'k1', 'k2' ],
 				'licenses' => [
+					[
+						'msg' => 'mediauploader-license-cc-by-nc-nd-2.0',
+						'icons' => [ 'cc-by', 'cc-nc', 'cc-nd' ],
+						'url' => '//creativecommons.org/licenses/by-nc-nd/2.0/',
+						'languageCodePrefix' => 'deed.',
+						'wikitext' => '{{subst:int:mediauploader-license-cc-by-nc-nd-2.0' .
+							'||//creativecommons.org/licenses/by-nc-nd/2.0/}}',
+						'explainMsg' => 'mediauploader-source-ownwork-cc-by-nc-nd-explain'
+					],
 					'fal' => [
 						'msg' => 'mediauploader-license-fal',
 						'wikitext' => '{{subst:int:mediauploader-license-fal}}'
@@ -184,6 +194,8 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 				'k1',
 				'k2',
 				// Licenses
+				'mediauploader-license-cc-by-nc-nd-2.0',
+				'mediauploader-source-ownwork-cc-by-nc-nd-explain',
 				'mediauploader-license-fal',
 				'mediauploader-license-gfdl',
 				'mediauploader-license-none',
@@ -191,9 +203,6 @@ class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 				'mediauploader-license-cc-head',
 				'mediauploader-license-cc-subhead',
 				'mediauploader-license-custom-head',
-				// Default license assertions for own work uploads
-				'mediauploader-source-ownwork-assert-cc-by-sa-4.0',
-				'mediauploader-source-ownwork-cc-by-sa-4.0-explain',
 			]
 		];
 	}

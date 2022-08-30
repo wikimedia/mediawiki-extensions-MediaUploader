@@ -35,9 +35,12 @@ class MediaUploaderResourceModule extends ResourceLoaderFileModule {
 	public function getMessages() {
 		$licenseMessages = [];
 
-		foreach ( $this->rawConfig->getSetting( 'licenses', [] ) as $key => $value ) {
-			if ( isset( $value['msg'] ) ) {
-				$licenseMessages[] = $value['msg'];
+		// Add messages used directly by licenses
+		foreach ( $this->rawConfig->getSetting( 'licenses', [] ) as $value ) {
+			foreach ( [ 'msg', 'assertMsg', 'explainMsg' ] as $mKey ) {
+				if ( isset( $value[$mKey] ) ) {
+					$licenseMessages[] = $value[$mKey];
+				}
 			}
 		}
 
@@ -64,52 +67,18 @@ class MediaUploaderResourceModule extends ResourceLoaderFileModule {
 		array $licensingConfig,
 		string $type
 	): array {
-		if ( !isset( $licensingConfig[$type] ) ) {
+		if ( !isset( $licensingConfig[$type]['licenseGroups'] ) ) {
 			return [];
 		}
-		$config = $licensingConfig[$type]; // shorthand
 
 		$messages = [];
-		if ( $type === 'ownWork' && isset( $config['licenses'] ) ) {
-			$messages = $this->getMessagesForDefaultLicenses( $config['licenses'] );
-		}
-
-		if ( !isset( $config['licenseGroups'] ) ) {
-			return $messages;
-		}
-		foreach ( $config['licenseGroups'] as $licenseGroup ) {
+		foreach ( $licensingConfig[$type]['licenseGroups'] as $licenseGroup ) {
 			if ( isset( $licenseGroup['head'] ) ) {
 				$messages[] = $licenseGroup['head'];
 			}
 			if ( isset( $licenseGroup['subhead'] ) ) {
 				$messages[] = $licenseGroup['subhead'];
 			}
-			if ( $type === 'ownWork' && isset( $licenseGroup['licenses'] ) ) {
-				$messages = array_merge(
-					$messages,
-					$this->getMessagesForDefaultLicenses(
-						$licenseGroup['licenses']
-					)
-				);
-			}
-		}
-
-		return $messages;
-	}
-
-	/**
-	 * Returns an array of messages necessary to display license assertion messages.
-	 * These are used when a user selects a license to be their default.
-	 *
-	 * @param string[] $licenses
-	 *
-	 * @return string[]
-	 */
-	private function getMessagesForDefaultLicenses( array $licenses ): array {
-		$messages = [];
-		foreach ( $licenses as $license ) {
-			$messages[] = 'mediauploader-source-ownwork-assert-' . $license;
-			$messages[] = 'mediauploader-source-ownwork-' . $license . '-explain';
 		}
 
 		return $messages;

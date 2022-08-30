@@ -81,20 +81,24 @@
 
 	uw.deed.OwnWork.prototype.setFormFields = function ( $selector ) {
 		var $customDiv, $formFields, $toggler, crossfaderWidget, defaultLicense,
-			defaultLicenseURL, defaultLicenseMsg, defaultLicenseExplainMsg,
-			$defaultLicenseLink, $standardDiv, $crossfader, deed, languageCode;
+			defaultLicenseURL, defaultLicenseMsg, $defaultLicenseLink,
+			$standardDiv, $crossfader, deed, languageCode, defaultLicConfig;
 
 		this.$selector = $selector;
 		deed = this;
 		languageCode = mw.config.get( 'wgUserLanguage' );
 
 		defaultLicense = this.getDefaultLicenses()[ 0 ];
+		defaultLicConfig = this.config.licenses[ defaultLicense ];
 
-		defaultLicenseURL = this.config.licenses[ defaultLicense ].url === undefined ?
-			'#missing license URL' :
-			this.config.licenses[ defaultLicense ].url + 'deed.' + languageCode;
-		defaultLicenseMsg = 'mediauploader-source-ownwork-assert-' + defaultLicense;
-		defaultLicenseExplainMsg = 'mediauploader-source-ownwork-' + defaultLicense + '-explain';
+		defaultLicenseURL = defaultLicConfig.url === undefined ?
+			'#missing license URL' : defaultLicConfig.url;
+		if ( defaultLicConfig.languageCodePrefix !== undefined ) {
+			defaultLicenseURL += defaultLicConfig.languageCodePrefix + languageCode;
+		}
+		defaultLicenseMsg = defaultLicConfig.assertMsg === undefined ?
+			'mediauploader-source-ownwork-assert' :
+			defaultLicConfig.assertMsg;
 		$defaultLicenseLink = $( '<a>' ).attr( { target: '_blank', href: defaultLicenseURL } );
 
 		this.$form = $( '<form>' );
@@ -107,17 +111,25 @@
 				this.authorInput.$element,
 				$defaultLicenseLink,
 				mw.user
-			),
-			$( '<p>' ).addClass( 'mwe-small-print' ).msg(
-				defaultLicenseExplainMsg,
-				this.uploadCount
-			)
+			).append( ' ' ).append( mw.message(
+				defaultLicConfig.msg, '', defaultLicenseURL
+			).parse() )
 		);
+
+		if ( defaultLicConfig.explainMsg !== undefined ) {
+			$standardDiv = $standardDiv.append(
+				$( '<p>' ).addClass( 'mwe-small-print' ).msg(
+					defaultLicConfig.explainMsg,
+					this.uploadCount
+				)
+			);
+		}
+
 		$crossfader = $( '<div>' ).addClass( 'mediauploader-crossfader' ).append( $standardDiv );
 		/* eslint-enable mediawiki/msg-doc */
 
 		$customDiv = $( '<div>' ).addClass( 'mediauploader-custom' ).append(
-			$( '<p>' ).msg( 'mediauploader-source-ownwork-assert-custom',
+			$( '<p>' ).msg( 'mediauploader-source-ownwork-assert',
 				this.uploadCount,
 				this.fakeAuthorInput.$element )
 		);
