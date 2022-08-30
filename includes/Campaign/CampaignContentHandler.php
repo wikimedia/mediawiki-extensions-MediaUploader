@@ -4,7 +4,6 @@ namespace MediaWiki\Extension\MediaUploader\Campaign;
 
 use Content;
 use Html;
-use JsonContentHandler;
 use MediaWiki\Content\Renderer\ContentParseParams;
 use MediaWiki\Content\Transform\PreSaveTransformParams;
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
@@ -12,12 +11,13 @@ use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use ParserOutput;
+use TextContentHandler;
 use Title;
 
 /**
  * Content handler for campaign pages.
  */
-class CampaignContentHandler extends JsonContentHandler {
+class CampaignContentHandler extends TextContentHandler {
 
 	/** @var ConfigFactory */
 	private $configFactory;
@@ -27,7 +27,7 @@ class CampaignContentHandler extends JsonContentHandler {
 	 * @param ConfigFactory $configFactory
 	 */
 	public function __construct( $modelId, ConfigFactory $configFactory ) {
-		parent::__construct( $modelId );
+		parent::__construct( $modelId, [ CONTENT_FORMAT_CAMPAIGN ] );
 		$this->configFactory = $configFactory;
 	}
 
@@ -43,7 +43,6 @@ class CampaignContentHandler extends JsonContentHandler {
 	 */
 	public function makeEmptyContent() {
 		$class = $this->getContentClass();
-
 		return new $class( 'enabled: false' );
 	}
 
