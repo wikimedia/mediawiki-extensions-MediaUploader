@@ -33,7 +33,7 @@ class Hooks implements GetPreferencesHook {
 			$preferences['upwiz_skiptutorial'] = [
 				'type' => 'check',
 				'label-message' => 'mediauploader-prefs-skiptutorial',
-				'section' => 'uploads/upwiz-interface'
+				'section' => 'uploads/mediauploader-interface'
 			];
 		}
 
@@ -41,13 +41,12 @@ class Hooks implements GetPreferencesHook {
 			'type' => 'text',
 			'label-message' => 'mediauploader-prefs-license-name',
 			'help-message' => 'mediauploader-prefs-license-name-help',
-			'section' => 'uploads/upwiz-licensing'
+			'section' => 'uploads/mediauploader-licensing'
 		];
 
 		if ( $this->config->getSetting( 'enableLicensePreference' ) ) {
 			$licenses = [];
 
-			$licensingOptions = $this->config->getSetting( 'licensing' );
 			$licenseTypes = [
 				[ 'configKey' => ConfigBase::LIC_OWN_WORK, 'msgKey' => 'ownwork' ],
 				[ 'configKey' => ConfigBase::LIC_THIRD_PARTY, 'msgKey' => 'thirdparty' ],
@@ -88,7 +87,7 @@ class Hooks implements GetPreferencesHook {
 			$preferences['upwiz_deflicense'] = [
 				'type' => 'radio',
 				'label-message' => 'mediauploader-prefs-def-license',
-				'section' => 'uploads/upwiz-licensing',
+				'section' => 'uploads/mediauploader-licensing',
 				'options' => $licenses
 			];
 
@@ -97,7 +96,7 @@ class Hooks implements GetPreferencesHook {
 					'type' => 'text',
 					'label-message' => 'mediauploader-prefs-def-license-custom',
 					'help-message' => 'mediauploader-prefs-def-license-custom-help',
-					'section' => 'uploads/upwiz-licensing',
+					'section' => 'uploads/mediauploader-licensing',
 				];
 			}
 		}
@@ -111,7 +110,7 @@ class Hooks implements GetPreferencesHook {
 			$preferences['upwiz_maxsimultaneous'] = [
 				'type' => 'select',
 				'label-message' => 'mediauploader-prefs-maxsimultaneous-upload',
-				'section' => 'uploads/upwiz-experimental',
+				'section' => 'uploads/mediauploader-experimental',
 				'options' => $range
 			];
 		}

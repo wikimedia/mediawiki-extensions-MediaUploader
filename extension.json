@@ -2,6 +2,7 @@
 	"name": "MediaUploader",
 	"version": "0.1.0",
 	"author": [
+		"Ostrzyciel",
 		"Neil Kandalgaonkar",
 		"Jeroen De Dauw",
 		"Mark Holmquist",
@@ -12,8 +13,7 @@
 		"Nischay Nahata",
 		"Yuvi Panda",
 		"Bartosz Dziewoński",
-		"Matthias Mullie",
-		"Ostrzyciel"
+		"Matthias Mullie"
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:MediaUploader",
 	"descriptionmsg": "mediauploader-desc",
@@ -443,7 +443,7 @@
 				"mediauploader-skip-tutorial-future",
 				"mediauploader-tooltip-skiptutorial",
 				"prefs-uploads",
-				"prefs-upwiz-interface",
+				"prefs-mediauploader-interface",
 				"mediauploader-add-file-n",
 				"mediauploader-add-file-0-free",
 				"mediauploader-tooltip-sign",

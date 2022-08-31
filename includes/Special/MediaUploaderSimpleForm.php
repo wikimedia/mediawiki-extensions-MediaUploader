@@ -12,7 +12,7 @@ namespace MediaWiki\Extension\MediaUploader\Special;
 use UploadForm;
 
 /**
- * This is a hack on UploadForm, to make one that works from UploadWizard when JS is not available.
+ * This is a hack on UploadForm, to make one that works from MediaUploader when JS is not available.
  *
  * @codeCoverageIgnore
  */

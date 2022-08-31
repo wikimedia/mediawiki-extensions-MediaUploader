@@ -2,8 +2,8 @@
 	"@metadata": {
 		"authors": []
 	},
-	"apihelp-query+allcampaigns-description": "Enumerate all UploadWizard campaigns.",
-	"apihelp-query+allcampaigns-summary": "Enumerate all UploadWizard campaigns.",
+	"apihelp-query+allcampaigns-description": "Enumerate all MediaUploader campaigns.",
+	"apihelp-query+allcampaigns-summary": "Enumerate all MediaUploader campaigns.",
 	"apihelp-query+allcampaigns-param-enabledonly": "Only list campaigns that are enabled.",
 	"apihelp-query+allcampaigns-param-limit": "Number of campaigns to return.",
 	"apihelp-query+allcampaigns-example-1": "Enumerate enabled campaigns"
