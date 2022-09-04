@@ -1,3 +1,5 @@
+@import '../../variables.less';
+
 /* Position the popup */
 #mediauploader-skip {
 	position: relative;
@@ -6,6 +8,11 @@
 #mediauploader-skip .oo-ui-popupWidget {
 	position: absolute;
 	left: 50%;
+
+	@media ( max-width: @mobile-w ) {
+		// The popup breaks on mobile badly
+		display: none;
+	}
 }
 
 /* Override some silly styles */

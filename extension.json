@@ -262,7 +262,7 @@
 				"resources/jquery.arrowSteps/jquery.arrowSteps.less",
 				"resources/uw.CopyMetadataWidget.less",
 				"resources/ui/steps/uw.ui.Thanks.less",
-				"resources/ui/steps/uw.ui.Tutorial.css",
+				"resources/ui/steps/uw.ui.Tutorial.less",
 				"resources/uploadWizard.less",
 				"resources/uw.FieldLayout.less",
 				"resources/details/uw.DateDetailsWidget.less",
