@@ -252,8 +252,21 @@
 			$ul.append( $( '<li>' ).text( warnings[ i ] ) );
 		}
 
-		return OO.ui.confirm( $message.append( $ul ), {
-			title: mw.message( 'mediauploader-dialog-title' ).text()
+		return OO.ui.getWindowManager().openWindow( 'message', {
+			message: $message.append( $ul ),
+			title: mw.message( 'mediauploader-dialog-title' ).text(),
+			actions: [
+				{
+					action: 'back',
+					label: mw.msg( 'mediauploader-dialog-back' )
+				},
+				{
+					action: 'continue',
+					label: mw.msg( 'mediauploader-dialog-continue' )
+				}
+			]
+		} ).closed.then( function ( data ) {
+			return !!( data && data.action === 'continue' );
 		} );
 	};
 
