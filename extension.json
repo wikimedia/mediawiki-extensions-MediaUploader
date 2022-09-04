@@ -140,7 +140,7 @@
 			"group": "ext.uploadWizard"
 		},
 		"ext.uploadWizard.page.styles": {
-			"styles": "resources/uploadWizard.noWizard.css",
+			"styles": "resources/uploadWizard.noWizard.less",
 			"targets": [
 				"desktop",
 				"mobile"
@@ -260,7 +260,7 @@
 				"resources/mw.UploadWizardUploadInterface.js"
 			],
 			"styles": [
-				"resources/jquery.arrowSteps/jquery.arrowSteps.css",
+				"resources/jquery.arrowSteps/jquery.arrowSteps.less",
 				"resources/uw.CopyMetadataWidget.less",
 				"resources/ui/steps/uw.ui.Thanks.less",
 				"resources/ui/steps/uw.ui.Tutorial.css",

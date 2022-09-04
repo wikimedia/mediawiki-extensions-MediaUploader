@@ -1,3 +1,5 @@
+@import 'variables.less';
+
 .mediauploader-copyMetadataWidget {
 	// Frame like mw.UploadWizardDetails
 	border-top: 1px solid #d8d8d8;
@@ -7,5 +9,13 @@
 
 	.mw-collapsible {
 		padding-left: 2.5em;
+	}
+
+	@media ( max-width: @mobile-w ) {
+		padding: 0;
+
+		.mw-collapsible {
+			padding-left: 0;
+		}
 	}
 }

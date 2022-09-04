@@ -1,3 +1,5 @@
+@import 'variables.less';
+
 form.mediauploader-form {
 	display: inline;
 }
@@ -6,6 +8,11 @@ form.mediauploader-form {
 	margin-top: 18px;
 	min-width: 750px; /* width of tutorial.png plus padding */
 	max-width: 900px; /* wild guess */
+
+	@media ( max-width: @mobile-w ) {
+		min-width: inherit;
+		max-width: inherit;
+	}
 }
 
 #mediauploader-steps {
@@ -15,6 +22,10 @@ form.mediauploader-form {
 	line-height: 2.5;
 	background-color: #fff;
 	border: 0;
+
+	@media ( max-width: @mobile-w ) {
+		line-height: inherit;
+	}
 }
 
 .mediauploader-clearing {
@@ -30,6 +41,12 @@ form.mediauploader-form {
 #mediauploader-files {
 	margin-top: 3em;
 	margin-bottom: 1em;
+
+	@media ( max-width: @mobile-w ) {
+		margin-top: 0;
+		margin-right: auto !important; /* stylelint-disable-line declaration-no-important */
+		margin-left: auto !important; /* stylelint-disable-line declaration-no-important */
+	}
 }
 
 .mediauploader-add-files-0 {
@@ -51,6 +68,10 @@ form.mediauploader-form {
 		display: inline-block;
 		width: auto;
 		height: auto;
+
+		@media ( max-width: @mobile-w ) {
+			width: 100%;
+		}
 
 		&.oo-ui-selectFileWidget.oo-ui-selectFileInputWidget-empty.oo-ui-selectFileWidget-dropTarget .oo-ui-selectFileInputWidget-selectButton,
 		&.oo-ui-selectFileWidget.oo-ui-selectFileInputWidget-empty.oo-ui-widget-enabled .oo-ui-selectFileWidget-dropLabel {
@@ -77,6 +98,10 @@ form.mediauploader-form {
 .mediauploader-file-indicator {
 	float: right;
 	padding: 1.5em 1.5em 0 0;
+
+	@media ( max-width: @mobile-w ) {
+		padding: 0 0.5em 0 0;
+	}
 
 	.oo-ui-messageWidget {
 		width: 20px;
@@ -116,11 +141,20 @@ form.mediauploader-form {
 	padding: 1.5em;
 	margin-right: 40px;
 	overflow: hidden;
+
+	@media ( max-width: @mobile-w ) {
+		padding: 1.8em 0.5em 1.5em 0.5em;
+		margin: 0;
+	}
 }
 
 #mediauploader-filelist {
 	/* We rely on the margin collapsing with that on #mediauploader-files */
 	margin-top: 3em;
+
+	@media ( max-width: @mobile-w ) {
+		margin-top: 1.5em;
+	}
 }
 
 .mediauploader-file-status {
@@ -146,12 +180,22 @@ form.mediauploader-form {
 	text-align: center;
 	/* @embed */
 	background: url( images/blank-document.svg ) no-repeat center center;
+
+	@media ( max-width: @mobile-w ) {
+		margin-right: 0.7em;
+	}
 }
 
+/* Box with filename, upload status and delete button */
 .mediauploader-file-texts {
 	/* This also create a new block formatting context, resulting in the whole block
 	   displaying next to image thumbnail, rather than wrapping the lines of text around it */
 	overflow: hidden;
+
+	@media ( max-width: @mobile-w ) {
+		// min-width: 20em;
+		overflow: unset !important; /* stylelint-disable-line declaration-no-important */
+	}
 }
 
 .mediauploader-file-preview-broken {
@@ -170,10 +214,21 @@ form.mediauploader-form {
 
 .filled + .filled {
 	border-top: 1px solid #c8ccd1;
+
+	@media ( max-width: @mobile-w ) {
+		padding-top: 0.5em;
+	}
 }
 
 #mediauploader-upload-ctrls {
 	margin-top: 1em;
+
+	@media ( max-width: @mobile-w ) {
+		.oo-ui-buttonElement > .oo-ui-buttonElement-button {
+			// Break lines on long button text
+			white-space: normal !important; /* stylelint-disable-line declaration-no-important */
+		}
+	}
 }
 
 #mediauploader-stepdiv-file .mediauploader-buttons .mediauploader-file-endchoice {
@@ -325,6 +380,10 @@ form.mediauploader-form {
 
 .mediauploader-data {
 	float: left;
+
+	@media ( max-width: @mobile-w ) {
+		width: 100% !important; /* stylelint-disable-line declaration-no-important */
+	}
 }
 
 /* I don't like that this has to have width, to ensure that all the floats work out correctly. */
@@ -337,6 +396,12 @@ form.mediauploader-form {
 	/* 120px + 2.5em is width of thumbnail on the left */
 	/* 0.5em is padding inside text input (2 * 0.25), 4px is border (2 x 2px) */
 	width: ~'calc( 100% - 120px - 2.5em - 0.5em - 4px )';
+
+	@media ( max-width: @mobile-w ) {
+		.oo-ui-buttonElement > .oo-ui-buttonElement-button {
+			white-space: normal;
+		}
+	}
 }
 
 .mediauploader-stepdiv {
@@ -359,6 +424,10 @@ form.mediauploader-form {
 
 .mediauploader-deed-license {
 	margin-left: 1.5em;
+
+	@media ( max-width: @mobile-w ) {
+		margin-left: 0 !important; /* stylelint-disable-line declaration-no-important */
+	}
 }
 
 .mediauploader-info-file {
@@ -391,6 +460,10 @@ form.mediauploader-form {
 
 .mediauploader-deed-form-internal {
 	padding: 0.5em 0 1em 2em;
+
+	@media ( max-width: @mobile-w ) {
+		padding-left: 1.5em;
+	}
 }
 
 label.mediauploader-copyright-info {
@@ -447,6 +520,10 @@ input[ type='radio' ].mediauploader-copyright-info-radio {
 
 .mediauploader-deed-license-group-body {
 	padding-left: 3em;
+
+	@media ( max-width: @mobile-w ) {
+		padding-left: 0 !important; /* stylelint-disable-line declaration-no-important */
+	}
 }
 
 .mediauploader-license-custom {
@@ -457,11 +534,23 @@ input[ type='radio' ].mediauploader-copyright-info-radio {
 		width: 9em;
 		padding-left: 1em;
 		margin-right: 0;
+
+		@media ( max-width: @mobile-w ) {
+			float: none;
+			padding-left: 0;
+			padding-top: 0.5em;
+		}
 	}
 
 	.oo-ui-textInputWidget {
 		width: auto;
 		margin-right: 10em;
+
+		@media ( max-width: @mobile-w ) {
+			float: none;
+			padding-top: 0.5em;
+			margin-right: 0;
+		}
 	}
 }
 
@@ -502,6 +591,10 @@ input[ type='radio' ].mediauploader-copyright-info-radio {
 	margin-top: 0;
 	margin-bottom: 0;
 	margin-left: 1.5em;
+
+	@media ( max-width: @mobile-w ) {
+		padding-left: 0 !important; /* stylelint-disable-line declaration-no-important */
+	}
 }
 
 .mediauploader-details-texts {

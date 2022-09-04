@@ -1,8 +1,15 @@
+@import '../variables.less';
+
 .arrowSteps {
 	list-style-type: none;
 	list-style-image: none;
 	border: 1px solid #666;
 	position: relative;
+
+	@media ( max-width: @mobile-w ) {
+		width: inherit;
+		position: inherit;
+	}
 }
 
 .arrowSteps li {
@@ -14,6 +21,29 @@
 	color: #72777d;
 	background-color: #eaecf0;
 	position: relative;
+
+	:after,
+	:before {
+		left: 100%;
+		top: 50%;
+		border: solid transparent;
+		content: ' ';
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+
+	@media ( max-width: @mobile-w ) {
+		width: auto !important; /* stylelint-disable-line declaration-no-important */
+		list-style-type: none !important; /* stylelint-disable-line declaration-no-important */
+		float: left;
+		padding: 0 0.1em;
+		position: inherit;
+		height: inherit;
+		background: inherit;
+		margin: 0 0 0 1.8em;
+	}
 }
 
 .arrowSteps li div {
@@ -30,32 +60,29 @@
 	font-weight: bold;
 }
 
-.arrowSteps li:after,
-.arrowSteps li:before {
-	left: 100%;
-	top: 50%;
-	border: solid transparent;
-	content: ' ';
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-}
+.arrowSteps li.arrow {
+	:after {
+		border-left-color: #eaecf0;
+		/* half the height of .arrowSteps li */
+		border-width: 25px;
+		margin-top: -25px;
+		z-index: 1;
+	}
 
-.arrowSteps li.arrow:after {
-	border-left-color: #eaecf0;
-	/* half the height of .arrowSteps li */
-	border-width: 25px;
-	margin-top: -25px;
-	z-index: 1;
-}
+	:before {
+		border-left-color: #fff;
+		/* half the height of .arrowSteps li + width of the arrow border */
+		border-width: 30px;
+		margin-top: -30px;
+		z-index: 1;
+	}
 
-.arrowSteps li.arrow:before {
-	border-left-color: #fff;
-	/* half the height of .arrowSteps li + width of the arrow border */
-	border-width: 30px;
-	margin-top: -30px;
-	z-index: 1;
+	:after,
+	:before {
+		@media ( max-width: @mobile-w ) {
+			display: none;
+		}
+	}
 }
 
 #mediauploader-steps li.head:after {
@@ -69,6 +96,11 @@
  */
 .arrowSteps li:not( :first-child ):not( :last-child ) div {
 	padding-left: 30px;
+
+	@media ( max-width: @mobile-w ) {
+		padding: inherit;
+		text-align: center;
+	}
 }
 
 /*
@@ -83,4 +115,9 @@
 .arrowSteps li:first-child div,
 .arrowSteps li:last-child div {
 	padding-left: 15px;
+
+	@media ( max-width: @mobile-w ) {
+		padding: inherit;
+		text-align: center;
+	}
 }
