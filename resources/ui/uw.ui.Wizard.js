@@ -45,28 +45,8 @@
 	 * @param {Object} config
 	 */
 	uw.ui.Wizard.prototype.initHeader = function ( config ) {
-		var feedbackLink,
-			// eslint-disable-next-line no-jquery/no-global-selector
-			$contentSub = $( '#contentSub' );
-
-		if ( config.feedbackLink ) {
-			// Preferred. Send user to bug tracker (defaults to UW's own
-			// Phabricator project)
-			feedbackLink = config.feedbackLink;
-		} else if ( config.feedbackPage ) {
-			// Backwards compatibility...send user to talk page to give
-			// feedback.
-			feedbackLink = mw.util.getUrl( config.feedbackPage );
-		}
-
-		if ( feedbackLink ) {
-			this.$feedbackLink = $( '<a>' )
-				.addClass( 'contentSubLink' )
-				.prop( 'href', feedbackLink )
-				.msg( 'mediauploader-feedback-prompt' );
-
-			$contentSub.append( this.$feedbackLink );
-		}
+		// eslint-disable-next-line no-jquery/no-global-selector
+		var $contentSub = $( '#contentSub' );
 
 		if ( config.alternativeUploadToolsPage ) {
 			this.$alternativeUploads = $( '<a>' )

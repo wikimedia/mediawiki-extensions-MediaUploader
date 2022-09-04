@@ -200,7 +200,7 @@
 			return $.Deferred().reject( 'aborted', {
 				errors: [ {
 					code: 'aborted',
-					html: mw.message( 'api-error-aborted' ).parse()
+					html: mw.message( 'mediauploader-api-error-aborted' ).parse()
 				} ]
 			} );
 		}
@@ -352,7 +352,7 @@
 			return $.Deferred().reject( 'aborted', {
 				errors: [ {
 					code: 'aborted',
-					html: mw.message( 'api-error-aborted' ).parse()
+					html: mw.message( 'mediauploader-api-error-aborted' ).parse()
 				} ]
 			} );
 		}

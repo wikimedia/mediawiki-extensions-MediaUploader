@@ -67,7 +67,7 @@
 		}
 
 		if ( !result.upload.imageinfo ) {
-			this.setError( 'noimageinfo', mw.message( 'api-error-noimageinfo' ).parse() );
+			this.setError( 'noimageinfo', mw.message( 'mediauploader-api-error-noimageinfo' ).parse() );
 			return;
 		}
 
@@ -112,7 +112,7 @@
 				}
 
 				// we have an unknown warning, so let's say what we know
-				this.setError( code, mw.message( 'api-error-unknown-warning', param ).parse() );
+				this.setError( code, mw.message( 'mediauploader-api-error-unknown-warning', param ).parse() );
 				return;
 		}
 	};

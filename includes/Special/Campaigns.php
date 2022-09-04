@@ -49,7 +49,7 @@ class Campaigns extends SpecialPage {
 			$queryBuilder->where( "campaign_page_id > $start" );
 		}
 
-		$this->getOutput()->setPageTitle( $this->msg( 'mwe-upload-campaigns-list-title' ) );
+		$this->getOutput()->setPageTitle( $this->msg( 'mediauploader-campaigns-list-title' ) );
 		$this->getOutput()->addModules( 'ext.uploadWizard.uploadCampaign.list' );
 		$this->getOutput()->addHTML( '<dl>' );
 
@@ -141,10 +141,10 @@ class Campaigns extends SpecialPage {
 	private function getHtmlForPagination( $firstId ) {
 		$nextHref = $this->getPageTitle()->getLocalURL( [ 'start' => $firstId ] );
 		return Html::rawElement( 'div',
-			[ 'id' => 'mwe-upload-campaigns-pagination' ],
+			[ 'id' => 'mediauploader-campaigns-pagination' ],
 			Html::element( 'a',
 				[ 'href' => $nextHref ],
-				$this->msg( 'mwe-upload-campaigns-pagination-next' )->text()
+				$this->msg( 'mediauploader-campaigns-pagination-next' )->text()
 			)
 		);
 	}

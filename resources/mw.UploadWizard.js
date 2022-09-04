@@ -143,7 +143,7 @@
 							// in case of $.ajax.fail(), there is no response json
 							response.errors[ 0 ].html = mw.message( 'api-clientside-error-timeout' ).parse();
 						} else if ( result && result.textStatus === 'parsererror' ) {
-							response.errors[ 0 ].html = mw.message( 'api-error-parsererror' ).parse();
+							response.errors[ 0 ].html = mw.message( 'mediauploader-api-error-parsererror' ).parse();
 						} else if ( code === 'http' && result && result.xhr && result.xhr.status === 0 ) {
 							// failed to even connect to server
 							response.errors[ 0 ].html = mw.message( 'api-clientside-error-noconnect' ).parse();

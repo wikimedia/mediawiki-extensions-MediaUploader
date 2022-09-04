@@ -336,7 +336,6 @@ return [
 			'licenseGroups' => [
 				[
 					'head' => 'mediauploader-license-cc-head',
-					'subhead' => 'mediauploader-license-cc-subhead',
 					'licenses' => [
 						'cc-by-sa-4.0',
 						'cc-by-sa-3.0',
@@ -405,16 +404,6 @@ return [
 	// Maximum length of custom wikitext for a license
 	'maxCustomLicenseLength' => 10000,
 
-	// Link to page where users can leave feedback or bug reports.
-	// Defaults to MediaUploader's bug tracker.
-	// If you want to use a wiki page, set this to a falsy value,
-	// and set feedbackPage to the name of the wiki page.
-	'feedbackLink' => '',
-
-	// [deprecated] Wiki page for leaving Upload Wizard feedback,
-	// for example 'Commons:Upload wizard feedback'
-	'feedbackPage' => '',
-
 	// Title of page for alternative uploading form, e.g.:
 	//   'altUploadForm' => 'Special:Upload',
 	//
@@ -429,9 +418,6 @@ return [
 
 	// Wiki page that lists alternative ways to upload
 	'alternativeUploadToolsPage' => 'Commons:Upload_tools',
-
-	// Wiki page for reporting issues with the blacklist
-	'blacklistIssuesPage' => '',
 
 	// When using chunked upload, what size, in bytes, should each chunk be?
 	'chunkSize' => 5 * 1024 * 1024,

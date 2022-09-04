@@ -217,21 +217,6 @@
 				}
 			];
 
-			// feedback request for titleblacklist
-			if ( mw.UploadWizard.config.blacklistIssuesPage !== undefined && mw.UploadWizard.config.blacklistIssuesPage !== '' ) {
-				messageParams[ 0 ] = 'mediauploader-blacklisted-details-feedback';
-				messageParams.push( function () {
-					var feedback = new mw.Feedback( {
-						title: new mw.Title( mw.UploadWizard.config.blacklistIssuesPage ),
-						dialogTitleMessageKey: 'mediauploader-feedback-title'
-					} );
-					feedback.launch( {
-						message: mw.message( 'mediauploader-feedback-blacklist-line-intro', result.blacklist.blacklistLine ).text(),
-						subject: mw.message( 'mediauploader-feedback-blacklist-subject', titleString ).text()
-					} );
-				} );
-			}
-
 			errors.push( mw.message.apply( mw, messageParams ) );
 		}
 

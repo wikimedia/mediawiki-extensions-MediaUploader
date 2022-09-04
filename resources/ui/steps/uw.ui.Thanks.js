@@ -27,8 +27,7 @@
 	uw.ui.Thanks = function UWUIThanks( config ) {
 		var $header,
 			beginButtonTarget,
-			thanks = this,
-			userGroups = mw.config.get( 'wgUserGroups' );
+			thanks = this;
 
 		this.config = config;
 
@@ -84,20 +83,6 @@
 		} );
 
 		this.$buttons.append( this.buttonGroup.$element );
-
-		// If appropriate, add a dismissable Machine Vision CTA above content.
-		mw.loader.using( 'ext.MachineVision.config' ).then( function ( require ) {
-			var machineVisionConfig = require( 'ext.MachineVision.config' );
-			if ( machineVisionConfig && userGroups &&
-				machineVisionConfig.showComputerAidedTaggingCallToAction === true &&
-				userGroups.indexOf( 'autoconfirmed' ) !== -1 &&
-				( machineVisionConfig.testersOnly === false ||
-					userGroups.indexOf( 'machinevision-tester' ) !== -1 ) ) {
-				thanks.mvCtaCheckbox = new OO.ui.CheckboxInputWidget( { value: 'Notify me' } )
-					.connect( thanks, { change: thanks.onMvCtaCheckboxChange } );
-				thanks.addMachineVisionCta();
-			}
-		} );
 	};
 
 	OO.inheritClass( uw.ui.Thanks, uw.ui.Step );
@@ -151,131 +136,6 @@
 		} );
 
 		this.$div.find( '.mediauploader-buttons' ).before( $thanksDiv );
-	};
-
-	/**
-	 * Add a call to action to opt into notifications for the machine vision
-	 * tool, and to visit the tool to tag popular uploads.
-	 */
-	uw.ui.Thanks.prototype.addMachineVisionCta = function () {
-		var mvCtaDismissedKey = 'upwiz_mv_cta_dismissed',
-			$mvCtaDiv,
-			$mvCtaDismiss,
-			$mvCtaContent,
-			$mvCtaCheckboxSection,
-			mvCtaCheckboxField;
-
-		// If the user has already opted into notifications or dismissed the
-		// CTA previously, don't show this.
-		if ( Number( mw.user.options.get( 'echo-subscriptions-web-machinevision' ) ) === 1 ||
-			Number( mw.user.options.get( mvCtaDismissedKey ) ) === 1 ) {
-			return;
-		}
-
-		// Wrapper div.
-		$mvCtaDiv = $( '<div>' ).addClass( 'mediauploader-mv-cta' );
-
-		// Add dismiss icon button.
-		$mvCtaDismiss = new OO.ui.ButtonWidget( {
-			classes: [ 'mediauploader-mv-cta-dismiss' ],
-			icon: 'close',
-			invisibleLabel: true,
-			label: mw.message( 'mediauploader-mv-cta-dismiss' ).text(),
-			title: mw.message( 'mediauploader-mv-cta-dismiss' ).text()
-		} ).on( 'click', function () {
-			$mvCtaDiv.remove();
-
-			// Set user preference to not show this again.
-			new mw.Api().saveOption( mvCtaDismissedKey, 1 );
-			mw.user.options.set( mvCtaDismissedKey, 1 );
-		} );
-		$mvCtaDismiss.$element.appendTo( $mvCtaDiv );
-
-		// Add icon div.
-		$mvCtaDiv.append( $( '<div>' ).addClass( 'mediauploader-mv-cta-icon' ) );
-
-		// Add wrapper for everything to the right of the icon.
-		$mvCtaContent = $( '<div>' )
-			.addClass( 'mediauploader-mv-cta-content' )
-			.appendTo( $mvCtaDiv );
-
-		// Add heading.
-		$mvCtaContent.append( $( '<h3>' )
-			.addClass( 'mediauploader-mv-cta-heading' )
-			.msg( 'mediauploader-mv-cta-heading' )
-		);
-
-		// Add description text.
-		$mvCtaContent.append( $( '<p>' )
-			.addClass( 'mediauploader-mv-cta-description' )
-			.msg( 'mediauploader-mv-cta-description' )
-		);
-
-		// Add wrapper checkbox and confirmation message.
-		$mvCtaCheckboxSection = $( '<div>' )
-			.addClass( 'mediauploader-mv-cta-checkbox-section' )
-			.appendTo( $mvCtaContent );
-
-		// Add checkbox field layout.
-		mvCtaCheckboxField = new OO.ui.FieldLayout( this.mvCtaCheckbox, {
-			label: mw.message( 'mediauploader-mv-cta-checkbox-label' ).text(),
-			align: 'inline'
-		} );
-		mvCtaCheckboxField.$element.appendTo( $mvCtaCheckboxSection );
-
-		// Add final CTA to go to the MV tool.
-		$mvCtaContent.append( $( '<p>' )
-			.addClass( 'mediauploader-mv-cta-final-cta' )
-			.msg( 'mediauploader-mv-cta-final-cta' )
-		);
-
-		// Add entire element above the main content of this step.
-		this.$div.find( '.mediauploader-thanks-header' ).before( $mvCtaDiv );
-	};
-
-	/**
-	 * Handle user preference update when user checks box to opt into or out of
-	 * notifications for the machine vision tool.
-	 */
-	uw.ui.Thanks.prototype.onMvCtaCheckboxChange = function () {
-		var self = this,
-			selected = this.mvCtaCheckbox.isSelected(),
-			key = 'echo-subscriptions-web-machinevision',
-			value = selected ? 1 : 0,
-			message = selected ?
-				'mediauploader-mv-cta-user-preference-set' :
-				'mediauploader-mv-cta-user-preference-unset',
-			$mvCtaCheckboxSection = this.$div.find( '.mediauploader-mv-cta-checkbox-section' );
-
-		// Remove existing confirmation message if there is one.
-		this.$div.find( '.mediauploader-mv-cta-confirmation' ).remove();
-
-		// Disable the checkbox until API call finishes.
-		this.mvCtaCheckbox.setDisabled( true );
-
-		// Update the user preference in the database and in local storage.
-		// Only authenticated users can use UW, so no need to check isAnon().
-		new mw.Api().saveOption( key, value )
-			.done( function () {
-				// Show the appropriate message.
-				// eslint-disable-next-line mediawiki/msg-doc
-				$mvCtaCheckboxSection.append( $( '<p>' )
-					.addClass( 'mediauploader-mv-cta-confirmation' )
-					.msg( message )
-				);
-				mw.user.options.set( key, value );
-			} )
-			.fail( function () {
-				message = 'mediauploader-mv-cta-user-preference-set-failed';
-				// eslint-disable-next-line mediawiki/msg-doc
-				$mvCtaCheckboxSection.append( $( '<p>' )
-					.addClass( 'mediauploader-mv-cta-confirmation' )
-					.msg( message )
-				);
-			} )
-			.always( function () {
-				self.mvCtaCheckbox.setDisabled( false );
-			} );
 	};
 
 	/**

@@ -1030,7 +1030,7 @@
 				} else {
 					warningsKeys = Object.keys( warnings );
 					code = 'unknown-warning';
-					message = mw.message( 'api-error-unknown-warning', warningsKeys.join( ', ' ) ).parse();
+					message = mw.message( 'mediauploader-api-error-unknown-warning', warningsKeys.join( ', ' ) ).parse();
 				}
 
 				return $.Deferred().reject( code, { errors: [ { html: message } ] } );
