@@ -412,32 +412,6 @@ class MediaUploader extends SpecialPage {
 			$this->getOutput()->addHTML( $config['display']['headerLabel'] );
 		}
 
-		if ( array_key_exists( 'fallbackToAltUploadForm', $config )
-			&& array_key_exists( 'altUploadForm', $config )
-			&& $config['altUploadForm'] != ''
-			&& $config[ 'fallbackToAltUploadForm' ]
-		) {
-			$linkHtml = '';
-			$altUploadForm = Title::newFromText( $config[ 'altUploadForm' ] );
-			if ( $altUploadForm instanceof Title ) {
-				$linkHtml = Html::rawElement( 'p', [ 'style' => 'text-align: center;' ],
-					Html::element( 'a', [ 'href' => $altUploadForm->getLocalURL() ],
-						$config['altUploadForm']
-					)
-				);
-			}
-
-			return Html::rawElement(
-				'div',
-				[],
-				Html::element(
-					'p',
-					[ 'style' => 'text-align: center' ],
-					$this->msg( 'mediauploader-extension-disabled' )->text()
-				) . $linkHtml
-			);
-		}
-
 		// TODO move this into UploadWizard.js or some other javascript resource so the upload wizard
 		// can be dynamically included ( for example the add media wizard )
 		return '<div id="upload-wizard" class="upload-section">' .

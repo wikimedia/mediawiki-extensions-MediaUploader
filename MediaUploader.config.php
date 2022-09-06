@@ -388,7 +388,7 @@ return [
 	//		'de'		=> 'Commons:Hochladen'
 	//	 );
 	// When empty, no link will be added.
-	'altUploadForm' => 'Special:Upload',
+	'altUploadForm' => '',
 
 	// Wiki page that lists alternative ways to upload
 	// When empty, no link will be added.
