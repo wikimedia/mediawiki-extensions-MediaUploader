@@ -2,7 +2,6 @@
 
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Hooks;
 
-use Content;
 use IContextSource;
 use LinksUpdate;
 use ManualLogEntry;
@@ -12,6 +11,9 @@ use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Config\ConfigCacheInvalidator;
 use MediaWiki\Extension\MediaUploader\Hooks\CampaignHooks;
 use MediaWiki\Linker\LinkTarget;
+use MediaWiki\Page\ProperPageIdentity;
+use MediaWiki\Permissions\Authority;
+use MediaWiki\Revision\RevisionRecord;
 use MediaWikiUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Status;
@@ -29,33 +31,33 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 	private const DUMMY_CAMPAIGN_NAME = 'Dummy';
 	private const DUMMY_CAMPAIGN_ID = 1234;
 
-	public function testArticleDeleteComplete_notCampaignNS() {
-		$wikiPage = $this->createMock( WikiPage::class );
-		$wikiPage->expects( $this->atLeastOnce() )
-			->method( 'getTitle' )
-			->willReturn( $this->getTitleNotInCampaignNamespace() );
+	public function testPageDeleteComplete_notCampaignNS() {
+		$page = $this->createMock( ProperPageIdentity::class );
+		$page->expects( $this->atLeastOnce() )
+			->method( 'getNamespace' )
+			->willReturn( 1 );
 
 		$hooks = $this->getCampaignHooks();
 
 		$this->assertTrue(
-			$hooks->onArticleDeleteComplete(
-				$wikiPage,
-				$this->createNoOpMock( User::class ),
+			$hooks->onPageDeleteComplete(
+				$page,
+				$this->createNoOpMock( Authority::class ),
 				'',
 				123,
-				$this->createNoOpMock( Content::class ),
+				$this->createNoOpMock( RevisionRecord::class ),
 				$this->createNoOpMock( ManualLogEntry::class ),
 				10
 			),
-			'onArticleDeleteComplete()'
+			'onPageDeleteComplete()'
 		);
 	}
 
-	public function testArticleDeleteComplete_campaignNS() {
-		$wikiPage = $this->createMock( WikiPage::class );
-		$wikiPage->expects( $this->atLeastOnce() )
-			->method( 'getTitle' )
-			->willReturn( $this->getTitleInCampaignNamespace() );
+	public function testPageDeleteComplete_campaignNS() {
+		$page = $this->createMock( ProperPageIdentity::class );
+		$page->expects( $this->atLeastOnce() )
+			->method( 'getNamespace' )
+			->willReturn( NS_CAMPAIGN );
 
 		$campaignStore = $this->createMock( CampaignStore::class );
 		$campaignStore->expects( $this->once() )
@@ -65,16 +67,16 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 		$hooks = $this->getCampaignHooks( $campaignStore );
 
 		$this->assertTrue(
-			$hooks->onArticleDeleteComplete(
-				$wikiPage,
-				$this->createNoOpMock( User::class ),
+			$hooks->onPageDeleteComplete(
+				$page,
+				$this->createNoOpMock( Authority::class ),
 				'',
 				self::DUMMY_CAMPAIGN_ID,
-				$this->createNoOpMock( Content::class ),
+				$this->createNoOpMock( RevisionRecord::class ),
 				$this->createNoOpMock( ManualLogEntry::class ),
 				10
 			),
-			'onArticleDeleteComplete()'
+			'onPageDeleteComplete()'
 		);
 	}
 
@@ -283,11 +285,14 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 		$hooks->doCampaignUpdate( $wikiPage, $content );
 	}
 
-	public function testArticleDelete_configAnchor() {
-		$wikiPage = $this->createMock( WikiPage::class );
-		$wikiPage->expects( $this->once() )
-			->method( 'getTitle' )
-			->willReturn( $this->getTitleForGlobalConfigAnchor() );
+	public function testPageDelete_configAnchor() {
+		$page = $this->createMock( ProperPageIdentity::class );
+		$page->expects( $this->once() )
+			->method( 'getNamespace' )
+			->willReturn( NS_CAMPAIGN );
+		$page->expects( $this->once() )
+			->method( 'getDBkey' )
+			->willReturn( CampaignContent::GLOBAL_CONFIG_ANCHOR_DBKEY );
 
 		$status = $this->createMock( Status::class );
 		$status->expects( $this->once() )
@@ -296,43 +301,42 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$hooks = $this->getCampaignHooks();
 
-		$error = '';
 		$reason = '';
 		$this->assertFalse(
-			$hooks->onArticleDelete(
-				$wikiPage,
-				$this->createNoOpMock( User::class ),
+			$hooks->onPageDelete(
+				$page,
+				$this->createNoOpMock( Authority::class ),
 				$reason,
-				$error,
 				$status,
 				false
 			),
-			'onArticleDelete()'
+			'onPageDelete()'
 		);
 	}
 
 	public function testArticleDelete_notConfigAnchor() {
-		$wikiPage = $this->createMock( WikiPage::class );
-		$wikiPage->expects( $this->once() )
-			->method( 'getTitle' )
-			->willReturn( $this->getTitleNotInCampaignNamespace() );
+		$page = $this->createMock( ProperPageIdentity::class );
+		$page->expects( $this->once() )
+			->method( 'getNamespace' )
+			->willReturn( 0 );
+		$page->expects( $this->once() )
+			->method( 'getDBkey' )
+			->willReturn( 'some other page' );
 
 		$status = $this->createNoOpMock( Status::class );
 
 		$hooks = $this->getCampaignHooks();
 
-		$error = '';
 		$reason = '';
 		$this->assertTrue(
-			$hooks->onArticleDelete(
-				$wikiPage,
-				$this->createNoOpMock( User::class ),
+			$hooks->onPageDelete(
+				$page,
+				$this->createNoOpMock( Authority::class ),
 				$reason,
-				$error,
 				$status,
 				false
 			),
-			'onArticleDelete()'
+			'onPageDelete()'
 		);
 	}
 

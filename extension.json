@@ -489,8 +489,8 @@
 		]
 	},
 	"Hooks": {
-		"ArticleDelete": "campaign",
-		"ArticleDeleteComplete": "campaign",
+		"PageDelete": "campaign",
+		"PageDeleteComplete": "campaign",
 		"ChangeTagsAllowedAdd": "registration",
 		"ChangeTagsListActive": "registration",
 		"CodeEditorGetPageLanguage": "\\MediaWiki\\Extension\\MediaUploader\\Hooks\\CampaignContentHooks::onCodeEditorGetPageLanguage",

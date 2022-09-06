@@ -224,7 +224,7 @@ YAML;
 		$wpFactory = $this->getServiceContainer()->getWikiPageFactory();
 		$title = Title::newFromText( $name, NS_CAMPAIGN );
 		$page = $wpFactory->newFromLinkTarget( $title );
-		$page->doDeleteArticleReal( '', $this->getTestSysop()->getUser() );
+		$this->deletePage( $page );
 	}
 
 	/**

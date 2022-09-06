@@ -15,14 +15,18 @@ use MediaWiki\Hook\EditFilterMergedContentHook;
 use MediaWiki\Hook\LinksUpdateCompleteHook;
 use MediaWiki\Hook\MovePageIsValidMoveHook;
 use MediaWiki\Linker\LinkTarget;
-use MediaWiki\Page\Hook\ArticleDeleteCompleteHook;
-use MediaWiki\Page\Hook\ArticleDeleteHook;
+use MediaWiki\Page\Hook\PageDeleteCompleteHook;
+use MediaWiki\Page\Hook\PageDeleteHook;
+use MediaWiki\Page\ProperPageIdentity;
+use MediaWiki\Permissions\Authority;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Storage\EditResult;
 use MediaWiki\Storage\Hook\PageSaveCompleteHook;
 use MediaWiki\User\UserIdentity;
 use Status;
+use StatusValue;
 use Title;
+use TitleValue;
 use User;
 use Wikimedia\Assert\PreconditionException;
 use WikiPage;
@@ -31,12 +35,12 @@ use WikiPage;
  * Hooks related to handling events happening on pages in the Campaign: namespace.
  */
 class CampaignHooks implements
-	PageSaveCompleteHook,
-	LinksUpdateCompleteHook,
-	ArticleDeleteCompleteHook,
 	EditFilterMergedContentHook,
-	ArticleDeleteHook,
-	MovePageIsValidMoveHook
+	LinksUpdateCompleteHook,
+	MovePageIsValidMoveHook,
+	PageDeleteCompleteHook,
+	PageDeleteHook,
+	PageSaveCompleteHook
 {
 
 	/** @var CampaignStore */
@@ -59,24 +63,26 @@ class CampaignHooks implements
 
 	/**
 	 * Deletes entries from mu_campaign table when a Campaign is deleted
-	 * @param WikiPage $wikiPage
-	 * @param User $user
+	 *
+	 * @param ProperPageIdentity $page
+	 * @param Authority $deleter
 	 * @param string $reason
-	 * @param int $id
-	 * @param Content|null $content
+	 * @param int $pageID
+	 * @param RevisionRecord $deletedRev
 	 * @param ManualLogEntry $logEntry
 	 * @param int $archivedRevisionCount
 	 *
-	 * @return bool
+	 * @return true
 	 */
-	public function onArticleDeleteComplete(
-		$wikiPage, $user, $reason, $id, $content, $logEntry, $archivedRevisionCount
+	public function onPageDeleteComplete(
+		ProperPageIdentity $page, Authority $deleter, string $reason, int $pageID,
+		RevisionRecord $deletedRev, ManualLogEntry $logEntry, int $archivedRevisionCount
 	): bool {
-		if ( !$wikiPage->getTitle()->inNamespace( NS_CAMPAIGN ) ) {
+		if ( $page->getNamespace() !== NS_CAMPAIGN ) {
 			return true;
 		}
 
-		$this->campaignStore->deleteCampaignByPageId( $id );
+		$this->campaignStore->deleteCampaignByPageId( $pageID );
 		return true;
 	}
 
@@ -202,23 +208,21 @@ class CampaignHooks implements
 	/**
 	 * Prevent the global config anchor from being deleted.
 	 *
-	 * @param WikiPage $wikiPage
-	 * @param User $user
-	 * @param string &$reason
-	 * @param string &$error
-	 * @param Status &$status
+	 * @param ProperPageIdentity $page
+	 * @param Authority $deleter
+	 * @param string $reason
+	 * @param StatusValue $status
 	 * @param bool $suppress
 	 *
 	 * @return bool
 	 */
-	public function onArticleDelete(
-		WikiPage $wikiPage, User $user, &$reason, &$error, Status &$status, $suppress
+	public function onPageDelete(
+		ProperPageIdentity $page, Authority $deleter, string $reason, StatusValue $status, bool $suppress
 	): bool {
-		if ( $this->isGlobalConfigAnchor( $wikiPage->getTitle() ) ) {
+		if ( $this->isGlobalConfigAnchor( TitleValue::newFromPage( $page ) ) ) {
 			$status->fatal( 'mediauploader-global-config-anchor' );
 			return false;
 		}
-
 		return true;
 	}
 
