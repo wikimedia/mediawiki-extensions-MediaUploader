@@ -24,6 +24,13 @@
 		this.deedChooserDetails = new uw.DeedChooserDetailsWidget();
 		this.customDeedChooser = false;
 
+		if ( !mw.UploadWizard.config.licensing.enabled ) {
+			// Create a pseudo-deed chooser if licensing is disabled
+			this.upload.deedChooser = {
+				deed: new uw.deed.None( mw.UploadWizard.config )
+			};
+		}
+
 		this.$div = $( '<div>' ).addClass( 'mediauploader-info-file ui-helper-clearfix filled' );
 	};
 

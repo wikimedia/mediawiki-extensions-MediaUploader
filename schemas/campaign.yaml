@@ -409,6 +409,7 @@ properties:
     type: object
     additionalProperties: false
     properties:
+      enabled: { type: boolean }
       defaultType:
         type: string
         enum:

@@ -284,6 +284,9 @@ return [
 	],
 
 	'licensing' => [
+		// Whether to enable the licensing step.
+		'enabled' => true,
+
 		// Default license type.
 		// Possible values: ownWork, thirdParty, choice.
 		'defaultType' => 'choice',

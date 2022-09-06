@@ -222,6 +222,7 @@
 				"resources/controller/uw.controller.Upload.js",
 				"resources/deed/uw.deed.base.js",
 				"resources/deed/uw.deed.Abstract.js",
+				"resources/deed/uw.deed.None.js",
 				"resources/deed/uw.deed.OwnWork.js",
 				"resources/deed/uw.deed.ThirdParty.js",
 				"resources/deed/uw.deed.Custom.js",

@@ -153,21 +153,21 @@
 	/**
 	 * @inheritdoc
 	 */
-	uw.deed.Abstract.prototype.getSourceWikiText = function () {
+	uw.deed.ThirdParty.prototype.getSourceWikiText = function () {
 		return this.sourceInput.getValue();
 	};
 
 	/**
 	 * @inheritdoc
 	 */
-	uw.deed.Abstract.prototype.getAuthorWikiText = function () {
+	uw.deed.ThirdParty.prototype.getAuthorWikiText = function () {
 		return this.authorInput.getValue();
 	};
 
 	/**
 	 * @inheritdoc
 	 */
-	uw.deed.Abstract.prototype.getLicenseWikiText = function () {
+	uw.deed.ThirdParty.prototype.getLicenseWikiText = function () {
 		return this.licenseInput.getWikiText();
 	};
 

@@ -29,6 +29,7 @@
 		var step = new uw.controller.Deed(
 				new mw.Api(),
 				{ licensing: {
+					enabled: true,
 					thirdParty: { type: 'radio', licenses: [] },
 					showTypes: [ 'thirdParty' ],
 					defaultType: 'thirdParty'

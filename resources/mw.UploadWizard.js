@@ -69,10 +69,14 @@
 			}
 
 			uploadStep = new uw.controller.Upload( this.api, this.config );
+			steps.push( uploadStep );
+
+			// Add the licensing step if it's enabled
+			if ( this.config.licensing.enabled ) {
+				steps.push( new uw.controller.Deed( this.api, this.config ) );
+			}
 
 			steps.push(
-				uploadStep,
-				new uw.controller.Deed( this.api, this.config ),
 				new uw.controller.Details( this.api, this.config ),
 				new uw.controller.Thanks( this.api, this.config )
 			);
@@ -180,6 +184,12 @@
 			deeds = {},
 			doOwnWork = config.licensing.showTypes.indexOf( 'ownWork' ) > -1,
 			doThirdParty = config.licensing.showTypes.indexOf( 'thirdParty' ) > -1;
+
+		if ( !config.licensing.enabled ) {
+			return {
+				none: new uw.deed.None( config )
+			};
+		}
 
 		api = this.prototype.getApi( { ajax: { timeout: 0 } } );
 
