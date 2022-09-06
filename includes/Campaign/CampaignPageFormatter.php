@@ -73,7 +73,7 @@ class CampaignPageFormatter {
 
 		$outputPage = $this->context->getOutput();
 		$outputPage->setCdnMaxage(
-			$this->config->getSetting( 'campaignSquidMaxAge' )
+			$this->config->getSetting( 'campaignCdnMaxAge' )
 		);
 		$outputPage->enableOOUI();
 

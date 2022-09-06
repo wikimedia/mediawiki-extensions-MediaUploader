@@ -28,7 +28,7 @@
 	mw.UploadWizardPage = function () {
 
 		var uploadWizard,
-			config = mw.config.get( 'UploadWizardConfig' );
+			config = mw.config.get( 'MediaUploaderConfig' );
 
 		// Default configuration value that cannot be removed
 		config.maxUploads = config.maxUploads || 10;
@@ -39,7 +39,7 @@
 
 		// eslint-disable-next-line no-jquery/no-global-selector
 		if ( $( '#upload-wizard' ).length === 0 ) {
-			mw.log( 'UploadWizard is disabled, nothing to do.' );
+			mw.log( 'MediaUploader is disabled, nothing to do.' );
 			return;
 		}
 

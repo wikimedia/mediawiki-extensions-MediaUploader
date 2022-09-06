@@ -317,7 +317,7 @@ class MediaUploader extends SpecialPage {
 		$bitmapHandler = new BitmapHandler();
 		$this->getOutput()->addJsConfigVars(
 			[
-				'UploadWizardConfig' => $config,
+				'MediaUploaderConfig' => $config,
 				'wgFileCanRotate' => $bitmapHandler->canRotate(),
 			]
 		);

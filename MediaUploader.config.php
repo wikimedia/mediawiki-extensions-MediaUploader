@@ -5,26 +5,18 @@
  * $wgMediaUploaderConfig['name'] = 'value';
  */
 return [
-	// MediaUploader has an internal debug flag
-	'debug' => false,
-
 	// The default campaign to use.
 	'defaultCampaign' => '',
 
 	// Enable or disable the default upload license user preference
 	'enableLicensePreference' => true,
 
-	// Number of seconds to cache Campaign pages in squid, for anon users
-	'campaignSquidMaxAge' => 10 * 60,
+	// Number of seconds to cache Campaign pages in the CDN, for anon users
+	'campaignCdnMaxAge' => 10 * 60,
 
 	// Number of seconds to cache Campaign stats
 	// Currently affects: uploaded media list and contributors count
 	'campaignStatsMaxAge' => 60,
-
-	// File extensions acceptable in this wiki
-	// The default is $wgFileExtensions if $wgCheckFileExtensions is enabled.
-	// Initialized in RawConfig.php
-	'fileExtensions' => null,
 
 	'display' => [
 		// wikitext to display above the MediaUploader UI.
@@ -379,17 +371,6 @@ return [
 		'mass-upload' => 500,
 	],
 
-	// Max file size that is allowed by PHP (may be higher/lower than MediaWiki file size limit).
-	// When using chunked uploading, these limits can be ignored.
-	// The default is UploadBase::getMaxPhpUploadSize()
-	// Initialized in RawConfig.php
-	'maxPhpUploadSize' => null,
-
-	// Max file size that is allowed by MediaWiki. This limit can never be ignored.
-	// The default is UploadBase::getMaxUploadSize( 'file' )
-	// Initialized in RawConfig.php
-	'maxMwUploadSize' => null,
-
 	// Minimum length of custom wikitext for a license, if used.
 	'minCustomLicenseLength' => 5,
 
@@ -406,10 +387,12 @@ return [
 	//		'default'	=> 'Commons:Upload',
 	//		'de'		=> 'Commons:Hochladen'
 	//	 );
-	'altUploadForm' => '',
+	// When empty, no link will be added.
+	'altUploadForm' => 'Special:Upload',
 
 	// Wiki page that lists alternative ways to upload
-	'alternativeUploadToolsPage' => 'Commons:Upload_tools',
+	// When empty, no link will be added.
+	'alternativeUploadToolsPage' => '',
 
 	// When using chunked upload, what size, in bytes, should each chunk be?
 	'chunkSize' => 5 * 1024 * 1024,

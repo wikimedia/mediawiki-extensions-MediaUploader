@@ -455,9 +455,6 @@
 
 		if ( !this.uploadHandler ) {
 			constructor = 'ApiUploadFormDataHandler';
-			if ( mw.UploadWizard.config.debug ) {
-				mw.log( 'mw.UploadWizard::getUploadHandler> ' + constructor );
-			}
 			this.uploadHandler = new mw[ constructor ]( this, this.api );
 		}
 		return this.uploadHandler;
