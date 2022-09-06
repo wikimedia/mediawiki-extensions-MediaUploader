@@ -147,7 +147,7 @@
 			]
 		},
 		"ext.uploadWizard.uploadCampaign.display": {
-			"styles": "resources/ext.uploadWizard.uploadCampaign.display.css",
+			"styles": "resources/ext.uploadWizard.uploadCampaign.display.less",
 			"targets": [
 				"desktop",
 				"mobile"
