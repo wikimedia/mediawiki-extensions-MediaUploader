@@ -155,7 +155,6 @@ class CampaignParsedConfig extends ParsedConfig {
 
 		foreach ( $activeModifiers as $cnf => $modifier ) {
 			switch ( $cnf ) {
-				case 'autoAdd':
 				case 'display':
 					if ( !array_key_exists( $cnf, $configArray ) ) {
 						$configArray[$cnf] = [];

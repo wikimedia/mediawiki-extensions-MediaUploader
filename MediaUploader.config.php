@@ -26,20 +26,6 @@ return [
 	// Initialized in RawConfig.php
 	'fileExtensions' => null,
 
-	// Settings about things that get automatically (and silently) added to uploads
-	'autoAdd' => [
-		// Categories to automatically (and silently) add all uploaded images into.
-		'categories' => [],
-
-		// WikiText to automatically (and silently) add to all uploaded images.
-		'wikitext' => '',
-	],
-
-	// If the user didn't add categories, or removed the default categories, add this wikitext.
-	// Use this to indicate that some human should categorize this file.
-	// Does not consider autoAdd.categories, which are hidden.
-	'missingCategoriesWikiText' => '',
-
 	'display' => [
 		// wikitext to display above the MediaUploader UI.
 		'headerLabel' => '',
@@ -69,18 +55,16 @@ return [
 	// Category names should be specified without the namespace prefix and with
 	// underscores instead of spaces.
 	'trackingCategory' => [
-		// Category added no matter what
-		// Default to none because we don't know what categories
-		// exist or not on local wikis.
-		// Do not uncomment this line, set
-		// $wgMediaUploaderConfig['trackingCategory']['all']
-		// to your favourite category name.
+		// Whether to add the tracking category to the upload automatically (and silently).
+		// Disable this if you plan to use templates to categorize campaign uploads.
+		'autoAdd' => true,
 
-		// 'all' => '',
-
-		// Tracking category added for campaigns. $1 is replaced with campaign page name
+		// Tracking category used for tracking what was uploaded in a given campaign.
+		// $1 is replaced with campaign page name.
 		// Changing this to an invalid value will prevent MediaUploader from collecting
 		// statistics, such as the total number of uploads and contributors in a campaign.
+		// If you set 'autoAdd' to false, make sure this setting reflects the categorization
+		// scheme you use with your templates.
 		'campaign' => 'Uploaded_via_Campaign:$1'
 	],
 
@@ -128,6 +112,14 @@ return [
 			'label' => '{{MediaWiki:mediauploader-categories}}',
 			'help' => '{{MediaWiki:mediauploader-tooltip-categories}}',
 			'required' => 'recommended',
+			// If the user didn't add categories, or removed the default categories, add this wikitext.
+			// Use this to indicate that some human should categorize this file.
+			// Does not consider hiddenDefault categories, which are hidden.
+			'missingWikitext' => '',
+			// Categories to automatically (and silently) add all uploaded images into.
+			'hiddenDefault' => [],
+			// Categories to add to the category selection field by default (the user can remove them).
+			'default' => [],
 		],
 		'location' => [
 			'order' => 5,

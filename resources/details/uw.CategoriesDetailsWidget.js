@@ -74,14 +74,13 @@
 		var hiddenCats, missingCatsWikiText, categories, wikiText;
 
 		hiddenCats = [];
-		if ( mw.UploadWizard.config.autoAdd.categories ) {
-			hiddenCats = hiddenCats.concat( mw.UploadWizard.config.autoAdd.categories );
+		if ( this.config.hiddenDefault ) {
+			hiddenCats = hiddenCats.concat( this.config.hiddenDefault );
 		}
 		if ( mw.UploadWizard.config.trackingCategory ) {
-			if ( mw.UploadWizard.config.trackingCategory.all ) {
-				hiddenCats.push( mw.UploadWizard.config.trackingCategory.all );
-			}
-			if ( mw.UploadWizard.config.trackingCategory.campaign ) {
+			if ( mw.UploadWizard.config.trackingCategory.campaign &&
+				mw.UploadWizard.config.trackingCategory.autoAdd
+			) {
 				hiddenCats.push( mw.UploadWizard.config.trackingCategory.campaign );
 			}
 		}
@@ -92,10 +91,10 @@
 
 		missingCatsWikiText = null;
 		if (
-			typeof mw.UploadWizard.config.missingCategoriesWikiText === 'string' &&
-			mw.UploadWizard.config.missingCategoriesWikiText.length > 0
+			typeof this.config.missingWikitext === 'string' &&
+			this.config.missingWikitext.length > 0
 		) {
-			missingCatsWikiText = mw.UploadWizard.config.missingCategoriesWikiText;
+			missingCatsWikiText = this.config.missingWikitext;
 		}
 
 		categories = this.categoriesWidget.getItems().map( function ( item ) {

@@ -104,16 +104,6 @@ definitions:
           label: { type: string }
           target: { type: string }
 
-  # The "autoAdd" section of the config
-  autoAddSection:
-    type: object
-    additionalProperties: false
-    properties:
-      categories:
-        type: array
-        items: { type: string }
-      wikitext: { type: string }
-
   # Base for fields in the details step
   fieldBase:
     type: object
@@ -302,7 +292,14 @@ definitions:
           type:
             enum:
               - categories
+          missingWikitext:
+            oneOf:
+              - { type: string }
+              - { type: 'null' }
           default:
+            type: array
+            items: { type: string }
+          hiddenDefault:
             type: array
             items: { type: string }
           # # # # #
@@ -375,8 +372,9 @@ properties:
   start: { type: string }
   end: { type: string }
 
-  # Automatically added items
-  autoAdd: { $ref: '#/definitions/autoAddSection' }
+  # Tracking category – only disabling the auto-adding it is allowed here
+  trackingCategory:
+    autoAdd: { type: boolean }
 
   # Field definitions
   fields:
@@ -454,7 +452,6 @@ properties:
     additionalProperties: false
     properties:
       display: { $ref: '#/definitions/displaySection' }
-      autoAdd: { $ref: '#/definitions/autoAddSection' }
 
   afterActive:
     type: object

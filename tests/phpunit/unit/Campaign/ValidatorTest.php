@@ -180,6 +180,8 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 						'type' => 'categories',
 						'label' => 'Nice label',
 						'default' => [ 'a', 'b' ],
+						'hiddenDefault' => [ 'c' ],
+						'missingWikitext' => 'The user is lazy!',
 					]
 				]
 			],
@@ -372,10 +374,6 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 					'display' => [
 						'thanksLabel' => 'header',
 						'homeButton' => [ 'label' => 'Home' ],
-					],
-					'autoAdd' => [
-						'categories' => [ 'Some category' ],
-						'wikitext' => 'auto-added WT',
 					]
 				]
 			],

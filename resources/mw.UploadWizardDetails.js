@@ -113,9 +113,10 @@
 						} ) );
 						break;
 					case 'categories':
-						fieldWidget = new uw.CategoriesDetailsWidget(
-							$.extend( {}, fConfigBase, {} )
-						);
+						fieldWidget = new uw.CategoriesDetailsWidget( $.extend( {}, fConfigBase, {
+							hiddenDefault: fSpec.hiddenDefault,
+							missingWikitext: fSpec.missingWikitext
+						} ) );
 						break;
 					default:
 						// Can't build the widget, ignore it
