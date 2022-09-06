@@ -22,8 +22,8 @@
 	background-color: #eaecf0;
 	position: relative;
 
-	:after,
-	:before {
+	&:after,
+	&:before {
 		left: 100%;
 		top: 50%;
 		border: solid transparent;
@@ -61,7 +61,7 @@
 }
 
 .arrowSteps li.arrow {
-	:after {
+	&:after {
 		border-left-color: #eaecf0;
 		/* half the height of .arrowSteps li */
 		border-width: 25px;
@@ -69,7 +69,7 @@
 		z-index: 1;
 	}
 
-	:before {
+	&:before {
 		border-left-color: #fff;
 		/* half the height of .arrowSteps li + width of the arrow border */
 		border-width: 30px;
@@ -77,8 +77,8 @@
 		z-index: 1;
 	}
 
-	:after,
-	:before {
+	&:after,
+	&:before {
 		@media ( max-width: @mobile-w ) {
 			display: none;
 		}
