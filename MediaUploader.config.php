@@ -8,9 +8,6 @@ return [
 	// The default campaign to use.
 	'defaultCampaign' => '',
 
-	// Enable or disable the default upload license user preference
-	'enableLicensePreference' => true,
-
 	// Number of seconds to cache Campaign pages in the CDN, for anon users
 	'campaignCdnMaxAge' => 10 * 60,
 

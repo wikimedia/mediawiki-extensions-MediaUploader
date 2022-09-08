@@ -44,61 +44,58 @@ class Hooks implements GetPreferencesHook {
 			'section' => 'uploads/mediauploader-licensing'
 		];
 
-		if ( $this->config->getSetting( 'enableLicensePreference' ) ) {
-			$licenses = [];
+		$licenses = [];
+		$licenseTypes = [
+			[ 'configKey' => ConfigBase::LIC_OWN_WORK, 'msgKey' => 'ownwork' ],
+			[ 'configKey' => ConfigBase::LIC_THIRD_PARTY, 'msgKey' => 'thirdparty' ],
+		];
+		$hasCustom = false;
 
-			$licenseTypes = [
-				[ 'configKey' => ConfigBase::LIC_OWN_WORK, 'msgKey' => 'ownwork' ],
-				[ 'configKey' => ConfigBase::LIC_THIRD_PARTY, 'msgKey' => 'thirdparty' ],
-			];
-			$hasCustom = false;
-
-			foreach ( $licenseTypes as $lType ) {
-				foreach ( $this->config->getAvailableLicenses( $lType['configKey'] ) as $license ) {
-					if ( $license === 'custom' ) {
-						$hasCustom = true;
-						continue;
-					}
-
-					$lMsg = $this->getLicenseMessage( $license ) ?: '';
-					$lKey = wfMessage( 'mediauploader-prefs-license-' . $lType['msgKey'] )
-						->rawParams( $lMsg )->escaped();
-					$lValue = htmlspecialchars(
-						$lType['configKey'] . '-' . $license, ENT_QUOTES, 'UTF-8', false
-					);
-					$licenses[$lKey] = $lValue;
+		foreach ( $licenseTypes as $lType ) {
+			foreach ( $this->config->getAvailableLicenses( $lType['configKey'] ) as $license ) {
+				if ( $license === 'custom' ) {
+					$hasCustom = true;
+					continue;
 				}
+
+				$lMsg = $this->getLicenseMessage( $license ) ?: '';
+				$lKey = wfMessage( 'mediauploader-prefs-license-' . $lType['msgKey'] )
+					->rawParams( $lMsg )->escaped();
+				$lValue = htmlspecialchars(
+					$lType['configKey'] . '-' . $license, ENT_QUOTES, 'UTF-8', false
+				);
+				$licenses[$lKey] = $lValue;
 			}
+		}
 
-			$licenses = array_merge(
-				[ wfMessage( 'mediauploader-prefs-def-license-def' )->escaped() => 'default' ],
-				$licenses
-			);
+		$licenses = array_merge(
+			[ wfMessage( 'mediauploader-prefs-def-license-def' )->escaped() => 'default' ],
+			$licenses
+		);
 
-			if ( $hasCustom ) {
-				// The "custom license" option must be last, otherwise the text referring to "following
-				// wikitext" and "last option above" makes no sense.
-				$licenseMessage = $this->getLicenseMessage( 'custom' ) ?: '';
-				$licenseKey = wfMessage( 'mediauploader-prefs-license-thirdparty' )
-					->rawParams( $licenseMessage )->escaped();
-				$licenses[$licenseKey] = 'thirdparty-custom';
-			}
+		if ( $hasCustom ) {
+			// The "custom license" option must be last, otherwise the text referring to "following
+			// wikitext" and "last option above" makes no sense.
+			$licenseMessage = $this->getLicenseMessage( 'custom' ) ?: '';
+			$licenseKey = wfMessage( 'mediauploader-prefs-license-thirdparty' )
+				->rawParams( $licenseMessage )->escaped();
+			$licenses[$licenseKey] = 'thirdparty-custom';
+		}
 
-			$preferences['upwiz_deflicense'] = [
-				'type' => 'radio',
-				'label-message' => 'mediauploader-prefs-def-license',
+		$preferences['upwiz_deflicense'] = [
+			'type' => 'radio',
+			'label-message' => 'mediauploader-prefs-def-license',
+			'section' => 'uploads/mediauploader-licensing',
+			'options' => $licenses
+		];
+
+		if ( $hasCustom ) {
+			$preferences['upwiz_deflicense_custom'] = [
+				'type' => 'text',
+				'label-message' => 'mediauploader-prefs-def-license-custom',
+				'help-message' => 'mediauploader-prefs-def-license-custom-help',
 				'section' => 'uploads/mediauploader-licensing',
-				'options' => $licenses
 			];
-
-			if ( $hasCustom ) {
-				$preferences['upwiz_deflicense_custom'] = [
-					'type' => 'text',
-					'label-message' => 'mediauploader-prefs-def-license-custom',
-					'help-message' => 'mediauploader-prefs-def-license-custom-help',
-					'section' => 'uploads/mediauploader-licensing',
-				];
-			}
 		}
 
 		// Setting for maximum number of simultaneous uploads (always lower than the server-side config)
