@@ -78,6 +78,7 @@ definitions:
               properties:
                 head: { type: string }
                 subhead: { type: string }
+                special: { type: string }
                 # # # # #
                 licenses: { }
                 licenseWikitext: { }

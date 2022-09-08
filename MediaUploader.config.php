@@ -227,6 +227,7 @@ return [
 			'icons' => [ 'cc-zero' ],
 			'url' => '//creativecommons.org/publicdomain/zero/1.0/',
 			'languageCodePrefix' => 'deed.',
+			'explainMsg' => 'mediauploader-source-ownwork-cc-zero-explain',
 			'wikitext' => '{{subst:int:mediauploader-license-cc-zero||//creativecommons.org/publicdomain/zero/1.0/}}'
 		],
 		'fal' => [
