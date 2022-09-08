@@ -172,7 +172,7 @@ return [
 	// The 'wikitext' field tells the uploader how to mark this license on the file description page.
 	// By default, this is just the name of the license, but if you want, you can put template names here.
 	// See also the 'licensing' section, it allows you to wrap this wikitext into more complex stuff.
-	// TODO: write down the docs about the optional parameters: assertMsg, explainMsg
+	// TODO: write down the docs about the optional parameters: explainMsg
 	//
 	// Messages used here:
 	// * mediauploader-license-cc-by-4.0

@@ -37,7 +37,7 @@ class MediaUploaderResourceModule extends ResourceLoaderFileModule {
 
 		// Add messages used directly by licenses
 		foreach ( $this->rawConfig->getSetting( 'licenses', [] ) as $value ) {
-			foreach ( [ 'msg', 'assertMsg', 'explainMsg' ] as $mKey ) {
+			foreach ( [ 'msg', 'explainMsg' ] as $mKey ) {
 				if ( isset( $value[$mKey] ) ) {
 					$licenseMessages[] = $value[$mKey];
 				}

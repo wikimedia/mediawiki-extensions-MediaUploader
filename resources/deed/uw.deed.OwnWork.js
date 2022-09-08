@@ -81,8 +81,8 @@
 
 	uw.deed.OwnWork.prototype.setFormFields = function ( $selector ) {
 		var $customDiv, $formFields, $toggler, crossfaderWidget, defaultLicense,
-			defaultLicenseURL, defaultLicenseMsg, $defaultLicenseLink,
-			$standardDiv, $crossfader, deed, languageCode, defaultLicConfig;
+			defaultLicenseURL, $defaultLicenseLink, $standardDiv, $crossfader,
+			deed, languageCode, defaultLicConfig;
 
 		this.$selector = $selector;
 		deed = this;
@@ -96,9 +96,6 @@
 		if ( defaultLicConfig.languageCodePrefix !== undefined ) {
 			defaultLicenseURL += defaultLicConfig.languageCodePrefix + languageCode;
 		}
-		defaultLicenseMsg = defaultLicConfig.assertMsg === undefined ?
-			'mediauploader-source-ownwork-assert' :
-			defaultLicConfig.assertMsg;
 		$defaultLicenseLink = $( '<a>' ).attr( { target: '_blank', href: defaultLicenseURL } );
 
 		this.$form = $( '<form>' );
@@ -106,7 +103,7 @@
 		/* eslint-disable mediawiki/msg-doc */
 		$standardDiv = $( '<div>' ).addClass( 'mediauploader-standard' ).append(
 			$( '<p>' ).msg(
-				defaultLicenseMsg,
+				'mediauploader-source-ownwork-assert',
 				this.uploadCount,
 				this.authorInput.$element,
 				$defaultLicenseLink,
