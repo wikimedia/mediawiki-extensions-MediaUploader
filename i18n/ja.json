@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Adom",
+			"春春眠眠"
+		]
+	},
+	"mediauploader-step-tutorial": "学ぶ",
+	"mediauploader-step-deeds": "許可する権利",
+	"mediauploader-file-some-failed": "失敗したアップロードがあります。",
+	"mediauploader-skip-tutorial-future": "今後はこの手順をスキップ",
+	"mediauploader-file-all-failed": "アップロードはどれも成功しませんでした。",
+	"mediauploader-undid-metadata": "コピーを取り消しました。",
+	"mediauploader-copy-other": "その他の情報をコピー",
+	"mediauploader-location-longitude": "経度",
+	"mediauploader-tooltip-more-info": "詳細。",
+	"mediauploader-dialog-back": "戻る",
+	"mediauploader-license-none-head": "インターネットで見つけた - よくわからない",
+	"mediauploader-error-title-invalid": "このページ名は無効です。大括弧、コロン、比較演算子、パイプ記号、中括弧のような無効な文字を除去してください。",
+	"mediauploader-prefs-def-license": "デフォルトのライセンス"
+}
