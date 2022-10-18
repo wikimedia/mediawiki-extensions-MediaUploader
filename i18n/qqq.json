@@ -30,11 +30,12 @@
 			"Toliño",
 			"Umherirrender",
 			"Verdy p",
-			"Yekrats"
+			"Yekrats",
+			"Ostrzyciel"
 		]
 	},
-	"mediauploader": "{{doc-special|UploadWizard}}\nUploadWizard is a wizard to upload multimedia files to a MediaWiki website.\nFor more information, see [[mw:UploadWizard]].",
-	"mediauploader-desc": "{{desc|name=Upload Wizard|url=https://www.mediawiki.org/wiki/Extension:UploadWizard}}",
+	"mediauploader": "{{doc-special|MediaUploader}}\nMediaUploader is a wizard to upload multimedia files to a MediaWiki website.\nFor more information, see [[mw:Extension:MediaUploader]].",
+	"mediauploader-desc": "{{desc|name=Media Uploader|url=https://www.mediawiki.org/wiki/Extension:MediaUploader}}",
 	"tag-uploadwizard": "Display name for 'uploadwizard' tag (= files uploaded with Upload Wizard)",
 	"tag-uploadwizard-description": "Description for 'uploadwizard' tag (= files uploaded with Upload Wizard)",
 	"tag-uploadwizard-flickr": "{{optional}}\nDisplay name for 'uploadwizard-flickr' tag (= Flickr files uploaded with Upload Wizard)",
@@ -334,7 +335,7 @@
 	"mwe-upwiz-error-campaigndisabled": "Used as error message. Parameters:\n* $1 - campaign name",
 	"mwe-upwiz-calendar-date": "Shown as a tooltip of a button next to a date input field, to display a calendar to choose a date from.",
 	"mwe-upwiz-custom-date": "Shown as a tooltip of a button next to a date input field, to enable inputting arbitrary text rather than only choosing dates from a calendar. (For example, if the date you want to input is 'circa 1900'.)",
-	"prefs-uploads": "Preferences tab label for UploadWizard preferences related to uploads.\n\nNote that this is about '''the process of uploading files''', and not files that were uploaded.\n\nSee https://commons.wikimedia.org/w/index.php?uselang=en&title=Special:Preferences#mw-prefsection-uploads.\n{{Identical|Uploading}}",
+	"prefs-uploads": "Preferences tab label for MediaUploader preferences related to uploads.\n\nNote that this is about '''the process of uploading files''', and not files that were uploaded.",
 	"prefs-upwiz-licensing": "{{Identical|Licensing}}",
 	"prefs-upwiz-experimental": "Used in [[Special:Preferences]].",
 	"prefs-upwiz-interface": "Preferences section heading for preferences related to the Upload Wizard user interface",
@@ -365,8 +366,8 @@
 	"mwe-upwiz-default-tutorial-text": "The default tutorial message explaining how to configure it and what can it contain.",
 	"mediauploader-yaml-parse-error": "Error message for YAML parsing exceptions. $1 – parse error message",
 	"mediauploader-schema-validation-error": "JSON Schema validation error formatter. This is a temporary message used until MediaWiki core gets real i18n support for JSON validation. $1 is the JSON property, $2 is the error message.",
-	"mediauploader-invalid-campaign-format": "Error message shown when trying to access a campaign with content that is in an invalid format.",
-	"mediauploader-invalid-campaign-schema": "Error message shown when trying to access a campaign with content that does not validate against the campaign schema.",
+	"mediauploader-invalid-campaign-format": "Error message shown when trying to access a campaign with content that is in an invalid format. $1 – name of the campaign.",
+	"mediauploader-invalid-campaign-schema": "Error message shown when trying to access a campaign with content that does not validate against the campaign schema. $1 – name of the campaign.",
 	"mediauploader-fix-campaign-comment-fixed": "Edit comment informing that some schema issues were fixed in in a campaign definition. $1 – number of fixes applied. $2 – number of issues left to resolve manually (implementing it in the message is optional).",
 	"mediauploader-fix-campaign-comment-prettified": "Edit comment informing that a campaign definition was reformatted (prettified). $1 – number of fixes applied (always 0). $2 – number of issues left to resolve manually (implementing it in the message is optional)."
 }
