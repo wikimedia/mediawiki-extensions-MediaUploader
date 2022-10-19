@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ajiniyaz Nurniyazov"
+		]
+	},
+	"mediauploader-step-tutorial": "Úyreniw",
+	"mediauploader-file-all-failed": "Júklewlerdiń heshbiri tabıslı bolmadı.",
+	"mediauploader-copy-other": "Basqa maǵlıwmatlardı nusqalaw",
+	"mediauploader-location-longitude": "Uzınlıq",
+	"mediauploader-tooltip-more-info": "Kóbirek maǵlıwmat alıń.",
+	"mediauploader-dialog-back": "Artqa qaytıw",
+	"mediauploader-campaign-media-count-desc": "{{PLURAL:$1|Júklew|Júklewler}}",
+	"mediauploader-license-none-head": "Men bunı Internette taptım - isenimim tolıq emes",
+	"mediauploader-error-title-invalid": "Bul bas bet jaramsız. Múyeshli qawıs, eki noqat, qıya sızıq, úlken yamasa kishi belgileri, tik sızıq hám buyra qawıslar sıyaqlı belgilerdi alıp taslań.",
+	"mediauploader-prefs-def-license": "Standart licenziya"
+}

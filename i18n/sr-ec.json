@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Milicevic01"
+		]
+	},
+	"mediauploader-source-ownwork-assert": "Ја, $2, носилац ауторског права {{PLURAL:$4|овог дела|ових дела}}, неопозиво дајем право свакоме да {{PLURAL:$1|га користи|их користи}} под следећом лиценцом:",
+	"mediauploader-description": "Опис",
+	"mediauploader-next-deeds": "Следеће",
+	"mediauploader-previous": "Назад"
+}

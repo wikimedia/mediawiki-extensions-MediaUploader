@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vlad5250"
+		]
+	},
+	"mediauploader-step-tutorial": "Saznajte",
+	"mediauploader-file-all-failed": "Nijedno postavljanje nije bilo uspješno.",
+	"mediauploader-tooltip-more-info": "Saznajte više.",
+	"mediauploader-dialog-back": "Nazad",
+	"mediauploader-prefs-def-license": "Podrazumijevana licencija"
+}
