@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"mediauploader-location-longitude": "Долгота",
+	"mediauploader-author": "Автор(ы)",
+	"mediauploader-tooltip-more-info": "Подробнее.",
+	"mediauploader-dialog-back": "Назад",
+	"mediauploader-categories": "Категории"
+}

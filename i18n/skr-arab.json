@@ -10,9 +10,11 @@
 	"mediauploader-step-thanks": "ورتو",
 	"mediauploader-remove": "ہٹاؤ",
 	"mediauploader-upload": "اپلوڈ",
+	"mediauploader-progressbar-uploading": "اپ لوڈ تھیندا پئے",
 	"mediauploader-source-thirdparty-accept": "ٹھیک ہے",
 	"mediauploader-copy-metadata-button": "نقل کرو",
 	"mediauploader-copy-metadata-button-undo": "واپس",
+	"mediauploader-description": "تفصیل",
 	"mediauploader-date-created": "تریخ",
 	"mediauploader-location": "محل وقوع",
 	"mediauploader-location-button": "نقشے تے ݙکھاؤ",
@@ -29,6 +31,11 @@
 	"mediauploader-tooltip-more-info": "ٻیا سِکھو۔",
 	"mediauploader-label-optional": "اختیاری",
 	"mediauploader-dialog-continue": "جاری رکھو",
+	"mediauploader-dialog-back": "واپس ڄُلو",
+	"mediauploader-categories": "ونکیاں",
 	"mediauploader-errordialog-ok": "ٹھیک ہے",
-	"mediauploader-prefs-license-name": "مصنف ناں"
+	"prefs-uploads": "اپ لوڈ تھیندا پئے",
+	"mediauploader-prefs-license-name": "مصنف ناں",
+	"mediauploader-campaigns-pagination-next": "اڳلا ورقہ",
+	"mediauploader-content-source-ownwork": "آپݨاں کم"
 }
