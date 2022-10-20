@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"CptViraj"
+		]
+	},
+	"mediauploader-other": "અન્ય માહિતી",
+	"mediauploader-campaign-contributors-count-desc": "{{PLURAL:$1|યોગદાનકર્તા|યોગદાનકર્તાઓ}}",
+	"mediauploader-categories": "શ્રેણીઓ"
+}

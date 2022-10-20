@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Saraiki"
+		]
+	},
+	"mediauploader-step-tutorial": "سکھو",
+	"mediauploader-step-file": "اپلوڈ",
+	"mediauploader-step-details": "بیان کرو",
+	"mediauploader-step-thanks": "ورتو",
+	"mediauploader-remove": "ہٹاؤ",
+	"mediauploader-upload": "اپلوڈ",
+	"mediauploader-source-thirdparty-accept": "ٹھیک ہے",
+	"mediauploader-copy-metadata-button": "نقل کرو",
+	"mediauploader-copy-metadata-button-undo": "واپس",
+	"mediauploader-date-created": "تریخ",
+	"mediauploader-location": "محل وقوع",
+	"mediauploader-location-button": "نقشے تے ݙکھاؤ",
+	"mediauploader-location-latitude": "عرض البلد",
+	"mediauploader-location-longitude": "طول البلد",
+	"mediauploader-location-altitude": "بلندی",
+	"mediauploader-location-heading": "سرخی",
+	"mediauploader-source": "ماخذ",
+	"mediauploader-ok": "ٹھیک ہے",
+	"mediauploader-next": "اڳلا",
+	"mediauploader-next-file": "جاری رکھو",
+	"mediauploader-next-deeds": "اڳلا",
+	"mediauploader-previous": "پچھوں",
+	"mediauploader-tooltip-more-info": "ٻیا سِکھو۔",
+	"mediauploader-label-optional": "اختیاری",
+	"mediauploader-dialog-continue": "جاری رکھو",
+	"mediauploader-errordialog-ok": "ٹھیک ہے",
+	"mediauploader-prefs-license-name": "مصنف ناں"
+}
