@@ -14,7 +14,7 @@
 	"right-upwizcampaigns": "Configurer les campagnes de l’assistant de téléversement de médias",
 	"action-upwizcampaigns": "configurer les campagnes de téléversement",
 	"group-upwizcampeditors": "Modificateurs de campagnes de l’assistant de téléversement de médias",
-	"group-upwizcampeditors-member": "Modificat{{GENDER:$1|eur|rice}} de campagnes de l’assistant de téléversement de médias",
+	"group-upwizcampeditors-member": "Modificat{{GENDER:$1|eur|rice}} des campagnes de l’assistant de téléversement de médias",
 	"grouppage-upwizcampeditors": "{{ns:project}}:Modificateurs de campagnes de l’assistant de téléversement de médias",
 	"group-upwizcampeditors.css": "/* Le CSS placé ici n’affectera que les modificateurs de campagnes de l’assistant de téléversement de médias */",
 	"group-upwizcampeditors.js": "/* Le Javascript placé ici n’affectera que les modificateurs de campagnes de l’assistant de téléversement de médias */",
