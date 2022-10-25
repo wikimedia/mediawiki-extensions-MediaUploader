@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"mediauploader": "Incargator multimedial",
+	"mediauploader-desc": "Incargator flexibile, multi-file, passo-a-passo.",
+	"action-upwizcampaigns": "configurar campanias de incargamento",
+	"prefs-uploads": "Incargamento",
+	"mediauploader-yaml-parse-error": "Le analyse syntactic de YAML ha fallite con le sequente message: $1",
+	"mediauploader-invalid-campaign-format": "Le contento del campania \"$1\" es in un formato non valide. Per favor tenta modificar lo pro corriger omne errores de validation.",
+	"mediauploader-invalid-campaign-schema": "Le contento del campania \"$1\" non se valida contra le schema del campania. Per favor tenta modificar lo pro corriger omne errores de validation.",
+	"mediauploader-fix-campaign-comment-fixed": "$1 problema{{PLURAL:$1||s}} corrigite in le definition del campania",
+	"mediauploader-fix-campaign-comment-prettified": "Definition del campania reformatate"
+}

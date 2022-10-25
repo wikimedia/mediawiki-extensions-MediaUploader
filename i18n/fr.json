@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Verdy p",
+			"Wladek92"
+		]
+	},
+	"mediauploader": "Assistant de téléversement de médias",
+	"mediauploader-desc": "Un outil de téléversement flexible, multi-fichiers, étape par étape.",
+	"action-upwizcampaigns": "configurer les campagnes de téléversement",
+	"prefs-uploads": "Téléversement en cours",
+	"mediauploader-yaml-parse-error": "L’analyse YAML a échoué avec le message suivant : $1",
+	"mediauploader-invalid-campaign-format": "Le contenu de la campagne « $1 » est dans un format non valide. Veuillez essayer de le modifier pour corriger les erreurs de validation.",
+	"mediauploader-invalid-campaign-schema": "Le contenu de la campagne « $1 » n’est pas validé par rapport au schéma des campagnes. Veuillez essayer de le modifier pour corriger les erreurs de validation.",
+	"mediauploader-fix-campaign-comment-fixed": "$1 problème{{PLURAL:$1||s}} corrigé{{PLURAL:$1||s}} dans la définition de la campagne",
+	"mediauploader-fix-campaign-comment-prettified": "Définition de la campagne remise en forme"
+}

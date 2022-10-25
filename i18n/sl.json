@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"mediauploader": "Media Uploader",
+	"mediauploader-desc": "Prilagodljivo orodje za nalaganje več datotek po korakih.",
+	"action-upwizcampaigns": "konfiguriranje kampanj nalaganja",
+	"prefs-uploads": "Nalaganje",
+	"mediauploader-yaml-parse-error": "Razčlenjevanje YAML ni uspelo z naslednjim sporočilom: $1",
+	"mediauploader-invalid-campaign-format": "Vsebina kampanje »$1« je v neveljavni obliki. Poskusite jo urediti, da odpravite morebitne napake pri preverjanju.",
+	"mediauploader-invalid-campaign-schema": "Vsebina kampanje »$1« se ne preverja glede na shemo kampanje. Poskusite jo urediti, da odpravite morebitne napake pri preverjanju.",
+	"mediauploader-fix-campaign-comment-fixed": "{{PLURAL:$1|Odpravljena|Odpravljeni|Odpravljene|Odpravljenih}} $1 {{PLURAL:$1|težava|težavi|težave|težav}} v opredelitvi kampanje",
+	"mediauploader-fix-campaign-comment-prettified": "Preoblikovana opredelitev kampanje"
+}

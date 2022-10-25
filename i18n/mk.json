@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"mediauploader": "Подигач на слики и снимки",
+	"mediauploader-desc": "Флексибилен повеќеподатотечен постепен подигач.",
+	"action-upwizcampaigns": "местење поставки за подигачки походи",
+	"prefs-uploads": "Подигање",
+	"mediauploader-yaml-parse-error": "YAML-расчленувањето не успеа со следнава порака: $1",
+	"mediauploader-invalid-campaign-format": "Содржината на походот „$1“ е во неважечки формат. Изменете ја за да ги исправите грешките.",
+	"mediauploader-invalid-campaign-schema": "Содржината на походот „$1“ не е во склад со походната шема. Изменете ја за да ги исправите грешките.",
+	"mediauploader-fix-campaign-comment-fixed": "{{PLURAL:$1|Попраен $1 проблем|Поправени $1 проблеми}} во опдредбата на подохот",
+	"mediauploader-fix-campaign-comment-prettified": "Преформатирана одредбата на походот"
+}

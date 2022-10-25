@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hamilton Abreu"
+		]
+	},
+	"mediauploader": "Carregador de multimédia",
+	"mediauploader-desc": "Carregador flexível, multificheiro e passo a passo.",
+	"action-upwizcampaigns": "configurar campanhas de carregamento",
+	"prefs-uploads": "A carregar",
+	"mediauploader-yaml-parse-error": "A análise sintática do YAML falhou com a seguinte mensagem: $1",
+	"mediauploader-invalid-campaign-format": "O conteúdo da campanha \"$1\" está num formato inválido. Tente editá-lo para corrigir os erros de validação, por favor.",
+	"mediauploader-invalid-campaign-schema": "O conteúdo da campanha \"$1\" não é válido contra o esquema da campanha. Tente editá-lo para corrigir os erros de validação, por favor.",
+	"mediauploader-fix-campaign-comment-fixed": "Correção de $1 {{PLURAL:$1|problema|problemas}} na definição da campanha",
+	"mediauploader-fix-campaign-comment-prettified": "A definição da campanha foi reformatada"
+}
