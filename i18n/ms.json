@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tofeiku"
+		]
+	},
+	"mediauploader-step-tutorial": "Belajar",
+	"mediauploader-uploading": "Memuat naik…",
+	"mediauploader-file-all-failed": "Tiada muat naik yang berjaya.",
+	"mediauploader-copy-other": "Salin maklumat lain",
+	"mediauploader-location-longitude": "Longitud",
+	"mediauploader-author": "Pengarang",
+	"mediauploader-tooltip-more-info": "Ketahui lebih lanjut.",
+	"mediauploader-label-optional": "Pilihan",
+	"mediauploader-categories": "Kategori"
+}
