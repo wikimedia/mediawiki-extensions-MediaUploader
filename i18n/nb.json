@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Telaneo"
+		]
+	},
+	"mediauploader-uploading": "Laster opp...",
+	"mediauploader-file-all-failed": "Ingen av opplastningene var vellykket.",
+	"mediauploader-finished": "Ferdig!",
+	"mediauploader-copy-other": "Kopier annen informasjon",
+	"mediauploader-tooltip-more-info": "Lær mer.",
+	"mediauploader-license-none-head": "Jeg fant den på internett – jeg er ikke sikker",
+	"mediauploader-error-title-invalid": "Tittelen er ugyldig. Sørg for å fjerne tegn som klammeparenteser, kolon, sammenligningsoperatorer, loddrette streker og krøllparenteser.",
+	"mediauploader-prefs-def-license": "Standardlisens"
+}

@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Abijeet Patro"
+		]
+	},
+	"mediauploader-step-tutorial": "सीखें",
+	"mediauploader-step-thanks": "प्रयोग करें",
+	"mediauploader-finished": "समाप्त!",
+	"mediauploader-description": "विवरण",
+	"mediauploader-next-deeds": "अगला",
+	"mediauploader-previous": "पीछे",
+	"mediauploader-label-optional": "वैकल्पिक",
+	"mediauploader-categories": "श्रेणियाँ"
+}

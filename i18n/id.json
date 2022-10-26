@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Veracious"
+		]
+	},
+	"mediauploader-uploading": "Mengunggah...",
+	"mediauploader-file-all-failed": "Tiada satu pun unggahan yang berhasil.",
+	"mediauploader-finished": "Selesai!",
+	"mediauploader-copied-metadata": "Tersalin!",
+	"mediauploader-tooltip-more-info": "Pelajari lebih lanjut.",
+	"mediauploader-error-blank": "Wajib diisi.",
+	"mediauploader-campaign-create-account-button": "Buat sebuah akun dan unggah!",
+	"mediauploader-campaign-media-count-desc": "{{PLURAL:$1|Unggahan}}",
+	"mediauploader-license-confirm-remove-title": "Konfirmasi pembatalan",
+	"mediauploader-subhead-alt-upload": "Kembali ke bentuk lama",
+	"prefs-uploads": "Mengunggah",
+	"mediauploader-prefs-def-license": "Lisensi bawaan"
+}

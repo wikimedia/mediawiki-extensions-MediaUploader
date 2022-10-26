@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jeeputer"
+		]
+	},
+	"mediauploader-step-tutorial": "یادگیری",
+	"mediauploader-step-file": "بارگذاری",
+	"mediauploader-step-thanks": "استفاده",
+	"mediauploader-queued": "در صف...",
+	"mediauploader-override": "با این وجود بارگذاری شود",
+	"mediauploader-file-retry": "تلاش برای انجام دوبارهٔ بارگذاری‌های ناموفق",
+	"mediauploader-file-all-failed": "هیچ‌یک از بارگذاری‌ها موفق نبودند.",
+	"mediauploader-upload-count": "$1 {{PLURAL:$2|پرونده}} از $2 {{PLURAL:$2|پرونده}} بارگذاری شد",
+	"mediauploader-copy-metadata-button-undo": "واگردانی",
+	"mediauploader-copy-location": "رونویسی مکان",
+	"mediauploader-copy-other": "رونویسی اطلاعات دیگر",
+	"mediauploader-select-date": "انتخاب تاریخ",
+	"mediauploader-location-heading": "عنوان",
+	"mediauploader-author": "پدیدآورنده(ها)",
+	"mediauploader-other": "اطلاعات دیگر",
+	"mediauploader-allowed-filename-extensions": "پسوندهای مجاز عبارتند از:",
+	"mediauploader-publish-details": "انتشار پرونده‌ها",
+	"mediauploader-home": "رفتن به صفحهٔ اصلی ویکی",
+	"mediauploader-tooltip-more-info": "اطلاعات بیشتر",
+	"mediauploader-too-many-files": "پرونده‌های زیاد.",
+	"mediauploader-file-too-large": "حجم پرونده خیلی زیاد است.",
+	"mediauploader-campaign-media-count-desc": "$1",
+	"mediauploader-license-none-head": "در اینترنت پیدایش کردم — مطمئن نیستم",
+	"mediauploader-categories": "رده‌ها",
+	"mediauploader-error-title-invalid": "این عنوان نامعتبر است. مطمئن شوید نویسه‌هایی چون براکت‌ها مربعی، دونقطه، عملوندهای مقایسه، لوله‌ها و براکت را حذف کرده‌اید.",
+	"mediauploader-errordialog-title": "در ثبت شما، خطایی وجود داشت.",
+	"mediauploader-custom-date": "انتخاب فرمت تاریخ سفارشی",
+	"mediauploader-prefs-def-license": "مجوز پیش‌فرض",
+	"mediauploader-prefs-license-name": "نام پدیدآورنده"
+}

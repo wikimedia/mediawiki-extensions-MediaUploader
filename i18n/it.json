@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"mediauploader-step-tutorial": "Impara",
+	"mediauploader-file-all-failed": "Nessuno dei caricamenti è riuscito.",
+	"mediauploader-upload-count": "$1 di $2 file {{PLURAL:$2|caricato|caricati}}",
+	"mediauploader-copy-other": "Copia altre informazioni",
+	"mediauploader-tooltip-more-info": "Ulteriori informazioni.",
+	"mediauploader-campaign-media-count-desc": "{{PLURAL:$1|Caricamento|Caricamenti}}",
+	"mediauploader-license-none-head": "L'ho trovato su Internet: non sono sicuro",
+	"mediauploader-error-title-invalid": "Questo titolo non è valido. Assicurati di rimuovere caratteri come parentesi quadre, due punti, operatori di confronto, barre verticali e parentesi graffe.",
+	"mediauploader-prefs-def-license": "Licenza predefinita"
+}
