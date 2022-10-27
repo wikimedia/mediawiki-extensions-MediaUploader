@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"mediauploader-add-file-n": "Добавить ещё файлы",
+	"mediauploader-publish": "Публикуется...",
+	"mediauploader-upload": "Загрузить",
+	"mediauploader-copy-metadata-button-undo": "Отменить",
+	"mediauploader-copy-date": "Скопировать дату",
+	"mediauploader-select-date": "Выберите дату",
+	"mediauploader-location-button": "Показать на карте",
+	"mediauploader-location-longitude": "Долгота",
+	"mediauploader-author": "Автор(ы)",
+	"mediauploader-source": "Источник",
+	"mediauploader-deleted-duplicate-unknown-filename": "Неизвестное имя файла",
+	"mediauploader-next": "Далее",
+	"mediauploader-next-file": "Продолжить",
+	"mediauploader-next-deeds": "Далее",
+	"mediauploader-publish-details": "Опубликовать файлы",
+	"mediauploader-previous": "Назад",
+	"mediauploader-tooltip-more-info": "Подробнее.",
+	"mediauploader-dialog-continue": "Продолжить",
+	"mediauploader-dialog-back": "Назад",
+	"mediauploader-license-custom-preview": "Предпросмотр",
+	"mediauploader-categories": "Категории",
+	"mediauploader-campaigns-pagination-next": "Следующая страница",
+	"mediauploader-content-source-ownwork": "собственная работа"
+}
