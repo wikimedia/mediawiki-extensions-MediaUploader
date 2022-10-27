@@ -4,6 +4,7 @@
 			"Ajiniyaz Nurniyazov"
 		]
 	},
+	"mediauploader": "Media juklewshisi",
 	"group-upwizcampeditors": "Media Uploader kampaniyası redaktorları",
 	"mediauploader-api-error-aborted": "Júklew toqtatıldı.",
 	"mediauploader-step-tutorial": "Úyreniw",
@@ -32,6 +33,7 @@
 	"mediauploader-description": "Sıpatlama",
 	"mediauploader-multilang-add": "{{PLURAL:$1|0=Tekst qosıw|Basqa tilde tekst qosıw}}",
 	"mediauploader-select-date": "Sáneni saylań",
+	"mediauploader-location": "Jaylasqan orın",
 	"mediauploader-location-longitude": "Uzınlıq",
 	"mediauploader-location-altitude": "Biyiklik",
 	"mediauploader-location-heading": "Rubrika",
