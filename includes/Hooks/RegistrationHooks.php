@@ -6,7 +6,7 @@ use DatabaseUpdater;
 use MediaWiki\ChangeTags\Hook\ChangeTagsAllowedAddHook;
 use MediaWiki\ChangeTags\Hook\ChangeTagsListActiveHook;
 use MediaWiki\ChangeTags\Hook\ListDefinedTagsHook;
-use MediaWiki\Extension\MediaUploader\Maintenance\FixCampaigns;
+use MediaWiki\Extension\MediaUploader\Maintenance\MigrateCampaigns;
 use MediaWiki\Installer\Hook\LoadExtensionSchemaUpdatesHook;
 use MediaWiki\User\Hook\UserGetReservedNamesHook;
 
@@ -82,7 +82,7 @@ class RegistrationHooks implements
 
 		$updater->addExtensionTable( 'mu_campaign', "$path/$type/tables-generated.sql" );
 
-		$updater->addPostDatabaseUpdateMaintenance( FixCampaigns::class );
+		$updater->addPostDatabaseUpdateMaintenance( MigrateCampaigns::class );
 
 		return true;
 	}
