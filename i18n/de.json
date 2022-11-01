@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"ThisCarthing"
+		]
+	},
+	"mediauploader-copied-metadata": "Kopiert!",
+	"mediauploader-description": "Beschreibung",
+	"mediauploader-home": "Zur Hauptseite des Wikis",
+	"mediauploader-error-blank": "Dieses Feld ist erforderlich.",
+	"mediauploader-campaign-create-account-button": "Erstelle ein Benutzerkonto und lade hoch!",
+	"mediauploader-custom-date": "Benutzerdefiniertes Datumsformat verwenden",
+	"mediauploader-prefs-def-license-custom-help": "Dieses Feld wird nur verwendet, wenn du oben die letzte Option auswählst.",
+	"mediauploader-campaigns-pagination-next": "Nächste Seite"
+}
