@@ -57,7 +57,8 @@ return [
 		'campaign' => 'Uploaded_via_Campaign:$1'
 	],
 
-	// TODO: add link to a documentation page about this
+	// This config section is well-documented on mediawiki.org:
+	// https://www.mediawiki.org/wiki/Extension:MediaUploader/Configuration/Details
 	'fields' => [
 		'title' => [
 			'order' => 0,
@@ -157,7 +158,7 @@ return [
 	// Initialized in RequestConfig.php
 	'languages' => [],
 
-	// The MediaUploader allows users to provide file descriptions in multiple languages. For each description, the user
+	// MediaUploader allows users to provide file descriptions in multiple languages. For each description, the user
 	// can choose the language. The MediaUploader wraps each description in a "language template". A language template
 	// is by default assumed to be a template with a name corresponding to the ISO 646 code of the language. For
 	// instance, Template:en for English, or Template:fr for French.
@@ -172,7 +173,9 @@ return [
 	// The 'wikitext' field tells the uploader how to mark this license on the file description page.
 	// By default, this is just the name of the license, but if you want, you can put template names here.
 	// See also the 'licensing' section, it allows you to wrap this wikitext into more complex stuff.
-	// TODO: write down the docs about the optional parameters: explainMsg
+	//
+	// See the detailed config guide here:
+	// https://www.mediawiki.org/wiki/Extension:MediaUploader/Configuration/Licensing
 	//
 	// Messages used here:
 	// * mediauploader-license-cc-by-4.0
