@@ -223,7 +223,6 @@
 	"mediauploader-yaml-parse-error": "A análise sintática do YAML falhou com a seguinte mensagem: $1",
 	"mediauploader-invalid-campaign-format": "O conteúdo da campanha \"$1\" está num formato inválido. Tente editá-lo para corrigir os erros de validação, por favor.",
 	"mediauploader-invalid-campaign-schema": "O conteúdo da campanha \"$1\" não é válido contra o esquema da campanha. Tente editá-lo para corrigir os erros de validação, por favor.",
-	"mediauploader-fix-campaign-comment-fixed": "Correção de $1 {{PLURAL:$1|problema|problemas}} na definição da campanha",
 	"mediauploader-fix-campaign-comment-prettified": "A definição da campanha foi reformatada",
 	"mediauploader-incomplete-campaign-record": "O registo da campanha \"$1\" não contém os seguintes elementos: $2",
 	"mediauploader-default-content-wikitext": "== Descrição ==\n{{{description}}}\n\n== Informações do conteúdo multimédia ==\n* '''Data:''' {{{date|''desconhecida''} }}\n* '''Fonte:''' {{{source|''desconhecida''}}}\n* '''Autor:''' {{{author|''desconhecido''} }}\n* '''Localização:''' {{{location|''desconhecida''}}}\n\n{{{other}}}\n\n== Licença ==\n{{{license}}}\n\n{{{categories}}}",

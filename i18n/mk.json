@@ -223,7 +223,6 @@
 	"mediauploader-yaml-parse-error": "YAML-расчленувањето не успеа со следнава порака: $1",
 	"mediauploader-invalid-campaign-format": "Содржината на походот „$1“ е во неважечки формат. Изменете ја за да ги исправите грешките.",
 	"mediauploader-invalid-campaign-schema": "Содржината на походот „$1“ не е во склад со походната шема. Изменете ја за да ги исправите грешките.",
-	"mediauploader-fix-campaign-comment-fixed": "{{PLURAL:$1|Попраен $1 проблем|Поправени $1 проблеми}} во опдредбата на подохот",
 	"mediauploader-fix-campaign-comment-prettified": "Преформатирана одредбата на походот",
 	"mediauploader-incomplete-campaign-record": "На записот за походот „$1“ недостасуваат следниве елементи: $2",
 	"mediauploader-default-content-wikitext": "== Опис ==\n{{{description}}}\n\n== Информации за податотеката ==\n* '''Датум:''' {{{date|''непознат''}}}\n* '''Извор:''' {{{source|''непознат''}}}\n* '''Автор:''' {{{author|''непознат''}}}\n* '''Место:''' {{{location|''непознато''}}}\n\n{{{other}}}\n\n== Лиценца ==\n{{{license}}}\n\n{{{categories}}}",

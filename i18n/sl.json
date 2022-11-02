@@ -223,7 +223,6 @@
 	"mediauploader-yaml-parse-error": "Razčlenjevanje YAML ni uspelo z naslednjim sporočilom: $1",
 	"mediauploader-invalid-campaign-format": "Vsebina kampanje »$1« je v neveljavni obliki. Poskusite jo urediti, da odpravite morebitne napake pri preverjanju.",
 	"mediauploader-invalid-campaign-schema": "Vsebina kampanje »$1« se ne preverja glede na shemo kampanje. Poskusite jo urediti, da odpravite morebitne napake pri preverjanju.",
-	"mediauploader-fix-campaign-comment-fixed": "{{PLURAL:$1|Odpravljena|Odpravljeni|Odpravljene|Odpravljenih}} $1 {{PLURAL:$1|težava|težavi|težave|težav}} v opredelitvi kampanje",
 	"mediauploader-fix-campaign-comment-prettified": "Preoblikovana opredelitev kampanje",
 	"mediauploader-incomplete-campaign-record": "Zapisu za kampanjo »$1« manjkajo naslednji elementi: $2",
 	"mediauploader-default-content-wikitext": "== Opis ==\n{{{description}}}\n\n== Podatki o predstavnosti ==\n* '''Datum:''' {{{date|''neznan''}}}\n* '''Vir:''' {{{source|''neznan''}}}\n* '''Avtor:''' {{{author|''neznan''}}}\n* '''Lokacija:''' {{{lokacija|''neznana''}}}\n\n{{{other}}}\n\n== Licenca ==\n{{{licenca}}}\n\n{{{categories}}}",
