@@ -4,6 +4,7 @@
 			"Ajiniyaz Nurniyazov"
 		]
 	},
+	"mediauploader": "Media juklewshisi",
 	"mediauploader-step-tutorial": "Úyreniw",
 	"mediauploader-step-file": "Júklew",
 	"mediauploader-step-deeds": "Bosatıw huqıqları",
@@ -29,6 +30,7 @@
 	"mediauploader-copy-other": "Basqa maǵlıwmatlardı nusqalaw",
 	"mediauploader-description": "Sıpatlama",
 	"mediauploader-select-date": "Sáneni saylań",
+	"mediauploader-location": "Jaylasqan orın",
 	"mediauploader-location-heading": "Rubrika",
 	"mediauploader-copyright-info": "Shıǵarıw huqıqları",
 	"mediauploader-author": "Avtor(lar)",

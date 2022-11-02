@@ -1,0 +1,36 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"mediauploader-step-tutorial": "Léieren",
+	"mediauploader-step-details": "Beschreiwen",
+	"mediauploader-publish": "Verëffentlechen...",
+	"mediauploader-published": "Verëffentlecht!",
+	"mediauploader-remove": "Ewechhuelen",
+	"mediauploader-override": "Trotzdeem eroplueden",
+	"mediauploader-file-all-failed": "D'Eropluede vun alle Fichieren huet net funktionéiert.",
+	"mediauploader-source-thirdparty-accept": "OK",
+	"mediauploader-copy-metadata-button": "Kopéieren",
+	"mediauploader-copied-metadata": "Kopéiert!",
+	"mediauploader-description": "Beschreiwung",
+	"mediauploader-date-created": "Datum",
+	"mediauploader-select-date": "Sicht en Datum eraus",
+	"mediauploader-location-button": "Op der Kaart weisen",
+	"mediauploader-other": "Aner Informatiounen",
+	"mediauploader-deleted-duplicate-unknown-filename": "Onbekannten Numm vum Fichier",
+	"mediauploader-ok": "OK",
+	"mediauploader-next-file": "Virufueren",
+	"mediauploader-next-deeds": "Weider",
+	"mediauploader-previous": "Zréck",
+	"mediauploader-tooltip-more-info": "Fir méi ze wëssen.",
+	"mediauploader-label-optional": "Fakultativ",
+	"mediauploader-error-blank": "Dëst Feld ass obligatoresch.",
+	"mediauploader-file-too-large": "De Fichier ass ze grouss.",
+	"mediauploader-dialog-title": "Warnung",
+	"mediauploader-campaign-upload-button": "Eroplueden!",
+	"mediauploader-categories": "Kategorien",
+	"mediauploader-errordialog-ok": "OK",
+	"prefs-uploads": "Eroplueden"
+}
