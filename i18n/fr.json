@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Verdy p",
-			"Wladek92"
+			"Wladek92",
+			"DavidL"
 		]
 	},
 	"mediauploader": "Assistant de téléversement de médias",
@@ -101,7 +102,7 @@
 	"mediauploader-thanks-intro": "Merci pour le téléversement !",
 	"mediauploader-thanks-explain": "Vous pouvez maintenant utiliser et intégrer ce{{PLURAL:$1||s}} fichier{{PLURAL:$1||s}} sur les wikis, ou bien établir des liens vers {{PLURAL:$1|lui|eux}} sur le web.",
 	"mediauploader-thanks-wikitext": "Afin d’utiliser le fichier sur un wiki, vous pouvez copier le texte suivant dans une page :",
-	"mediauploader-thanks-url": "Pour établir un lien vers lui en HTML, copiez cette URL :",
+	"mediauploader-thanks-url": "Pour créer un lien vers lui en HTML, copiez cette URL :",
 	"mediauploader-upload-error-bad-filename-extension": "Ce wiki n’accepte pas les noms de fichiers avec l’extension « .$1 ».",
 	"mediauploader-upload-error-bad-filename-no-extension": "Ce wiki requiert que les fichiers aient une extension (comme « .JPG ») à la fin du nom de fichier.",
 	"mediauploader-upload-error-duplicate-filename-error": "Vous téléversez déjà le fichier « $1 ».",
