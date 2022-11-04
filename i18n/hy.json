@@ -12,8 +12,6 @@
 	"mediauploader-remove": "Հեռացնել",
 	"mediauploader-next-file-despite-failures": "Անտեսել և շարունակել",
 	"mediauploader-progressbar-uploading": "վերբեռնվում է",
-	"mediauploader-source-thirdparty-intro": "Խնդրում ենք մուտքագրել հասցեն, որտեղ գտել եք յուրաքանչյուր նիշք:",
-	"mediauploader-source-thirdparty-accept": "Լավ",
 	"mediauploader-copy-metadata-button-undo": "Հետ շրջել",
 	"mediauploader-copy-description": "Պատճենել նկարագրությունները",
 	"mediauploader-description": "Նկարագրություն",

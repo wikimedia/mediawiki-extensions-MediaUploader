@@ -22,8 +22,6 @@
 	"mediauploader-file-all-failed": "Júklewlerdiń heshbiri tabıslı bolmadı.",
 	"mediauploader-upload-count": "$2 {{PLURAL:$2|fayl|fayllar}}dan $1 júklengen",
 	"mediauploader-finished": "Tamamlandı!",
-	"mediauploader-source-permission": "Olardıń avtorı sizge olardı júklewge anıq ruxsat bergen",
-	"mediauploader-source-thirdparty-accept": "OK",
 	"mediauploader-copy-metadata-button-undo": "Qaytarıw",
 	"mediauploader-copied-metadata": "Kóshirmelendi!",
 	"mediauploader-undid-metadata": "Nusqalaw biykar etildi.",
