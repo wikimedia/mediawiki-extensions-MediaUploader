@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Sabelöga"
+		]
+	},
+	"mediauploader": "Medieuppladdare",
+	"mediauploader-desc": "Flexibel uppladdare, flera filer, steg för steg.",
+	"tag-uploadwizard": "Medieuppladdare",
+	"tag-uploadwizard-description": "Enklare uppladdningar med Medieuppladdaren",
+	"right-mass-upload": "Ladda upp fler filer samtidigt och i klumpar med Medieuppladdaren",
+	"action-mass-upload": "ladda upp fler filer samtidigt och i klumpar med Medieuppladdaren"
+}

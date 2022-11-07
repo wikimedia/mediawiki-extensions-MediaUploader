@@ -22,6 +22,8 @@
 	"mediauploader-file-all-failed": "Júklewlerdiń heshbiri tabıslı bolmadı.",
 	"mediauploader-upload-count": "$2 {{PLURAL:$2|fayl|fayllar}}dan $1 júklengen",
 	"mediauploader-finished": "Tamamlandı!",
+	"mediauploader-more-options": "Jaylasıw ornı hám basqa da maǵlıwmatlardı qosıń…",
+	"mediauploader-copy-metadata": "Maǵlıwmatlardı … izinen keliwshi barlıq júklemelerge kóshirmelew",
 	"mediauploader-copy-metadata-button-undo": "Qaytarıw",
 	"mediauploader-copied-metadata": "Kóshirmelendi!",
 	"mediauploader-undid-metadata": "Nusqalaw biykar etildi.",
@@ -30,6 +32,7 @@
 	"mediauploader-copy-other": "Basqa maǵlıwmatlardı nusqalaw",
 	"mediauploader-description": "Sıpatlama",
 	"mediauploader-multilang-add": "{{PLURAL:$1|0=Tekst qosıw|Basqa tilde tekst qosıw}}",
+	"mediauploader-title": "Fayl atı",
 	"mediauploader-select-date": "Sáneni saylań",
 	"mediauploader-location": "Jaylasqan orın",
 	"mediauploader-location-longitude": "Uzınlıq",
@@ -86,5 +89,6 @@
 	"mediauploader-prefs-def-license-custom": "Arnawlı standart licenziya",
 	"mediauploader-prefs-def-license-custom-help": "Bul maydan tek joqarıdan aqırǵı varianttı tańlasańız isletiledi.",
 	"mediauploader-prefs-license-name": "Avtordıń atı",
+	"mediauploader-prefs-skiptutorial": "Kirisiw sabaǵın ótkerip jiberiw",
 	"mediauploader-campaigns-pagination-next": "Keyingi bet"
 }
