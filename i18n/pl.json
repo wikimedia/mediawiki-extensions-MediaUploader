@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ostrzyciel"
+		]
+	},
+	"mediauploader": "Kreator przesyłania",
+	"mediauploader-desc": "Elastyczny i łatwy w obsłudze kreator przesyłania plików.",
+	"action-upwizcampaigns": "konfigurowania inicjatyw kreatora przesyłania",
+	"prefs-uploads": "Przesyłanie",
+	"mediauploader-yaml-parse-error": "Parsowanie pliku YAML nie powiodło się: $1",
+	"mediauploader-invalid-campaign-format": "Treść inicjatywy „$1” ma nieprawidłowy format. Spróbuj ją edytować, aby naprawić błędy.",
+	"mediauploader-invalid-campaign-schema": "Treść inicjatywy „$1” nie pasuje do schematu inicjatyw. Spróbuj ją edytować, aby naprawić błędy.",
+	"mediauploader-fix-campaign-comment-prettified": "Przeformatowano definicję inicjatywy"
+}
