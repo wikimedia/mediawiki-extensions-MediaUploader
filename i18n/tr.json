@@ -91,5 +91,11 @@
 	"mediauploader-fileexists-replace-on-page": "Bu ada sahip bir dosya zaten var. Değiştirmek isterseniz [$2 $1] için sayfaya gidin ve orada değiştirin.",
 	"mediauploader-fileexists-replace-no-link": "Lütfen farklı bir başlık seçin çünkü bu başlık zaten başka bir dosya tarafından kullanılıyor.",
 	"mediauploader-blacklisted-details": "Lütfen farklı ve açıklayıcı bir başlık seçin ([$2 daha fazla bilgi]).",
-	"mediauploader-next": "Sonraki"
+	"mediauploader-next": "Sonraki",
+	"prefs-uploads": "Yükleniyor",
+	"mediauploader-prefs-def-license": "Varsayılan lisans",
+	"mediauploader-prefs-def-license-def": "Varsayılanı kullan",
+	"mediauploader-prefs-def-license-custom": "Özel varsayılan lisans",
+	"mediauploader-prefs-def-license-custom-help": "Bu alan yalnızca yukarıdaki son seçeneği belirlerseniz kullanılır.",
+	"mediauploader-prefs-license-name": "Yazar adı"
 }
