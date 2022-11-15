@@ -387,10 +387,10 @@ return [
 	// If different pages are required for different languages,
 	// supply an object mapping user language code to page. For a catch-all
 	// page for all languages not explicitly configured, use 'default'. For instance:
-	//   array(
-	//		'default'	=> 'Commons:Upload',
-	//		'de'		=> 'Commons:Hochladen'
-	//	 );
+	//   [
+	//     'default' => 'Commons:Upload',
+	//     'de'      => 'Commons:Hochladen'
+	//   ];
 	// When empty, no link will be added.
 	'altUploadForm' => '',
 
