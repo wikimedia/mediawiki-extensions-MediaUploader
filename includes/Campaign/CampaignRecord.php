@@ -7,7 +7,6 @@ use MediaWiki\Extension\MediaUploader\Campaign\Exception\IncompleteRecordExcepti
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidFormatException;
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\InvalidSchemaException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigBase;
-
 use MediaWiki\Page\PageReference;
 use MWException;
 

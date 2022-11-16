@@ -182,8 +182,7 @@ class CampaignContent extends TextContent {
 				);
 			}
 			return $this->yamlParse;
-		}
-		catch ( ParseException $e ) {
+		} catch ( ParseException $e ) {
 			return Status::newFatal(
 				'mediauploader-yaml-parse-error',
 				$e->getMessage()
