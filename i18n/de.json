@@ -2,13 +2,15 @@
 	"@metadata": {
 		"authors": [
 			"TMg",
-			"ThisCarthing"
+			"ThisCarthing",
+			"Zabien"
 		]
 	},
 	"mediauploader-api-error-aborted": "Hochladen abgebrochen.",
 	"mediauploader-api-error-unknown-warning": "Unbekannte Warnung: „$1“.",
 	"mediauploader-step-file": "Hochladen",
 	"mediauploader-step-details": "Beschreiben",
+	"mediauploader-remove": "Entfernen",
 	"mediauploader-upload": "Hochladen",
 	"mediauploader-copy-metadata-button": "Kopieren",
 	"mediauploader-copy-metadata-button-undo": "Rückgängig machen",
