@@ -6,5 +6,10 @@
 	},
 	"mediauploader": "Medieuppladdare",
 	"mediauploader-desc": "Flexibel uppladdare, flera filer, steg för steg.",
-	"action-upwizcampaigns": "konfigurera uppladdningskampanjer"
+	"action-upwizcampaigns": "konfigurera uppladdningskampanjer",
+	"prefs-uploads": "Laddar upp",
+	"mediauploader-yaml-parse-error": "YAML-analys misslyckades med följande meddelande: $1",
+	"mediauploader-invalid-campaign-format": "Innehållet i kampanjen \" $1 \" är i ett ogiltigt format. Försök att redigera den för att åtgärda eventuella valideringsfel.",
+	"mediauploader-invalid-campaign-schema": "Innehållet i kampanjen \" $1 \" valideras inte mot kampanjschemat. Försök att redigera den för att åtgärda eventuella valideringsfel.",
+	"mediauploader-fix-campaign-comment-prettified": "Omformaterade kampanjdefinitionen"
 }
