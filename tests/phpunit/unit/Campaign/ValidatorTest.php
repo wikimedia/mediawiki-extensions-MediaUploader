@@ -444,7 +444,8 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 		$status = $validator->validate( $toValidate );
 
 		if ( $expectedIsValid ) {
-			$this->assertEmpty(
+			$this->assertSame(
+				[],
 				$status->getErrors(),
 				// print the validation errors
 				FormatJson::encode( $status->getErrors(), true )
