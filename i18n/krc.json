@@ -7,5 +7,7 @@
 	"mediauploader-more-options": "Локация бла аслам информация къош",
 	"mediauploader-copy-metadata": "Бютеу джюклениулеге бу билгилени копия эт...",
 	"mediauploader-title": "Файлны аты",
+	"mediauploader-error-latitude": "Кенглик -90 бла 90 арасында сан болургъа керекди.",
+	"mediauploader-error-longitude": "Кенглик -180 бла 180 арасында сан болургъа керекди.",
 	"mediauploader-prefs-skiptutorial": "Кириш дерсни атлат"
 }

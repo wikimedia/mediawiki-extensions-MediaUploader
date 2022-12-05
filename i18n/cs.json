@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Matěj Suchánek"
+		]
+	},
+	"mediauploader-error-longitude": "Zeměpisná délka musí být číslo v rozsahu -180 až 180."
+}
