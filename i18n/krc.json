@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Къарачайлы"
+		]
+	},
+	"mediauploader-error-latitude": "Кенглик -90 бла 90 арасында сан болургъа керекди.",
+	"mediauploader-error-longitude": "Кенглик -180 бла 180 арасында сан болургъа керекди."
+}
