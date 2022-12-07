@@ -12,5 +12,6 @@
 	"mediauploader-author": "Pengarang",
 	"mediauploader-tooltip-more-info": "Ketahui lebih lanjut.",
 	"mediauploader-label-optional": "Pilihan",
+	"mediauploader-error-longitude": "Longitud mesti nombor antara -180 dan 180.",
 	"mediauploader-categories": "Kategori"
 }
