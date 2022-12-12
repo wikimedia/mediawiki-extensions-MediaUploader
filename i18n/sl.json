@@ -96,7 +96,7 @@
 	"mediauploader-other": "Druge informacije",
 	"mediauploader-source": "Vir",
 	"mediauploader-thanks-intro": "Hvala za naložitev!",
-	"mediauploader-thanks-explain": "Zdaj lahko {{PLURAL:$1|to datoteko|ti datoteki|te datoteke}} uporabljate v vikijih ali {{PLURAL:$1|nanjo|nanju|nanje}} povezujete v spletu.",
+	"mediauploader-thanks-explain": "Zdaj lahko {{PLURAL:$1|to datoteko|ti datoteki|te datoteke}} uporabljate v vikijih ali {{PLURAL:$1|nanjo|nanju|nanje}} povezujete na spletu.",
 	"mediauploader-thanks-wikitext": "Za uporabo datoteke v vikiju skopirajte na stran naslednje besedilo:",
 	"mediauploader-thanks-url": "Za povezavo v HTML skopirajte naslednji spletni naslov:",
 	"mediauploader-upload-error-bad-filename-extension": "Ta viki ne sprejema imen datotek s pripono ».$1«.",
