@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lantianjialiang"
+		]
+	},
+	"mediauploader-error-latitude": "纬度必须是在-90~90之间的一个数字。",
+	"mediauploader-error-longitude": "经度必须是在-180~180之间的一个数字。"
+}

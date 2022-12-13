@@ -3,7 +3,8 @@
 		"authors": [
 			"Adom",
 			"MathXplore",
-			"春春眠眠"
+			"春春眠眠",
+			"バレロン"
 		]
 	},
 	"tag-uploadwizard": "MediaUploader",
@@ -60,6 +61,8 @@
 	"mediauploader-tooltip-more-info": "詳細。",
 	"mediauploader-deeds-need-license": "ライセンスを選択してください。",
 	"mediauploader-license-show-all": "別のライセンスを使用する",
+	"mediauploader-error-latitude": "緯度は-90から90の範囲で入力してください",
+	"mediauploader-error-longitude": "経度は-180から180の範囲で入力してください",
 	"mediauploader-error-blank": "この欄は必須です。",
 	"mediauploader-file-too-large": "ファイルが大きすぎます。",
 	"mediauploader-dialog-title": "警告",
