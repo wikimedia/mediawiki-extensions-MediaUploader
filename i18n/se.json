@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"Kimberli Mäkäräinen (WMNO)",
 			"Yupik"
 		]
 	},
+	"mediauploader-remove": "Sihko",
 	"mediauploader-tooltip-more-info": "Lassedieđut",
 	"prefs-mediauploader-interface": "Geavahanlakta"
 }
