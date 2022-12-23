@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Agam Riyandana",
 			"DARMAS BUDI SANTOSO",
 			"Veracious"
 		]
@@ -13,6 +14,8 @@
 	"mediauploader-location-longitude": "Bujur",
 	"mediauploader-location-altitude": "Ketinggian",
 	"mediauploader-tooltip-more-info": "Pelajari lebih lanjut.",
+	"mediauploader-error-latitude": "Garis lintang harus berupa angka antara -90 dan 90.",
+	"mediauploader-error-longitude": "Garis bujur harus berupa angka antara -180 dan 180.",
 	"mediauploader-error-blank": "Wajib diisi.",
 	"mediauploader-dialog-back": "Kembali",
 	"mediauploader-campaign-create-account-button": "Buat sebuah akun dan unggah!",
