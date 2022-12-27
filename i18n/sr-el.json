@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"mediauploader-source-ownwork-assert": "Ja, $2, nosilac autorskog prava {{PLURAL:$4|ovog dela|ovih dela}}, neopozivo dajem pravo svakome da {{PLURAL:$1|ga koristi|ih koristi}} pod sledećom licencom:",
+	"mediauploader-description": "Opis",
+	"mediauploader-next-deeds": "Sledeće",
+	"mediauploader-previous": "Nazad"
+}

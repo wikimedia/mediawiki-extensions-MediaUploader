@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Veracious",
-			"DARMAS BUDI SANTOSO"
+			"DARMAS BUDI SANTOSO",
+			"Agam Riyandana"
 		]
 	},
 	"tag-uploadwizard": "MediaUploader",
@@ -13,8 +14,8 @@
 	"mediauploader-location-longitude": "Bujur",
 	"mediauploader-location-altitude": "Ketinggian",
 	"mediauploader-tooltip-more-info": "Pelajari lebih lanjut.",
-	"mediauploader-error-latitude": "The latitude must be a number between -90 and 90.",
-	"mediauploader-error-longitude": "The longitude must be a number between -180 and 180.",
+	"mediauploader-error-latitude": "Garis lintang harus berupa angka antara -90 dan 90.",
+	"mediauploader-error-longitude": "Garis bujur harus berupa angka antara -180 dan 180.",
 	"mediauploader-error-blank": "Wajib diisi.",
 	"mediauploader-dialog-back": "Kembali",
 	"mediauploader-campaign-create-account-button": "Buat sebuah akun dan unggah!",
