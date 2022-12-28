@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nguyenphutrong2"
+		]
+	},
+	"mediauploader-error-latitude": "Vĩ độ phải là một số từ -90 đến 90.",
+	"mediauploader-error-longitude": "Kinh độ phải là một số từ -180 đến 180."
+}
