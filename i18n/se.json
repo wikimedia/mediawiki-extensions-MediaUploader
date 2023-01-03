@@ -6,6 +6,8 @@
 		]
 	},
 	"mediauploader-remove": "Sihko",
+	"mediauploader-description": "Govvádus",
+	"mediauploader-deleted-duplicate-unknown-filename": "Dovdameahttun fiilanamma",
 	"mediauploader-tooltip-more-info": "Lassedieđut",
 	"prefs-mediauploader-interface": "Geavahanlakta"
 }

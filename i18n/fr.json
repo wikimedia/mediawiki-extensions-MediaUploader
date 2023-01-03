@@ -62,7 +62,7 @@
 	"mediauploader-progressbar-uploading": "téléversement en cours",
 	"mediauploader-almost-finished": "Traitement des fichiers en cours...",
 	"mediauploader-finished": "Terminé !",
-	"mediauploader-deeds-macro-prompt": "Ce site vous{{GENDER:$2|}} demande de fournir les informations de droit d’auteur pour ce{{PLURAL:$1|tte|s}} œuvre{{PLURAL:$1||s}}, afin d’assurer que chacun puisse l{{PLURAL:$1|a|es}} réutiliser.",
+	"mediauploader-deeds-macro-prompt": "Ce site {{GENDER:$2|}}vous demande de fournir les informations de droit d’auteur pour ce{{PLURAL:$1|tte|s}} œuvre{{PLURAL:$1||s}}, afin d’assurer que chacun puisse l{{PLURAL:$1|a|es}} réutiliser.",
 	"mediauploader-source-ownwork": "Ce{{PLURAL:$1||s}} fichier{{PLURAL:$1||s}} {{PLURAL:$1|es|son}}t de mon propre travail.",
 	"mediauploader-source-ownwork-assert": "Moi, $2, titulaire{{GENDER:$4|}} du droit d’auteur sur ce{{PLURAL:$1|tte|s}} œuvre{{PLURAL:$1||s}}, accorde irrévocablement à quiconque le droit d’utiliser ce{{PLURAL:$1|tte|s}} œuvre{{PLURAL:$1||s}} sous la licence suivante :",
 	"mediauploader-source-permission": "Leur auteur vous a donné la permission explicite de les téléverser",
