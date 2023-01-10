@@ -62,7 +62,7 @@
 	"mediauploader-finished": "Končano!",
 	"mediauploader-deeds-macro-prompt": "Prosimo, da za {{PLURAL:$1|to delo|ti deli|ta dela}} {{GENDER:$2|navedete}} informacije o avtorskih pravicah in tako zagotovite, da {{PLURAL:$1|ga|ju|jih}} lahko vsakdo zakonito znova uporabi.",
 	"mediauploader-source-ownwork": "{{PLURAL:$1|Datoteka je|Datoteki sta|Datoteke so}} moje lastno delo.",
-	"mediauploader-source-ownwork-assert": "Jaz, $2, {{GENDER:$4|nosilec avtorskih pravic|nosilka avtorskih pravic|nosilec_ka avtorskih pravic}} na {{PLURAL:$1|tem delu|teh delih}}, vsakomur nepreklicno podeljujem pravico do uporabe {{PLURAL:$1|tega dela|teh del}} pod naslednjo licenco:",
+	"mediauploader-source-ownwork-assert": "Jaz, $2, {{GENDER:$4|imetnik|imetnica|imetnik_ca}} avtorskih pravic na {{PLURAL:$1|tem delu|teh delih}}, vsakomur nepreklicno podeljujem pravico do uporabe {{PLURAL:$1|tega dela|teh del}} pod naslednjo licenco:",
 	"mediauploader-source-permission": "Njihov avtor vam je dal izrecno dovoljenje, da jih lahko naložite",
 	"mediauploader-source-thirdparty": "{{PLURAL:$1|Datoteka ni|Datoteki nista|Datoteke niso}} moje delo.",
 	"mediauploader-source-thirdparty-intro": "Vnesite naslov, na katerem ste našli vsako od datotek.",
@@ -227,6 +227,6 @@
 	"mediauploader-incomplete-campaign-record": "Zapisu za kampanjo »$1« manjkajo naslednji elementi: $2",
 	"mediauploader-default-content-wikitext": "== Opis ==\n{{{description}}}\n\n== Podatki o predstavnosti ==\n* '''Datum:''' {{{date|''neznan''}}}\n* '''Vir:''' {{{source|''neznan''}}}\n* '''Avtor:''' {{{author|''neznan''}}}\n* '''Lokacija:''' {{{lokacija|''neznana''}}}\n\n{{{other}}}\n\n== Licenca ==\n{{{licenca}}}\n\n{{{categories}}}",
 	"mediauploader-content-source-ownwork": "lastno delo",
-	"mediauploader-content-license-ownwork": "Jaz, nosilec avtorskih pravic na tem delu, ga s tem izdajam pod {{PLURAL:$1|naslednjo licenco|naslednjima licencama|naslednjimi licencami}}:",
+	"mediauploader-content-license-ownwork": "Jaz, imetnik avtorskih pravic na tem delu, ga s tem objavljam pod {{PLURAL:$1|naslednjo licenco|naslednjima licencama|naslednjimi licencami}}:",
 	"mediauploader-license-none-text": "Navedena ni nobena licenca"
 }
