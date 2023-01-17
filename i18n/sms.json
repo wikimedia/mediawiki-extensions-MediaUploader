@@ -12,6 +12,7 @@
 	"mediauploader-description": "Deskriptt",
 	"mediauploader-other": "Jeeʹres teâđ",
 	"mediauploader-deleted-duplicate-unknown-filename": "Toobdteʹmes teâttõsnõmm",
+	"mediauploader-upload-another": "Ruõkk lââʹzz teâttõõzzid",
 	"mediauploader-categories": "Kategoria",
 	"prefs-mediauploader-interface": "Ââʹnnemõhttõs",
 	"mediauploader-default-content-wikitext": "== Deskriptt ==\n{{{description}}}\n\n== Mediateâđ ==\n* '''Peiʹvvmieʹrr:''' {{{date|''toobdtem''}}}\n* '''Käivv:''' {{{source|''toobdtem''}}}\n* '''Raajji:''' {{{author|''toobdtem''}}}\n* '''Sââʹjj:''' {{{location|''toobdtem''}}}\n\n{{{other}}}\n\n== Liseʹnss ==\n{{{license}}}\n\n{{{categories}}}"
