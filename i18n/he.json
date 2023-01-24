@@ -5,5 +5,6 @@
 		]
 	},
 	"mediauploader-title": "כותרת הקובץ",
+	"mediauploader-error-title-invalid": "הכותרת הזאת אינה תקינה. נא להסיר תווים כגון סוגריים מרובעים, נקודתיים, קווים נטויים, תווי השוואה, קווים ניצבים וסוגריים מסולסלים.",
 	"mediauploader-campaigns-pagination-next": "הדף הבא"
 }
