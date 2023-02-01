@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"DavidL",
+			"SleaY",
 			"Verdy p",
 			"Wladek92"
 		]
@@ -181,7 +182,7 @@
 	"mediauploader-license-custom-head": "Une autre raison non mentionnée ci-dessus",
 	"mediauploader-license-custom-preview": "Aperçu",
 	"mediauploader-license-none-head": "Je l’ai trouvé sur Internet — je ne suis pas sûr{{GENDER:||e}}",
-	"mediauploader-license-none": "Je crois que ce{{PLURAL:$1|tte|s}}œuvre{{PLURAL:$1||s}} {{PLURAL:$1|es|son}}t placée{{PLURAL:$1||s}} sous licence libre ou {{PLURAL:$1|es|son}}t légalement dans le domaine public. Je comprends que si je n’ajoute pas rapidement les informations de licence nécessaires, le{{PLURAL:$1||s}} fichier{{PLURAL:$1||s}} pourront être supprimé{{PLURAL:$1||s}}.",
+	"mediauploader-license-none": "Je crois que ce{{PLURAL:$1|tte|s}}œuvre{{PLURAL:$1||s}} {{PLURAL:$1|es|son}}t placée{{PLURAL:$1||s}} sous licence libre ou {{PLURAL:$1|es|son}}t légalement dans le domaine public. Je comprends que si je n’ajoute pas rapidement les informations de licence nécessaires, le{{PLURAL:$1||s}} fichier{{PLURAL:$1||s}} pourr{{PLURAL:$1|a|ont}} être supprimé{{PLURAL:$1||s}}.",
 	"mediauploader-license-generic": "J’ai relu [[{{int:disclaimerpage}}|la clause de non-responsabilité de ce wiki]] et, à ma connaissance, cet{{PLURAL:$1|tte|s}} œuvre{{PLURAL:$1||s}} n{{PLURAL:$1|’es|e son}}t pas protégée{{PLURAL:$1||s}} à des niveaux dépassant ceux de ce wiki.",
 	"mediauploader-license-confirm-remove": "Êtes-vous sûr{{GENDER:||e}} de vouloir supprimer ce{{PLURAL:$1||s}} téléversement{{PLURAL:$1||s}} ?",
 	"mediauploader-license-confirm-remove-title": "Confirmer le retrait",
