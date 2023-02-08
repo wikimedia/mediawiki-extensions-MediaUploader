@@ -4,5 +4,10 @@
 			"Amire80"
 		]
 	},
+	"mediauploader-copy-metadata-button-undo": "ביטול",
+	"mediauploader-undid-metadata": "ההעתקה בוטלה.",
+	"mediauploader-next": "הבא",
+	"mediauploader-next-deeds": "הבא",
+	"mediauploader-license-custom-preview": "תצוגה מקדימה",
 	"mediauploader-error-title-invalid": "הכותרת הזאת אינה תקינה. נא להסיר תווים כגון סוגריים מרובעים, נקודתיים, קווים נטויים, תווי השוואה, קווים ניצבים וסוגריים מסולסלים."
 }
