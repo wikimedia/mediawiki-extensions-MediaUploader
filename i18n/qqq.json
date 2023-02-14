@@ -151,7 +151,7 @@
 	"mediauploader-previous": "Button text for going back to the previous Media Uploader stage.\n{{Identical|Back}}",
 	"mediauploader-home": "This is a button label, used at the end in the \"{{MediaWiki:mediauploader-step-thanks/en}}\" page of the [[:mw:Extension:MediaUploader|MediaWiki Media Uploader]].",
 	"mediauploader-upload-another": "This is a button label, used at the end in the \"{{MediaWiki:mediauploader-step-thanks/en}}\" page of the [[:mw:Extension:MediaUploader|MediaWiki Media Uploader]].",
-	"mediauploader-tooltip-skiptutorial": "The tooltip shown when clicking the checkbox in the first step which enables the user to skip the introductory licensing tutorial in future.\n\nParameters:\n* $1 - the URL for the user preferences\n* $2 - {{msg-mw|Prefs-uploads}}\n* $3 - {{msg-mw|Prefs-mediauploader-interface}}",
+	"mediauploader-tooltip-skiptutorial": "The tooltip shown when clicking the checkbox in the first step, which enables the user to skip the introductory licensing tutorial in the future.\n\nIn right to left languages, use ←.\n\nParameters:\n* $1 - the URL for the user preferences\n* $2 - {{msg-mw|Prefs-uploads}}\n* $3 - {{msg-mw|Prefs-mediauploader-interface}}",
 	"mediauploader-tooltip-author": "The tooltip that documents the author field in the deeds step, for attribution purposes.",
 	"mediauploader-tooltip-source": "The tooltip that documents the source field in the deeds step, for attribution purposes.",
 	"mediauploader-tooltip-sign": "The tooltip documenting the field for the permissions signature - often a username or real name of the uploader.",
