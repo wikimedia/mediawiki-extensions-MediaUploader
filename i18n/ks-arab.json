@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Tajamul9"
+			"Tajamul9",
+			"Iflaq"
 		]
 	},
 	"mediauploader-step-tutorial": "ہیٚچھِو",
@@ -24,7 +25,7 @@
 	"mediauploader-tooltip-more-info": "مٔزیٖد وُچھِو",
 	"mediauploader-license-show-all": "اکھ مُختلف اِجازت نامہٕ کٕریٚو استعمال",
 	"mediauploader-label-optional": "اِختِیٲری",
-	"mediauploader-campaign-create-account-button": "کھاتہٕ بنأوِو تہٕ کٕریٚو اَپلوڈ!",
+	"mediauploader-campaign-create-account-button": "کھاتہٕ بنأوِو تہٕ کٔرِو اَپلوڈ!",
 	"mediauploader-campaign-media-count-desc": "{{PLURAL:$1|اَپلوڈ|اَپلوڈٕس}}",
 	"mediauploader-campaign-view-all-media": "وُچھو سٲری اَپلوڈ گۄومُت مِیٖڈِیا",
 	"mediauploader-categories": "زٲژ",
