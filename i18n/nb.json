@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"EdoAug",
 			"Telaneo"
 		]
 	},
-	"mediauploader-uploading": "Laster opp...",
+	"mediauploader-uploading": "Laster opp ...",
 	"mediauploader-file-all-failed": "Ingen av opplastningene var vellykket.",
 	"mediauploader-finished": "Ferdig!",
 	"mediauploader-copy-other": "Kopier annen informasjon",
