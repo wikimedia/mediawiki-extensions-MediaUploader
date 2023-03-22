@@ -20,10 +20,10 @@
 
 	QUnit.test( 'Constructor sanity test', function ( assert ) {
 		var step = new uw.controller.Tutorial( new mw.Api() );
-		assert.ok( step );
-		assert.ok( step instanceof uw.controller.Step );
-		assert.ok( step.ui );
-		assert.ok( step.api );
+		assert.true( !!step );
+		assert.true( step instanceof uw.controller.Step );
+		assert.true( !!step.ui );
+		assert.true( !!step.api );
 	} );
 
 	QUnit.test( 'setSkipPreference', function ( assert ) {
@@ -38,14 +38,14 @@
 
 		step.setSkipPreference( true );
 
-		assert.ok( mw.confirmCloseWindow.called );
-		assert.ok( api.postWithToken.calledWithExactly( 'options', {
+		assert.true( mw.confirmCloseWindow.called );
+		assert.true( api.postWithToken.calledWithExactly( 'options', {
 			action: 'options',
 			change: 'upwiz_skiptutorial=1'
 		} ) );
 
 		pwtd.resolve();
-		assert.ok( acwStub.release.called );
+		assert.true( acwStub.release.called );
 
 		api = new mw.Api();
 		step = new uw.controller.Tutorial( api );
@@ -59,6 +59,6 @@
 		assert.notOk( acwStub.release.called );
 
 		pwtd.reject( 'http', { textStatus: 'Foo bar' } );
-		assert.ok( mnStub.calledWith( 'Foo bar' ) );
+		assert.true( mnStub.calledWith( 'Foo bar' ) );
 	} );
 }( mw.uploadWizard ) );
