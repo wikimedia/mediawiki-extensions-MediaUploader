@@ -5,6 +5,7 @@
  *   'new' 'transporting' 'transported' 'metadata' 'stashed' 'details' 'submitting-details' 'complete' 'error'
  * should fork this into two -- local and remote, e.g. filename
  */
+
 ( function ( uw ) {
 	/**
 	 * Constructor for objects representing uploads. The workhorse of this entire extension.
@@ -172,7 +173,7 @@
 
 		// find index of last path separator in the path, add 1. (If no separator found, yields 0)
 		// then take the entire string after that.
-		return path.substr( Math.max( path.lastIndexOf( '/' ), path.lastIndexOf( '\\' ) ) + 1 );
+		return path.slice( Math.max( path.lastIndexOf( '/' ), path.lastIndexOf( '\\' ) ) + 1 );
 	};
 
 	/**

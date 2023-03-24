@@ -19,6 +19,8 @@
 				]
 			}
 		],
-		"no-shadow": "warn"
+		"no-shadow": "warn",
+		"es-x/no-regexp-u-flag": "warn",
+		"es-x/no-typed-arrays": "warn"
 	}
 }

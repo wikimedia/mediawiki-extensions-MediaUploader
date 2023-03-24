@@ -36,7 +36,7 @@
 		var handler = this;
 
 		return this.configureEditToken().then( function () {
-			handler.beginTime = ( new Date() ).getTime();
+			handler.beginTime = Date.now();
 			handler.upload.ui.setStatus( 'mediauploader-transport-started' );
 			handler.upload.ui.showTransportProgress();
 

@@ -1,6 +1,7 @@
 /**
  * Object that represents the entire multi-step Upload Wizard
  */
+
 ( function ( uw ) {
 
 	mw.UploadWizard = function ( config ) {

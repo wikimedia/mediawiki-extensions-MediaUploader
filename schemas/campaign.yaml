@@ -3,11 +3,11 @@
 # Changes to this schema MUST be backwards-compatible.
 # See tests/phpunit/unit/Campaign/ValidatorTest.php for schema tests
 
-$schema: 'http://json-schema.org/draft-04/schema#'
+$schema: "http://json-schema.org/draft-04/schema#"
 
-################################
-## Definitions used elsewhere ##
-################################
+# ###############################
+# # Definitions used elsewhere ##
+# ###############################
 definitions:
   # Represents a name of a license defined in the global config
   licenseName:
@@ -19,9 +19,9 @@ definitions:
   # 'defaults' field in licensing config
   defaultLicensesField:
     oneOf:
-      - { $ref: '#/definitions/licenseName' }
+      - { $ref: "#/definitions/licenseName" }
       - type: array
-        items: { $ref: '#/definitions/licenseName' }
+        items: { $ref: "#/definitions/licenseName" }
 
   # One abstract group of licenses
   licenseGroup:
@@ -29,7 +29,7 @@ definitions:
     properties:
       licenses:
         type: array
-        items: { $ref: '#/definitions/licenseName' }
+        items: { $ref: "#/definitions/licenseName" }
       licenseWikitext: { type: string }
       licenseSeparator: { type: string }
       wrapper: { type: string }
@@ -37,7 +37,7 @@ definitions:
   # Licensing – plain list of licenses
   licensingList:
     allOf:
-      - $ref: '#/definitions/licenseGroup'
+      - $ref: "#/definitions/licenseGroup"
       - type: object
         additionalProperties: false
         properties:
@@ -46,9 +46,9 @@ definitions:
             enum:
               - radio
               - checkbox
-          defaults: { $ref: '#/definitions/defaultLicensesField' }
+          defaults: { $ref: "#/definitions/defaultLicensesField" }
           # For overriding the base config with groups of licenses
-          licenseGroups: { type: 'null' }
+          licenseGroups: { type: "null" }
           # # # # #
           licenses: {}
           licenseWikitext: {}
@@ -60,19 +60,19 @@ definitions:
     type: object
     additionalProperties: false
     properties:
-      defaults: { $ref: '#/definitions/defaultLicensesField' }
+      defaults: { $ref: "#/definitions/defaultLicensesField" }
       type:
         type: string
         enum:
           - radio
           - checkbox
       # For overriding the base config with a list of licenses
-      licenses: { type: 'null' }
+      licenses: { type: "null" }
       licenseGroups:
         type: array
         items:
           allOf:
-            - $ref: '#/definitions/licenseGroup'
+            - $ref: "#/definitions/licenseGroup"
             - type: object
               additionalProperties: false
               properties:
@@ -130,7 +130,7 @@ definitions:
 
   fieldText:
     allOf:
-      - $ref: '#/definitions/fieldBase'
+      - $ref: "#/definitions/fieldBase"
       - type: object
         properties:
           type:
@@ -159,7 +159,7 @@ definitions:
 
   fieldSingleLang:
     allOf:
-      - $ref: '#/definitions/fieldBase'
+      - $ref: "#/definitions/fieldBase"
       - type: object
         properties:
           type:
@@ -190,7 +190,7 @@ definitions:
 
   fieldMultiLang:
     allOf:
-      - $ref: '#/definitions/fieldBase'
+      - $ref: "#/definitions/fieldBase"
       - type: object
         properties:
           type:
@@ -223,7 +223,7 @@ definitions:
 
   fieldSelect:
     allOf:
-      - $ref: '#/definitions/fieldBase'
+      - $ref: "#/definitions/fieldBase"
       - type: object
         properties:
           # JSON Schema Draft 4 does not support const values, so just use an enum
@@ -248,7 +248,7 @@ definitions:
 
   fieldLicense:
     allOf:
-      - $ref: '#/definitions/fieldBase'
+      - $ref: "#/definitions/fieldBase"
       - type: object
         properties:
           type:
@@ -266,7 +266,7 @@ definitions:
 
   fieldDate:
     allOf:
-      - $ref: '#/definitions/fieldBase'
+      - $ref: "#/definitions/fieldBase"
       - type: object
         properties:
           type:
@@ -287,7 +287,7 @@ definitions:
 
   fieldCategories:
     allOf:
-      - $ref: '#/definitions/fieldBase'
+      - $ref: "#/definitions/fieldBase"
       - type: object
         properties:
           type:
@@ -296,7 +296,7 @@ definitions:
           missingWikitext:
             oneOf:
               - { type: string }
-              - { type: 'null' }
+              - { type: "null" }
           default:
             type: array
             items: { type: string }
@@ -315,7 +315,7 @@ definitions:
 
   fieldLocation:
     allOf:
-      - $ref: '#/definitions/fieldBase'
+      - $ref: "#/definitions/fieldBase"
       - type: object
         properties:
           type:
@@ -360,9 +360,9 @@ definitions:
           auxiliary: { }
         additionalProperties: false
 
-################################
-#### The main config object ####
-################################
+# ###############################
+# ### The main config object ####
+# ###############################
 type: object
 additionalProperties: false
 properties:
@@ -383,14 +383,14 @@ properties:
     additionalProperties:
       oneOf:
         # null can be used for "unsetting" fields previously defined in the main config
-        - type: 'null'
-        - $ref: '#/definitions/fieldText'
-        - $ref: '#/definitions/fieldSingleLang'
-        - $ref: '#/definitions/fieldMultiLang'
-        - $ref: '#/definitions/fieldSelect'
-        - $ref: '#/definitions/fieldDate'
-        - $ref: '#/definitions/fieldCategories'
-        - $ref: '#/definitions/fieldLocation'
+        - type: "null"
+        - $ref: "#/definitions/fieldText"
+        - $ref: "#/definitions/fieldSingleLang"
+        - $ref: "#/definitions/fieldMultiLang"
+        - $ref: "#/definitions/fieldSelect"
+        - $ref: "#/definitions/fieldDate"
+        - $ref: "#/definitions/fieldCategories"
+        - $ref: "#/definitions/fieldLocation"
 
   # Field -> content (wikitext) transformation
   content:
@@ -403,7 +403,7 @@ properties:
       append: { type: string }
 
   # Labels and URLs on things
-  display: { $ref: '#/definitions/displaySection' }
+  display: { $ref: "#/definitions/displaySection" }
 
   # License groups
   licensing:
@@ -426,12 +426,12 @@ properties:
             - thirdParty
       ownWork:
         oneOf:
-          - $ref: '#/definitions/licensingList'
-          - $ref: '#/definitions/licensingGroups'
+          - $ref: "#/definitions/licensingList"
+          - $ref: "#/definitions/licensingGroups"
       thirdParty:
         oneOf:
-          - $ref: '#/definitions/licensingList'
-          - $ref: '#/definitions/licensingGroups'
+          - $ref: "#/definitions/licensingList"
+          - $ref: "#/definitions/licensingGroups"
 
   # The tutorial
   tutorial:
@@ -447,19 +447,19 @@ properties:
     type: object
     additionalProperties: false
     properties:
-      display: { $ref: '#/definitions/displaySection' }
+      display: { $ref: "#/definitions/displaySection" }
 
   whileActive:
     type: object
     additionalProperties: false
     properties:
-      display: { $ref: '#/definitions/displaySection' }
+      display: { $ref: "#/definitions/displaySection" }
 
   afterActive:
     type: object
     additionalProperties: false
     properties:
-      display: { $ref: '#/definitions/displaySection' }
+      display: { $ref: "#/definitions/displaySection" }
 
 required:
   - enabled
