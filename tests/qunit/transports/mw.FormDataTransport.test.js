@@ -200,7 +200,7 @@
 
 		return transport.checkStatus().done( tstub, function () {
 			assert.true( tstub.calledWith( 'testing' ) );
-			assert.notOk( usstub.called );
+			assert.false( usstub.called );
 		} );
 	} );
 
@@ -220,7 +220,7 @@
 
 		transport.checkStatus().fail( tstub, function () {
 			assert.true( tstub.calledWith( 'testing', { error: 'testing' } ) );
-			assert.notOk( usstub.called );
+			assert.false( usstub.called );
 			done();
 		} );
 	} );

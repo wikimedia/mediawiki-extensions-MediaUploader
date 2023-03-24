@@ -56,7 +56,7 @@
 		this.sandbox.stub( api, 'postWithToken' ).returns( pwtd.promise() );
 
 		step.setSkipPreference( true );
-		assert.notOk( acwStub.release.called );
+		assert.false( acwStub.release.called );
 
 		pwtd.reject( 'http', { textStatus: 'Foo bar' } );
 		assert.true( mnStub.calledWith( 'Foo bar' ) );
