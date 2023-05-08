@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"apihelp-query+allcampaigns-description": "Naštetje vseh kampanj MediaUploader.",
+	"apihelp-query+allcampaigns-summary": "Naštetje vseh kampanj MediaUploader.",
+	"apihelp-query+allcampaigns-param-enabledonly": "Naštetje samo omogočenih kampanj.",
+	"apihelp-query+allcampaigns-param-limit": "Število kampanj za vrnitev.",
+	"apihelp-query+allcampaigns-example-1": "Naštetje omogočenih kampanj"
+}
