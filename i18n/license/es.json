@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jruigar138"
+		]
+	},
+	"mediauploader-source-ownwork-cc-by-nc-nd-explain": "(Cualquiera puede usar, compartir o remezclar {{PLURAL:$1| este trabajo en su forma original|estos trabajos en sus formas originales}}, para fines no comerciales, siempre que se acredite mi autoría).",
+	"mediauploader-source-ownwork-wtfpl-explain": "(Cualquiera puede hacer lo que se le antoje con {{PLURAL:$1|este trabajo|estos trabajos}}.)",
+	"mediauploader-license-attribution": "Puede usarse para cualquier propósito, incluido el comercial, si se referencia correctamente el titular de los derechos de autor",
+	"mediauploader-license-gfdl": "Licencia de documentación libre de GNU"
+}
