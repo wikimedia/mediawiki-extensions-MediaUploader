@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alshamiri1"
+		]
+	},
+	"apihelp-query+allcampaigns-description": "تعداد جميع حملات MediaUploader.",
+	"apihelp-query+allcampaigns-param-enabledonly": "قائمة فقط الحملات التي تم تمكينها.",
+	"apihelp-query+allcampaigns-param-limit": "عدد الحملات للعودة.",
+	"apihelp-query+allcampaigns-example-1": "تعداد الحملات الممكنة"
+}
