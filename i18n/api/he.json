@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80"
+		]
+	},
+	"apihelp-query+allcampaigns-param-enabledonly": "רשימה רק של מסעות פרסום מופעלים.",
+	"apihelp-query+allcampaigns-param-limit": "מספר מסעות הפרסום שצריך להחזיר.",
+	"apihelp-query+allcampaigns-example-1": "ספירה של מסעות פרסום מופעלים"
+}

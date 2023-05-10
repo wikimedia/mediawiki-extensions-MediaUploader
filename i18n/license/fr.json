@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Verdy p"
+		]
+	},
+	"mediauploader-source-ownwork-cc-zero-explain": "(N’importe qui peut utiliser, partager ou adapter ce{{PLURAL:$1|tte|s}} œuvre{{PLURAL:$1||s}}, sans aucune restriction.)",
+	"mediauploader-source-ownwork-generic-explain": "(Ce{{PLURAL:$1|tte|s}} œuvre{{PLURAL:$1||s}} peu{{PLURAL:$1||ven}}t être téléversée{{PLURAL:$1||s}} sur ce wiki)",
+	"mediauploader-license-cc-by-sa-4.0": "Creative Commons Attribution – Partage dans les Mêmes Conditions 4.0 ([$2 texte juridique])",
+	"mediauploader-license-cc-by-sa-3.0": "Creative Commons Attribution – Partage dans les Mêmes Conditions 3.0 ([$2 texte juridique])",
+	"mediauploader-license-cc-by-4.0": "Creative Commons Attribution 4.0 ([$2 texte juridique])",
+	"mediauploader-license-cc-by-3.0": "Creative Commons Attribution 3.0 ([$2 texte juridique])",
+	"mediauploader-license-cc-by-sa-2.5": "Creative Commons Attribution – Partage dans les Mêmes Conditions 2.5 ([$2 texte juridique])",
+	"mediauploader-license-cc-by-2.5": "Creative Commons Attribution 2.5 ([$2 texte juridique])",
+	"mediauploader-license-cc-by-sa-2.0": "Creative Commons Attribution – Partage dans les Mêmes Conditions 2.0 ([$2 texte juridique])",
+	"mediauploader-license-cc-by-2.0": "Creative Commons Attribution 2.0 ([$2 texte juridique])",
+	"mediauploader-license-cc-zero": "Creative Commons CC0 Transfert dans le Domaine Public (libère tous les droits, comme le domaine public : [$2 texte juridique])",
+	"mediauploader-license-fal": "Licence Art Libre",
+	"mediauploader-license-pd-old": "L’auteur est décédé il y a plus de 70 ans",
+	"mediauploader-license-pd-ineligible": "Trop simple pour être soumise au droit d’auteur",
+	"mediauploader-license-attribution": "Peut être utilisé à toute fin, y compris commerciale, si le titulaire du droit d’auteur est attribué correctement",
+	"mediauploader-license-gfdl": "Licence de documentation libre GNU"
+}

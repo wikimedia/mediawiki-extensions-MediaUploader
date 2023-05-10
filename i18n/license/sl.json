@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"mediauploader-source-ownwork-cc-zero-explain": "({{PLURAL:$1|To delo|Ti deli|Ta dela}} lahko uporablja, deli ali predeluje vsakdo brez kakršnih koli omejitev.)",
+	"mediauploader-source-ownwork-generic-explain": "({{PLURAL:$1|To delo se lahko naloži|Ti deli se lahko naložita|Ta dela se lahko naložijo}} v ta viki)",
+	"mediauploader-license-cc-by-sa-4.0": "Creative Commons Priznanje avtorstva-Deljenje pod enakimi pogoji 4.0 ([$2 pravno besedilo])",
+	"mediauploader-license-cc-by-sa-3.0": "Creative Commons Priznanje avtorstva-Deljenje pod enakimi pogoji 3.0 ([$2 pravno besedilo])",
+	"mediauploader-license-cc-by-4.0": "Creative Commons Priznanje avtorstva 4.0 ([$2 pravno besedilo])",
+	"mediauploader-license-cc-by-3.0": "Creative Commons Priznanje avtorstva 3.0 ([$2 pravno besedilo])",
+	"mediauploader-license-cc-by-sa-2.5": "Creative Commons Priznanje avtorstva-Deljenje pod enakimi pogoji 2.5 ([$2 pravno besedilo])",
+	"mediauploader-license-cc-by-2.5": "Creative Commons Priznanje avtorstva 2.5 ([$2 pravno besedilo])",
+	"mediauploader-license-cc-by-sa-2.0": "Creative Commons Priznanje avtorstva-Deljenje pod enakimi pogoji 2.0 ([$2 pravno besedilo])",
+	"mediauploader-license-cc-by-2.0": "Creative Commons Priznanje avtorstva 2.0 ([$2 pravno besedilo])",
+	"mediauploader-license-cc-zero": "Creative Commons odpoved CC0 (odpoved vsem pravicam, tako kot javna domena: [$2 zakonik])",
+	"mediauploader-license-fal": "Licenca za prosto umetnost (FAL)",
+	"mediauploader-license-pd-old": "Avtor je umrl pred več kot 70 leti",
+	"mediauploader-license-pd-ineligible": "Preveč preprosto za avtorsko delo",
+	"mediauploader-license-attribution": "Lahko se uporablja v kateri koli namen, tudi gospodarski, če je pravilno naveden imetnik avtorskih pravic.",
+	"mediauploader-license-gfdl": "Licenca GNU za prosto dokumentacijo"
+}

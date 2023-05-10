@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"apihelp-query+allcampaigns-param-limit": "Numero di campagne da restituire."
+}

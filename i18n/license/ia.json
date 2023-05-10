@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"mediauploader-source-ownwork-cc-zero-explain": "(Omnes pote usar, condivider o remiscer iste {{PLURAL:$1|obra|obras}}, sin restriction qualcunque.)",
+	"mediauploader-source-ownwork-generic-explain": "(Iste obra{{PLURAL:$1||s}} es acceptabile pro incargamento a iste wiki)",
+	"mediauploader-license-cc-by-sa-4.0": "Creative Commons Attribution CompartiSimile 4.0 ([$2 codice juridic])",
+	"mediauploader-license-cc-by-sa-3.0": "Creative Commons Attribution CompartiSimile 3.0 ([$2 codice juridic])",
+	"mediauploader-license-cc-by-4.0": "Creative Commons Attribution 4.0 ([$2 codice juridic])",
+	"mediauploader-license-cc-by-3.0": "Creative Commons Attribution 3.0 ([$2 codice juridic])",
+	"mediauploader-license-cc-by-sa-2.5": "Creative Commons Attribution CompartiSimile 2.5 ([$2 codice juridic])",
+	"mediauploader-license-cc-by-2.5": "Creative Commons Attribution 2.5 ([$2 codice juridic])",
+	"mediauploader-license-cc-by-sa-2.0": "Creative Commons Attribution CompartiSimile 2.0 ([$2 codice juridic])",
+	"mediauploader-license-cc-by-2.0": "Creative Commons Attribution 2.0 ([$2 codice juridic])",
+	"mediauploader-license-cc-zero": "Creative Commons CC0 Waiver (liberation de tote le derectos, como le dominio public: [$2 codice juridic])",
+	"mediauploader-license-fal": "Licentia Artistic Libere",
+	"mediauploader-license-pd-old": "Le autor moriva plus de 70 annos retro",
+	"mediauploader-license-pd-ineligible": "Troppo simple pro esser sub copyright",
+	"mediauploader-license-attribution": "Pote esser usate pro omne fin, includente scopos commercial, si le titular del copyright es attribuite appropriatemente",
+	"mediauploader-license-gfdl": "Licentia GNU pro Documentation Libere"
+}

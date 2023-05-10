@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"mediauploader-source-ownwork-cc-zero-explain": "(Chiunque può utilizzare, condividere o modificare {{PLURAL:$1|quest'opera|queste opere}}, senza alcuna restrizione.)",
+	"mediauploader-source-ownwork-generic-explain": "({{PLURAL:$1|Quest'opera è accettabile|Queste opere sono accettabili}} per il caricamento in questo wiki)",
+	"mediauploader-license-cc-by-sa-4.0": "Creative Commons Attribuzione-Condividi allo stesso modo 4.0 ([$2 codice legale])",
+	"mediauploader-license-cc-by-sa-3.0": "Creative Commons Attribuzione-Condividi allo stesso modo 3.0 ([$2 codice legale])",
+	"mediauploader-license-cc-by-4.0": "Creative Commons Attribuzione 4.0 ([$2 codice legale])",
+	"mediauploader-license-cc-by-3.0": "Creative Commons Attribuzione 3.0 ([$2 codice legale])",
+	"mediauploader-license-cc-by-sa-2.5": "Creative Commons Attribuzione-Condividi allo stesso modo 2.5 ([$2 codice legale])",
+	"mediauploader-license-cc-by-sa-2.0": "Creative Commons Attribuzione-Condividi allo stesso modo 2.0 ([$2 codice legale])",
+	"mediauploader-license-cc-by-2.0": "Creative Commons Attribuzione 2.0 ([$2 codice legale])",
+	"mediauploader-license-cc-zero": "Rinuncia Creative Commons CC0 (rinuncia a tutti i diritti, come il pubblico dominio: [$2 codice legale])",
+	"mediauploader-license-fal": "Licenza Arte Libera",
+	"mediauploader-license-pd-old": "L'autore è morto più di 70 anni fa",
+	"mediauploader-license-pd-ineligible": "Troppo semplice per essere protetta da copyright",
+	"mediauploader-license-attribution": "Può essere usata per qualsiasi scopo, anche commercialmente, se la paternità dell'opera è correttamente attribuita",
+	"mediauploader-license-gfdl": "GNU Free Documentation License"
+}

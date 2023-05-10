@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"apihelp-query+allcampaigns-param-enabledonly": "Solmente listar le campanias que ha essite activate.",
+	"apihelp-query+allcampaigns-param-limit": "Numero de campanias a restituer.",
+	"apihelp-query+allcampaigns-example-1": "Enumerar le campanias activate"
+}
