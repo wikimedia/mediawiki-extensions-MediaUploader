@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Verdy p"
+		]
+	},
+	"apihelp-query+allcampaigns-description": "Énumérer toutes les campagnes de l’assistant de téléversement de médias.",
+	"apihelp-query+allcampaigns-summary": "Énumérer toutes les campagnes de l’assistant de téléversement de médias.",
+	"apihelp-query+allcampaigns-param-enabledonly": "Lister uniquement les campagnes qui sont activées.",
+	"apihelp-query+allcampaigns-param-limit": "Nombre de campagnes à renvoyer.",
+	"apihelp-query+allcampaigns-example-1": "Énumérer les campagnes activées."
+}
