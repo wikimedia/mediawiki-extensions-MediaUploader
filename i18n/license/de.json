@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Justman10000"
+		]
+	},
+	"mediauploader-source-ownwork-cc-zero-explain": "(Jeder darf {{PLURAL:$1|dieses Werk|diese Werke}} ohne jegliche Einschränkungen verwenden, teilen oder remixen).",
+	"mediauploader-source-ownwork-generic-explain": "({{PLURAL:$1|Dieses Werk ist|Diese Werke sind}} akzeptabel für den Upload in dieses Wiki)",
+	"mediauploader-license-cc-by-sa-4.0": "Creative Commons Attribution ShareAlike 4.0 ([$2 Rechtscode])",
+	"mediauploader-license-cc-by-sa-3.0": "Creative Commons Attribution ShareAlike 3.0 ([$2 Rechtscode])",
+	"mediauploader-license-cc-by-4.0": "Creative Commons Namensnennung 4.0 ([$2 Rechtscode])",
+	"mediauploader-license-cc-by-3.0": "Creative Commons Namensnennung 3.0 ([$2 Rechtscode])",
+	"mediauploader-license-cc-by-sa-2.5": "Creative Commons Attribution ShareAlike 2.5 ([$2 Rechtscode])",
+	"mediauploader-license-cc-by-2.5": "Creative Commons Namensnennung 2.5 ([$2 Rechtscode])",
+	"mediauploader-license-cc-by-sa-2.0": "Creative Commons Attribution ShareAlike 2.0 ([$2 Rechtscode])",
+	"mediauploader-license-cc-by-2.0": "Creative Commons Namensnennung 2.0 ([$2 Rechtscode])",
+	"mediauploader-license-cc-zero": "Creative Commons CC0 Verzichtserklärung (alle Rechte freigeben, wie Public Domain: [$2 Rechtscode])",
+	"mediauploader-license-fal": "Free Art License",
+	"mediauploader-license-pd-old": "Der Autor starb vor mehr als 70 Jahren",
+	"mediauploader-license-pd-ineligible": "Zu einfach, um urheberrechtlich geschützt zu sein",
+	"mediauploader-license-attribution": "Darf für jeden Zweck verwendet werden, auch für kommerzielle Zwecke, wenn der Urheberrechtsinhaber ordnungsgemäß angegeben wird.",
+	"mediauploader-license-gfdl": "GNU Free Documentation License"
+}

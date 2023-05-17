@@ -1,0 +1,23 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alshamiri1"
+		]
+	},
+	"mediauploader-source-ownwork-cc-zero-explain": "(يجوز لأي شخص استخدام أو مشاركة أو إعادة مزج {{PLURAL:$1| هذا العمل | هذه الأعمال}} ، بدون قيود على الإطلاق.)",
+	"mediauploader-source-ownwork-generic-explain": "( {{PLURAL:$1| هذا العمل | هذه الأعمال}} مقبولة للتحميل إلى هذا الويكي)",
+	"mediauploader-license-cc-by-sa-4.0": "نسب المشاع الإبداعي ShareAlike 4.0 ([الرمز القانوني $2 ])",
+	"mediauploader-license-cc-by-sa-3.0": "المشاع الإبداعي: النسبة-الترخيص بالمثل 3.0 ([$2 النص القانوني])",
+	"mediauploader-license-cc-by-4.0": "Creative Commons Attribution 4.0 ([ $2 legal code])",
+	"mediauploader-license-cc-by-3.0": "Creative Commons Attribution 3.0 ([ $2 legal code])",
+	"mediauploader-license-cc-by-sa-2.5": "المشاع الإبداعي: النسبة-الترخيص بالمثل 2.5 ([$2 النص القانوني])",
+	"mediauploader-license-cc-by-2.5": "Creative Commons Attribution 2.5 ([ $2 legal code])",
+	"mediauploader-license-cc-by-sa-2.0": "نسب المشاع الإبداعي ShareAlike 2.0 ([الرمز القانوني $2 ])",
+	"mediauploader-license-cc-by-2.0": "المشاع الإبداعي: النسبة 2.0 ([$2 النص القانوني])",
+	"mediauploader-license-cc-zero": "تنازل المشاع الإبداعي CC0 (التخلي عن جميع الحقوق ، مثل النطاق العام: [الرمز القانوني $2 ])",
+	"mediauploader-license-fal": "رخصة فنية مجانية",
+	"mediauploader-license-pd-old": "توفي المؤلف منذ أكثر من 70 عامًا",
+	"mediauploader-license-pd-ineligible": "من السهل جدا أن تكون محمية بحقوق النشر",
+	"mediauploader-license-attribution": "يمكن استخدامها لأي غرض ، بما في ذلك تجاريًا ، إذا تم إسناد صاحب حقوق النشر بشكل صحيح",
+	"mediauploader-license-gfdl": "رخصة التوثيق الحرة GNU"
+}
