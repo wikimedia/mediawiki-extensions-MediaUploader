@@ -15,7 +15,7 @@ use Title;
  */
 class CampaignContentHooksTest extends MediaWikiUnitTestCase {
 
-	public function provideContentModelCanBeUsedOn(): iterable {
+	public static function provideContentModelCanBeUsedOn(): iterable {
 		yield 'Campaign content model, Campaign: namespace' => [
 			CONTENT_MODEL_CAMPAIGN, true, true
 		];
@@ -63,7 +63,7 @@ class CampaignContentHooksTest extends MediaWikiUnitTestCase {
 		$this->assertSame( $expected, $ok, '&$ok parameter' );
 	}
 
-	public function provideCodeEditorGetPageLanguage(): iterable {
+	public static function provideCodeEditorGetPageLanguage(): iterable {
 		yield 'title not in Campaign namespace' => [ false, null ];
 		yield 'title in Campaign namespace' => [ true, 'yaml' ];
 	}

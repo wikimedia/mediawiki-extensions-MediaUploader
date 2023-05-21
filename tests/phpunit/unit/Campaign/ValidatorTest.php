@@ -41,7 +41,7 @@ class ValidatorTest extends MediaWikiUnitTestCase {
 		);
 	}
 
-	public function provideValidate(): iterable {
+	public static function provideValidate(): iterable {
 		// Basic cases
 		yield 'simplest valid campaign' => [
 			[ 'enabled' => true ],

@@ -20,7 +20,7 @@ use WANObjectCache;
  */
 class GlobalParsedConfigTest extends ConfigUnitTestCase {
 
-	public function provideInitialize(): iterable {
+	public static function provideInitialize(): iterable {
 		yield 'no URL overrides' => [
 			[ 'k' => 'config' ],
 			[],

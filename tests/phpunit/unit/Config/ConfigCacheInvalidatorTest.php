@@ -11,7 +11,7 @@ use WANObjectCache;
  */
 class ConfigCacheInvalidatorTest extends ConfigUnitTestCase {
 
-	public function provideMakeInvalidateTimestampKey(): iterable {
+	public static function provideMakeInvalidateTimestampKey(): iterable {
 		yield 'no additional parameters' => [ [] ];
 
 		yield 'with additional parameters' => [ [

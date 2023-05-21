@@ -77,7 +77,7 @@ class ConfigBaseTest extends MediaWikiUnitTestCase {
 		);
 	}
 
-	public function provideArrayReplaceSanely(): iterable {
+	public static function provideArrayReplaceSanely(): iterable {
 		yield 'no replacements to be made' => [
 			[ 'key' => [ 'key' => 'value' ] ],
 			[],

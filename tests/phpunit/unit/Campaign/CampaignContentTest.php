@@ -84,7 +84,7 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 		$this->assertTrue( $content->isValid(), 'isValid()' );
 	}
 
-	public function provideInvalidSyntax(): iterable {
+	public static function provideInvalidSyntax(): iterable {
 		yield 'invalid YAML' => [ '[[[[' ];
 		yield 'invalid JSON' => [ '{"enabled":false' ];
 	}
@@ -145,7 +145,7 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 		$this->assertFalse( $content->isValid(), 'isValid()' );
 	}
 
-	public function provideNewCampaignRecord(): iterable {
+	public static function provideNewCampaignRecord(): iterable {
 		yield 'Invalid markup' => [
 			'[', false, CampaignRecord::CONTENT_INVALID_FORMAT, null
 		];

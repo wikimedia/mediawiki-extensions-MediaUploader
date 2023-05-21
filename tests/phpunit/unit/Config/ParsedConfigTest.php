@@ -16,7 +16,7 @@ use WANObjectCache;
  */
 class ParsedConfigTest extends ConfigUnitTestCase {
 
-	public function provideGetCacheKey(): iterable {
+	public static function provideGetCacheKey(): iterable {
 		yield 'no additional parameters' => [ [] ];
 
 		yield 'with additional parameters' => [ [

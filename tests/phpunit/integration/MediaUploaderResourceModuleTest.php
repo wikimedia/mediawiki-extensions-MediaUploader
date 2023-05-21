@@ -18,7 +18,7 @@ use MediaWikiIntegrationTestCase;
  */
 class MediaUploaderResourceModuleTest extends MediaWikiIntegrationTestCase {
 
-	public function provideGetMessages(): iterable {
+	public static function provideGetMessages(): iterable {
 		yield 'empty config' => [
 			[],
 			[]

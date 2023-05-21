@@ -120,7 +120,7 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 		);
 	}
 
-	public function provideParse() {
+	public static function provideParse() {
 		yield 'title and description are parsed' => [
 			[
 				'title' => 'Title to parse',

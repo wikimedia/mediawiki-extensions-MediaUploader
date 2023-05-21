@@ -84,7 +84,7 @@ class CampaignRecordTest extends MediaWikiUnitTestCase {
 		$record->getTrackingCategoryName( $this->createNoOpMock( ConfigBase::class ) );
 	}
 
-	public function provideGetTrackingCategoryName(): iterable {
+	public static function provideGetTrackingCategoryName(): iterable {
 		yield 'valid replacement' => [
 			[ 'trackingCategory' => [ 'campaign' => 'Campaign_$1' ] ],
 			'Wiki_Loves_PHP',
