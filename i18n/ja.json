@@ -4,7 +4,8 @@
 			"Adom",
 			"MathXplore",
 			"春春眠眠",
-			"バレロン"
+			"バレロン",
+			"Shirayuki"
 		]
 	},
 	"tag-uploadwizard": "MediaUploader",
@@ -78,7 +79,7 @@
 	"mediauploader-errordialog-ok": "OK",
 	"prefs-uploads": "アップロード中",
 	"prefs-mediauploader-interface": "ユーザーインターフェイス",
-	"mediauploader-prefs-def-license": "デフォルトのライセンス",
+	"mediauploader-prefs-def-license": "既定のライセンス",
 	"mediauploader-prefs-license-name": "著者名",
 	"mediauploader-campaigns-pagination-next": "次のページ",
 	"mediauploader-license-none-text": "ライセンスが指定されていません"
