@@ -4,7 +4,8 @@
 			"Adom",
 			"春春眠眠",
 			"MathXplore",
-			"バレロン"
+			"バレロン",
+			"Shirayuki"
 		]
 	},
 	"mediauploader-step-tutorial": "学ぶ",
@@ -72,6 +73,6 @@
 	"mediauploader-error-title-invalid": "このページ名は無効です。大括弧、コロン、比較演算子、パイプ記号、中括弧のような無効な文字を除去してください。",
 	"mediauploader-errordialog-ok": "OK",
 	"prefs-uploads": "アップロード中",
-	"mediauploader-prefs-def-license": "デフォルトのライセンス",
+	"mediauploader-prefs-def-license": "既定のライセンス",
 	"mediauploader-prefs-license-name": "著者名"
 }
