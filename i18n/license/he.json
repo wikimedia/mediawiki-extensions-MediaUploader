@@ -2,8 +2,24 @@
 	"@metadata": {
 		"authors": [
 			"Amire80",
-			"Shoko"
+			"Shoko",
+			"YaronSh"
 		]
 	},
-	"mediauploader-license-attribution": "יכול לשמש לכל מטרה, כולל למטרות מסחריות, אם ניתן ייחוס ראוי לבעל הזכויות"
+	"mediauploader-source-ownwork-cc-zero-explain": "(כולם יכולים להשתמש {{PLURAL:$1|ביצירה הזאת|ביצירות האלו}}, וכן לשתף {{PLURAL:$1|אותה ולעשות ממנה|אותן ולעשות מהן}} יצירות נגזרות, בלא כל הגבלה.)",
+	"mediauploader-source-ownwork-generic-explain": "(קביל להעלות את {{PLURAL:$1|היצירה הזאת|היצירות האלו}} לוויקי הזה)",
+	"mediauploader-license-cc-by-sa-4.0": "קריאייטיב קומונז–ייחוס–שיתוף זהה 4.0 ([$2 ניסוח משפטי])",
+	"mediauploader-license-cc-by-sa-3.0": "קריאייטיב קומונז ייחוס ושיתוף זהה 3.0 ([$2 ניסוח משפטי])",
+	"mediauploader-license-cc-by-4.0": "קריאייטיב קומונז–ייחוס 4.0 ([$2 ניסוח משפטי])",
+	"mediauploader-license-cc-by-3.0": "קריאייטיב קומונז ייחוס 3.0 ([$2 ניסוח משפטי])",
+	"mediauploader-license-cc-by-sa-2.5": "קריאייטיב קומונז ייחוס ושיתוף זהה 2.5 ([$2 ניסוח משפטי])",
+	"mediauploader-license-cc-by-2.5": "קריאייטיב קומונז ייחוס 2.5 ([$2 ניסוח משפטי])",
+	"mediauploader-license-cc-by-sa-2.0": "קריאייטיב קומונז ייחוס ושיתוף זהה 2.0 ([$2 ניסוח משפטי])",
+	"mediauploader-license-cc-by-2.0": "קריאייטיב קומונז ייחוס 2.0 ([$2 ניסוח משפטי])",
+	"mediauploader-license-cc-zero": "ויתור על זכויות לפי קריאייטיב קומונז CC0 (שחרור כל הזכויות, כמו נחלת הכלל: [$2 ניסוח משפטי])",
+	"mediauploader-license-fal": "רישיון אמנותי חופשי (Free Art License)",
+	"mediauploader-license-pd-old": "היוצר נפטר לפני יותר מ־70 שנה",
+	"mediauploader-license-pd-ineligible": "פשוט מכדי להיות מושא חוק זכויות יוצרים",
+	"mediauploader-license-attribution": "יכול לשמש לכל מטרה, כולל למטרות מסחריות, אם ניתן ייחוס ראוי לבעל הזכויות",
+	"mediauploader-license-gfdl": "הרישיון לשימוש חופשי במסמכים של גנו"
 }

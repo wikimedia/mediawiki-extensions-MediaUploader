@@ -1,9 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ykhwong"
+			"Ykhwong",
+			"Adreamy"
 		]
 	},
+	"mediauploader-license-cc-by-4.0": "크리에이티브 커먼즈 저작자표시 4.0 ([$2 법률 규정])",
+	"mediauploader-license-cc-by-3.0": "크리에이티브 커먼즈 저작자표시 3.0 ([$2 법률 규정])",
 	"mediauploader-license-fal": "프리 아트 라이선스",
 	"mediauploader-license-gfdl": "GNU 자유 문서 사용 허가서"
 }
