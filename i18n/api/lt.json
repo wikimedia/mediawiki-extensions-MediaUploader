@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nokeoo"
+		]
+	},
+	"apihelp-query+allcampaigns-param-enabledonly": "Pateikti tik aktyvuotas kampanijas.",
+	"apihelp-query+allcampaigns-param-limit": "Grąžinamų kampanijų skaičius.",
+	"apihelp-query+allcampaigns-example-1": "Išvardinti aktyvuotas kampanijas"
+}

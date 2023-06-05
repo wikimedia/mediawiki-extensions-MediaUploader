@@ -1,0 +1,22 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nokeoo"
+		]
+	},
+	"mediauploader-source-ownwork-cc-by-explain": "(Bet kas gali naudoti, dalintis ir perdirbinėti {{PLURAL:$1|šį darbą|šiuos darbus}}, tol kol aš būsiu nurodytas kaip vienas iš autorių.)",
+	"mediauploader-source-ownwork-cc-by-nc-explain": "(Bet kas gali naudoti, dalintis ir perdirbinėti {{PLURAL:$1|šį darbą|šiuos darbus}} nekomerciniais tikslais, tol kol aš būsiu nurodytas kaip vienas iš autorių.)",
+	"mediauploader-source-ownwork-cc-by-nd-explain": "(Bet kas gali naudoti ir dalintis {{PLURAL:$1|šiuo darbu|šiais darbais}} originalia forma, tol kol aš būsiu nurodytas kaip vienas iš autorių.)",
+	"mediauploader-source-ownwork-cc-by-nc-nd-explain": "(Bet kas gali naudoti, dalintis ir perdirbinėti {{PLURAL:$1|šį darbą|šiuos darbus}} originalia forma, nekomerciniais tikslais, tol kol aš būsiu nurodytas kaip vienas iš autorių.)",
+	"mediauploader-source-ownwork-cc-by-nc-sa-explain": "(Bet kas gali naudoti, dalintis ir perdarinėti {{PLURAL:$1|šį darbą|šiuos darbus}} nekomerciniais tikslais, tol kol aš būsiu nurodytas kaip vienas iš autorių ir išvestiniai darbai bus platinami su šia licencija.)",
+	"mediauploader-source-ownwork-cc-by-sa-explain": "(Bet kas gali naudoti, dalintis ir perdarinėti {{PLURAL:$1|šį darbą|šiuos darbus}}, tol kol aš būsiu nurodytas kaip vienas iš autorių ir išvestiniai darbai bus platinami su šia licencija.)",
+	"mediauploader-source-ownwork-cc-zero-explain": "(Bet kas gali naudoti, dalintis ir perdirbinėti {{PLURAL:$1|šį darbą|šiuos darbus}} be jokių apribojimų.)",
+	"mediauploader-source-ownwork-beerware-explain": "(Bet kas gali naudoti, dalintis ir perdarinėti {{PLURAL:$1|šį darbą|šiuos darbus}}, tol kol šis pranešimas yra prisegtas. Jei juos kažkada sutiksite ir jie matys taip kaip tinkamą, jie galės jums pastatyti alaus.)",
+	"mediauploader-source-ownwork-wtfpl-explain": "(Kiekvienas gali daryti ką nori su {{PLURAL:$1|šiuo darbu|šiais darbais}}.)",
+	"mediauploader-source-ownwork-generic-explain": "({{PLURAL:$1|Šis darbas yra tinkamas|Šie darbai yra tinkami}} įkelti į šią vikį)",
+	"mediauploader-license-custom": "Licencija apibūdinta tokiu vikitekstu:",
+	"mediauploader-license-pd-old": "Autorius mirė daugiau nei prieš 70 metų",
+	"mediauploader-license-pd-ineligible": "Per paprastas, kad būtų apsaugotas autorinėmis teisėmis",
+	"mediauploader-license-attribution": "Gali būti naudojama bet kokiais tikslais, įskaitant komerciniais, jeigu autorinių teisių savininkas yra tinkamai nurodytas",
+	"mediauploader-license-copyright": "Visos teisės saugomos"
+}
