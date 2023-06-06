@@ -186,7 +186,7 @@
 	"mediauploader-license-confirm-remove": "Ali res želite odstraniti {{PLURAL:$1|1=to skupino|2=ti skupini|te skupine}}?",
 	"mediauploader-license-confirm-remove-title": "Potrditev odstranitve",
 	"mediauploader-categories": "Kategorije",
-	"mediauploader-categories-missing": "Eni od kategorij manjka opisna stran. Ste prepričani, da ste ime pravilno vnesli?",
+	"mediauploader-categories-missing": "Eni od kategorij manjka opisna stran. Ste prepričani, da ste njeno ime pravilno vnesli?",
 	"mediauploader-thumbnail-failed": "Nalaganje je uspelo, vendar strežnik ni mogel pridobiti predogledne sličice.",
 	"mediauploader-unparseable-filename": "Imena datoteke »$1« ni bilo mogoče razumeti.",
 	"mediauploader-error-title-invalid": "Neveljaven naslov. Nekatere nesprejemljive znake je potrebno odstraniti: oglate oklepaje, zavite oklepaje, dvopičja, poševnice, klicaje, enačaje, puščice in navpičnice.",
