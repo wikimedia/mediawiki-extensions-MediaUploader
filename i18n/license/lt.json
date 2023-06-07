@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nokeoo"
+		]
+	},
+	"mediauploader-source-ownwork-cc-zero-explain": "(Bet kas gali naudoti, dalintis ir perdirbinėti {{PLURAL:$1|šį darbą|šiuos darbus}} be jokių apribojimų.)",
+	"mediauploader-source-ownwork-generic-explain": "({{PLURAL:$1|Šis darbas yra tinkamas|Šie darbai yra tinkami}} įkelti į šią vikį)",
+	"mediauploader-license-pd-old": "Autorius mirė daugiau nei prieš 70 metų",
+	"mediauploader-license-pd-ineligible": "Per paprastas, kad būtų apsaugotas autorinėmis teisėmis",
+	"mediauploader-license-attribution": "Gali būti naudojama bet kokiais tikslais, įskaitant komerciniais, jeigu autorinių teisių savininkas yra tinkamai nurodytas"
+}
