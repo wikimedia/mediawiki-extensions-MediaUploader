@@ -4,7 +4,6 @@
 			"McDutchie"
 		]
 	},
-	"apihelp-query+allcampaigns-description": "Enumerar tote le campanias MediaUploader.",
 	"apihelp-query+allcampaigns-summary": "Enumerar tote le campanias MediaUploader.",
 	"apihelp-query+allcampaigns-param-enabledonly": "Solmente listar le campanias que ha essite activate.",
 	"apihelp-query+allcampaigns-param-limit": "Numero de campanias a restituer.",

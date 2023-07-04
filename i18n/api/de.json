@@ -4,7 +4,6 @@
 			"Justman10000"
 		]
 	},
-	"apihelp-query+allcampaigns-description": "Zähle alle MediaUploader-Kampagnen auf.",
 	"apihelp-query+allcampaigns-summary": "Zähle alle MediaUploader-Kampagnen auf.",
 	"apihelp-query+allcampaigns-param-enabledonly": "Liste nur Kampagnen auf, die aktiviert sind.",
 	"apihelp-query+allcampaigns-param-limit": "Anzahl der Kampagnen, die zurückkommen sollen.",

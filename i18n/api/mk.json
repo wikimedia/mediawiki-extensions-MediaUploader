@@ -4,7 +4,6 @@
 			"Bjankuloski06"
 		]
 	},
-	"apihelp-query+allcampaigns-description": "Наброј ги сите походи со Подигачот на слики и снимки.",
 	"apihelp-query+allcampaigns-summary": "Наброј ги сите походи со Подигачот на слики и снимки.",
 	"apihelp-query+allcampaigns-param-enabledonly": "Испиши ги само походите кои се во тек.",
 	"apihelp-query+allcampaigns-param-limit": "Број на походи во исписот.",

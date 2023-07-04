@@ -4,7 +4,6 @@
 			"Amire80"
 		]
 	},
-	"apihelp-query+allcampaigns-description": "מניית כל מסעות הפרסום של MediaUploader.",
 	"apihelp-query+allcampaigns-summary": "מניית כל מסעות הפרסום של MediaUploader.",
 	"apihelp-query+allcampaigns-param-enabledonly": "רשימה רק של מסעות פרסום מופעלים.",
 	"apihelp-query+allcampaigns-param-limit": "מספר מסעות הפרסום שצריך להחזיר.",
