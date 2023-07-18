@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"محمد أحمد عبد الفتاح",
-			"Alshamiri1"
+			"Alshamiri1",
+			"Mr. Ibrahem"
 		]
 	},
 	"mediauploader": "رافع الوسائط",
@@ -60,7 +61,7 @@
 	"mediauploader-finished": "تمَّ!",
 	"mediauploader-deeds-macro-prompt": "يَطلب هذا المَوقِع {{GENDER:$2|منكَ|منكِ}} توفير معلوماتٍ عن حقوق نشر {{PLURAL:$1||هذا العمل|هذين العملين|هذه الأَعمال}} للتأكَّد من أَن الجميع يستطيع إِعادة {{PLURAL:$1||استخدامه|استخدامهما|استخدامها}} قانونيَّاً.",
 	"mediauploader-source-ownwork": "{{PLURAL:$1| هذا الملف هو | هذه الملفات}} عملي الخاص.",
-	"mediauploader-source-ownwork-assert": "أنا $2 {{GENDER:$4| صاحب حقوق النشر}} لـ {{PLURAL:$1| هذا العمل | هذه الأعمال}} ، يمنح أي شخص بشكل نهائي الحق في استخدام {{PLURAL:$1| هذا العمل | هذه الأعمال}} بموجب الترخيص التالي:",
+	"mediauploader-source-ownwork-assert": "أنا $2 {{GENDER:$4| صاحب حقوق النشر}} لـ {{PLURAL:$1| هذا العمل | هذه الأعمال}}، أمنح أي شخص بشكل نهائي الحق في استخدام {{PLURAL:$1| هذا العمل | هذه الأعمال}} بموجب الترخيص التالي:",
 	"mediauploader-source-thirdparty": "{{PLURAL:$1| هذا الملف | هذه الملفات}} ليس عملي الخاص.",
 	"mediauploader-source-thirdparty-custom-multiple-intro": "إذا كانت جميع الملفات لها نفس المصدر والمؤلف وحالة حقوق النشر ، فيمكنك إدخالها مرة واحدة فقط لكل منهم.",
 	"mediauploader-source-thirdparty-cases": "أخبرنا الآن لماذا أنت متأكد من أن لديك الحق في نشر {{PLURAL:$1| هذا العمل | هذه الأعمال}}:",
