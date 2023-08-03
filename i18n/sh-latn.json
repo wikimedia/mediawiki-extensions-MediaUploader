@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Winston Sung"
+		]
+	},
+	"mediauploader-step-tutorial": "Saznajte",
+	"mediauploader-file-all-failed": "Nijedno postavljanje nije bilo uspješno.",
+	"mediauploader-author": "Autor(i)",
+	"mediauploader-tooltip-more-info": "Saznajte više.",
+	"mediauploader-label-optional": "Izborno",
+	"mediauploader-dialog-back": "Nazad",
+	"mediauploader-categories": "Kategorije",
+	"mediauploader-prefs-def-license": "Podrazumijevana licencija"
+}
