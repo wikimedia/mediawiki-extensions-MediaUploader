@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"apihelp-query+allcampaigns-summary": "Gå gjennom alle MediaUpoader-kampanjer.",
+	"apihelp-query+allcampaigns-param-enabledonly": "List bare opp aktiverte kampanjer.",
+	"apihelp-query+allcampaigns-param-limit": "Antall kampanjer som skal returneres.",
+	"apihelp-query+allcampaigns-example-1": "Gå gjennom aktiverte kampanjer."
+}
