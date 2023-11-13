@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"McDutchie"
+		]
+	},
+	"apihelp-query+allcampaigns-summary": "Alle MediaUploader-campagnes inventariseren.",
+	"apihelp-query+allcampaigns-param-enabledonly": "Alleen campagnes weergeven die zijn ingeschakeld.",
+	"apihelp-query+allcampaigns-param-limit": "Aantal te retourneren campagnes.",
+	"apihelp-query+allcampaigns-example-1": "Ingeschakelde campagnes inventariseren"
+}
