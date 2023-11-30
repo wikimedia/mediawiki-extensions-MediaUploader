@@ -67,7 +67,7 @@
 	"mediauploader-source-thirdparty": "{{PLURAL:$1|Denna fil|Dessa filer}} är inte mitt eget verk.",
 	"mediauploader-source-thirdparty-custom-multiple-intro": "Om alla filer har samma källa, författare och upphovsrättsliga status kan du ange dem bara en gång för allihopa.",
 	"mediauploader-source-thirdparty-cases": "Berätta varför du är säker på att du har rätt att publicera {{PLURAL:$1|detta verk|dessa verk}}:",
-	"mediauploader-source-custom": "Ge copyrightinformation för varje fil på nästa sida.",
+	"mediauploader-source-custom": "Ge upphovsrättsinformation för varje fil på nästa sida.",
 	"mediauploader-more-options": "Lägg till plats och mer information...",
 	"mediauploader-copy-metadata": "Kopiera information till alla följande uppladdningar ...",
 	"mediauploader-copy-metadata-button": "Kopiera",
