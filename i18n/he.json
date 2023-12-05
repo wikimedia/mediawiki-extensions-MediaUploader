@@ -64,7 +64,7 @@
 	"mediauploader-source-thirdparty": "{{PLURAL:$1|הקובץ הזה אינו|הקבצים האלה אינם}} פרי עבודתי.",
 	"mediauploader-source-thirdparty-custom-multiple-intro": "אם כל הקבצים מגיעים מאותו המקור ומאותו היוצר, ויש להם אותו מצב זכויות יוצרים, באפשרותך להזין אותם פעם אחת עבור כולם.",
 	"mediauploader-source-thirdparty-cases": "עכשיו {{GENDER:|ספר|ספרי}} לנו למה {{GENDER:|אתה בטוח|את בטוחה}} שיש לכ זכות לפרסם את {{PLURAL:$1|היצירה הזאת|היצירות האלו}}:",
-	"mediauploader-source-custom": "להזין מידע על זכויות יוצרים עבור כל קובץ בנפרד בדף הבא.",
+	"mediauploader-source-custom": "אזין מידע על זכויות יוצרים עבור כל קובץ בנפרד בדף הבא.",
 	"mediauploader-copy-metadata-button": "העתקה",
 	"mediauploader-copy-metadata-button-undo": "ביטול",
 	"mediauploader-copied-metadata": "הועתק!",
