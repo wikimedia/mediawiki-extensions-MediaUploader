@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Theklan"
+		]
+	},
+	"apihelp-query+allcampaigns-summary": "Zenbakitu MediaUploader kanpaina guztiak.",
+	"apihelp-query+allcampaigns-param-enabledonly": "Gaituta dauden kanpainak soilik zerrendatu.",
+	"apihelp-query+allcampaigns-param-limit": "Itzuli beharreko kanpaina kopurua.",
+	"apihelp-query+allcampaigns-example-1": "Zerrendatu gaitutako kanpainak"
+}
