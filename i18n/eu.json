@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Juele",
 			"Theklan"
 		]
 	},
@@ -28,7 +29,7 @@
 	"mediauploader-override": "Edonola igo",
 	"mediauploader-override-upload": "Igo fitxategi hau dena den.",
 	"mediauploader-remove-upload": "Kendu fitxategi hau kargatu beharreko fitxategien zerrendatik",
-	"mediauploader-multilang-remove": "Testu hau kendu",
+	"mediauploader-multilang-remove": "Testu hau ezabatu",
 	"mediauploader-upload": "Igo",
 	"mediauploader-file-all-ok": "Igoera guztiak egoki burutu dira!",
 	"mediauploader-file-some-failed": "Igoera batzuetan hutsegitea gertatu da.",
