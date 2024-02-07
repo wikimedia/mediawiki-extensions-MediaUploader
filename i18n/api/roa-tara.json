@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joetaras"
+		]
+	},
+	"apihelp-query+allcampaigns-summary": "Elenghe tutte le cambagne MediaUploader.",
+	"apihelp-query+allcampaigns-param-enabledonly": "Sulamende le elenghe de le cambagne ca sò attive.",
+	"apihelp-query+allcampaigns-param-limit": "Numere de le cambagne da dà.",
+	"apihelp-query+allcampaigns-example-1": "Numere le cambagne attive"
+}
