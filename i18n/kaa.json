@@ -42,7 +42,7 @@
 	"mediauploader-author": "Avtor(lar)",
 	"mediauploader-other": "Basqa maǵlıwmatlar",
 	"mediauploader-upload-error-bad-filename-extension": "Bul Wiki \".$1\" keńeytpesi menen tawsılatuǵın fayl atların qabıl etpeydi.",
-	"mediauploader-allowed-filename-extensions": "Ruxsat berilgen keńeytpeler:",
+	"mediauploader-allowed-filename-extensions": "Ruqsat berilgen keńeytpeler:",
 	"mediauploader-upload-error-duplicate-archive": "Bul fayl aldın usı Wikiǵa júklengen, biraq keyin óshirip taslanǵan.",
 	"mediauploader-ok": "OK",
 	"mediauploader-next": "Keyingi",
