@@ -42,5 +42,9 @@
 	"mediauploader-license-custom": "以下 wikitext 描述了該授權條款：",
 	"mediauploader-license-fal": "自由藝術作品授權條款",
 	"mediauploader-license-pd-old": "作者已逝世超過 70 年",
-	"mediauploader-license-pd-ineligible": "過於簡單，無法受版權保護"
+	"mediauploader-license-pd-ineligible": "過於簡單，無法受版權保護",
+	"mediauploader-license-gfdl": "GNU 自由文件授權條款",
+	"mediauploader-license-beerware": "啤酒軟體授權條款（[$2 法律條款（喝酒打嗝聲）]）",
+	"mediauploader-license-wtfpl": "你他X的想幹嘛就幹嘛公眾授權條款（[$2 法律條款]）",
+	"mediauploader-license-copyright": "保留所有權利"
 }
