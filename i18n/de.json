@@ -4,6 +4,7 @@
 			"TMg",
 			"The Other Karma",
 			"ThisCarthing",
+			"TomatoCake",
 			"Zabien"
 		]
 	},
@@ -11,6 +12,9 @@
 	"mediauploader-api-error-unknown-warning": "Unbekannte Warnung: „$1“.",
 	"mediauploader-step-file": "Hochladen",
 	"mediauploader-step-details": "Beschreiben",
+	"mediauploader-campaign-name-duplicate": "Eine Kampagne mit diesem Namen ist bereits vorhanden.",
+	"mediauploader-campaign-unknown-error": "Ein unbekannter Fehler ist aufgetreten.",
+	"mediauploader-add-file-n": "Weitere Dateien hinzufügen",
 	"mediauploader-transport-started": "Starte …",
 	"mediauploader-uploading": "Lade hoch …",
 	"mediauploader-queued": "In der Warteschlange …",
