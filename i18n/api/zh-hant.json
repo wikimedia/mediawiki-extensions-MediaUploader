@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"apihelp-query+allcampaigns-param-enabledonly": "僅列出已啟用的活動",
+	"apihelp-query+allcampaigns-param-limit": "要回傳的活動數量。"
+}
