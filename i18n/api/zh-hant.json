@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"apihelp-query+allcampaigns-summary": "列舉所有媒體上傳器活動。",
+	"apihelp-query+allcampaigns-param-enabledonly": "僅列出已啟用的活動",
+	"apihelp-query+allcampaigns-param-limit": "要回傳的活動數量。",
+	"apihelp-query+allcampaigns-example-1": "列舉已啟用的活動。"
+}
