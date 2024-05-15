@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kly"
+			"Kly",
+			"Cookai1205"
 		]
 	},
 	"mediauploader": "媒體上傳器",
@@ -36,7 +37,7 @@
 	"mediauploader-uploading": "上傳中…",
 	"mediauploader-queued": "已列入佇列…",
 	"mediauploader-assembling": "正在整合上傳內容…",
-	"mediauploader-publish": "發佈中…",
+	"mediauploader-publish": "發布中…",
 	"mediauploader-transported": "已完成上傳…",
 	"mediauploader-stashed-upload": "已上傳",
 	"mediauploader-getting-metadata": "正在取得檔案資訊與預覽…",
