@@ -4,7 +4,7 @@ namespace MediaWiki\Extension\MediaUploader\Campaign;
 
 use BagOStuff;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
-use Status;
+use MediaWiki\Status\Status;
 use stdClass;
 use Symfony\Component\Yaml\Yaml;
 

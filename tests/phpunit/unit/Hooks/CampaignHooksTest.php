@@ -3,8 +3,8 @@
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Hooks;
 
 use IContextSource;
-use LinksUpdate;
 use ManualLogEntry;
+use MediaWiki\Deferred\LinksUpdate\LinksUpdate;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
@@ -14,9 +14,9 @@ use MediaWiki\Linker\LinkTarget;
 use MediaWiki\Page\ProperPageIdentity;
 use MediaWiki\Permissions\Authority;
 use MediaWiki\Revision\RevisionRecord;
+use MediaWiki\Status\Status;
 use MediaWikiUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Status;
 use Title;
 use User;
 use WikiPage;

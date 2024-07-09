@@ -3,12 +3,12 @@
 namespace MediaWiki\Extension\MediaUploader;
 
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
-use ResourceLoaderFileModule;
+use MediaWiki\ResourceLoader\FileModule;
 
 /**
  * Class representing the 'ext.uploadWizard' ResourceLoader module.
  */
-class MediaUploaderResourceModule extends ResourceLoaderFileModule {
+class MediaUploaderResourceModule extends FileModule {
 
 	/** @var RawConfig */
 	private $rawConfig;

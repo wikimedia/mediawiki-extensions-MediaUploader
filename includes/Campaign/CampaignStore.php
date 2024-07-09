@@ -144,7 +144,7 @@ class CampaignStore implements IDBAccessObject {
 		int $queryFlags = self::READ_NORMAL
 	): CampaignSelectQueryBuilder {
 		[ $mode, $options ] = DBAccessObjectUtils::getDBOptions( $queryFlags );
-		$db = $this->loadBalancer->getConnectionRef( $mode );
+		$db = $this->loadBalancer->getConnection( $mode );
 		$queryBuilder = new CampaignSelectQueryBuilder( $db, $this );
 		$queryBuilder->options( $options );
 
@@ -157,7 +157,7 @@ class CampaignStore implements IDBAccessObject {
 	 * @param CampaignRecord $record
 	 */
 	public function upsertCampaign( CampaignRecord $record ): void {
-		$db = $this->loadBalancer->getConnectionRef( DB_PRIMARY );
+		$db = $this->loadBalancer->getConnection( DB_PRIMARY );
 		$content = $record->getContent();
 		if ( $content !== null ) {
 			$content = FormatJson::encode( $content );
@@ -183,7 +183,7 @@ class CampaignStore implements IDBAccessObject {
 	 * @param int $pageId
 	 */
 	public function deleteCampaignByPageId( int $pageId ): void {
-		$db = $this->loadBalancer->getConnectionRef( DB_PRIMARY );
+		$db = $this->loadBalancer->getConnection( DB_PRIMARY );
 		$db->delete(
 			'mu_campaign',
 			[ 'campaign_page_id' => $pageId ],

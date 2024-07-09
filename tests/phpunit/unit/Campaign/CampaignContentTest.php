@@ -6,8 +6,8 @@ use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\Validator;
 use MediaWiki\Page\PageReferenceValue;
+use MediaWiki\Status\Status;
 use MediaWikiUnitTestCase;
-use Status;
 use Symfony\Component\Yaml\Yaml;
 
 /**
