@@ -5,6 +5,7 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
 use MediaWiki\Block\DatabaseBlock;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\Extension\MediaUploader\Special\MediaUploader;
+use MediaWiki\MainConfigNames;
 use SpecialPageTestBase;
 use UserBlockedError;
 
@@ -33,9 +34,9 @@ class SpecialMediaUploaderTest extends SpecialPageTestBase {
 	 * @param bool $expectException A UserBlockedError is expected
 	 */
 	public function testIsUserUploadAllowedForBlockedUser( $sitewide, $expectException ) {
-		$this->setMwGlobals( [
-			'wgBlockDisablesLogin' => false,
-			'wgEnableUploads' => true,
+		$this->overrideConfigValues( [
+			MainConfigNames::BlockDisablesLogin => false,
+			MainConfigNames::EnableUploads => true,
 		] );
 
 		$user = $this->getTestUser()->getUser();

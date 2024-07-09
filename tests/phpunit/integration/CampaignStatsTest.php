@@ -7,6 +7,7 @@ use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
+use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use MediaWikiIntegrationTestCase;
 use Title;
@@ -38,10 +39,12 @@ class CampaignStatsTest extends MediaWikiIntegrationTestCase {
 			'wgMediaUploaderConfig',
 			[ 'trackingCategory' => [ 'campaign' => '$1' ] ]
 		);
-		// Disable foreign repos so they don't interfere with the tests
-		$this->setMwGlobals( 'wgForeignFileRepos', [] );
-		// Enable caching
-		$this->setMwGlobals( 'wgMainCacheType', 'hash' );
+		$this->overrideConfigValues( [
+			// Disable foreign repos so they don't interfere with the tests
+			MainConfigNames::ForeignFileRepos => [],
+			// Enable caching
+			MainConfigNames::MainCacheType, 'hash'
+		] );
 
 		// Disable persistence of the raw config so we can modify it during the test.
 		$this->setService(
