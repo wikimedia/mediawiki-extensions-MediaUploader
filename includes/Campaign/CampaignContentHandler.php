@@ -32,7 +32,7 @@ class CampaignContentHandler extends TextContentHandler {
 	}
 
 	/**
-	 * @inheritDoc
+	 * @return class-string<CampaignContent>
 	 */
 	protected function getContentClass() {
 		return CampaignContent::class;
@@ -42,8 +42,7 @@ class CampaignContentHandler extends TextContentHandler {
 	 * @return CampaignContent
 	 */
 	public function makeEmptyContent() {
-		$class = $this->getContentClass();
-		return new $class( 'enabled: false' );
+		return new CampaignContent( 'enabled: false' );
 	}
 
 	/**

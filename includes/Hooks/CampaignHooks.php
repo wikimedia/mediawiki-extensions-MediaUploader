@@ -140,7 +140,7 @@ class CampaignHooks implements
 	 *
 	 * @return bool
 	 */
-	public function onLinksUpdateComplete( $linksUpdate, $ticket ): bool {
+	public function onLinksUpdateComplete( $linksUpdate, $ticket ) {
 		if ( !$linksUpdate->getTitle()->inNamespace( NS_CAMPAIGN ) ) {
 			return true;
 		}
