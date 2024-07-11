@@ -3,7 +3,7 @@
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
 use Iterator;
-use Wikimedia\Rdbms\IDatabase;
+use Wikimedia\Rdbms\IReadableDatabase;
 use Wikimedia\Rdbms\SelectQueryBuilder;
 
 /**
@@ -16,12 +16,12 @@ class CampaignSelectQueryBuilder extends SelectQueryBuilder {
 	private $store;
 
 	/**
-	 * @param IDatabase $db
+	 * @param IReadableDatabase $db
 	 * @param CampaignStore $store
 	 *
 	 * @internal only for use by CampaignStore
 	 */
-	public function __construct( IDatabase $db, CampaignStore $store ) {
+	public function __construct( IReadableDatabase $db, CampaignStore $store ) {
 		parent::__construct( $db );
 
 		$this->store = $store;
