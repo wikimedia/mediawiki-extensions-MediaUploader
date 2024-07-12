@@ -6,16 +6,15 @@ use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use Title;
 use WANObjectCache;
 use Wikimedia\Rdbms\Database;
-use Wikimedia\Rdbms\IDatabase;
-use Wikimedia\Rdbms\ILoadBalancer;
+use Wikimedia\Rdbms\IConnectionProvider;
+use Wikimedia\Rdbms\IReadableDatabase;
 
 /**
  * Facility for retrieving statistics about campaigns.
  */
 class CampaignStats {
 
-	/** @var ILoadBalancer */
-	private $loadBalancer;
+	private IConnectionProvider $dbProvider;
 
 	/** @var WANObjectCache */
 	private $cache;
@@ -26,18 +25,18 @@ class CampaignStats {
 	/**
 	 * CampaignStats constructor.
 	 *
-	 * @param ILoadBalancer $loadBalancer
+	 * @param IConnectionProvider $dbProvider
 	 * @param WANObjectCache $cache
 	 * @param RawConfig $rawConfig
 	 *
 	 * @internal Only for use by ServiceWiring
 	 */
 	public function __construct(
-		ILoadBalancer $loadBalancer,
+		IConnectionProvider $dbProvider,
 		WANObjectCache $cache,
 		RawConfig $rawConfig
 	) {
-		$this->loadBalancer = $loadBalancer;
+		$this->dbProvider = $dbProvider;
 		$this->cache = $cache;
 		$this->rawConfig = $rawConfig;
 	}
@@ -91,7 +90,7 @@ class CampaignStats {
 			$keys,
 			$this->rawConfig->getSetting( 'campaignStatsMaxAge' ),
 			function ( array $ids, array &$ttls, array &$setOpts ) use ( $recordMap ) {
-				$db = $this->loadBalancer->getConnection( DB_REPLICA );
+				$db = $this->dbProvider->getReplicaDatabase();
 				$setOpts += Database::getCacheSetOptions( $db );
 
 				// Construct a tracking category => id map
@@ -145,12 +144,12 @@ class CampaignStats {
 	}
 
 	/**
-	 * @param IDatabase $db
+	 * @param IReadableDatabase $db
 	 * @param int[] $categories Map: campaign DB key => campaign page ID
 	 *
 	 * @return string[][] campaign ID => string[], the strings are filenames
 	 */
-	private function getUploadedMedia( IDatabase $db, array $categories ): array {
+	private function getUploadedMedia( IReadableDatabase $db, array $categories ): array {
 		$result = $db->newSelectQueryBuilder()
 			->table( 'categorylinks' )
 			->fields( [ 'cl_to', 'page_namespace', 'page_title' ] )
@@ -180,12 +179,12 @@ class CampaignStats {
 	}
 
 	/**
-	 * @param IDatabase $db
+	 * @param IReadableDatabase $db
 	 * @param int[] $categories Map: campaign DB key => campaign page ID
 	 *
 	 * @return array Map: campaign ID => [ media count, contributor count ]
 	 */
-	private function getSummaryCounts( IDatabase $db, array $categories ): array {
+	private function getSummaryCounts( IReadableDatabase $db, array $categories ): array {
 		$result = $db->newSelectQueryBuilder()
 			->table( 'categorylinks' )
 			->field( 'cl_to' )

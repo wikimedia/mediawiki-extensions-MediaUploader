@@ -15,14 +15,14 @@ use MediaWiki\MediaWikiServices;
 return [
 	'MediaUploaderCampaignStats' => static function ( MediaWikiServices $services ): CampaignStats {
 		return new CampaignStats(
-			$services->getDBLoadBalancer(),
+			$services->getConnectionProvider(),
 			$services->getMainWANObjectCache(),
 			MediaUploaderServices::getRawConfig( $services )
 		);
 	},
 
 	'MediaUploaderCampaignStore' => static function ( MediaWikiServices $services ): CampaignStore {
-		return new CampaignStore( $services->getDBLoadBalancer() );
+		return new CampaignStore( $services->getConnectionProvider() );
 	},
 
 	'MediaUploaderCampaignValidator' => static function ( MediaWikiServices $services ): Validator {

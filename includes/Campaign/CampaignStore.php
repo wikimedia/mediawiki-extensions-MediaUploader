@@ -6,7 +6,7 @@ use FormatJson;
 use IDBAccessObject;
 use stdClass;
 use Title;
-use Wikimedia\Rdbms\ILoadBalancer;
+use Wikimedia\Rdbms\IConnectionProvider;
 
 /**
  * Provides access to the mu_campaign database table.
@@ -21,16 +21,13 @@ class CampaignStore implements IDBAccessObject {
 	/** @var int The title of the corresponding page */
 	public const SELECT_TITLE = 2;
 
-	/** @var ILoadBalancer */
-	private $loadBalancer;
+	private IConnectionProvider $dbProvider;
 
 	/**
-	 * @param ILoadBalancer $loadBalancer
-	 *
 	 * @internal only for use by ServiceWiring
 	 */
-	public function __construct( ILoadBalancer $loadBalancer ) {
-		$this->loadBalancer = $loadBalancer;
+	public function __construct( IConnectionProvider $dbProvider ) {
+		$this->dbProvider = $dbProvider;
 	}
 
 	/**
@@ -138,7 +135,7 @@ class CampaignStore implements IDBAccessObject {
 	 * @return CampaignSelectQueryBuilder
 	 */
 	public function newSelectQueryBuilder(): CampaignSelectQueryBuilder {
-		$db = $this->loadBalancer->getConnection( DB_REPLICA );
+		$db = $this->dbProvider->getReplicaDatabase();
 		$queryBuilder = new CampaignSelectQueryBuilder( $db, $this );
 		return $queryBuilder;
 	}
@@ -149,7 +146,7 @@ class CampaignStore implements IDBAccessObject {
 	 * @param CampaignRecord $record
 	 */
 	public function upsertCampaign( CampaignRecord $record ): void {
-		$db = $this->loadBalancer->getConnection( DB_PRIMARY );
+		$db = $this->dbProvider->getPrimaryDatabase();
 		$content = $record->getContent();
 		if ( $content !== null ) {
 			$content = FormatJson::encode( $content );
@@ -175,7 +172,7 @@ class CampaignStore implements IDBAccessObject {
 	 * @param int $pageId
 	 */
 	public function deleteCampaignByPageId( int $pageId ): void {
-		$db = $this->loadBalancer->getConnection( DB_PRIMARY );
+		$db = $this->dbProvider->getPrimaryDatabase();
 		$db->delete(
 			'mu_campaign',
 			[ 'campaign_page_id' => $pageId ],

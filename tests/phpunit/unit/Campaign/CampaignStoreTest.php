@@ -7,7 +7,7 @@ use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWikiUnitTestCase;
 use stdClass;
 use Title;
-use Wikimedia\Rdbms\ILoadBalancer;
+use Wikimedia\Rdbms\IConnectionProvider;
 
 /**
  * Only non-DB utility methods are tested here.
@@ -97,7 +97,7 @@ class CampaignStoreTest extends MediaWikiUnitTestCase {
 		bool $shouldHaveTitle
 	) {
 		$store = new CampaignStore(
-			$this->createNoOpMock( ILoadBalancer::class )
+			$this->createNoOpMock( IConnectionProvider::class )
 		);
 		$row = new stdClass();
 		$row->campaign_page_id = 123;
