@@ -38,25 +38,24 @@ class RegistrationHooks implements
 	 *
 	 * @param string[] &$tags
 	 *
-	 * @return bool true
+	 * @return void
 	 */
-	public function onListDefinedTags( &$tags ): bool {
+	public function onListDefinedTags( &$tags ) {
 		$tags = array_merge( $tags, self::CHANGE_TAGS );
-		return true;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function onChangeTagsAllowedAdd( &$allowedTags, $addTags, $user ): bool {
-		return $this->onListDefinedTags( $allowedTags );
+	public function onChangeTagsAllowedAdd( &$allowedTags, $addTags, $user ) {
+		$this->onListDefinedTags( $allowedTags );
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function onChangeTagsListActive( &$tags ): bool {
-		return $this->onListDefinedTags( $tags );
+	public function onChangeTagsListActive( &$tags ) {
+		$this->onListDefinedTags( $tags );
 	}
 
 	/**
@@ -64,17 +63,16 @@ class RegistrationHooks implements
 	 *
 	 * @param array &$reservedUsernames
 	 *
-	 * @return true
+	 * @return void
 	 */
-	public function onUserGetReservedNames( &$reservedUsernames ): bool {
+	public function onUserGetReservedNames( &$reservedUsernames ) {
 		$reservedUsernames[] = 'MediaUploader';
-		return true;
 	}
 
 	/**
 	 * @param DatabaseUpdater $updater
 	 *
-	 * @return true
+	 * @return void
 	 */
 	public function onLoadExtensionSchemaUpdates( $updater ) {
 		$type = $updater->getDB()->getType();
@@ -83,7 +81,5 @@ class RegistrationHooks implements
 		$updater->addExtensionTable( 'mu_campaign', "$path/$type/tables-generated.sql" );
 
 		$updater->addPostDatabaseUpdateMaintenance( MigrateCampaigns::class );
-
-		return true;
 	}
 }

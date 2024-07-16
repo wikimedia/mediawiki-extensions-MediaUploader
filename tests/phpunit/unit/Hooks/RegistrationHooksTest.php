@@ -22,10 +22,7 @@ class RegistrationHooksTest extends MediaWikiUnitTestCase {
 		$hooks = new RegistrationHooks();
 
 		$tags = $original;
-		$this->assertTrue(
-			$hooks->onListDefinedTags( $tags ),
-			'onListDefinedTags'
-		);
+		$hooks->onListDefinedTags( $tags );
 		$this->assertArrayEquals(
 			$expected,
 			$tags,
@@ -35,13 +32,10 @@ class RegistrationHooksTest extends MediaWikiUnitTestCase {
 		);
 
 		$tags = $original;
-		$this->assertTrue(
-			$hooks->onChangeTagsAllowedAdd(
-				$tags,
-				[],
-				$this->createNoOpMock( User::class )
-			),
-			'onChangeTagsAllowedAdd()'
+		$hooks->onChangeTagsAllowedAdd(
+			$tags,
+			[],
+			$this->createNoOpMock( User::class )
 		);
 		$this->assertArrayEquals(
 			$expected,
@@ -52,10 +46,7 @@ class RegistrationHooksTest extends MediaWikiUnitTestCase {
 		);
 
 		$tags = $original;
-		$this->assertTrue(
-			$hooks->onChangeTagsListActive( $tags ),
-			'onChangeTagsListActive()'
-		);
+		$hooks->onChangeTagsListActive( $tags );
 		$this->assertArrayEquals(
 			$expected,
 			$tags,
@@ -71,10 +62,7 @@ class RegistrationHooksTest extends MediaWikiUnitTestCase {
 
 		$hooks = new RegistrationHooks();
 
-		$this->assertTrue(
-			$hooks->onUserGetReservedNames( $usernames ),
-			'onUserGetReservedNames()'
-		);
+		$hooks->onUserGetReservedNames( $usernames );
 		$this->assertArrayEquals(
 			$expected,
 			$usernames,

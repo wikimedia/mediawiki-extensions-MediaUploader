@@ -61,7 +61,7 @@ class CampaignContentHooks implements
 	 * @param EditPage $editor
 	 * @param OutputPage $out
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	public function onEditPage__showEditForm_initial( $editor, $out ) {
 		if ( $this->extensionRegistry->isLoaded( 'CodeEditor' ) &&
@@ -69,8 +69,6 @@ class CampaignContentHooks implements
 		) {
 			$out->addModules( 'ext.mediaUploader.campaignEditor' );
 		}
-
-		return true;
 	}
 
 	/**
@@ -80,12 +78,11 @@ class CampaignContentHooks implements
 	 * @param Title $title
 	 * @param string|null &$lang Page language.
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	public static function onCodeEditorGetPageLanguage( Title $title, ?string &$lang ): bool {
+	public static function onCodeEditorGetPageLanguage( Title $title, ?string &$lang ) {
 		if ( $title->inNamespace( NS_CAMPAIGN ) ) {
 			$lang = 'yaml';
 		}
-		return true;
 	}
 }

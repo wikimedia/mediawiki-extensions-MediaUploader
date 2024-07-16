@@ -72,18 +72,17 @@ class CampaignHooks implements
 	 * @param ManualLogEntry $logEntry
 	 * @param int $archivedRevisionCount
 	 *
-	 * @return true
+	 * @return void
 	 */
 	public function onPageDeleteComplete(
 		ProperPageIdentity $page, Authority $deleter, string $reason, int $pageID,
 		RevisionRecord $deletedRev, ManualLogEntry $logEntry, int $archivedRevisionCount
-	): bool {
+	) {
 		if ( $page->getNamespace() !== NS_CAMPAIGN ) {
-			return true;
+			return;
 		}
 
 		$this->campaignStore->deleteCampaignByPageId( $pageID );
-		return true;
 	}
 
 	/**
@@ -138,11 +137,11 @@ class CampaignHooks implements
 	 * @param LinksUpdate $linksUpdate
 	 * @param mixed $ticket
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	public function onLinksUpdateComplete( $linksUpdate, $ticket ) {
 		if ( !$linksUpdate->getTitle()->inNamespace( NS_CAMPAIGN ) ) {
-			return true;
+			return;
 		}
 
 		// Invalidate global config cache.
@@ -152,12 +151,10 @@ class CampaignHooks implements
 			if ( !$this->isMagicUser( $linksUpdate->getTriggeringUser() ) ) {
 				$this->cacheInvalidator->invalidate();
 			}
-			return true;
+			return;
 		}
 
 		$this->cacheInvalidator->invalidate( $linksUpdate->getTitle()->getDBkey() );
-
-		return true;
 	}
 
 	/**
@@ -173,16 +170,16 @@ class CampaignHooks implements
 	 * @param RevisionRecord $revisionRecord
 	 * @param EditResult $editResult
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	public function onPageSaveComplete(
 		$wikiPage, $userIdentity, $summary, $flags, $revisionRecord, $editResult
-	): bool {
+	) {
 		$content = $wikiPage->getContent();
 		if ( !$content instanceof CampaignContent
 			|| $this->isGlobalConfigAnchor( $wikiPage->getTitle() )
 		) {
-			return true;
+			return;
 		}
 
 		DeferredUpdates::addCallableUpdate(
@@ -190,8 +187,6 @@ class CampaignHooks implements
 				$this->doCampaignUpdate( $wikiPage, $content );
 			}
 		);
-
-		return true;
 	}
 
 	/**
@@ -233,15 +228,14 @@ class CampaignHooks implements
 	 * @param Title $newTitle
 	 * @param Status $status
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	public function onMovePageIsValidMove( $oldTitle, $newTitle, $status ): bool {
+	public function onMovePageIsValidMove( $oldTitle, $newTitle, $status ) {
 		if ( $this->isGlobalConfigAnchor( $oldTitle ) ||
 			$this->isGlobalConfigAnchor( $newTitle )
 		) {
 			$status->fatal( 'mediauploader-global-config-anchor' );
 		}
-		return true;
 	}
 
 	/**

@@ -25,7 +25,7 @@ class Hooks implements GetPreferencesHook {
 	 * @param User $user
 	 * @param array &$preferences
 	 *
-	 * @return true
+	 * @return void
 	 */
 	public function onGetPreferences( $user, &$preferences ) {
 		// User preference to skip the licensing tutorial, provided it's not globally disabled
@@ -111,8 +111,6 @@ class Hooks implements GetPreferencesHook {
 				'options' => $range
 			];
 		}
-
-		return true;
 	}
 
 	/**
