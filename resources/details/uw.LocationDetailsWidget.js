@@ -9,7 +9,7 @@
 	 * @cfg {string[]} [fields] List of fields to show in the widget
 	 */
 	uw.LocationDetailsWidget = function UWLocationDetailsWidget( config ) {
-		this.config = $.extend( {
+		this.config = Object.assign( {
 			fields: [ 'latitude', 'longitude' ]
 		}, config );
 

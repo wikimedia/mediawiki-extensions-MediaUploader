@@ -124,7 +124,7 @@
 			api.ajax = function ( parameters, ajaxOptions ) {
 				var original, override;
 
-				$.extend( parameters, {
+				Object.assign( parameters, {
 					errorformat: 'html',
 					errorlang: mw.config.get( 'wgUserLanguage' ),
 					errorsuselocal: 1,

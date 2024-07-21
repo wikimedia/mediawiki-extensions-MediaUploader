@@ -10,7 +10,7 @@
 	 * @param {number} [config.maxLength=99999] Maximum input length
 	 */
 	uw.TextWidget = function UWTextWidget( config ) {
-		this.config = $.extend( {
+		this.config = Object.assign( {
 			minLength: 0,
 			maxLength: 99999,
 			mode: 'text'

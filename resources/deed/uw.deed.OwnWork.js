@@ -212,7 +212,7 @@
 	 * @return {Object}
 	 */
 	uw.deed.OwnWork.prototype.getSerialized = function () {
-		return $.extend( uw.deed.Abstract.prototype.getSerialized.call( this ), {
+		return Object.assign( uw.deed.Abstract.prototype.getSerialized.call( this ), {
 			author: this.authorInput.getValue(),
 			license: this.licenseInput.getSerialized()
 		} );

@@ -13,7 +13,7 @@
 	 * @cfg {Object} [languages] { langcode: text } map of languages
 	 */
 	uw.MultipleLanguageInputWidget = function UWMultipleLanguageInputWidget( config ) {
-		this.config = $.extend( {}, config );
+		this.config = Object.assign( {}, config );
 		uw.MultipleLanguageInputWidget.parent.call( this, this.config );
 		OO.ui.mixin.GroupElement.call( this );
 
@@ -47,7 +47,7 @@
 		);
 
 		// Add empty input (non-removable if this field is required)
-		this.addLanguageInput( $.extend( {}, this.config, { canBeRemoved: !this.required } ) );
+		this.addLanguageInput( Object.assign( {}, this.config, { canBeRemoved: !this.required } ) );
 	};
 	OO.inheritClass( uw.MultipleLanguageInputWidget, uw.DetailsWidget );
 	OO.mixinClass( uw.MultipleLanguageInputWidget, OO.ui.mixin.GroupElement );
@@ -70,12 +70,12 @@
 		// languages that have already been selected to show up in the next dropdown...
 		if ( config.defaultLanguage ) {
 			languages[ config.defaultLanguage ] = allLanguages[ config.defaultLanguage ];
-			languages = $.extend( {}, languages, unusedLanguages );
+			languages = Object.assign( {}, languages, unusedLanguages );
 		} else {
 			languages = unusedLanguages;
 		}
 
-		config = $.extend( {}, config, {
+		config = Object.assign( {}, config, {
 			languages: languages,
 			required: false
 		} );
@@ -111,7 +111,7 @@
 			// languages that have already been selected to show up in the next dropdown...
 			languages = {};
 			languages[ item.getLanguage() ] = allLanguages[ item.getLanguage() ];
-			languages = $.extend( {}, languages, unusedLanguages );
+			languages = Object.assign( {}, languages, unusedLanguages );
 			item.updateLanguages( languages );
 		}
 	};
@@ -277,7 +277,7 @@
 		this.removeItems( this.getItems() );
 
 		for ( i = 0; i < serialized.inputs.length; i++ ) {
-			config = $.extend( {}, config, { defaultLanguage: serialized.inputs[ i ].language } );
+			config = Object.assign( {}, config, { defaultLanguage: serialized.inputs[ i ].language } );
 			this.addLanguageInput( config, serialized.inputs[ i ].text );
 		}
 	};

@@ -53,7 +53,7 @@
 
 			for ( fKey in config.fields ) {
 				// Make a deep copy
-				fSpec = $.extend( {}, config.fields[ fKey ] );
+				fSpec = Object.assign( {}, config.fields[ fKey ] );
 				fSpec.key = fKey;
 				fSpec.enabled = fSpec.enabled === undefined ? true : fSpec.enabled;
 				// Override the label in case it wasn't set
@@ -70,7 +70,7 @@
 				fieldWidget = null;
 				switch ( fSpec.type ) {
 					case 'title':
-						fieldWidget = new uw.TitleDetailsWidget( $.extend( {}, fConfigBase, {
+						fieldWidget = new uw.TitleDetailsWidget( Object.assign( {}, fConfigBase, {
 							// Normalize file extension, e.g. 'JPEG' to 'jpg'
 							extension: mw.UploadWizard.config.content.titleField === fKey ?
 								mw.Title.normalizeExtension( this.upload.title.getExtension() ) : '',
@@ -80,14 +80,14 @@
 						break;
 					case 'text':
 					case 'textarea':
-						fieldWidget = new uw.TextWidget( $.extend( {}, fConfigBase, {
+						fieldWidget = new uw.TextWidget( Object.assign( {}, fConfigBase, {
 							disabled: !fSpec.enabled,
 							minLength: fSpec.minLength,
 							maxLength: fSpec.maxLength
 						} ) );
 						break;
 					case 'singlelang':
-						fieldWidget = new uw.SingleLanguageInputWidget( $.extend( {}, fConfigBase, {
+						fieldWidget = new uw.SingleLanguageInputWidget( Object.assign( {}, fConfigBase, {
 							canBeRemoved: false,
 							languages: this.getLanguageOptions(),
 							minLength: fSpec.minLength,
@@ -95,14 +95,14 @@
 						} ) );
 						break;
 					case 'multilang':
-						fieldWidget = new uw.MultipleLanguageInputWidget( $.extend( {}, fConfigBase, {
+						fieldWidget = new uw.MultipleLanguageInputWidget( Object.assign( {}, fConfigBase, {
 							languages: this.getLanguageOptions(),
 							minLength: fSpec.minLength,
 							maxLength: fSpec.maxLength
 						} ) );
 						break;
 					case 'select':
-						fieldWidget = new uw.DropdownWidget( $.extend( {}, fConfigBase, {
+						fieldWidget = new uw.DropdownWidget( Object.assign( {}, fConfigBase, {
 							options: fSpec.options
 						} ) );
 						break;
@@ -110,17 +110,17 @@
 						fieldWidget = this.deedChooserDetails;
 						break;
 					case 'date':
-						fieldWidget = new uw.DateDetailsWidget( $.extend( {}, fConfigBase, {
+						fieldWidget = new uw.DateDetailsWidget( Object.assign( {}, fConfigBase, {
 							upload: this.upload
 						} ) );
 						break;
 					case 'location':
-						fieldWidget = new uw.LocationDetailsWidget( $.extend( {}, fConfigBase, {
+						fieldWidget = new uw.LocationDetailsWidget( Object.assign( {}, fConfigBase, {
 							fields: fSpec.fields
 						} ) );
 						break;
 					case 'categories':
-						fieldWidget = new uw.CategoriesDetailsWidget( $.extend( {}, fConfigBase, {
+						fieldWidget = new uw.CategoriesDetailsWidget( Object.assign( {}, fConfigBase, {
 							hiddenDefault: fSpec.hiddenDefault,
 							missingWikitext: fSpec.missingWikitext
 						} ) );
