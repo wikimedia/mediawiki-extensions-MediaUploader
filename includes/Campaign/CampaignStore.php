@@ -2,7 +2,6 @@
 
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
-use DBAccessObjectUtils;
 use FormatJson;
 use IDBAccessObject;
 use stdClass;
@@ -136,18 +135,11 @@ class CampaignStore implements IDBAccessObject {
 	/**
 	 * Constructs a new CampaignSelectQueryBuilder.
 	 *
-	 * @param int $queryFlags bitfield of self::READ_* constants
-	 *
 	 * @return CampaignSelectQueryBuilder
 	 */
-	public function newSelectQueryBuilder(
-		int $queryFlags = self::READ_NORMAL
-	): CampaignSelectQueryBuilder {
-		[ $mode, $options ] = DBAccessObjectUtils::getDBOptions( $queryFlags );
-		$db = $this->loadBalancer->getConnection( $mode );
+	public function newSelectQueryBuilder(): CampaignSelectQueryBuilder {
+		$db = $this->loadBalancer->getConnection( DB_REPLICA );
 		$queryBuilder = new CampaignSelectQueryBuilder( $db, $this );
-		$queryBuilder->options( $options );
-
 		return $queryBuilder;
 	}
 
@@ -198,17 +190,15 @@ class CampaignStore implements IDBAccessObject {
 	 * @param int $selectFlags Bitfield of self::SELECT_* constants used to
 	 *   retrieve the row from the DB. SELECT_TITLE is always included
 	 *   regardless of this parameter.
-	 * @param int $queryFlags bitfield of self::READ_* constants
 	 *
 	 * @return CampaignRecord|null
 	 */
 	public function getCampaignByDBKey(
 		string $dbKey,
-		int $selectFlags = self::SELECT_TITLE,
-		int $queryFlags = self::READ_NORMAL
+		int $selectFlags = self::SELECT_TITLE
 	): ?CampaignRecord {
 		$selectFlags |= self::SELECT_TITLE;
-		return $this->newSelectQueryBuilder( $queryFlags )
+		return $this->newSelectQueryBuilder()
 			->where( [ 'page_title' => $dbKey ] )
 			->fetchCampaignRecord( $selectFlags );
 	}

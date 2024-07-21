@@ -28,7 +28,7 @@ class CampaignStoreTest extends MediaWikiIntegrationTestCase {
 	}
 
 	public function testDeleteCampaignByPageId() {
-		$dbw = wfGetDB( DB_PRIMARY );
+		$dbw = $this->getDb();
 		$dbw->insert(
 			'mu_campaign',
 			[
@@ -110,7 +110,7 @@ class CampaignStoreTest extends MediaWikiIntegrationTestCase {
 	}
 
 	public function testSelectQueryBuilder() {
-		$dbw = wfGetDB( DB_PRIMARY );
+		$dbw = $this->getDb();
 		$ids = [ 6, 7, 5, 2, 1, 4, 3 ];
 		foreach ( $ids as $id ) {
 			$dbw->insert(

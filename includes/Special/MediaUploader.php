@@ -187,7 +187,7 @@ class MediaUploader extends SpecialPage {
 
 		// Load it
 		$campaignTitle = Title::newFromText( $campaignName, NS_CAMPAIGN );
-		$record = $this->campaignStore->getCampaignByDBkey(
+		$record = $this->campaignStore->getCampaignByDBKey(
 			$campaignTitle->getDBkey(),
 			CampaignStore::SELECT_TITLE | CampaignStore::SELECT_CONTENT
 		);
