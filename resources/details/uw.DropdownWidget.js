@@ -10,7 +10,7 @@
 	 * @cfg {Object} [options] Map of select dropdown options
 	 */
 	uw.DropdownWidget = function MUDropdownWidget( config ) {
-		config = $.extend( { type: 'text' }, config );
+		config = Object.assign( { type: 'text' }, config );
 		uw.DropdownWidget.parent.call( this, config );
 
 		this.required = !!config.required;

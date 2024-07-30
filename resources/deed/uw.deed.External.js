@@ -63,7 +63,7 @@
 	 * @return {Object}
 	 */
 	uw.deed.External.prototype.getSerialized = function () {
-		return $.extend( uw.deed.Custom.prototype.getSerialized.call( this ), {
+		return Object.assign( uw.deed.Custom.prototype.getSerialized.call( this ), {
 			license: this.licenseInput.getSerialized()
 		} );
 	};

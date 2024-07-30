@@ -34,7 +34,7 @@
 			throw new Error( 'Invalid type: ' + type );
 		}
 
-		this.config = $.extend( {
+		this.config = Object.assign( {
 			licenseWikitext: '$1',
 			licenseSeparator: ' ',
 			wrapper: '$1'

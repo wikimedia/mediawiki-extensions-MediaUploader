@@ -74,7 +74,7 @@
 	OO.inheritClass( mw.UploadWizardLicenseInput, OO.ui.Widget );
 	OO.mixinClass( mw.UploadWizardLicenseInput, OO.ui.mixin.GroupElement );
 
-	$.extend( mw.UploadWizardLicenseInput.prototype, {
+	Object.assign( mw.UploadWizardLicenseInput.prototype, {
 		unload: function () {
 			this.getItems().forEach( function ( group ) {
 				group.unload();
@@ -267,7 +267,7 @@
 
 				if ( Object.keys( value ).length > 0 ) {
 					// $.extend just in case there are multiple groups with the same name...
-					values[ groupName ] = $.extend( {}, values[ groupName ] || {}, value );
+					values[ groupName ] = Object.assign( {}, values[ groupName ] || {}, value );
 				}
 			} );
 
