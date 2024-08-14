@@ -39,17 +39,14 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$hooks = $this->getCampaignHooks();
 
-		$this->assertTrue(
-			$hooks->onPageDeleteComplete(
-				$page,
-				$this->createNoOpMock( Authority::class ),
-				'',
-				123,
-				$this->createNoOpMock( RevisionRecord::class ),
-				$this->createNoOpMock( ManualLogEntry::class ),
-				10
-			),
-			'onPageDeleteComplete()'
+		$hooks->onPageDeleteComplete(
+			$page,
+			$this->createNoOpMock( Authority::class ),
+			'',
+			123,
+			$this->createNoOpMock( RevisionRecord::class ),
+			$this->createNoOpMock( ManualLogEntry::class ),
+			10
 		);
 	}
 
@@ -66,17 +63,14 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$hooks = $this->getCampaignHooks( $campaignStore );
 
-		$this->assertTrue(
-			$hooks->onPageDeleteComplete(
-				$page,
-				$this->createNoOpMock( Authority::class ),
-				'',
-				self::DUMMY_CAMPAIGN_ID,
-				$this->createNoOpMock( RevisionRecord::class ),
-				$this->createNoOpMock( ManualLogEntry::class ),
-				10
-			),
-			'onPageDeleteComplete()'
+		$hooks->onPageDeleteComplete(
+			$page,
+			$this->createNoOpMock( Authority::class ),
+			'',
+			self::DUMMY_CAMPAIGN_ID,
+			$this->createNoOpMock( RevisionRecord::class ),
+			$this->createNoOpMock( ManualLogEntry::class ),
+			10
 		);
 	}
 
@@ -190,10 +184,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$hooks = $this->getCampaignHooks();
 
-		$this->assertTrue(
-			$hooks->onLinksUpdateComplete( $linksUpdate, null ),
-			'onLinksUpdateComplete()'
-		);
+		$hooks->onLinksUpdateComplete( $linksUpdate, null );
 	}
 
 	/**
@@ -211,10 +202,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$hooks = $this->getCampaignHooks();
 
-		$this->assertTrue(
-			$hooks->onLinksUpdateComplete( $linksUpdate, null ),
-			'onLinksUpdateComplete()'
-		);
+		$hooks->onLinksUpdateComplete( $linksUpdate, null );
 	}
 
 	/**
@@ -237,10 +225,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$hooks = $this->getCampaignHooks( null, $invalidator );
 
-		$this->assertTrue(
-			$hooks->onLinksUpdateComplete( $linksUpdate, null ),
-			'onLinksUpdateComplete()'
-		);
+		$hooks->onLinksUpdateComplete( $linksUpdate, null );
 	}
 
 	public function testLinksUpdateComplete_campaign() {
@@ -256,10 +241,7 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 
 		$hooks = $this->getCampaignHooks( null, $invalidator );
 
-		$this->assertTrue(
-			$hooks->onLinksUpdateComplete( $linksUpdate, null ),
-			'onLinksUpdateComplete()'
-		);
+		$hooks->onLinksUpdateComplete( $linksUpdate, null );
 	}
 
 	public function testDoCampaignUpdate() {

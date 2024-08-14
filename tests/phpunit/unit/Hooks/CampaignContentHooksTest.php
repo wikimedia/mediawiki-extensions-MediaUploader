@@ -85,10 +85,7 @@ class CampaignContentHooksTest extends MediaWikiUnitTestCase {
 			->willReturn( $inCampaignNamespace );
 
 		$lang = null;
-		$this->assertTrue(
-			CampaignContentHooks::onCodeEditorGetPageLanguage( $title, $lang ),
-			'onCodeEditorGetPageLanguage()'
-		);
+		CampaignContentHooks::onCodeEditorGetPageLanguage( $title, $lang );
 		$this->assertSame(
 			$expectedLang,
 			$lang,
@@ -105,12 +102,9 @@ class CampaignContentHooksTest extends MediaWikiUnitTestCase {
 
 		$hooks = new CampaignContentHooks( $extensionRegistry );
 
-		$this->assertTrue(
-			$hooks->onEditPage__showEditForm_initial(
-				$this->createNoOpMock( EditPage::class ),
-				$this->createNoOpMock( OutputPage::class )
-			),
-			'onEditPage__showEditForm_initial()'
+		$hooks->onEditPage__showEditForm_initial(
+			$this->createNoOpMock( EditPage::class ),
+			$this->createNoOpMock( OutputPage::class )
 		);
 	}
 
@@ -133,12 +127,9 @@ class CampaignContentHooksTest extends MediaWikiUnitTestCase {
 
 		$hooks = new CampaignContentHooks( $extensionRegistry );
 
-		$this->assertTrue(
-			$hooks->onEditPage__showEditForm_initial(
-				$editPage,
-				$this->createNoOpMock( OutputPage::class )
-			),
-			'onEditPage__showEditForm_initial()'
+		$hooks->onEditPage__showEditForm_initial(
+			$editPage,
+			$this->createNoOpMock( OutputPage::class )
 		);
 	}
 
@@ -166,12 +157,6 @@ class CampaignContentHooksTest extends MediaWikiUnitTestCase {
 
 		$hooks = new CampaignContentHooks( $extensionRegistry );
 
-		$this->assertTrue(
-			$hooks->onEditPage__showEditForm_initial(
-				$editPage,
-				$outputPage
-			),
-			'onEditPage__showEditForm_initial()'
-		);
+		$hooks->onEditPage__showEditForm_initial( $editPage, $outputPage );
 	}
 }
