@@ -167,7 +167,6 @@
 				"jquery.client",
 				"jquery.spinner",
 				"jquery.makeCollapsible",
-				"mediawiki.icon",
 				"mediawiki.Uri",
 				"mediawiki.util",
 				"mediawiki.libs.jpegmeta",

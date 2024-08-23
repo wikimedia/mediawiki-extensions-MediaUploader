@@ -188,6 +188,7 @@
 			$moreDetailsWrapperDiv
 				.append(
 					$( '<a>' ).text( mw.msg( 'mediauploader-more-options' ) )
+						.prepend( $( '<span>' ).addClass( 'mw-toggle-icon' ) )
 						.addClass( 'mediauploader-details-more-options mw-collapsible-toggle mw-collapsible-arrow' ),
 					$moreDetailsDiv.addClass( 'mw-collapsible-content' )
 				)

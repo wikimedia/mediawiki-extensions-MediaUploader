@@ -87,8 +87,9 @@
 	uw.LicenseGroup.prototype.createFieldset = function ( group ) {
 		/* eslint-disable mediawiki/msg-doc */
 		var $head = this.config.head && $( '<a>' )
-				.addClass( 'mediauploader-deed-license-group-head mw-collapsible-arrow' )
-				.msg( this.config.head, this.count ),
+				.addClass( 'mediauploader-deed-license-group-head' )
+				.msg( this.config.head, this.count )
+				.prepend( $( '<span>' ).addClass( 'mw-toggle-icon' ) ),
 			$subhead = this.config.subhead && $( '<div>' )
 				.addClass( 'mediauploader-deed-license-group-subhead' )
 				.msg( this.config.subhead, this.count ),

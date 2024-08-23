@@ -74,7 +74,8 @@
 		$copyMetadataWrapperDiv
 			.append(
 				$( '<a>' ).text( mw.msg( 'mediauploader-copy-metadata' ) )
-					.addClass( 'mediauploader-details-copy-metadata mw-collapsible-toggle mw-collapsible-arrow' ),
+					.prepend( $( '<span>' ).addClass( 'mw-toggle-icon' ) )
+					.addClass( 'mediauploader-details-copy-metadata mw-collapsible-toggle' ),
 				$copyMetadataDiv.addClass( 'mw-collapsible-content' )
 			)
 			.makeCollapsible( { collapsed: true } );
