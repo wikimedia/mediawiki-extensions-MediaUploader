@@ -6,6 +6,7 @@ use Html;
 use ImageGalleryBase;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
+use MediaWiki\MediaWikiServices;
 use MWException;
 use ParserOutput;
 use RequestContext;
@@ -67,6 +68,7 @@ class CampaignPageFormatter {
 		$campaignViewMoreLink = $trackingCat ? $trackingCat->getFullURL() : '';
 
 		$gallery = ImageGalleryBase::factory( 'packed-hover', $this->context );
+		$gallery->setParser( MediaWikiServices::getInstance()->getParserFactory()->create() );
 		$gallery->setWidths( '180' );
 		$gallery->setHeights( '180' );
 		$gallery->setShowBytes( false );
