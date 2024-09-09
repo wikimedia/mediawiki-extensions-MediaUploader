@@ -6,7 +6,6 @@ use Html;
 use ImageGalleryBase;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
-use MediaWiki\MediaWikiServices;
 use MWException;
 use ParserOutput;
 use RequestContext;
@@ -67,12 +66,6 @@ class CampaignPageFormatter {
 		);
 		$campaignViewMoreLink = $trackingCat ? $trackingCat->getFullURL() : '';
 
-		$gallery = ImageGalleryBase::factory( 'packed-hover', $this->context );
-		$gallery->setParser( MediaWikiServices::getInstance()->getParserFactory()->create() );
-		$gallery->setWidths( '180' );
-		$gallery->setHeights( '180' );
-		$gallery->setShowBytes( false );
-
 		$outputPage = $this->context->getOutput();
 		$outputPage->setCdnMaxage(
 			$this->config->getSetting( 'campaignCdnMaxAge' )
@@ -108,6 +101,9 @@ class CampaignPageFormatter {
 				$this->context->msg( 'mediauploader-campaign-no-uploads-yet' )->plain()
 			);
 		} else {
+			$gallery = ImageGalleryBase::factory( 'packed-hover', $this->context );
+			$gallery->setShowBytes( false );
+
 			foreach ( $images as $image ) {
 				$gallery->add( Title::newFromText( $image, NS_FILE ) );
 			}
