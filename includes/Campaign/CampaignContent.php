@@ -103,7 +103,7 @@ class CampaignContent extends TextContent {
 	 *
 	 * @param Validator|null $validator
 	 */
-	public function setServices( Validator $validator = null ) {
+	public function setServices( ?Validator $validator = null ) {
 		$this->validator = $validator;
 		$this->initializedServices = true;
 	}
@@ -196,7 +196,7 @@ class CampaignContent extends TextContent {
 	 *
 	 * @return CampaignRecord
 	 */
-	public function newCampaignRecord( PageReference $page, int $pageId = null ): CampaignRecord {
+	public function newCampaignRecord( PageReference $page, ?int $pageId = null ): CampaignRecord {
 		$yamlParse = $this->realYamlParse ?: $this->getData();
 		if ( !$yamlParse->isGood() ) {
 			$validity = CampaignRecord::CONTENT_INVALID_FORMAT;

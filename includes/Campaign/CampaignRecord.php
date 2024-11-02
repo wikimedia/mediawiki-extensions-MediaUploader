@@ -51,8 +51,8 @@ class CampaignRecord {
 		?int $pageId,
 		bool $enabled,
 		int $validity,
-		array $content = null,
-		PageReference $pageReference = null
+		?array $content = null,
+		?PageReference $pageReference = null
 	) {
 		$this->pageId = $pageId;
 		$this->enabled = $enabled;

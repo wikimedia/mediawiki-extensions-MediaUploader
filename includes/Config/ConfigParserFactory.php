@@ -38,7 +38,7 @@ class ConfigParserFactory {
 	public function newConfigParser(
 		array $rawConfig,
 		ParserOptions $parserOptions,
-		PageReference $pageRef = null
+		?PageReference $pageRef = null
 	): ConfigParser {
 		if ( $pageRef === null ) {
 			$pageRef = PageReferenceValue::localReference( NS_SPECIAL, 'MediaUploader' );

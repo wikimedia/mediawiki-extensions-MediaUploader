@@ -332,8 +332,8 @@ class CampaignHooksTest extends MediaWikiUnitTestCase {
 	 * @return CampaignHooks
 	 */
 	private function getCampaignHooks(
-		CampaignStore $campaignStore = null,
-		ConfigCacheInvalidator $cacheInvalidator = null
+		?CampaignStore $campaignStore = null,
+		?ConfigCacheInvalidator $cacheInvalidator = null
 	): CampaignHooks {
 		return new CampaignHooks(
 			$campaignStore ?:
