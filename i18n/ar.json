@@ -20,7 +20,7 @@
 	"action-upwizcampaigns": "تكوين حملات التحميل",
 	"group-upwizcampeditors": "محرري حملة Media Uploader",
 	"group-upwizcampeditors-member": "{{GENDER:$1| محرر حملة Media Uploader}}",
-	"grouppage-upwizcampeditors": "{{ns:project}}:محررو حملة Media Uploader",
+	"grouppage-upwizcampeditors": "{{ns:project}}:محررو حملة رافعي الوسائط",
 	"mediauploader-api-error-parsererror": "استجاب الخادم بمستند JSON غير صالح. قد تكون هذه مشكلة في واجهة برمجة التطبيقات ، أو ربما تستخدم خادمًا وكيلاً يمنعك من تحميل الملفات.",
 	"mediauploader-api-error-aborted": "أُجهضت عملية الرَّفع.",
 	"mediauploader-api-error-noimageinfo": "نجح التحميل، لكن الخادم لم يقدم لنا أي معلومات حول الملف.",
@@ -226,7 +226,7 @@
 	"mediauploader-invalid-campaign-schema": "لا يتم التحقق من صحة محتوى الحملة \" $1 \" مقابل مخطط الحملة. يرجى محاولة تحريره لإصلاح أي أخطاء في التحقق من الصحة.",
 	"mediauploader-fix-campaign-comment-prettified": "إعادة صياغة تعريف الحملة",
 	"mediauploader-incomplete-campaign-record": "يفتقد سجل الحملة \" $1 \" العناصر التالية: $2",
-	"mediauploader-default-content-wikitext": "== الوصف ==\n{{{description}}}\n\n== معلومات الوسائط ==\n* '''التاريخ:''' {{{date|''unknown''}}}\n* '''المصدر:''' {{{source|''unknown''}}\n* '''المؤلف:''' {{{author|''unknown''}}\n* '''الموقع:''' {{{location|''unknown''}}\n\n{{{other}}}\n\n== الترخيص ==\n{{{license}}}\n\n{{{categories}}}}",
+	"mediauploader-default-content-wikitext": "== الوصف ==\n{{{description}}}\n\n== معلومات الوسائط ==\n* '''التاريخ:''' {{{date|''غير معروف''}}}\n* '''المصدر:''' {{{source|''غير معروف''}}}\n* '''المؤلف:''' {{{author|''غير معروف''}}}\n* '''الموقع:''' {{{location|''غير معروف''}}}\n\n{{{other}}}\n\n== الترخيص ==\n{{{license}}}\n\n{{{categories}}}",
 	"mediauploader-content-source-ownwork": "عمل شخصي",
 	"mediauploader-content-license-ownwork": "أنا ، صاحب حقوق الطبع والنشر لهذا العمل ، أنشره بموجب {{PLURAL:$1| الترخيص | التراخيص}}:",
 	"mediauploader-license-none-text": "لا يوجد ترخيص محدد"
