@@ -28,31 +28,31 @@ class MediaUploaderServices {
 		return $services->getService( 'MediaUploader' . $name );
 	}
 
-	public static function getCampaignStore( MediaWikiServices $services = null ): CampaignStore {
+	public static function getCampaignStore( ?MediaWikiServices $services = null ): CampaignStore {
 		return self::getService( $services, 'CampaignStore' );
 	}
 
-	public static function getCampaignStats( MediaWikiServices $services = null ): CampaignStats {
+	public static function getCampaignStats( ?MediaWikiServices $services = null ): CampaignStats {
 		return self::getService( $services, 'CampaignStats' );
 	}
 
-	public static function getCampaignValidator( MediaWikiServices $services = null ): Validator {
+	public static function getCampaignValidator( ?MediaWikiServices $services = null ): Validator {
 		return self::getService( $services, 'CampaignValidator' );
 	}
 
-	public static function getConfigFactory( MediaWikiServices $services = null ): ConfigFactory {
+	public static function getConfigFactory( ?MediaWikiServices $services = null ): ConfigFactory {
 		return self::getService( $services, 'ConfigFactory' );
 	}
 
-	public static function getConfigParserFactory( MediaWikiServices $services = null ): ConfigParserFactory {
+	public static function getConfigParserFactory( ?MediaWikiServices $services = null ): ConfigParserFactory {
 		return self::getService( $services, 'ConfigParserFactory' );
 	}
 
-	public static function getConfigCacheInvalidator( MediaWikiServices $services = null ): ConfigCacheInvalidator {
+	public static function getConfigCacheInvalidator( ?MediaWikiServices $services = null ): ConfigCacheInvalidator {
 		return self::getService( $services, 'ConfigCacheInvalidator' );
 	}
 
-	public static function getRawConfig( MediaWikiServices $services = null ): RawConfig {
+	public static function getRawConfig( ?MediaWikiServices $services = null ): RawConfig {
 		return self::getService( $services, 'RawConfig' );
 	}
 
