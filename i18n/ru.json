@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kareyac"
+			"Kareyac",
+			"Mitte27"
 		]
 	},
 	"mediauploader-add-file-n": "Добавить ещё файлы",
+	"mediauploader-add-file-0-free": "Выберите медиафайлы, чтобы поделиться",
 	"mediauploader-publish": "Публикуется...",
 	"mediauploader-upload": "Загрузить",
 	"mediauploader-copy-metadata-button-undo": "Отменить",
