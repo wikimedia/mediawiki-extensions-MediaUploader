@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Kly",
-			"Cookai1205"
+			"Cookai1205",
+			"Winston Sung"
 		]
 	},
 	"mediauploader": "媒體上傳器",
@@ -113,7 +114,7 @@
 	"mediauploader-previous": "上一步驟",
 	"mediauploader-home": "前往 wiki 首頁",
 	"mediauploader-upload-another": "上傳更多檔案",
-	"mediauploader-tooltip-skiptutorial": "您可在[$1 您的使用者偏好設定]裡$2→$3來重新開啟此教程。",
+	"mediauploader-tooltip-skiptutorial": "您可在[$1 您的使用者偏好設定]裡$2→$3來重新開啟此教學。",
 	"mediauploader-tooltip-author": "攝影、繪圖、製圖等創作者的姓名。",
 	"mediauploader-tooltip-source": "此數位檔案的出處 － 可以是 URL、書籍，或是出版物。",
 	"mediauploader-tooltip-sign": "您可以使用您的 wiki 使用者名稱，或是真實姓名。兩種情況下都會連結至您的 wiki 使用者頁面",
@@ -210,7 +211,7 @@
 	"mediauploader-upload-comment-own-work": "使用媒體上傳器來上傳自己的作品",
 	"mediauploader-upload-comment-third-party": "透過媒體上傳器上傳出自於$2由$1做出的作品",
 	"mediauploader-global-config-anchor": "'''此頁面用作全域媒體上傳器設定的錨點。'''\n\n要在變動任何使用的模版時設定能夠正確更新，這是必需的。請不要移動或刪除此頁面。",
-	"mediauploader-default-tutorial-text": "=== 此為預設的教程訊息 ===\n教程步驟是對您的 wiki 使用者解釋上傳檔案規則的好地方。\n* 您可以透過設定 <code>$wgMediaUploader['tutorial']['enabled'] = false;</code> 來停用整個教程（此設定較適合用在內部 wiki 上）。\n* 或者您可以使用此設定來更改教程的 wikitext：<code>$wgMediaUploader['tutorial']['wikitext'] = '您要輸入的 wikitext 內容';</code>。\n您可參閱[https://www.mediawiki.org/wiki/Extension:MediaUploader/Configuration 文件]來獲得更多資訊。",
+	"mediauploader-default-tutorial-text": "=== 此為預設教學訊息 ===\n教學步驟是對您的 wiki 使用者解釋上傳檔案規則的好地方。\n* 您可以透過設定 <code>$wgMediaUploader['tutorial']['enabled'] = false;</code> 來停用整個教學（此設定較適合用在內部 wiki 上）。\n* 或者您可以使用此設定來變更教學的 wikitext：<code>$wgMediaUploader['tutorial']['wikitext'] = '您要輸入的 wikitext 內容';</code>。\n您可參閱[https://www.mediawiki.org/wiki/Extension:MediaUploader/Configuration 說明文件]取得更多資訊。",
 	"mediauploader-yaml-parse-error": "YAML 解析失敗並顯示以下訊息：$1",
 	"mediauploader-invalid-campaign-format": "活動「$1」的內容格式無效。請嘗試編輯來修正任何驗證錯誤。",
 	"mediauploader-invalid-campaign-schema": "活動「$1」的內容未依照活動架構進行驗證。請嘗試編輯來修正任何驗證錯誤。",
