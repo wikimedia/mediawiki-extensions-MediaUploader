@@ -27,14 +27,6 @@ class CampaignStatsTest extends MediaWikiIntegrationTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		$this->tablesUsed = [
-			'mu_campaign',
-			'page',
-			'revision',
-			'image',
-			'categorylinks',
-		];
-
 		$this->mergeMwGlobalArrayValue(
 			'wgMediaUploaderConfig',
 			[ 'trackingCategory' => [ 'campaign' => '$1' ] ]
