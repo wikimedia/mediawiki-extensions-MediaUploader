@@ -72,7 +72,6 @@
 				return $.Deferred().resolve();
 			} } );
 
-		this.sandbox.useFakeXMLHttpRequest();
 		this.sandbox.useFakeServer();
 
 		assert.true( stub.notCalled );
@@ -90,7 +89,6 @@
 				size: 5
 			};
 
-		this.sandbox.useFakeXMLHttpRequest();
 		this.sandbox.useFakeServer();
 
 		transport.upload( fakeFile, 'test file for fdt.jpg' );
@@ -119,7 +117,6 @@
 				}
 			};
 
-		this.sandbox.useFakeXMLHttpRequest();
 		this.sandbox.useFakeServer();
 
 		transport.uploadChunk( fakeFile, 0 );
