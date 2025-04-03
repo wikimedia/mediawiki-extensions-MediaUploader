@@ -21,7 +21,7 @@ abstract class ConfigBase {
 	 * Returns a specific setting of the configuration array.
 	 *
 	 * @param string $key
-	 * @param mixed $default Default value if $key is not found in the array
+	 * @param mixed|null $default Default value if $key is not found in the array
 	 *
 	 * @return mixed $default if the key does not exist.
 	 */

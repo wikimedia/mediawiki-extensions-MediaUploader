@@ -173,10 +173,8 @@ class MediaUploader extends SpecialPage {
 	 */
 	private function tryLoadCampaignConfig( array $urlOverrides ): void {
 		// Establish the name of the campaign to load
-		$campaignName = $this->getRequest()->getVal( 'campaign' );
-		if ( $campaignName === null ) {
-			$campaignName = $this->rawConfig->getSetting( 'defaultCampaign' );
-		}
+		$campaignName = $this->getRequest()->getVal( 'campaign' ) ??
+			$this->rawConfig->getSetting( 'defaultCampaign' );
 
 		if ( $campaignName === null || $campaignName === '' ) {
 			return;

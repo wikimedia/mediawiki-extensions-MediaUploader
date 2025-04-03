@@ -22,9 +22,7 @@ class MediaUploaderServices {
 	 * @return mixed
 	 */
 	private static function getService( ?MediaWikiServices $services, string $name ) {
-		if ( $services === null ) {
-			$services = MediaWikiServices::getInstance();
-		}
+		$services ??= MediaWikiServices::getInstance();
 		return $services->getService( 'MediaUploader' . $name );
 	}
 
