@@ -66,8 +66,11 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 
 		$parserOutput = $this->createMock( ParserOutput::class );
 		$parserOutput->expects( $this->once() )
-			->method( 'getText' )
+			->method( 'getContentHolderText' )
 			->willReturn( self::PARSED_TEXT );
+		$parserOutput->expects( $this->once() )
+			->method( 'runOutputPipeline' )
+			->willReturn( $parserOutput );
 		$parserOutput->expects( $this->once() )
 			->method( 'getTemplateIds' )
 			->willReturn( [] );
@@ -386,8 +389,10 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 
 		// ParserOutput here always returns the same text, which is to simplify the test
 		// a bit. Integration tests cover this a bit better.
-		$parserOutput->method( 'getText' )
+		$parserOutput->method( 'getContentHolderText' )
 			->willReturn( self::PARSED_TEXT );
+		$parserOutput->method( 'runOutputPipeline' )
+			->willReturn( $parserOutput );
 		$parserOutput->method( 'getTemplateIds' )
 			->willReturn( [] );
 		$parserOutput->method( 'getTemplates' )
@@ -432,8 +437,10 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 	public function testUsedTemplates() {
 		// setup mocks
 		$parserOutput = $this->createMock( ParserOutput::class );
-		$parserOutput->method( 'getText' )
+		$parserOutput->method( 'getContentHolderText' )
 			->willReturn( self::PARSED_TEXT );
+		$parserOutput->method( 'runOutputPipeline' )
+			->willReturn( $parserOutput );
 
 		$parserOutput->method( 'getTemplates' )
 			->willReturnOnConsecutiveCalls(

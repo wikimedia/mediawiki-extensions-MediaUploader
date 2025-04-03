@@ -6,11 +6,11 @@ use ImageGalleryBase;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\Html\Html;
+use MediaWiki\Skin\SkinComponentUtils;
 use MediaWiki\Title\Title;
 use MWException;
 use ParserOutput;
 use RequestContext;
-use Skin;
 
 /**
  * Helper class to produce formatted HTML output for campaigns
@@ -77,14 +77,14 @@ class CampaignPageFormatter {
 
 		if ( $this->context->getUser()->isAnon() ) {
 			$urlParams = [ 'returnto' => $campaignTitle->getPrefixedText() ];
-			$createAccountUrl = Skin::makeSpecialUrlSubpage( 'Userlogin', 'signup', $urlParams );
+			$createAccountUrl = SkinComponentUtils::makeSpecialUrlSubpage( 'Userlogin', 'signup', $urlParams );
 			$uploadLink = new \OOUI\ButtonWidget( [
 				'label' => $this->context->msg( 'mediauploader-campaign-create-account-button' )->text(),
 				'flags' => [ 'progressive', 'primary' ],
 				'href' => $createAccountUrl
 			] );
 		} else {
-			$uploadUrl = Skin::makeSpecialUrl(
+			$uploadUrl = SkinComponentUtils::makeSpecialUrl(
 				'MediaUploader', [ 'campaign' => $this->record->getPage()->getDBkey() ]
 			);
 			$uploadLink = new \OOUI\ButtonWidget( [

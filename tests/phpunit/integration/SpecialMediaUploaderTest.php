@@ -3,6 +3,7 @@
 namespace MediaWiki\Extension\MediaUploader\Tests\Integration;
 
 use MediaWiki\Block\DatabaseBlock;
+use MediaWiki\Block\UserBlockTarget;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\Extension\MediaUploader\Special\MediaUploader;
 use MediaWiki\MainConfigNames;
@@ -33,7 +34,7 @@ class SpecialMediaUploaderTest extends SpecialPageTestBase {
 	 * @param bool $sitewide The block is a sitewide block
 	 * @param bool $expectException A UserBlockedError is expected
 	 */
-	public function testIsUserUploadAllowedForBlockedUser( $sitewide, $expectException ) {
+	public function testIsUserUploadAllowedForBlockedUser( bool $sitewide, bool $expectException ) {
 		$this->overrideConfigValues( [
 			MainConfigNames::BlockDisablesLogin => false,
 			MainConfigNames::EnableUploads => true,
@@ -44,22 +45,23 @@ class SpecialMediaUploaderTest extends SpecialPageTestBase {
 			'expiry' => 'infinite',
 			'sitewide' => $sitewide,
 		] );
-		$block->setTarget( $user );
+		$target = new UserBlockTarget( $user );
+		$block->setTarget( $target );
 		$block->setBlocker( $this->getTestSysop()->getUser() );
 
 		$blockStore = $this->getServiceContainer()->getDatabaseBlockStore();
 		$blockStore->insertBlock( $block );
 
-		$caughtException = false;
-		try {
-			$this->executeSpecialPage( '', null, null, $user );
-		} catch ( UserBlockedError $e ) {
-			$caughtException = true;
+		if ( $expectException ) {
+			$this->expectException( UserBlockedError::class );
 		}
 
-		$blockStore->deleteBlock( $block );
-
-		$this->assertSame( $expectException, $caughtException );
+		try {
+			$this->executeSpecialPage( '', null, null, $user );
+			$this->addToAssertionCount( 1 );
+		} finally {
+			$blockStore->deleteBlock( $block );
+		}
 	}
 
 	public static function provideIsUserUploadAllowedForBlockedUser() {

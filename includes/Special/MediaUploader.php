@@ -21,6 +21,7 @@ use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use MediaWiki\Extension\MediaUploader\Hooks\RegistrationHooks;
 use MediaWiki\Html\Html;
+use MediaWiki\Parser\ParserOptions;
 use MediaWiki\Title\Title;
 use MediaWiki\User\UserOptionsLookup;
 use MediaWiki\Widget\SpinnerWidget;
@@ -162,7 +163,7 @@ class MediaUploader extends SpecialPage {
 		if ( $this->loadedConfig === null ) {
 
 			$this->loadedConfig = $this->configFactory->newGlobalConfig(
-				$this->getOutput()->parserOptions(),
+				ParserOptions::newFromContext( $this->getContext() ),
 				$urlOverrides
 			);
 		}
@@ -210,7 +211,7 @@ class MediaUploader extends SpecialPage {
 		// Load the config
 		try {
 			$this->loadedConfig = $this->configFactory->newCampaignConfig(
-				$this->getOutput()->parserOptions(),
+				ParserOptions::newFromContext( $this->getContext() ),
 				$record,
 				$campaignTitle,
 				$urlOverrides
@@ -383,12 +384,6 @@ class MediaUploader extends SpecialPage {
 			// If the user is blocked from uploading then there is a block
 			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			throw new UserBlockedError( $user->getBlock() );
-		}
-
-		// Global blocks
-		$globalBlock = $user->getGlobalBlock();
-		if ( $globalBlock ) {
-			throw new UserBlockedError( $globalBlock );
 		}
 
 		// we got all the way here, so it must be okay to upload
