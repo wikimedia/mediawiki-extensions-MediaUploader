@@ -152,8 +152,6 @@ class MediaUploader extends SpecialPage {
 
 	/**
 	 * Loads the appropriate config.
-	 *
-	 * @param array $urlOverrides
 	 */
 	protected function loadConfig( array $urlOverrides ): void {
 		$this->tryLoadCampaignConfig( $urlOverrides );
@@ -172,8 +170,6 @@ class MediaUploader extends SpecialPage {
 	/**
 	 * Attempts to load a campaign config.
 	 * Sets $this->loadedConfig if successful.
-	 *
-	 * @param array $urlOverrides
 	 */
 	private function tryLoadCampaignConfig( array $urlOverrides ): void {
 		// Establish the name of the campaign to load

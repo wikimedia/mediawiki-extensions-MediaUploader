@@ -58,7 +58,6 @@ class MediaUploaderServices {
 
 	/**
 	 * Returns the system (MediaUploader) user used for maintenance tasks.
-	 * @return User
 	 */
 	public static function getSystemUser(): User {
 		return User::newSystemUser( 'MediaUploader', [ 'steal' => true ] );

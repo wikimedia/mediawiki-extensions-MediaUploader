@@ -83,9 +83,6 @@ class CampaignSelectQueryBuilder extends SelectQueryBuilder {
 		}
 	}
 
-	/**
-	 * @param int $selectFlags
-	 */
 	private function prepareForSelect( int $selectFlags ): void {
 		$this->fields( $this->store->getSelectFields( $selectFlags ) );
 		$this->tables( $this->store->getSelectTables( $selectFlags ) );

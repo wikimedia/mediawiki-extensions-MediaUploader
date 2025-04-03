@@ -73,7 +73,6 @@ class CampaignRecord {
 
 	/**
 	 * Whether this campaign is enabled (not necessarily active).
-	 * @return bool
 	 */
 	public function isEnabled(): bool {
 		return $this->enabled;
@@ -82,7 +81,6 @@ class CampaignRecord {
 	/**
 	 * The validity of this campaign definition.
 	 * One of self::CONTENT_* constants
-	 * @return int
 	 */
 	public function getValidity(): int {
 		return $this->validity;

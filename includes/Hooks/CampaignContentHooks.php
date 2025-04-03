@@ -29,9 +29,6 @@ class CampaignContentHooks implements
 		return new static( ExtensionRegistry::getInstance() );
 	}
 
-	/**
-	 * @param ExtensionRegistry $extensionRegistry
-	 */
 	public function __construct( ExtensionRegistry $extensionRegistry ) {
 		$this->extensionRegistry = $extensionRegistry;
 	}

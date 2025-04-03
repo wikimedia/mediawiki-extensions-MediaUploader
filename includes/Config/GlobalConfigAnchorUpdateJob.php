@@ -23,16 +23,11 @@ class GlobalConfigAnchorUpdateJob extends Job implements GenericParameterJob {
 
 	/**
 	 * Returns a JobSpecification for this job.
-	 *
-	 * @return JobSpecification
 	 */
 	public static function newSpec(): JobSpecification {
 		return new JobSpecification( self::NAME, [] );
 	}
 
-	/**
-	 * @param array $params
-	 */
 	public function __construct( array $params ) {
 		parent::__construct( self::NAME, $params );
 	}

@@ -74,8 +74,6 @@ class CampaignParsedConfig extends ParsedConfig {
 
 	/**
 	 * Returns the name of the campaign.
-	 *
-	 * @return string
 	 */
 	public function getName(): string {
 		return $this->campaignPage->getDBkey();
@@ -117,8 +115,6 @@ class CampaignParsedConfig extends ParsedConfig {
 
 	/**
 	 * Parses the config and returns an array to be saved in cache.
-	 *
-	 * @return array
 	 */
 	private function parseConfigForCache(): array {
 		$configParser = $this->configParserFactory->newConfigParser(

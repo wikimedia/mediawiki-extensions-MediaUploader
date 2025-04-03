@@ -23,11 +23,6 @@ class ConfigParserTest extends MediaWikiIntegrationTestCase {
 	private const PAGE_2_TITLE = 'MU_test_page_2';
 	private const PAGE_2_CONTENT = 'content2';
 
-	/**
-	 * @param array $configToParse
-	 *
-	 * @return ConfigParser
-	 */
 	private function getConfigParser( array $configToParse ): ConfigParser {
 		$configParserFactory = MediaUploaderServices::getConfigParserFactory();
 		$requestContext = RequestContext::getMain();

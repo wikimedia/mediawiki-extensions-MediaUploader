@@ -123,8 +123,6 @@ class CampaignContent extends TextContent {
 
 	/**
 	 * Checks user input YAML to make sure that it produces a valid campaign object.
-	 *
-	 * @return Status
 	 */
 	public function getValidationStatus(): Status {
 		$this->initServices();
@@ -160,8 +158,6 @@ class CampaignContent extends TextContent {
 	 *
 	 * The data is guaranteed to come from a syntactically valid YAML, but may
 	 * not validate against the schema. Use isValid() to check if it does.
-	 *
-	 * @return Status
 	 */
 	public function getData(): Status {
 		if ( $this->yamlParse ) {

@@ -68,8 +68,6 @@ class RequestConfig extends ConfigBase {
 	/**
 	 * Returns the unparsed configuration array with all dynamically
 	 * generated defaults applied.
-	 *
-	 * @return array
 	 */
 	public function getConfigArray(): array {
 		if ( $this->config !== null ) {
@@ -84,9 +82,6 @@ class RequestConfig extends ConfigBase {
 		return $this->config;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getConfigHash(): string {
 		return md5( FormatJson::encode( $this->getConfigArray() ) );
 	}
@@ -94,8 +89,6 @@ class RequestConfig extends ConfigBase {
 	/**
 	 * Generates the 'languages' setting's default value.
 	 * TODO: Execute this only if the wizard is configured with multi-language fields.
-	 *
-	 * @return array
 	 */
 	private function getTemplateLanguages(): array {
 		// We need to get a list of languages for the description dropdown.

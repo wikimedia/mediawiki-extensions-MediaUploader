@@ -49,10 +49,6 @@ class CampaignHooks implements
 	/** @var ConfigCacheInvalidator */
 	private $cacheInvalidator;
 
-	/**
-	 * @param CampaignStore $campaignStore
-	 * @param ConfigCacheInvalidator $cacheInvalidator
-	 */
 	public function __construct(
 		CampaignStore $campaignStore,
 		ConfigCacheInvalidator $cacheInvalidator

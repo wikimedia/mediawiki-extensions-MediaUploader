@@ -19,10 +19,6 @@ class Validator {
 	/** @var BagOStuff */
 	private $localServerCache;
 
-	/**
-	 * @param RawConfig $rawConfig
-	 * @param BagOStuff $localServerCache
-	 */
 	public function __construct(
 		RawConfig $rawConfig,
 		BagOStuff $localServerCache
@@ -56,8 +52,6 @@ class Validator {
 
 	/**
 	 * Reads the schema from the YAML file and fills in the required gaps.
-	 *
-	 * @return stdClass
 	 */
 	private function makeSchema(): stdClass {
 		$schema = Yaml::parseFile(

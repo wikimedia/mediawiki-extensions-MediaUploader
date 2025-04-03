@@ -14,9 +14,6 @@ class Hooks implements GetPreferencesHook {
 	/** @var RawConfig */
 	private $config;
 
-	/**
-	 * @param RawConfig $rawConfig
-	 */
 	public function __construct( RawConfig $rawConfig ) {
 		$this->config = $rawConfig;
 	}

@@ -82,11 +82,6 @@ class ConfigFactory {
 		$this->configCacheInvalidator = $cacheInvalidator;
 	}
 
-	/**
-	 * @param Language $language
-	 *
-	 * @return RequestConfig
-	 */
 	private function newRequestConfig( Language $language ): RequestConfig {
 		return new RequestConfig(
 			$this->cache,

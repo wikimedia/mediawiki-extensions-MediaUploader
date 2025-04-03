@@ -13,9 +13,6 @@ class ConfigCacheInvalidator {
 	/** @var WANObjectCache */
 	private $cache;
 
-	/**
-	 * @param WANObjectCache $cache
-	 */
 	public function __construct( WANObjectCache $cache ) {
 		$this->cache = $cache;
 	}
@@ -42,8 +39,6 @@ class ConfigCacheInvalidator {
 	 * Does so by simply writing a new invalidate timestamp to cache.
 	 * Since this invalidate timestamp is checked on every read, the cached entries
 	 * for the config will be regenerated the next time there is a read.
-	 *
-	 * @param string ...$additionalComponents
 	 */
 	public function invalidate( string ...$additionalComponents ): void {
 		$this->cache->touchCheckKey(

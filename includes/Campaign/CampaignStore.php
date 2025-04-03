@@ -131,8 +131,6 @@ class CampaignStore implements IDBAccessObject {
 
 	/**
 	 * Constructs a new CampaignSelectQueryBuilder.
-	 *
-	 * @return CampaignSelectQueryBuilder
 	 */
 	public function newSelectQueryBuilder(): CampaignSelectQueryBuilder {
 		$db = $this->dbProvider->getReplicaDatabase();
@@ -142,8 +140,6 @@ class CampaignStore implements IDBAccessObject {
 
 	/**
 	 * Insert or update an existing row in the database.
-	 *
-	 * @param CampaignRecord $record
 	 */
 	public function upsertCampaign( CampaignRecord $record ): void {
 		$db = $this->dbProvider->getPrimaryDatabase();
@@ -168,8 +164,6 @@ class CampaignStore implements IDBAccessObject {
 
 	/**
 	 * Delete a campaign row in the DB by its page id (PK).
-	 *
-	 * @param int $pageId
 	 */
 	public function deleteCampaignByPageId( int $pageId ): void {
 		$db = $this->dbProvider->getPrimaryDatabase();

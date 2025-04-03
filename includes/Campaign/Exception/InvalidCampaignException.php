@@ -7,9 +7,6 @@ namespace MediaWiki\Extension\MediaUploader\Campaign\Exception;
  */
 abstract class InvalidCampaignException extends BaseCampaignException {
 
-	/**
-	 * @param string $campaignName
-	 */
 	public function __construct( string $campaignName ) {
 		$this->campaignName = $campaignName;
 		$message = $this->msg(

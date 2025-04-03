@@ -7,11 +7,6 @@ namespace MediaWiki\Extension\MediaUploader;
  */
 class MediaUploaderResourceModuleFactory {
 
-	/**
-	 * @param array $options
-	 *
-	 * @return MediaUploaderResourceModule
-	 */
 	public static function factory( array $options ): MediaUploaderResourceModule {
 		return new MediaUploaderResourceModule(
 			$options,

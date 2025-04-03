@@ -60,8 +60,6 @@ class ConfigParser {
 
 	/**
 	 * Returns the parsed config array.
-	 *
-	 * @return array
 	 */
 	public function getParsedConfig(): array {
 		if ( $this->parsedConfig === null ) {
@@ -84,8 +82,6 @@ class ConfigParser {
 
 	/**
 	 * Does the actual parsing work.
-	 *
-	 * @return void
 	 */
 	private function parseConfig(): void {
 		$parsedConfig = [];

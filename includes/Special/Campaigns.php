@@ -78,11 +78,6 @@ class Campaigns extends SpecialPage {
 		}
 	}
 
-	/**
-	 * @param CampaignRecord $record
-	 *
-	 * @return string
-	 */
 	private function getHtmlForCampaign( CampaignRecord $record ): string {
 		$pageRef = $record->getPage();
 		if ( $pageRef === null ) {

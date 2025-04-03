@@ -59,8 +59,6 @@ class RawConfig extends ConfigBase {
 
 	/**
 	 * Returns the default global config, from MediaUploader.config.php.
-	 *
-	 * @return array
 	 */
 	private function getDefaultConfig(): array {
 		$configPath = dirname( __DIR__, 2 ) . '/MediaUploader.config.php';
