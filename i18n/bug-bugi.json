@@ -4,5 +4,12 @@
 			"Rdwnnr"
 		]
 	},
-	"mediauploader": "ᨄᨒᨘᨑᨛ ᨆᨙᨉᨗᨐ"
+	"mediauploader": "ᨄᨒᨘᨑᨛ ᨆᨙᨉᨗᨐ",
+	"mediauploader-step-file": "ᨒᨘᨑᨛ",
+	"mediauploader-transport-started": "ᨆᨆᨘᨒ …",
+	"mediauploader-uploading": "ᨆᨒᨘᨑᨛ …",
+	"mediauploader-stashed-upload": "ᨈᨒᨘᨑᨛ",
+	"mediauploader-remove": "ᨅᨘᨓ",
+	"mediauploader-override": "ᨒᨘᨑᨛᨆᨗ ᨅᨓ",
+	"mediauploader-upload": "ᨒᨘᨑᨛ"
 }
