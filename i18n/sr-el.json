@@ -5,5 +5,8 @@
 	"mediauploader-source-ownwork-assert": "Ja, $2, nosilac autorskog prava {{PLURAL:$4|ovog dela|ovih dela}}, neopozivo dajem pravo svakome da {{PLURAL:$1|ga koristi|ih koristi}} pod sledećom licencom:",
 	"mediauploader-description": "Opis",
 	"mediauploader-next-deeds": "Sledeće",
-	"mediauploader-previous": "Nazad"
+	"mediauploader-previous": "Nazad",
+	"mediauploader-error-too-long": "Ovaj unos je predugačak.\nUnos ne sme biti duži od $1 {{PLURAL:$1|znak|znakova}}.",
+	"mediauploader-error-too-short": "Ovaj unos je prekratak.\nUnos mora biti bar $1 {{PLURAL:$1|znak|znakova}}.",
+	"mediauploader-error-title-too-short": "Naslov je prekratak.\nNaslov mora imati bar $1 {{PLURAL:$1|bajt|bajtova}}."
 }
