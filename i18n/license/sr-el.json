@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"mediauploader-source-ownwork-generic-explain": "({{PLURAL:$1|Ovaj rad je prihvatljiv|Ovi radovi su prihvatljivi}} za otpremanje na ovom vikiju)",
+	"mediauploader-license-cc-zero": "Creative Commons CC0 Odricanje (sva prava predata, kao javno vlasništvo: [$2 tekst licence])",
+	"mediauploader-license-cc-by-4.0": "Creative Commons Autorstvo 4.0 ([$2 tekst licence])",
+	"mediauploader-license-cc-by-3.0": "Creative Commons Autorstvo 3.0 ([$2 tekst licence])",
+	"mediauploader-license-cc-by-2.5": "Creative Commons Autorstvo 2.5 ([$2 tekst licence])",
+	"mediauploader-license-cc-by-2.0": "Creative Commons Autorstvo 2.0 ([$2 tekst licence])",
+	"mediauploader-license-cc-by-sa-4.0": "Creative Commons Autorstvo-Deliti pod istim uslovima 4.0 ([$2 tekst licence])",
+	"mediauploader-license-cc-by-sa-3.0": "Creative Commons Autorstvo-Deliti pod istim uslovima 3.0 ([$2 tekst licence])",
+	"mediauploader-license-cc-by-sa-2.5": "Creative Commons Autorstvo-Deliti pod istim uslovima 2.5 ([$2 tekst licence])",
+	"mediauploader-license-cc-by-sa-2.0": "Creative Commons Autorstvo-Deliti pod istim uslovima 2.0 ([$2 tekst licence])",
+	"mediauploader-license-custom": "Licenca je navedena sledećim vikitekstom:",
+	"mediauploader-license-pd-old": "Autor je umro pre više od 70 godina",
+	"mediauploader-license-pd-ineligible": "Previše jednostavno da podleže autorskim pravima",
+	"mediauploader-license-attribution": "Može se koristiti u bilo koje svrhe, uključujući i komercijalne, ako je pravilno naveden nosilac autorskog prava",
+	"mediauploader-license-gfdl": "GNU-ova licenca za slobodnu dokumentaciju",
+	"mediauploader-license-copyright": "Sva prava zadržana"
+}
