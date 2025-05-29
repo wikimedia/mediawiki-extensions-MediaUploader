@@ -189,14 +189,14 @@ class ConfigParser {
 		$output = $this->parserFactory->create()->parse(
 			$value, $this->pageRef, $this->parserOptions
 		);
-		$parsed = $output->getText( [
+		$processedOutput = $output->runOutputPipeline( $this->parserOptions, [
 			'unwrap' => true,
 			'enableSectionEditLinks' => false,
 		] );
 
-		$this->updateTemplates( $output );
+		$this->updateTemplates( $processedOutput );
 
-		return Parser::stripOuterParagraph( $parsed );
+		return Parser::stripOuterParagraph( $processedOutput->getContentHolderText() );
 	}
 
 	/**
