@@ -190,6 +190,7 @@ class ConfigParser {
 			$value, $this->pageRef, $this->parserOptions
 		);
 		$parsed = $output->getText( [
+			'unwrap' => true,
 			'enableSectionEditLinks' => false,
 		] );
 
