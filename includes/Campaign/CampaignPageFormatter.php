@@ -2,15 +2,15 @@
 
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
-use Html;
 use ImageGalleryBase;
 use MediaWiki\Extension\MediaUploader\Config\CampaignParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
+use MediaWiki\Html\Html;
+use MediaWiki\Title\Title;
 use MWException;
 use ParserOutput;
 use RequestContext;
 use Skin;
-use Title;
 
 /**
  * Helper class to produce formatted HTML output for campaigns

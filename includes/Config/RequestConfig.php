@@ -8,7 +8,7 @@ use Language;
 use LanguageCode;
 use MediaWiki\Cache\LinkBatchFactory;
 use MediaWiki\Languages\LanguageNameUtils;
-use Title;
+use MediaWiki\Title\Title;
 use WANObjectCache;
 
 /**

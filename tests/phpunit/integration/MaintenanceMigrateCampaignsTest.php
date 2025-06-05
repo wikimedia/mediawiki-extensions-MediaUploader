@@ -6,7 +6,7 @@ use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Maintenance\MigrateCampaigns;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\Tests\Maintenance\MaintenanceBaseTestCase;
-use Title;
+use MediaWiki\Title\Title;
 
 /**
  * @group medium

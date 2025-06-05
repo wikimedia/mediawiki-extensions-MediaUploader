@@ -3,12 +3,12 @@
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Config;
 
 use MediaWiki\Extension\MediaUploader\Config\ConfigParser;
+use MediaWiki\Title\Title;
 use MediaWikiUnitTestCase;
 use Parser;
 use ParserFactory;
 use ParserOptions;
 use ParserOutput;
-use Title;
 
 /**
  * @group Upload

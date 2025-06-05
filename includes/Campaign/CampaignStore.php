@@ -4,8 +4,8 @@ namespace MediaWiki\Extension\MediaUploader\Campaign;
 
 use FormatJson;
 use IDBAccessObject;
+use MediaWiki\Title\Title;
 use stdClass;
-use Title;
 use Wikimedia\Rdbms\IConnectionProvider;
 
 /**

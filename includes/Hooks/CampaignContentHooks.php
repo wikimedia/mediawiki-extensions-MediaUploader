@@ -3,12 +3,12 @@
 
 namespace MediaWiki\Extension\MediaUploader\Hooks;
 
-use EditPage;
 use ExtensionRegistry;
 use MediaWiki\Content\Hook\ContentModelCanBeUsedOnHook;
+use MediaWiki\EditPage\EditPage;
 use MediaWiki\Hook\EditPage__showEditForm_initialHook;
+use MediaWiki\Title\Title;
 use OutputPage;
-use Title;
 
 /**
  * Hooks related directly to the campaign content model.

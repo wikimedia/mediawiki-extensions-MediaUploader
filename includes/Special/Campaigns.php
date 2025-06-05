@@ -2,15 +2,15 @@
 
 namespace MediaWiki\Extension\MediaUploader\Special;
 
-use Html;
 use LogicException;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
+use MediaWiki\Html\Html;
+use MediaWiki\Title\Title;
 use ParserOptions;
 use SpecialPage;
-use Title;
 
 class Campaigns extends SpecialPage {
 
