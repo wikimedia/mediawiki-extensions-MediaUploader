@@ -2,12 +2,12 @@
 
 namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Hooks;
 
-use EditPage;
 use ExtensionRegistry;
+use MediaWiki\EditPage\EditPage;
 use MediaWiki\Extension\MediaUploader\Hooks\CampaignContentHooks;
+use MediaWiki\Title\Title;
 use MediaWikiUnitTestCase;
 use OutputPage;
-use Title;
 
 /**
  * @group Upload

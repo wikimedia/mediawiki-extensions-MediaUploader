@@ -9,8 +9,8 @@ use MediaWiki\Extension\MediaUploader\Config\RawConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use MediaWikiIntegrationTestCase;
-use Title;
 use User;
 use WikitextContent;
 

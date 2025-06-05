@@ -3,16 +3,16 @@
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
 use Content;
-use Html;
 use MediaWiki\Content\Renderer\ContentParseParams;
 use MediaWiki\Content\Transform\PreSaveTransformParams;
 use MediaWiki\Extension\MediaUploader\Campaign\Exception\BaseCampaignException;
 use MediaWiki\Extension\MediaUploader\Config\ConfigFactory;
 use MediaWiki\Extension\MediaUploader\Config\ParsedConfig;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
+use MediaWiki\Html\Html;
+use MediaWiki\Title\Title;
 use ParserOutput;
 use TextContentHandler;
-use Title;
 
 /**
  * Content handler for campaign pages.

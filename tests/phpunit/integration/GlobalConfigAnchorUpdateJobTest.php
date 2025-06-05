@@ -6,9 +6,9 @@ use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\Config\GlobalConfigAnchorUpdateJob;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Storage\EditResult;
+use MediaWiki\Title\Title;
 use MediaWiki\User\UserIdentity;
 use MediaWikiIntegrationTestCase;
-use Title;
 use WikiPage;
 
 /**

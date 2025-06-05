@@ -3,7 +3,7 @@
 namespace MediaWiki\Extension\MediaUploader\Campaign;
 
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
-use Title;
+use MediaWiki\Title\Title;
 use WANObjectCache;
 use Wikimedia\Rdbms\Database;
 use Wikimedia\Rdbms\IConnectionProvider;

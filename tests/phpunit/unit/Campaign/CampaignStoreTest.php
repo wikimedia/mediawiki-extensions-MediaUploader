@@ -4,9 +4,9 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Campaign;
 
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
+use MediaWiki\Title\Title;
 use MediaWikiUnitTestCase;
 use stdClass;
-use Title;
 use Wikimedia\Rdbms\IConnectionProvider;
 
 /**

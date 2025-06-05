@@ -3,11 +3,11 @@
 namespace MediaWiki\Extension\MediaUploader\Config;
 
 use MediaWiki\Page\PageReference;
+use MediaWiki\Title\Title;
 use Parser;
 use ParserFactory;
 use ParserOptions;
 use ParserOutput;
-use Title;
 
 /**
  * Class responsible for parsing wikitext in MediaUploader's config.
