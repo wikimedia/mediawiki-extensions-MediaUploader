@@ -18,8 +18,8 @@
 ( function ( uw ) {
 	QUnit.module( 'uw.controller.Tutorial', QUnit.newMwEnvironment() );
 
-	QUnit.test( 'Constructor sanity test', function ( assert ) {
-		var step = new uw.controller.Tutorial( new mw.Api() );
+	QUnit.test( 'Constructor sanity test', ( assert ) => {
+		const step = new uw.controller.Tutorial( new mw.Api() );
 		assert.true( !!step );
 		assert.true( step instanceof uw.controller.Step );
 		assert.true( !!step.ui );
@@ -27,7 +27,7 @@
 	} );
 
 	QUnit.test( 'setSkipPreference', function ( assert ) {
-		var mnStub,
+		let mnStub,
 			api = new mw.Api(),
 			step = new uw.controller.Tutorial( api ),
 			acwStub = { release: this.sandbox.stub() },

@@ -43,7 +43,7 @@
 	 * @return {jQuery.Promise}
 	 */
 	uw.ValidationMessageElement.prototype.checkValidity = function ( thorough ) {
-		var element = this;
+		const element = this;
 		thorough = thorough || false;
 
 		if ( !this.validatedWidget.getWarnings || !this.validatedWidget.getErrors ) {
@@ -57,13 +57,13 @@
 		return $.when(
 			this.validatedWidget.getWarnings( thorough ),
 			this.validatedWidget.getErrors( thorough )
-		).then( function ( warnings, errors ) {
+		).then( ( warnings, errors ) => {
 			// this.notices and this.errors are arrays of mw.Messages and not strings in this subclass
 			element.setNotices( warnings );
 			element.setErrors( errors );
 
 			return $.Deferred().resolve( warnings, errors ).promise();
-		} ).always( function () {
+		} ).always( () => {
 			if ( element.validatedWidget.popPending ) {
 				element.validatedWidget.popPending();
 			}
@@ -77,7 +77,7 @@
 	 * @return {jQuery}
 	 */
 	uw.ValidationMessageElement.prototype.makeMessage = function ( kind, error ) {
-		var code, $content, $listItem;
+		let code, $content, $listItem;
 		if ( error.parseDom ) {
 			// mw.Message object
 			code = error.key;

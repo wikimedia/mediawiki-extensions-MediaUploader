@@ -9,7 +9,7 @@
 	 * @param {mw.UploadWizardUpload[]} uploads Uploads that this applies to (this is just to make deleting and plurals work)
 	 */
 	mw.UploadWizardDeedChooser = function ( config, selector, deeds, uploads ) {
-		var chooser = this;
+		const chooser = this;
 		this.$selector = $( selector );
 		this.uploads = uploads;
 		this.deeds = deeds;
@@ -20,8 +20,8 @@
 
 		this.onLayoutReady = function () {};
 
-		Object.keys( this.deeds ).forEach( function ( name ) {
-			var deed = chooser.deeds[ name ],
+		Object.keys( this.deeds ).forEach( ( name ) => {
+			const deed = chooser.deeds[ name ],
 				radio = new OO.ui.RadioSelectWidget( {
 					items: [ new OO.ui.RadioOptionWidget( {
 						// eslint-disable-next-line mediawiki/msg-doc
@@ -53,7 +53,7 @@
 				if ( config.licensing.defaultType.toLowerCase() === deed.name ) {
 					chooser.onLayoutReady = chooser.selectDeed.bind( chooser, deed );
 				}
-				radio.on( 'choose', function () {
+				radio.on( 'choose', () => {
 					chooser.selectDeed( deed );
 				} );
 			}
@@ -84,7 +84,7 @@
 		uploads: [],
 
 		selectDeed: function ( deed ) {
-			var $deedInterface = this.$selector.find( '.mediauploader-deed.mediauploader-deed-' + deed.name );
+			const $deedInterface = this.$selector.find( '.mediauploader-deed.mediauploader-deed-' + deed.name );
 
 			this.choose( deed );
 			this.selectDeedInterface( $deedInterface );
@@ -92,11 +92,11 @@
 		},
 
 		choose: function ( deed ) {
-			var chooser = this;
+			const chooser = this;
 
 			this.deed = deed;
 
-			this.uploads.forEach( function ( upload ) {
+			this.uploads.forEach( ( upload ) => {
 				upload.deedChooser = chooser;
 			} );
 
@@ -112,7 +112,7 @@
 		deselectDeedInterface: function ( $deedSelector ) {
 			$deedSelector.removeClass( 'selected' );
 			$deedSelector.find( '.mediauploader-deed-form' ).each( function () {
-				var $form = $( this );
+				const $form = $( this );
 				// Prevent validation of deselected deeds by disabling all form inputs
 				// TODO: Use a tag selector
 				// eslint-disable-next-line no-jquery/no-sizzle
@@ -134,13 +134,13 @@
 		 * @param {jQuery} $deedSelector
 		 */
 		selectDeedInterface: function ( $deedSelector ) {
-			var $otherDeeds = $deedSelector.siblings().filter( '.mediauploader-deed' );
+			const $otherDeeds = $deedSelector.siblings().filter( '.mediauploader-deed' );
 			this.deselectDeedInterface( $otherDeeds );
 			// FIXME: Use CSS transition
 			// eslint-disable-next-line no-jquery/no-fade
 			$deedSelector.addClass( 'selected' ).fadeTo( 'fast', 1.0 );
 			$deedSelector.find( '.mediauploader-deed-form' ).each( function () {
-				var $form = $( this );
+				const $form = $( this );
 				// (Re-)enable all form inputs
 				// TODO: Use a tag selector
 				// eslint-disable-next-line no-jquery/no-sizzle
@@ -173,7 +173,7 @@
 		 * @param {Object} serialized
 		 */
 		setSerialized: function ( serialized ) {
-			var deed;
+			let deed;
 
 			if ( serialized.name && serialized.name in this.deeds ) {
 				deed = this.deeds[ serialized.name ];

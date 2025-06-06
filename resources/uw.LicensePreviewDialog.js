@@ -7,7 +7,7 @@
 	uw.LicensePreviewDialog.static.name = 'licensePreviewDialog';
 
 	uw.LicensePreviewDialog.prototype.initialize = function () {
-		var dialog = this;
+		const dialog = this;
 
 		uw.LicensePreviewDialog.parent.prototype.initialize.call( this );
 
@@ -16,7 +16,7 @@
 		this.$spinner = $.createSpinner( { size: 'large', type: 'block' } )
 			.css( { width: 200, padding: 20, float: 'none', margin: '0 auto' } );
 
-		$( document.body ).on( 'click', function ( e ) {
+		$( document.body ).on( 'click', ( e ) => {
 			if ( !$.contains( dialog.$body.get( 0 ), e.target ) ) {
 				dialog.close();
 			}
@@ -24,12 +24,12 @@
 	};
 
 	uw.LicensePreviewDialog.prototype.addCloseButton = function () {
-		var dialog = this,
+		const dialog = this,
 			closeButton = new OO.ui.ButtonWidget( {
 				label: OO.ui.msg( 'ooui-dialog-process-dismiss' )
 			} );
 
-		closeButton.on( 'click', function () {
+		closeButton.on( 'click', () => {
 			dialog.close();
 		} );
 

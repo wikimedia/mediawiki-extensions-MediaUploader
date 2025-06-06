@@ -13,8 +13,8 @@ QUnit.module( 'ext.uploadWizardLicenseInput', QUnit.newMwEnvironment( {
 	}
 } ) );
 
-QUnit.test( 'Smoke test', function ( assert ) {
-	var config = { type: 'radio', licenses: [] },
+QUnit.test( 'Smoke test', ( assert ) => {
+	let config = { type: 'radio', licenses: [] },
 		$fixture = $( '<div>' ),
 		uwLicenseInput;
 
@@ -23,8 +23,8 @@ QUnit.test( 'Smoke test', function ( assert ) {
 	assert.true( !!uwLicenseInput, 'LicenseInput object created !' );
 } );
 
-QUnit.test( 'createInputs()', function ( assert ) {
-	var config = { type: 'radio', licenses: [ 'cc-by-sa-3.0' ] },
+QUnit.test( 'createInputs()', ( assert ) => {
+	let config = { type: 'radio', licenses: [ 'cc-by-sa-3.0' ] },
 		$fixture = $( '<div>' ),
 		uwLicenseInput,
 		$input,
@@ -42,8 +42,8 @@ QUnit.test( 'createInputs()', function ( assert ) {
 	assert.strictEqual( $label.length, 1, 'Label created.' );
 } );
 
-QUnit.test( 'createGroupedInputs()', function ( assert ) {
-	var config = {
+QUnit.test( 'createGroupedInputs()', ( assert ) => {
+	let config = {
 			type: 'checkbox',
 			licenseGroups: [
 				{

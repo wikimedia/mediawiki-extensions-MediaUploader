@@ -51,7 +51,7 @@
 	 * @constructor
 	 */
 	uw.ui.Tutorial = function UWUITutorial() {
-		var ui = this;
+		const ui = this;
 
 		uw.ui.Step.call(
 			this,
@@ -78,7 +78,7 @@
 			label: mw.message( 'mediauploader-skip-tutorial-future' ).text()
 		} );
 
-		this.skipCheckbox.on( 'change', function () {
+		this.skipCheckbox.on( 'change', () => {
 			ui.emit( 'skip-tutorial-click', ui.skipCheckbox.isSelected() );
 		} );
 
@@ -112,17 +112,17 @@
 	};
 
 	uw.ui.Tutorial.prototype.addNextButton = function () {
-		var ui = this;
+		const ui = this;
 
 		this.nextButton = new OO.ui.ButtonWidget( {
 			classes: [ 'mediauploader-button-next' ],
 			label: mw.message( 'mediauploader-next' ).text(),
 			flags: [ 'progressive', 'primary' ]
-		} ).on( 'click', function () {
+		} ).on( 'click', () => {
 			ui.emit( 'next-step' );
 		} );
 
-		this.nextButtonPromise.done( function () {
+		this.nextButtonPromise.done( () => {
 			ui.$buttons.append(
 				new OO.ui.HorizontalLayout( {
 					items: [ ui.skipCheckbox, ui.skipCheckboxLabel, ui.nextButton ]

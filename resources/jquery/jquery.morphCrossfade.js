@@ -47,7 +47,7 @@
 	 * @chainable
 	 */
 	$.fn.morphCrossfader = function () {
-		var $this = $( this );
+		const $this = $( this );
 		// the elements that are immediate children are the crossfadables
 		// they must all be "on top" of each other, so position them relative
 		$this.css( {
@@ -64,7 +64,7 @@
 		// should achieve the same result as crossfade( this.children().first() ) but without
 		// animation etc.
 		$this.each( function () {
-			var $container = $( this );
+			const $container = $( this );
 			$container.morphCrossfade( $container.children().first(), 0 );
 		} );
 
@@ -80,14 +80,14 @@
 	 * @chainable
 	 */
 	$.fn.morphCrossfade = function ( newPanelSelector, speed ) {
-		var $this = $( this );
+		const $this = $( this );
 
 		if ( typeof speed === 'undefined' ) {
 			speed = 400;
 		}
 
 		$this.each( function () {
-			var $container = $( this ),
+			const $container = $( this ),
 				$oldPanel = $( $container.data( 'crossfadeDisplay' ) ),
 				$newPanel = ( typeof newPanelSelector === 'string' ) ?
 					$container.find( newPanelSelector ) : $( newPanelSelector );
@@ -102,7 +102,7 @@
 					$oldPanel.css( { position: 'absolute' } );
 					// fade WITHOUT hiding when opacity = 0
 					// eslint-disable-next-line no-jquery/no-animate
-					$oldPanel.stop().animate( { opacity: 0 }, speed, 'linear', function () {
+					$oldPanel.stop().animate( { opacity: 0 }, speed, 'linear', () => {
 						$oldPanel.css( { visibility: 'hidden' } );
 					} );
 				}
@@ -110,7 +110,7 @@
 
 				$newPanel.css( { visibility: 'visible' } );
 				// eslint-disable-next-line no-jquery/no-animate
-				$container.stop().animate( { height: $newPanel.outerHeight() }, speed, 'linear', function () {
+				$container.stop().animate( { height: $newPanel.outerHeight() }, speed, 'linear', () => {
 					// we place it back into the flow, in case its size changes.
 					$newPanel.css( { position: 'relative' } );
 					// and allow the container to grow with it.

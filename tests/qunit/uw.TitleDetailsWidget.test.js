@@ -1,7 +1,7 @@
 ( function ( uw ) {
 	'use strict';
 
-	var fileNs, makeTitleInFileNSCases;
+	let fileNs, makeTitleInFileNSCases;
 	fileNs = mw.config.get( 'wgFormattedNamespaces' )[ 6 ];
 	makeTitleInFileNSCases = [ {
 		filename: 'foo.png',
@@ -35,11 +35,11 @@
 
 	QUnit.module( 'uw.TitleDetailsWidget', QUnit.newMwEnvironment() );
 
-	QUnit.test( '.static.makeTitleInFileNS()', function ( assert ) {
-		var makeTitleInFileNS = uw.TitleDetailsWidget.static.makeTitleInFileNS;
+	QUnit.test( '.static.makeTitleInFileNS()', ( assert ) => {
+		const makeTitleInFileNS = uw.TitleDetailsWidget.static.makeTitleInFileNS;
 
-		makeTitleInFileNSCases.forEach( function ( test ) {
-			var title = makeTitleInFileNS( test.filename );
+		makeTitleInFileNSCases.forEach( ( test ) => {
+			const title = makeTitleInFileNS( test.filename );
 			assert.strictEqual(
 				title ? title.getPrefixedText() : title,
 				test.prefixedText,

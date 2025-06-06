@@ -7,7 +7,7 @@
 	 * @param {mw.UploadWizardUpload} upload
 	 */
 	mw.UploadWizardUploadInterface = function MWUploadWizardUploadInterface( upload ) {
-		var ui = this;
+		const ui = this;
 
 		OO.EventEmitter.call( this );
 
@@ -47,7 +47,7 @@
 			flags: 'destructive',
 			icon: 'trash',
 			framed: false
-		} ).on( 'click', function () {
+		} ).on( 'click', () => {
 			ui.emit( 'upload-removed' );
 		} );
 
@@ -63,7 +63,7 @@
 		// this.progressBar = ( no progress bar for individual uploads yet )
 		// we bind to the ui div since .off() doesn't work for non-DOM objects
 		// TODO Convert this to an OO.EventEmitter, and use OOjs events
-		this.$div.on( 'transportProgressEvent', function () {
+		this.$div.on( 'transportProgressEvent', () => {
 			ui.showTransportProgress();
 		} );
 	};
@@ -96,7 +96,7 @@
 	 */
 	mw.UploadWizardUploadInterface.prototype.setStatus = function ( msgKey, args ) {
 		// get the status line for our upload
-		var $status = this.$div.find( '.mediauploader-file-status' );
+		const $status = this.$div.find( '.mediauploader-file-status' );
 		// eslint-disable-next-line mediawiki/msg-doc
 		$status.msg( msgKey, args || [] ).show();
 	};
@@ -176,7 +176,7 @@
 	 * @param {File} file
 	 */
 	mw.UploadWizardUploadInterface.prototype.fileChangedOk = function ( imageinfo, file ) {
-		var statusItems = [];
+		const statusItems = [];
 
 		this.updateFilename();
 
@@ -200,10 +200,10 @@
 	 *     fails
 	 */
 	mw.UploadWizardUploadInterface.prototype.showThumbnail = function () {
-		var $preview = this.$div.find( '.mediauploader-file-preview' ),
+		const $preview = this.$div.find( '.mediauploader-file-preview' ),
 			deferred = $.Deferred();
 		// This must match the CSS dimensions of .mediauploader-file-preview
-		this.upload.getThumbnail( 120, 120 ).done( function ( thumb ) {
+		this.upload.getThumbnail( 120, 120 ).done( ( thumb ) => {
 			mw.UploadWizard.placeThumbnail( $preview, thumb );
 			deferred.resolve();
 		} );
@@ -219,7 +219,7 @@
 	 *       TODO silently fix to have unique filename? unnecessary at this point...
 	 */
 	mw.UploadWizardUploadInterface.prototype.updateFilename = function () {
-		var path = this.upload.getFilename();
+		const path = this.upload.getFilename();
 
 		// visible filename
 		this.$form.find( '.mediauploader-visible-file-filename-text' )

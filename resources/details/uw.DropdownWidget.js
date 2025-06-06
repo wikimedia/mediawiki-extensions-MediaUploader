@@ -17,9 +17,7 @@
 		this.wikitext = config.wikitext;
 		this.input = new OO.ui.DropdownInputWidget( {
 			classes: [ 'mwe-idfield', 'mediauploader-dropdownWidget-input' ],
-			options: Object.keys( config.options ).map( function ( key ) {
-				return { data: key, label: config.options[ key ] };
-			} )
+			options: Object.keys( config.options ).map( ( key ) => ( { data: key, label: config.options[ key ] } ) )
 		} );
 
 		// Aggregate 'change' event
@@ -37,7 +35,7 @@
 	 * @inheritdoc
 	 */
 	uw.DropdownWidget.prototype.getErrors = function () {
-		var errors = [];
+		const errors = [];
 		if ( this.required && this.input.getValue().trim() === '' ) {
 			errors.push( mw.message( 'mediauploader-error-blank' ) );
 		}
@@ -48,7 +46,7 @@
 	 * @inheritdoc
 	 */
 	uw.DropdownWidget.prototype.getWarnings = function () {
-		var warnings = [];
+		const warnings = [];
 		this.getEmptyWarning( this.input.getValue().trim() === '', warnings );
 
 		return $.Deferred().resolve( warnings ).promise();

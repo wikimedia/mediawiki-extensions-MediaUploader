@@ -56,30 +56,30 @@
 		 * loop around the uploads, summing certain properties for a weighted total fraction
 		 */
 		start: function () {
-			var bar = this,
+			let bar = this,
 				shown = false;
 
 			this.setBeginTime();
 
 			function displayer() {
-				var totalWeight = 0.0,
+				let totalWeight = 0.0,
 					fraction = 0.0,
 					successStateCount = 0,
 					errorStateCount = 0,
 					hasData = false;
 
-				bar.uploads.forEach( function ( upload ) {
+				bar.uploads.forEach( ( upload ) => {
 					totalWeight += upload[ bar.weightProperty ];
 				} );
 
-				bar.uploads.forEach( function ( upload ) {
+				bar.uploads.forEach( ( upload ) => {
 					if ( upload.state === 'aborted' ) {
 						return;
 					}
-					if ( bar.successStates.indexOf( upload.state ) !== -1 ) {
+					if ( bar.successStates.includes( upload.state ) ) {
 						successStateCount++;
 					}
-					if ( bar.errorStates.indexOf( upload.state ) !== -1 ) {
+					if ( bar.errorStates.includes( upload.state ) ) {
 						errorStateCount++;
 					}
 					if ( upload[ bar.progressProperty ] !== undefined ) {
@@ -106,7 +106,7 @@
 				} else {
 					bar.showProgress( 1.0 );
 					bar.finished = true;
-					setTimeout( function () {
+					setTimeout( () => {
 						bar.hideBar();
 					}, 500 );
 				}
@@ -142,7 +142,7 @@
 		 * @param {number} fraction The amount of whatever it is that's done whatever it's done
 		 */
 		showProgress: function ( fraction ) {
-			var t, timeString,
+			let t, timeString,
 				remainingTime = this.getRemainingTime( fraction );
 
 			this.progressBarWidget.setProgress( parseInt( fraction * 100, 10 ) );
@@ -168,7 +168,7 @@
 		 * @return {number} Estimated time remaining (in milliseconds)
 		 */
 		getRemainingTime: function ( fraction ) {
-			var elapsedTime, rate;
+			let elapsedTime, rate;
 			if ( this.beginTime ) {
 				elapsedTime = Date.now() - this.beginTime;
 				if ( fraction > 0.0 && elapsedTime > 0 ) { // or some other minimums for good data
@@ -185,7 +185,7 @@
 		 * @param {number} completed The number of items that have done whatever has been done e.g. in "uploaded 2 of 5", this is the 2
 		 */
 		showCount: function ( completed ) {
-			var total = this.uploads.length - this.countRemoved();
+			const total = this.uploads.length - this.countRemoved();
 			this.$selector
 				.find( '.mediauploader-count' )
 				// Hide if there are no uploads, show otherwise
@@ -194,8 +194,8 @@
 		},
 
 		countRemoved: function () {
-			var count = 0;
-			this.uploads.forEach( function ( upload ) {
+			let count = 0;
+			this.uploads.forEach( ( upload ) => {
 				if ( !upload || upload.state === 'aborted' ) {
 					count += 1;
 				}

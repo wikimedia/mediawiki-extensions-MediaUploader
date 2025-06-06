@@ -31,10 +31,10 @@
 			disabled: this.config.disabled
 		} )
 			.selectItemByData( 'calendar' )
-			.on( 'choose', function ( selectedItem ) {
+			.on( 'choose', ( selectedItem ) => {
 				this.setupDateInput( selectedItem.getData() );
 				this.dateInputWidget.focus();
-			}.bind( this ) );
+			} );
 
 		this.$element.addClass( 'mediauploader-dateDetailsWidget' );
 		this.$element.append(
@@ -52,7 +52,7 @@
 	 * @private
 	 */
 	uw.DateDetailsWidget.prototype.setupDateInput = function ( mode ) {
-		var
+		const
 			oldDateInputWidget = this.dateInputWidget;
 
 		if ( mode === undefined ) {
@@ -75,13 +75,13 @@
 			} );
 			// If the user types '{{', assume that they are trying to input template wikitext and switch
 			// to 'arbitrary' mode. This might help confused power-users (T110026#1567714).
-			this.dateInputWidget.textInput.on( 'change', function ( value ) {
+			this.dateInputWidget.textInput.on( 'change', ( value ) => {
 				if ( value === '{{' ) {
 					this.setupDateInput( 'arbitrary' );
 					this.dateInputWidget.setValue( '{{' );
 					this.dateInputWidget.moveCursorToEnd();
 				}
-			}.bind( this ) );
+			} );
 		}
 
 		if ( oldDateInputWidget ) {
@@ -121,7 +121,7 @@
 	 * @inheritdoc
 	 */
 	uw.DateDetailsWidget.prototype.getWarnings = function () {
-		var warnings = [],
+		const warnings = [],
 			dateVal = Date.parse( this.dateInputWidget.getValue().trim() ),
 			now = new Date();
 
@@ -143,7 +143,7 @@
 	 * @inheritdoc
 	 */
 	uw.DateDetailsWidget.prototype.getErrors = function () {
-		var errors = [];
+		const errors = [];
 
 		if ( this.config.required && this.dateInputWidget.getValue().trim() === '' ) {
 			errors.push( mw.message( 'mediauploader-error-blank' ) );

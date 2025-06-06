@@ -7,7 +7,7 @@
 ( function ( uw ) {
 
 	mw.UploadWizard = function ( config ) {
-		var maxSimPref;
+		let maxSimPref;
 
 		this.api = this.getApi( { ajax: { timeout: 0 } } );
 
@@ -49,7 +49,7 @@
 		createInterface: function ( selector ) {
 			this.ui = new uw.ui.Wizard( selector );
 
-			this.initialiseSteps().then( function ( steps ) {
+			this.initialiseSteps().then( ( steps ) => {
 				// "select" the first step - highlight, make it visible, hide all others
 				steps[ 0 ].load( [] );
 			} );
@@ -61,7 +61,7 @@
 		 * @return {jQuery.Promise}
 		 */
 		initialiseSteps: function () {
-			var self = this,
+			let self = this,
 				steps = [],
 				i,
 				uploadStep;
@@ -98,7 +98,7 @@
 			steps[ steps.length - 1 ].setNextStep( uploadStep );
 
 			return $.Deferred().resolve( steps ).promise()
-				.always( function ( stepsInner ) {
+				.always( ( stepsInner ) => {
 					self.steps = stepsInner;
 					self.ui.initialiseSteps( stepsInner );
 				} );
@@ -119,10 +119,10 @@
 		 * @return {mw.Api}
 		 */
 		getApi: function ( options ) {
-			var api = new mw.Api( options );
+			const api = new mw.Api( options );
 
 			api.ajax = function ( parameters, ajaxOptions ) {
-				var original, override;
+				let original, override;
 
 				Object.assign( parameters, {
 					errorformat: 'html',
@@ -137,8 +137,8 @@
 				// output is always, reliably, in the same format
 				override = original.then(
 					null, // done handler - doesn't need overriding
-					function ( code, result ) { // fail handler
-						var response = { errors: [ {
+					( code, result ) => { // fail handler
+						let response = { errors: [ {
 							code: code,
 							html: result.textStatus || mw.message( 'api-clientside-error-invalidresponse' ).parse()
 						} ] };
@@ -183,10 +183,10 @@
 	 * @return {mw.deed.Abstract[]}
 	 */
 	mw.UploadWizard.getLicensingDeeds = function ( uploads, config ) {
-		var deed, api,
+		let deed, api,
 			deeds = {},
-			doOwnWork = config.licensing.showTypes.indexOf( 'ownWork' ) > -1,
-			doThirdParty = config.licensing.showTypes.indexOf( 'thirdParty' ) > -1;
+			doOwnWork = config.licensing.showTypes.includes( 'ownWork' ),
+			doThirdParty = config.licensing.showTypes.includes( 'thirdParty' );
 
 		if ( !config.licensing.enabled ) {
 			return {

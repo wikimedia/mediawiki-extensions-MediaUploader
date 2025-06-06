@@ -5,5 +5,9 @@
 	],
 	"globals": {
 		"sinon": false
+	},
+	"rules": {
+		"no-jquery/no-done-fail": "warn",
+		"prefer-const": "warn"
 	}
 }

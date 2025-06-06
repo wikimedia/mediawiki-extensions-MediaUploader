@@ -40,7 +40,7 @@
 	OO.inheritClass( uw.controller.Deed, uw.controller.Step );
 
 	uw.controller.Deed.prototype.moveNext = function () {
-		var
+		let
 			deedController = this,
 			valid, fields, validityPromises;
 
@@ -52,10 +52,10 @@
 		valid = this.deedChooser.valid();
 		if ( valid ) {
 			fields = this.deedChooser.deed.getFields();
-			validityPromises = fields.map( function ( fieldLayout ) {
+			validityPromises = fields.map( ( fieldLayout ) =>
 				// Update any error/warning messages
-				return fieldLayout.checkValidity( true );
-			} );
+				 fieldLayout.checkValidity( true )
+			 );
 			if ( validityPromises.length === 1 ) {
 				// validityPromises will hold all promises for all uploads;
 				// adding a bogus promise (no warnings & errors) to
@@ -73,7 +73,7 @@
 
 				// TODO Handle warnings with a confirmation dialog
 
-				var i;
+				let i;
 				for ( i = 0; i < arguments.length; i++ ) {
 					if ( arguments[ i ][ 1 ].length ) {
 						// One of the fields has errors; refuse to proceed!
@@ -87,10 +87,10 @@
 	};
 
 	uw.controller.Deed.prototype.unload = function () {
-		var deedController = this;
+		const deedController = this;
 		uw.controller.Step.prototype.unload.call( this );
 
-		Object.keys( this.deeds ).forEach( function ( name ) {
+		Object.keys( this.deeds ).forEach( ( name ) => {
 			deedController.deeds[ name ].unload();
 		} );
 	};
@@ -101,7 +101,7 @@
 	 * @param {mw.UploadWizardUpload[]} uploads
 	 */
 	uw.controller.Deed.prototype.load = function ( uploads ) {
-		var customDeed, previousDeed;
+		let customDeed, previousDeed;
 
 		uw.controller.Step.prototype.load.call( this, uploads );
 
@@ -130,7 +130,7 @@
 			.insertBefore( this.deedChooser.$selector.find( '.mediauploader-deed-ownwork' ) )
 			.msg( 'mediauploader-deeds-macro-prompt', this.uploads.length, mw.user );
 
-		uploads.forEach( function ( upload ) {
+		uploads.forEach( ( upload ) => {
 			// Add previews and details to the DOM
 			upload.deedPreview = new uw.ui.DeedPreview( upload );
 		} );

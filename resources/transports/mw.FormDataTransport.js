@@ -48,7 +48,7 @@
 	 * @return {jQuery.Promise}
 	 */
 	mw.FormDataTransport.prototype.post = function ( params ) {
-		var deferred = $.Deferred();
+		const deferred = $.Deferred();
 
 		this.request = this.api.post( params, {
 			/*
@@ -66,9 +66,9 @@
 			 * out how much of the upload has already gone out, so let's add it!
 			 */
 			xhr: function () {
-				var xhr = $.ajaxSettings.xhr();
-				xhr.upload.addEventListener( 'progress', function ( evt ) {
-					var fraction = null;
+				const xhr = $.ajaxSettings.xhr();
+				xhr.upload.addEventListener( 'progress', ( evt ) => {
+					let fraction = null;
 					if ( evt.lengthComputable ) {
 						fraction = parseFloat( evt.loaded / evt.total );
 					}
@@ -92,7 +92,7 @@
 	 * @return {Object}
 	 */
 	mw.FormDataTransport.prototype.createParams = function ( filename, offset ) {
-		var params = OO.cloneObject( this.formData );
+		const params = OO.cloneObject( this.formData );
 
 		Object.assign( params, {
 			filename: filename,
@@ -118,7 +118,7 @@
 	 * @return {jQuery.Promise}
 	 */
 	mw.FormDataTransport.prototype.upload = function ( file, tempFileName ) {
-		var params, ext;
+		let params, ext;
 
 		this.tempname = tempFileName;
 		// Limit length to 240 bytes (limit hardcoded in UploadBase.php).
@@ -150,7 +150,7 @@
 	 *   promise from #upload
 	 */
 	mw.FormDataTransport.prototype.chunkedUpload = function ( file ) {
-		var
+		let
 			offset,
 			prevPromise = $.Deferred().resolve(),
 			deferred = $.Deferred(),
@@ -162,15 +162,15 @@
 			// Capture offset in a closure
 			// eslint-disable-next-line no-loop-func
 			( function ( offset2 ) {
-				var
+				const
 					newPromise = $.Deferred(),
 					isLastChunk = offset2 + chunkSize >= fileSize,
 					thisChunkSize = isLastChunk ? ( fileSize % chunkSize ) : chunkSize;
-				prevPromise.done( function () {
+				prevPromise.done( () => {
 					transport.uploadChunk( file, offset2 )
 						.done( isLastChunk ? deferred.resolve : newPromise.resolve )
 						.fail( deferred.reject )
-						.progress( function ( fraction ) {
+						.progress( ( fraction ) => {
 							// The progress notifications give us per-chunk progress.
 							// Calculate progress for the whole file.
 							deferred.notify( ( offset2 + fraction * thisChunkSize ) / fileSize );
@@ -191,7 +191,7 @@
 	 * @return {jQuery.Promise}
 	 */
 	mw.FormDataTransport.prototype.uploadChunk = function ( file, offset ) {
-		var params = this.createParams( this.tempname, offset ),
+		let params = this.createParams( this.tempname, offset ),
 			transport = this,
 			bytesAvailable = file.size,
 			chunk;
@@ -229,7 +229,7 @@
 		params.filesize = bytesAvailable;
 		params.chunk = chunk;
 
-		return this.post( params ).then( function ( response ) {
+		return this.post( params ).then( ( response ) => {
 			if ( response.upload && response.upload.filekey ) {
 				transport.filekey = response.upload.filekey;
 			}
@@ -256,7 +256,7 @@
 					file, offset
 				);
 			}
-		}, function ( code, result ) {
+		}, ( code, result ) => {
 			// Ain't this some great machine readable output eh
 			if (
 				result.errors &&
@@ -323,7 +323,7 @@
 	 * @return {jQuery.Promise}
 	 */
 	mw.FormDataTransport.prototype.retryWithMethod = function ( methodName, file, offset ) {
-		var
+		const
 			transport = this,
 			retryDeferred = $.Deferred(),
 			retry = function () {
@@ -345,7 +345,7 @@
 	 * @return {jQuery.Promise}
 	 */
 	mw.FormDataTransport.prototype.checkStatus = function () {
-		var transport = this,
+		const transport = this,
 			params = OO.cloneObject( this.formData );
 
 		if ( this.aborted ) {
@@ -363,7 +363,7 @@
 		params.checkstatus = true;
 		params.filekey = this.filekey;
 		this.request = this.api.post( params )
-			.then( function ( response ) {
+			.then( ( response ) => {
 				if ( response.upload && response.upload.result === 'Poll' ) {
 					// If concatenation takes longer than 10 minutes give up
 					if ( ( Date.now() - transport.firstPoll ) > 10 * 60 * 1000 ) {
@@ -390,9 +390,7 @@
 				}
 
 				return response;
-			}, function ( code, result ) {
-				return $.Deferred().reject( code, result );
-			} );
+			}, ( code, result ) => $.Deferred().reject( code, result ) );
 
 		return this.request;
 	};

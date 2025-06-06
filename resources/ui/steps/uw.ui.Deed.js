@@ -36,7 +36,7 @@
 	OO.inheritClass( uw.ui.Deed, uw.ui.Step );
 
 	uw.ui.Deed.prototype.load = function ( uploads ) {
-		var ui = this;
+		const ui = this;
 
 		uw.ui.Step.prototype.load.call( this, uploads );
 
@@ -52,7 +52,7 @@
 				.addClass( 'ui-helper-clearfix' )
 		);
 
-		this.nextButtonPromise.done( function () {
+		this.nextButtonPromise.done( () => {
 			// hide "next" button, controller will only show it once license has
 			// been selected
 			ui.nextButton.$element.hide();

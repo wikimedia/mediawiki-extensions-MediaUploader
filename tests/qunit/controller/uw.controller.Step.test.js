@@ -18,8 +18,8 @@
 ( function ( uw ) {
 	QUnit.module( 'uw.controller.Step', QUnit.newMwEnvironment() );
 
-	QUnit.test( 'Constructor sanity test', function ( assert ) {
-		var step = new uw.controller.Step( { on: function () {} }, new mw.Api(), {} );
+	QUnit.test( 'Constructor sanity test', ( assert ) => {
+		const step = new uw.controller.Step( { on: function () {} }, new mw.Api(), {} );
 		assert.true( !!step );
 		assert.true( !!step.ui );
 	} );

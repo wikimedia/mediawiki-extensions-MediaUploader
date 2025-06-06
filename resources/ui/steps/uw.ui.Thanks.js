@@ -25,7 +25,7 @@
 	 * @param {Object} config
 	 */
 	uw.ui.Thanks = function UWUIThanks( config ) {
-		var $header,
+		let $header,
 			beginButtonTarget,
 			thanks = this;
 
@@ -68,13 +68,13 @@
 		// TODO: make the step order configurable by campaign definitions instead of using these hacks
 		beginButtonTarget = this.getButtonConfig( 'beginButton', 'target' );
 		if ( !beginButtonTarget ) {
-			this.beginButton.on( 'click', function () {
+			this.beginButton.on( 'click', () => {
 				thanks.emit( 'next-step' );
 			} );
 		} else {
 			this.beginButton.setHref( beginButtonTarget );
 		}
-		this.beginButton.on( 'click', function () {
+		this.beginButton.on( 'click', () => {
 			mw.DestinationChecker.clearCache();
 		} );
 
@@ -93,7 +93,7 @@
 	 * @param {mw.UploadWizardUpload} upload
 	 */
 	uw.ui.Thanks.prototype.addUpload = function ( upload ) {
-		var thumbWikiText, $thanksDiv, $thumbnailWrapDiv, $thumbnailDiv, $thumbnailCaption, $thumbnailLink;
+		let thumbWikiText, $thanksDiv, $thumbnailWrapDiv, $thumbnailDiv, $thumbnailCaption, $thumbnailLink;
 
 		thumbWikiText = '[[' + [
 			upload.details.getTitle().getPrefixedText(),
@@ -125,7 +125,7 @@
 			);
 
 		// This must match the CSS dimensions of .mediauploader-thumbnail
-		upload.getThumbnail( 120, 120 ).done( function ( thumb ) {
+		upload.getThumbnail( 120, 120 ).done( ( thumb ) => {
 			mw.UploadWizard.placeThumbnail( $thumbnailDiv, thumb );
 		} );
 
@@ -148,7 +148,7 @@
 	 * @return {jQuery}
 	 */
 	uw.ui.Thanks.prototype.makeReadOnlyInput = function ( value, label, useEditFont ) {
-		var copyText = new mw.widgets.CopyTextLayout( {
+		const copyText = new mw.widgets.CopyTextLayout( {
 			align: 'top',
 			label: label,
 			copyText: value

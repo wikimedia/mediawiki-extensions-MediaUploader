@@ -1,6 +1,6 @@
 ( function ( uw ) {
 
-	var NS_FILE = mw.config.get( 'wgNamespaceIds' ).file;
+	const NS_FILE = mw.config.get( 'wgNamespaceIds' ).file;
 
 	/**
 	 * Object that represents the Details (step 2) portion of the UploadWizard
@@ -42,7 +42,7 @@
 		 * Build the interface and attach all elements - do this on demand.
 		 */
 		buildInterface: function () {
-			var $moreDetailsWrapperDiv, $moreDetailsDiv,
+			let $moreDetailsWrapperDiv, $moreDetailsDiv,
 				fKey, fSpec, fieldWidget, fieldWrapper, fConfigBase,
 				details = this,
 				config = mw.UploadWizard.config;
@@ -135,7 +135,7 @@
 				this.fieldMap[ fKey ] = fieldWidget;
 			}
 
-			this.fieldList.sort( function ( a, b ) {
+			this.fieldList.sort( ( a, b ) => {
 				if ( a.order < b.order ) {
 					return -1;
 				}
@@ -175,7 +175,7 @@
 					$moreDetailsDiv.append( fieldWrapper.$element );
 					// If something changes the input "hidden" in the collapsed section,
 					// expand it.
-					fieldWidget.on( 'change', function () {
+					fieldWidget.on( 'change', () => {
 						$moreDetailsWrapperDiv.data( 'mw-collapsible' ).expand();
 					} );
 				} else {
@@ -194,7 +194,7 @@
 				)
 				.makeCollapsible( { collapsed: true } );
 
-			this.$form.on( 'submit', function ( e ) {
+			this.$form.on( 'submit', ( e ) => {
 				// Prevent actual form submission
 				e.preventDefault();
 			} );
@@ -211,10 +211,10 @@
 				flags: 'destructive',
 				icon: 'trash',
 				framed: false
-			} ).on( 'click', function () {
+			} ).on( 'click', () => {
 				OO.ui.confirm( mw.message( 'mediauploader-license-confirm-remove' ).text(), {
 					title: mw.message( 'mediauploader-license-confirm-remove-title' ).text()
-				} ).done( function ( confirmed ) {
+				} ).done( ( confirmed ) => {
 					if ( confirmed ) {
 						details.upload.emit( 'remove-upload' );
 					}
@@ -272,7 +272,7 @@
 		 * Will only append once.
 		 */
 		attach: function () {
-			var $window = $( window ),
+			const $window = $( window ),
 				details = this;
 
 			function maybeBuild() {
@@ -301,7 +301,7 @@
 		 * @return {mw.Title|null}
 		 */
 		getTitle: function () {
-			var titleField = mw.UploadWizard.config.content.titleField;
+			const titleField = mw.UploadWizard.config.content.titleField;
 
 			// title will not be set until we've actually submitted the file
 			if ( this.title === undefined ) {
@@ -320,7 +320,7 @@
 		 * @chainable
 		 */
 		setDuplicateTitleError: function () {
-			var titleField = mw.UploadWizard.config.content.titleField;
+			const titleField = mw.UploadWizard.config.content.titleField;
 			// TODO This should give immediate response, not only when submitting the form
 			this.fieldWrapperMap[ titleField ].setErrors(
 				[ mw.message( 'mediauploader-error-title-duplicate' ) ]
@@ -357,9 +357,7 @@
 		 *   empty arrays.
 		 */
 		getErrors: function () {
-			return $.when.apply( $, this.getAllFields().map( function ( fieldLayout ) {
-				return fieldLayout.fieldWidget.getErrors();
-			} ) );
+			return $.when.apply( $, this.getAllFields().map( ( fieldLayout ) => fieldLayout.fieldWidget.getErrors() ) );
 		},
 
 		/**
@@ -368,9 +366,7 @@
 		 * @return {jQuery.Promise} Same as #getErrors
 		 */
 		getWarnings: function () {
-			return $.when.apply( $, this.getAllFields().map( function ( fieldLayout ) {
-				return fieldLayout.fieldWidget.getWarnings();
-			} ) );
+			return $.when.apply( $, this.getAllFields().map( ( fieldLayout ) => fieldLayout.fieldWidget.getWarnings() ) );
 		},
 
 		/**
@@ -380,12 +376,12 @@
 		 * @return {jQuery.Promise} Combined promise of all fields' validation results.
 		 */
 		checkValidity: function ( thorough ) {
-			var fields = this.getAllFields();
+			const fields = this.getAllFields();
 
-			return $.when.apply( $, fields.map( function ( fieldLayout ) {
+			return $.when.apply( $, fields.map( ( fieldLayout ) =>
 				// Update any error/warning messages
-				return fieldLayout.checkValidity( thorough );
-			} ) );
+				 fieldLayout.checkValidity( thorough )
+			 ) );
 		},
 
 		/**
@@ -394,7 +390,7 @@
 		 * @return {string}
 		 */
 		getThumbnailCaption: function () {
-			var captionField = mw.UploadWizard.config.content.captionField;
+			const captionField = mw.UploadWizard.config.content.captionField;
 
 			// The caption field should be one of:
 			// TextWidget, SingleLanguageInputWidget, MultipleLanguageInputWidget
@@ -409,7 +405,7 @@
 		 * @param {uw.DetailsWidget} widget
 		 */
 		prefillField: function ( fSpec, widget ) {
-			var dynPrefilled = false;
+			let dynPrefilled = false;
 
 			// Try dynamic prefilling, if requested and available for this type
 			if ( fSpec.autoFill ) {
@@ -447,7 +443,7 @@
 		 * @return {boolean}
 		 */
 		prefillDate: function ( widget ) {
-			var dateObj, metadata, dateStr, saneTime,
+			let dateObj, metadata, dateStr, saneTime,
 				dateMode = 'calendar',
 				yyyyMmDdRegex = /^(\d\d\d\d)[:/-](\d\d)[:/-](\d\d)\D.*/,
 				timeRegex = /\D(\d\d):(\d\d):(\d\d)/;
@@ -458,7 +454,7 @@
 			}
 
 			function getSaneTime( date ) {
-				var str = '';
+				let str = '';
 
 				str += pad( date.getHours() ) + ':';
 				str += pad( date.getMinutes() ) + ':';
@@ -469,8 +465,8 @@
 
 			if ( this.upload.imageinfo.metadata ) {
 				metadata = this.upload.imageinfo.metadata;
-				[ 'datetimeoriginal', 'datetimedigitized', 'datetime', 'date' ].some( function ( propName ) {
-					var matches, timeMatches,
+				[ 'datetimeoriginal', 'datetimedigitized', 'datetime', 'date' ].some( ( propName ) => {
+					let matches, timeMatches,
 						dateInfo = metadata[ propName ];
 					if ( dateInfo ) {
 						matches = dateInfo.trim().match( yyyyMmDdRegex );
@@ -551,7 +547,7 @@
 		 * @return {boolean}
 		 */
 		prefillDescription: function ( type, widget ) {
-			var m, descText;
+			let m, descText;
 
 			if (
 				widget.getWikiText() === '' &&
@@ -601,7 +597,7 @@
 		 * @return {boolean}
 		 */
 		prefillLocation: function ( widget ) {
-			var dir,
+			let dir,
 				m = this.upload.imageinfo.metadata,
 				modified = false,
 				values = {};
@@ -652,7 +648,7 @@
 		 * @return {Object}
 		 */
 		getLanguageOptions: function () {
-			var languages, code;
+			let languages, code;
 
 			languages = {};
 			for ( code in mw.UploadWizard.config.languages ) {
@@ -673,7 +669,7 @@
 		 * @return {Object.<string,Object>}
 		 */
 		getSerialized: function () {
-			var fieldWidget, serialized = {};
+			let fieldWidget, serialized = {};
 
 			if ( !this.interfaceBuilt ) {
 				// We don't have the interface yet, but it'll get filled out as
@@ -734,7 +730,7 @@
 		 * @return {string} wikitext representing all details
 		 */
 		getWikiText: function () {
-			var wikiText = mw.UploadWizard.config.content.wikitext,
+			let wikiText = mw.UploadWizard.config.content.wikitext,
 				substitutions = {}, substList = [],
 				deed = this.upload.deedChooser.deed,
 				fieldWidget, serialized, valueType, re, escapedKey, replaceValue;
@@ -750,7 +746,7 @@
 			}
 
 			function addSubstitution( key, value ) {
-				var v = value;
+				let v = value;
 				if ( key in substitutions ) {
 					return;
 				}
@@ -781,7 +777,7 @@
 					return;
 				}
 				// Also add "subfields" based on the serialized values. Just in case.
-				Object.keys( serialized ).forEach( function ( key ) {
+				Object.keys( serialized ).forEach( ( key ) => {
 					replaceValue = serialized[ key ];
 					valueType = typeof replaceValue;
 					if ( valueType === 'string' || valueType === 'number' || valueType === 'boolean' ) {
@@ -791,11 +787,11 @@
 			}, this );
 
 			// Do the substitutions
-			substList.forEach( function ( substKey ) {
+			substList.forEach( ( substKey ) => {
 				replaceValue = substitutions[ substKey ].trim();
 				escapedKey = substKey.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' );
 				re = new RegExp( '\\{\\{\\{ *' + escapedKey + ' *(\\|(.*?))?\\}\\}\\}', 'giu' );
-				wikiText = wikiText.replace( re, function ( match, _, defaultValue ) {
+				wikiText = wikiText.replace( re, ( match, _, defaultValue ) => {
 					if ( !replaceValue ) {
 						return defaultValue || '';
 					} else {
@@ -814,7 +810,7 @@
 		 * @return {jQuery.Promise}
 		 */
 		submit: function () {
-			var details = this,
+			let details = this,
 				wikitext, promise;
 
 			this.$containerDiv.find( 'form' ).trigger( 'submit' );
@@ -827,7 +823,7 @@
 			wikitext = this.getWikiText();
 			promise = this.submitWikiText( wikitext );
 
-			return promise.then( function () {
+			return promise.then( () => {
 				details.showIndicator( 'success' );
 				details.setStatus( mw.message( 'mediauploader-published' ).text() );
 			} );
@@ -843,7 +839,7 @@
 		 * @return {jQuery.Promise}
 		 */
 		submitWikiText: function ( wikiText ) {
-			var params,
+			let params,
 				tags = [ 'uploadwizard' ],
 				deed = this.upload.deedChooser.deed,
 				comment = '',
@@ -900,7 +896,7 @@
 		 * @return {jQuery.Promise}
 		 */
 		submitWikiTextInternal: function ( params ) {
-			var details = this,
+			const details = this,
 				apiPromise = this.upload.api.postWithEditToken( params );
 
 			return apiPromise
@@ -910,7 +906,7 @@
 				.then( this.validateWikiTextSubmitResult.bind( this, params ) )
 				// making it here means the upload is a success, or it would've been
 				// rejected by now (either by HTTP status code, or in validateWikiTextSubmitResult)
-				.then( function ( result ) {
+				.then( ( result ) => {
 					details.title = mw.Title.makeTitle( 6, result.upload.filename );
 					details.upload.extractImageInfo( result.upload.imageinfo );
 					details.upload.thisProgress = 1.0;
@@ -918,7 +914,7 @@
 					return result;
 				} )
 				// uh-oh - something went wrong!
-				.catch( function ( code, result ) {
+				.catch( ( code, result ) => {
 					details.upload.state = 'error';
 					details.processError( code, result );
 					return $.Deferred().reject( code, result );
@@ -936,7 +932,7 @@
 		 * @return {jQuery.Promise}
 		 */
 		validateWikiTextSubmitResult: function ( params, result ) {
-			var wx, warningsKeys, existingFile, existingFileUrl, existingFileExt, ourFileExt, code, message,
+			let wx, warningsKeys, existingFile, existingFileUrl, existingFileExt, ourFileExt, code, message,
 				details = this,
 				warnings = null,
 				ignoreTheseWarnings = false,
@@ -961,7 +957,7 @@
 						// * mediauploader-publish
 						// * mediauploader-assembling
 						this.setStatus( mw.message( 'mediauploader-' + result.upload.stage ).text() );
-						setTimeout( function () {
+						setTimeout( () => {
 							if ( details.upload.state !== 'aborted' ) {
 								details.submitWikiTextInternal( {
 									action: 'upload',
@@ -1055,7 +1051,7 @@
 		 * @param {string} html Error message to show.
 		 */
 		recoverFromError: function ( code, html ) {
-			var titleField = mw.UploadWizard.config.content.titleField;
+			const titleField = mw.UploadWizard.config.content.titleField;
 
 			this.upload.state = 'recoverable-error';
 			this.$dataDiv.morphCrossfade( '.detailsForm' );
@@ -1080,7 +1076,7 @@
 		 * @param {Object} result Result from ajax call
 		 */
 		processError: function ( code, result ) {
-			var recoverable = [
+			const recoverable = [
 				'abusefilter-disallowed',
 				'abusefilter-warning',
 				'spamblacklist',
@@ -1117,7 +1113,7 @@
 				code = 'ratelimited';
 			}
 
-			if ( recoverable.indexOf( code ) > -1 ) {
+			if ( recoverable.includes( code ) ) {
 				this.recoverFromError( code, result.errors[ 0 ].html );
 				return;
 			}

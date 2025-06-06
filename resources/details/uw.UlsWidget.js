@@ -9,7 +9,7 @@
 	 * @cfg {Array} [classes] Classes to apply to the ULS container div
 	 */
 	uw.UlsWidget = function UWUlsWidget( config ) {
-		var i;
+		let i;
 
 		uw.UlsWidget.parent.call( this, config );
 
@@ -49,7 +49,7 @@
 	OO.mixinClass( uw.UlsWidget, OO.EventEmitter );
 
 	uw.UlsWidget.prototype.initialiseUls = function ( languages ) {
-		var ulsWidget = this;
+		const ulsWidget = this;
 
 		this.languages = languages;
 
@@ -63,7 +63,7 @@
 			onVisible: function () {
 				// Re-position the ULS *after* the widget has been rendered, so that we can be
 				// sure it's in the right place
-				var offset = ulsWidget.$element.offset();
+				const offset = ulsWidget.$element.offset();
 				if ( this.$menu.css( 'direction' ) === 'rtl' ) {
 					offset.left =
 						offset.left - parseInt( this.$menu.css( 'width' ) ) + ulsWidget.$element.width();
@@ -85,7 +85,7 @@
 	 * @param {string} value
 	 */
 	uw.UlsWidget.prototype.setValue = function ( value ) {
-		var current = this.languageValue;
+		const current = this.languageValue;
 		this.languageValue = value;
 		this.$element.find( '.oo-ui-labelElement-label' ).text( this.languages[ value ] );
 		if ( current !== value ) {

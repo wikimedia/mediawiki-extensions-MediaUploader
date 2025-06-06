@@ -1,6 +1,6 @@
 ( function ( uw ) {
 
-	var NS_FILE = mw.config.get( 'wgNamespaceIds' ).file,
+	const NS_FILE = mw.config.get( 'wgNamespaceIds' ).file,
 		byteLength = require( 'mediawiki.String' ).byteLength;
 
 	/**
@@ -44,7 +44,7 @@
 	 * @return {mw.Title|null}
 	 */
 	uw.TitleDetailsWidget.static.makeTitleInFileNS = function ( filename ) {
-		var
+		let
 			mwTitle = mw.Title.newFromText( filename, NS_FILE ),
 			illegalFileChars = new RegExp( '[' + mw.config.get( 'wgIllegalFileChars', '' ) + ']' );
 		if ( mwTitle && mwTitle.getNamespaceId() !== NS_FILE ) {
@@ -78,7 +78,7 @@
 	 * @return {mw.Title|null}
 	 */
 	uw.TitleDetailsWidget.prototype.getTitle = function () {
-		var value, extRegex, cleaned, title;
+		let value, extRegex, cleaned, title;
 		value = this.titleInput.getValue().trim();
 		if ( !value ) {
 			return null;
@@ -99,7 +99,7 @@
 	 * @inheritdoc
 	 */
 	uw.TitleDetailsWidget.prototype.getWarnings = function () {
-		var warnings = [];
+		const warnings = [];
 		this.getEmptyWarning( this.titleInput.getValue().trim() === '', warnings );
 
 		return $.Deferred().resolve( warnings ).promise();
@@ -109,7 +109,7 @@
 	 * @return {jQuery.Promise}
 	 */
 	uw.TitleDetailsWidget.prototype.getErrors = function () {
-		var
+		const
 			errors = [],
 			value = this.titleInput.getValue().trim(),
 			processDestinationCheck = this.processDestinationCheck,
@@ -142,28 +142,24 @@
 		}
 
 		return mw.DestinationChecker.checkTitle( title.getPrefixedText() )
-			.then( function ( result ) {
-				var moreErrors = processDestinationCheck( result );
+			.then( ( result ) => {
+				let moreErrors = processDestinationCheck( result );
 				if ( result.blacklist.unavailable ) {
 					// We don't have a title blacklist, so just check for some likely undesirable patterns.
 					moreErrors = moreErrors.concat(
-						mw.QuickTitleChecker.checkTitle( title.getNameText() ).map( function ( errorCode ) {
+						mw.QuickTitleChecker.checkTitle( title.getNameText() ).map( ( errorCode ) =>
 							// Messages that can be used here:
 							// * mediauploader-error-title-invalid
 							// * mediauploader-error-title-senselessimagename
 							// * mediauploader-error-title-thumbnail
 							// * mediauploader-error-title-extension
-							return mw.message( 'mediauploader-error-title-' + errorCode );
-						} )
+							 mw.message( 'mediauploader-error-title-' + errorCode )
+						 )
 					);
 				}
 				return moreErrors;
 			} )
-			.then( function ( moreErrors ) {
-				return [].concat( errors, moreErrors );
-			}, function () {
-				return $.Deferred().resolve( errors );
-			} );
+			.then( ( moreErrors ) => [].concat( errors, moreErrors ), () => $.Deferred().resolve( errors ) );
 	};
 
 	/**
@@ -175,7 +171,7 @@
 	 * @return {mw.Message[]} Error messages
 	 */
 	uw.TitleDetailsWidget.prototype.processDestinationCheck = function ( result ) {
-		var messageParams, errors, titleString;
+		let messageParams, errors, titleString;
 
 		if ( result.unique.isUnique && result.blacklist.notBlacklisted && !result.unique.isProtected ) {
 			return [];

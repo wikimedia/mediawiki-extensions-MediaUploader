@@ -10,7 +10,7 @@
 ( function () {
 
 	function isCompatible() {
-		var
+		const
 			profile = $.client.profile(),
 			// Firefox < 7.0 sends an empty string as filename for Blobs in FormData.
 			// requests. https://bugzilla.mozilla.org/show_bug.cgi?id=649150
@@ -27,7 +27,7 @@
 
 	mw.UploadWizardPage = function () {
 
-		var uploadWizard,
+		let uploadWizard,
 			config = mw.config.get( 'MediaUploaderConfig' );
 
 		// Default configuration value that cannot be removed
@@ -54,7 +54,7 @@
 		uploadWizard.createInterface( '#upload-wizard' );
 	};
 
-	$( function () {
+	$( () => {
 		// show page.
 		mw.UploadWizardPage();
 	} );

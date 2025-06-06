@@ -46,7 +46,7 @@
 	 */
 	uw.ui.Wizard.prototype.initHeader = function ( config ) {
 		// eslint-disable-next-line no-jquery/no-global-selector
-		var $contentSub = $( '#contentSub' );
+		const $contentSub = $( '#contentSub' );
 
 		if ( config.alternativeUploadToolsPage ) {
 			this.$alternativeUploads = $( '<a>' )
@@ -72,7 +72,7 @@
 	 * @param {Object|string} configAltUploadForm A link or map of languages to links, pointing at an alternate form.
 	 */
 	uw.ui.Wizard.prototype.initAltUploadForm = function ( configAltUploadForm ) {
-		var altUploadForm, userLanguage, title;
+		let altUploadForm, userLanguage, title;
 
 		if ( typeof configAltUploadForm === 'object' ) {
 			userLanguage = mw.config.get( 'wgUserLanguage' );
@@ -108,13 +108,13 @@
 	 * @param {uw.controller.Step[]} steps
 	 */
 	uw.ui.Wizard.prototype.initialiseSteps = function ( steps ) {
-		var $steps = $( '<ul>' )
+		const $steps = $( '<ul>' )
 			.attr( 'id', 'mediauploader-steps' )
 			.addClass( 'ui-helper-clearfix' )
 			.insertBefore( '#mediauploader-content' );
 
-		steps.forEach( function ( step ) {
-			var $arrow = $( '<li>' )
+		steps.forEach( ( step ) => {
+			const $arrow = $( '<li>' )
 				.attr( 'id', 'mediauploader-step-' + step.stepName )
 				.append(
 					// Messages that can be used here:
@@ -128,9 +128,9 @@
 			$steps.append( $arrow );
 
 			// once a (new) step loads, highlight it
-			step.on( 'load', function ( $arrow2 ) {
+			step.on( 'load', ( ( $arrow2 ) => {
 				$steps.arrowStepsHighlight( $arrow2 );
-			}.bind( step, $arrow ) );
+			} ).bind( step, $arrow ) );
 		} );
 
 		$steps.arrowSteps();

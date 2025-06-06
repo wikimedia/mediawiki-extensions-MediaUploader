@@ -14,7 +14,7 @@
 	 * @param {mw.Api} api API object, used for wikitext previews
 	 */
 	mw.UploadWizardLicenseInput = function ( config, count, api ) {
-		var self = this,
+		let self = this,
 			groups = [],
 			group;
 
@@ -45,7 +45,7 @@
 			group = new uw.LicenseGroup( config, this.type, this.api, this.count );
 			groups.push( group );
 		} else {
-			config.licenseGroups.forEach( function ( groupConfig ) {
+			config.licenseGroups.forEach( ( groupConfig ) => {
 				group = new uw.LicenseGroup( groupConfig, self.type, self.api, self.count );
 				groups.push( group );
 
@@ -54,8 +54,8 @@
 				// upon selecting a new item in any group, iterate the other groups and make
 				// sure they're updated accordingly, deselecting previously selected items
 				if ( self.type === 'radio' ) {
-					group.on( 'change', function ( currentGroup ) {
-						var value = currentGroup.getValue(),
+					group.on( 'change', ( currentGroup ) => {
+						const value = currentGroup.getValue(),
 							group2 = currentGroup.getGroup();
 						self.setValues( value, group2 );
 					} );
@@ -76,7 +76,7 @@
 
 	Object.assign( mw.UploadWizardLicenseInput.prototype, {
 		unload: function () {
-			this.getItems().forEach( function ( group ) {
+			this.getItems().forEach( ( group ) => {
 				group.unload();
 			} );
 		},
@@ -89,10 +89,10 @@
 		 * @param {string} [groupName] Name of group, when values are only relevant to this group
 		 */
 		setValues: function ( values, groupName ) {
-			var self = this,
+			const self = this,
 				selectedGroups = [];
 
-			this.getItems().forEach( function ( group ) {
+			this.getItems().forEach( ( group ) => {
 				if ( groupName === undefined || group.getGroup() === groupName ) {
 					group.setValue( values );
 					if ( Object.keys( group.getValue() ).length > 0 ) {
@@ -115,7 +115,7 @@
 				// 1 group
 				// in that case, we're only going to select the *last* occurrence, which is what
 				// a browser would do when trying to find/select a radio that occurs twice
-				selectedGroups.forEach( function ( group ) {
+				selectedGroups.forEach( ( group ) => {
 					group.setValue( {} );
 				} );
 			}
@@ -125,8 +125,8 @@
 		 * Set the default configured licenses
 		 */
 		setDefaultValues: function () {
-			var values = {};
-			this.defaults.forEach( function ( license ) {
+			const values = {};
+			this.defaults.forEach( ( license ) => {
 				values[ license ] = true;
 			} );
 			this.setValues( values );
@@ -139,11 +139,11 @@
 		 * @return {Object}
 		 */
 		getLicenses: function () {
-			var licenses = {};
+			const licenses = {};
 
-			this.getItems().forEach( function ( group ) {
-				var licenseNames = Object.keys( group.getValue() );
-				licenseNames.forEach( function ( name ) {
+			this.getItems().forEach( ( group ) => {
+				const licenseNames = Object.keys( group.getValue() );
+				licenseNames.forEach( ( name ) => {
 					licenses[ name ] = mw.UploadWizard.config.licenses[ name ] || {};
 				} );
 			} );
@@ -157,9 +157,7 @@
 		 * @return {string} of wikitext (empty string if no inputs set)
 		 */
 		getWikiText: function () {
-			return this.getItems().map( function ( group ) {
-				return group.getWikiText();
-			} ).join( '' ).trim();
+			return this.getItems().map( ( group ) => group.getWikiText() ).join( '' ).trim();
 		},
 
 		/**
@@ -169,7 +167,7 @@
 		 * @return {jQuery.Promise} Promise that resolves with an array of template names
 		 */
 		getUsedTemplates: function ( wikitext ) {
-			var input = this;
+			const input = this;
 
 			if ( wikitext in this.templateCache ) {
 				return $.Deferred().resolve( this.templateCache[ wikitext ] ).promise();
@@ -181,8 +179,8 @@
 				prop: 'templates',
 				title: 'File:UploadWizard license verification.png',
 				text: wikitext
-			} ).then( function ( result ) {
-				var templates = [],
+			} ).then( ( result ) => {
+				let templates = [],
 					template, title, i;
 
 				for ( i = 0; i < result.parse.templates.length; i++ ) {
@@ -207,9 +205,9 @@
 		 * @return {jQuery.Promise}
 		 */
 		getErrors: function () {
-			var errors = $.Deferred().resolve( [] ).promise(),
+			let errors = $.Deferred().resolve( [] ).promise(),
 				addError = function ( message ) {
-					errors = errors.then( function ( errorsCopy ) {
+					errors = errors.then( ( errorsCopy ) => {
 						// eslint-disable-next-line mediawiki/msg-doc
 						errorsCopy.push( mw.message( message ) );
 						return errorsCopy;
@@ -223,8 +221,8 @@
 				// It's pretty hard to screw up a radio button, so if even one of them is selected it's okay.
 				// But also check that associated textareas are filled for if the input is selected, and that
 				// they are the appropriate size.
-				Object.keys( selectedInputs ).forEach( function ( name ) {
-					var wikitext,
+				Object.keys( selectedInputs ).forEach( ( name ) => {
+					let wikitext,
 						data = selectedInputs[ name ];
 
 					if ( typeof data !== 'string' ) {
@@ -259,10 +257,10 @@
 		 * @return {Object}
 		 */
 		getSerialized: function () {
-			var values = {};
+			const values = {};
 
-			this.getItems().forEach( function ( group ) {
-				var groupName = group.getGroup(),
+			this.getItems().forEach( ( group ) => {
+				const groupName = group.getGroup(),
 					value = group.getValue();
 
 				if ( Object.keys( value ).length > 0 ) {
@@ -278,9 +276,9 @@
 		 * @param {Object} serialized
 		 */
 		setSerialized: function ( serialized ) {
-			var self = this;
+			const self = this;
 
-			Object.keys( serialized ).forEach( function ( group ) {
+			Object.keys( serialized ).forEach( ( group ) => {
 				self.setValues( serialized[ group ], group );
 			} );
 		}
