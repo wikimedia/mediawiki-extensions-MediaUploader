@@ -19,7 +19,7 @@
 	QUnit.module( 'uw.controller.Details', QUnit.newMwEnvironment() );
 
 	function createTestUpload( sandbox, customDeedChooser, aborted ) {
-		var stubs = {
+		const stubs = {
 			ucdc: sandbox.stub(),
 			getSerialized: sandbox.stub(),
 			setSerialized: sandbox.stub(),
@@ -44,8 +44,8 @@
 		};
 	}
 
-	QUnit.test( 'Constructor sanity test', function ( assert ) {
-		var step = new uw.controller.Details( new mw.Api(), {
+	QUnit.test( 'Constructor sanity test', ( assert ) => {
+		const step = new uw.controller.Details( new mw.Api(), {
 			maxSimultaneousConnections: 1
 		} );
 		assert.true( !!step );
@@ -54,7 +54,7 @@
 	} );
 
 	QUnit.test( 'load', function ( assert ) {
-		var step = new uw.controller.Details( new mw.Api(), {
+		let step = new uw.controller.Details( new mw.Api(), {
 				maxSimultaneousConnections: 1
 			} ),
 			testUpload = createTestUpload( this.sandbox ),
@@ -92,8 +92,8 @@
 		assert.true( stepUiStub.called );
 	} );
 
-	QUnit.test( 'canTransition', function ( assert ) {
-		var upload = {},
+	QUnit.test( 'canTransition', ( assert ) => {
+		const upload = {},
 			step = new uw.controller.Details( new mw.Api(), {
 				maxSimultaneousConnections: 1
 			} );
@@ -106,7 +106,7 @@
 	} );
 
 	QUnit.test( 'transitionAll', function ( assert ) {
-		var tostub,
+		let tostub,
 			done = assert.async(),
 			donestub = this.sandbox.stub(),
 			ds = [ $.Deferred(), $.Deferred(), $.Deferred() ],
@@ -133,7 +133,7 @@
 		];
 
 		step.transitionAll().done( donestub );
-		setTimeout( function () {
+		setTimeout( () => {
 			calls = [ tostub.getCall( 0 ), tostub.getCall( 1 ), tostub.getCall( 2 ) ];
 
 			assert.strictEqual( calls[ 0 ].args[ 0 ].id, 15 );
@@ -141,11 +141,11 @@
 
 			ds[ 0 ].resolve();
 			ds[ 1 ].resolve();
-			setTimeout( function () {
+			setTimeout( () => {
 				assert.strictEqual( donestub.called, false );
 
 				ds[ 2 ].resolve();
-				setTimeout( function () {
+				setTimeout( () => {
 					assert.true( donestub.called );
 
 					done();

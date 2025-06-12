@@ -22,7 +22,7 @@
 	 * @param {number} count Number of the things we are licensing (it matters to some texts)
 	 */
 	uw.LicenseGroup = function UWLicenseGroup( config, type, api, count ) {
-		var self = this;
+		const self = this;
 
 		uw.LicenseGroup.parent.call( this, {} );
 
@@ -30,7 +30,7 @@
 			throw new Error( 'improper license config' );
 		}
 
-		if ( [ 'radio', 'checkbox' ].indexOf( type ) < 0 ) {
+		if ( ![ 'radio', 'checkbox' ].includes( type ) ) {
 			throw new Error( 'Invalid type: ' + type );
 		}
 
@@ -58,12 +58,12 @@
 		}
 
 		// when selecting an item that has a custom textarea, we'll immediately focus it
-		this.on( 'change', function ( group, item ) {
+		this.on( 'change', ( group, item ) => {
 			if ( item && item.isSelected && item.isSelected() ) {
 				// wrapped inside setTimeout to ensure it goes at the end of the call stack,
 				// just in case something steals focus in the meantime...
-				setTimeout( function () {
-					var name = item.getData();
+				setTimeout( () => {
+					const name = item.getData();
 					if ( self.textareas[ name ] ) {
 						self.textareas[ name ].focus();
 					}
@@ -86,7 +86,7 @@
 	 */
 	uw.LicenseGroup.prototype.createFieldset = function ( group ) {
 		/* eslint-disable mediawiki/msg-doc */
-		var $head = this.config.head && $( '<a>' )
+		const $head = this.config.head && $( '<a>' )
 				.addClass( 'mediauploader-deed-license-group-head' )
 				.msg( this.config.head, this.count )
 				.prepend( $( '<span>' ).addClass( 'mw-toggle-icon' ) ),
@@ -118,11 +118,11 @@
 	 * @return {OO.ui.RadioSelectWidget}
 	 */
 	uw.LicenseGroup.prototype.createRadioGroup = function ( classes ) {
-		var self = this,
+		const self = this,
 			options = [];
 
-		this.config.licenses.forEach( function ( licenseName ) {
-			var option;
+		this.config.licenses.forEach( ( licenseName ) => {
+			let option;
 
 			if ( mw.UploadWizard.config.licenses[ licenseName ] === undefined ) {
 				// unknown license
@@ -136,7 +136,7 @@
 
 			// when custom text area receives focus, we should make sure this element is selected
 			if ( self.textareas[ licenseName ] ) {
-				self.textareas[ licenseName ].on( 'focus', function () {
+				self.textareas[ licenseName ].on( 'focus', () => {
 					option.setSelected( true );
 				} );
 			}
@@ -153,11 +153,11 @@
 	 * @return {OO.ui.CheckboxMultiselectInputWidget}
 	 */
 	uw.LicenseGroup.prototype.createCheckboxGroup = function ( classes ) {
-		var self = this,
+		const self = this,
 			options = [];
 
-		this.config.licenses.forEach( function ( licenseName ) {
-			var option;
+		this.config.licenses.forEach( ( licenseName ) => {
+			let option;
 
 			if ( mw.UploadWizard.config.licenses[ licenseName ] === undefined ) {
 				// unknown license
@@ -171,7 +171,7 @@
 
 			// when custom text area receives focus, we should make sure this element is selected
 			if ( self.textareas[ licenseName ] ) {
-				self.textareas[ licenseName ].on( 'focus', function () {
+				self.textareas[ licenseName ].on( 'focus', () => {
 					option.setSelected( true );
 				} );
 			}
@@ -187,12 +187,12 @@
 	 * @return {string}
 	 */
 	uw.LicenseGroup.prototype.getWikiText = function () {
-		var wikiTexts,
+		let wikiTexts,
 			self = this,
 			values = this.getValue();
 
-		wikiTexts = Object.keys( values ).map( function ( name ) {
-			var wikiText = self.getLicenseWikiText( name ),
+		wikiTexts = Object.keys( values ).map( ( name ) => {
+			let wikiText = self.getLicenseWikiText( name ),
 				value = values[ name ];
 			if ( typeof value === 'string' ) {
 				// `value` is custom input
@@ -219,7 +219,7 @@
 	 * @return {Object} Map of { licenseName: true }, or { licenseName: "custom input" }
 	 */
 	uw.LicenseGroup.prototype.getValue = function () {
-		var self = this,
+		let self = this,
 			result = {},
 			selected,
 			name;
@@ -232,7 +232,7 @@
 			}
 		} else if ( this.type === 'checkbox' ) {
 			selected = this.group.findSelectedItems();
-			selected.forEach( function ( item ) {
+			selected.forEach( ( item ) => {
 				name = item.getData();
 				result[ name ] = !self.textareas[ name ] || self.textareas[ name ].getValue();
 			} );
@@ -245,12 +245,12 @@
 	 * @param {Object} values Map of { licenseName: true }, or { licenseName: "custom input" }
 	 */
 	uw.LicenseGroup.prototype.setValue = function ( values ) {
-		var self = this,
+		let self = this,
 			selectArray = [],
 			selected;
 
-		Object.keys( values ).forEach( function ( name ) {
-			var value = values[ name ];
+		Object.keys( values ).forEach( ( name ) => {
+			const value = values[ name ];
 			if ( typeof value === 'string' && self.textareas[ name ] ) {
 				self.textareas[ name ].setValue( value );
 				// add to list of items to select
@@ -300,7 +300,7 @@
 	 * @return {string} of wikitext
 	 */
 	uw.LicenseGroup.prototype.getLicenseWikiText = function ( name ) {
-		var licenseInfo = this.getLicenseInfo( name ),
+		let licenseInfo = this.getLicenseInfo( name ),
 			licenseText;
 
 		licenseText = licenseInfo.props.wikitext !== undefined ?
@@ -316,7 +316,7 @@
 	 * @return {jQuery}
 	 */
 	uw.LicenseGroup.prototype.createLabel = function ( name ) {
-		var licenseInfo = this.getLicenseInfo( name ),
+		let licenseInfo = this.getLicenseInfo( name ),
 			messageKey = licenseInfo.props.msg === undefined ?
 				'[missing msg for ' + licenseInfo.name + ']' :
 				licenseInfo.props.msg,
@@ -333,7 +333,7 @@
 		}
 		$licenseLink = $( '<a>' ).attr( { target: '_blank', href: licenseURL } );
 		if ( licenseInfo.props.icons !== undefined ) {
-			licenseInfo.props.icons.forEach( function ( icon ) {
+			licenseInfo.props.icons.forEach( ( icon ) => {
 				// eslint-disable-next-line mediawiki/class-doc
 				$icons.append( $( '<span>' ).addClass( 'mediauploader-license-icon mediauploader-' + icon + '-icon' ) );
 			} );
@@ -358,7 +358,7 @@
 	 * @return {jQuery} Wrapped textarea
 	 */
 	uw.LicenseGroup.prototype.createCustom = function ( name, defaultText ) {
-		var self = this,
+		let self = this,
 			button;
 
 		this.textareas[ name ] = new OO.ui.MultilineTextInputWidget( {
@@ -372,7 +372,7 @@
 		button = new OO.ui.ButtonWidget( {
 			label: mw.message( 'mediauploader-license-custom-preview' ).text(),
 			flags: [ 'progressive' ]
-		} ).on( 'click', function () {
+		} ).on( 'click', () => {
 			self.showPreview( self.textareas[ name ].getValue() );
 		} );
 
@@ -389,7 +389,7 @@
 	 * @param {string} wikiText
 	 */
 	uw.LicenseGroup.prototype.showPreview = function ( wikiText ) {
-		var input;
+		let input;
 
 		this.previewDialog.setLoading( true );
 		this.windowManager.openWindow( this.previewDialog );
@@ -402,7 +402,7 @@
 		}
 
 		function error( code, result ) {
-			var message = result.errors[ 0 ].html;
+			const message = result.errors[ 0 ].html;
 
 			show( $( '<div>' ).append(
 				$( '<h3>' ).append( code ),

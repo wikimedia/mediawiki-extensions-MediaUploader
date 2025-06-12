@@ -68,10 +68,10 @@
 		this.connect( this, { change: 'onChange' } );
 
 		this.mapButton.toggle( false );
-		mw.loader.using( [ 'ext.kartographer.box', 'ext.kartographer.editing' ] ).done( function () {
+		mw.loader.using( [ 'ext.kartographer.box', 'ext.kartographer.editing' ] ).done( () => {
 			// Kartographer is installed and we'll be able to show the map. Display the button.
 			this.mapButton.toggle( true );
-		}.bind( this ) );
+		} );
 	};
 
 	OO.inheritClass( uw.LocationDetailsWidget, uw.DetailsWidget );
@@ -80,8 +80,8 @@
 	 * @private
 	 */
 	uw.LocationDetailsWidget.prototype.onChange = function () {
-		var widget = this;
-		this.getErrors().done( function ( errors ) {
+		const widget = this;
+		this.getErrors().done( ( errors ) => {
 			widget.mapButton.setDisabled( !( errors.length === 0 && widget.getWikiText() !== '' ) );
 		} );
 	};
@@ -90,7 +90,7 @@
 	 * @private
 	 */
 	uw.LocationDetailsWidget.prototype.onMapButtonClick = function () {
-		var coords = this.getSerializedParsed();
+		const coords = this.getSerializedParsed();
 
 		// Disable clipping because it doesn't play nicely with the map
 		this.mapButton.getPopup().toggleClipping( false );
@@ -112,7 +112,7 @@
 	 * @inheritdoc
 	 */
 	uw.LocationDetailsWidget.prototype.getErrors = function () {
-		var errors = [],
+		let errors = [],
 			serialized = this.getSerialized(),
 			parsed = this.getSerializedParsed(),
 			field;
@@ -132,13 +132,13 @@
 		// coordinates that were derived from the input are 0, without a 0 even
 		// being present in the input
 		if ( this.config.showField.latitude && serialized.latitude ) {
-			if ( isNaN( parsed.latitude ) || parsed.latitude > 90 || parsed.latitude < -90 || ( parsed.latitude === 0 && serialized.latitude.indexOf( '0' ) < 0 ) ) {
+			if ( isNaN( parsed.latitude ) || parsed.latitude > 90 || parsed.latitude < -90 || ( parsed.latitude === 0 && !serialized.latitude.includes( '0' ) ) ) {
 				errors.push( mw.message( 'mediauploader-error-latitude' ) );
 			}
 		}
 
 		if ( this.config.showField.longitude && serialized.longitude ) {
-			if ( isNaN( parsed.longitude ) || parsed.longitude > 180 || parsed.longitude < -180 || ( parsed.longitude === 0 && serialized.longitude.indexOf( '0' ) < 0 ) ) {
+			if ( isNaN( parsed.longitude ) || parsed.longitude > 180 || parsed.longitude < -180 || ( parsed.longitude === 0 && !serialized.longitude.includes( '0' ) ) ) {
 				errors.push( mw.message( 'mediauploader-error-longitude' ) );
 			}
 		}
@@ -160,7 +160,7 @@
 	 * @inheritdoc
 	 */
 	uw.LocationDetailsWidget.prototype.getWikiText = function () {
-		var field,
+		let field,
 			result = '',
 			serialized = this.getSerializedParsed();
 
@@ -190,7 +190,7 @@
 	 * @return {Object} See #setSerialized
 	 */
 	uw.LocationDetailsWidget.prototype.getSerialized = function () {
-		var field,
+		let field,
 			result = {};
 
 		for ( field in this.config.showField ) {
@@ -206,7 +206,7 @@
 	 * @return {Object} Serialized, parsed values of the subfields (numbers)
 	 */
 	uw.LocationDetailsWidget.prototype.getSerializedParsed = function () {
-		var field,
+		let field,
 			result = {},
 			serialized = this.getSerialized();
 
@@ -232,7 +232,7 @@
 	 * @param {string} serialized.heading Heading value
 	 */
 	uw.LocationDetailsWidget.prototype.setSerialized = function ( serialized ) {
-		var field;
+		let field;
 
 		for ( field in this.config.showField ) {
 			if ( serialized[ field ] !== undefined ) {
@@ -255,7 +255,7 @@
 	 * @return {number}
 	 */
 	uw.LocationDetailsWidget.prototype.normalizeCoordinate = function ( coordinate ) {
-		var sign = coordinate.match( /[sw]/i ) ? -1 : 1,
+		let sign = coordinate.match( /[sw]/i ) ? -1 : 1,
 			parts, value;
 
 		// fix commonly used character alternatives

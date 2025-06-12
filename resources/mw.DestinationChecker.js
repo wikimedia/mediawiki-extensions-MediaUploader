@@ -22,13 +22,11 @@
 			return $.when(
 				this.checkUnique( title ),
 				this.checkBlacklist( title )
-			).then( function ( unique, blacklist ) {
-				return {
-					unique: unique,
-					blacklist: blacklist,
-					title: title
-				};
-			} );
+			).then( ( unique, blacklist ) => ( {
+				unique: unique,
+				blacklist: blacklist,
+				title: title
+			} ) );
 		},
 
 		/**
@@ -43,7 +41,7 @@
 		 *  {string} [return.done.blacklistLine] See mw.Api#isBlacklisted
 		 */
 		checkBlacklist: function ( title ) {
-			var checker = this;
+			const checker = this;
 
 			/**
 			 * Process result of a TitleBlacklist API call.
@@ -53,7 +51,7 @@
 			 * @return {Object}
 			 */
 			function blacklistResultProcessor( blacklistResult ) {
-				var result;
+				let result;
 
 				if ( blacklistResult === false ) {
 					result = { notBlacklisted: true };
@@ -74,12 +72,10 @@
 				return $.Deferred().resolve( this.cachedBlacklist[ title ] );
 			}
 
-			return mw.loader.using( 'mediawiki.api.titleblacklist' ).then( function () {
-				return checker.api.isBlacklisted( title ).then( blacklistResultProcessor );
-			}, function () {
+			return mw.loader.using( 'mediawiki.api.titleblacklist' ).then( () => checker.api.isBlacklisted( title ).then( blacklistResultProcessor ), () =>
 				// it's not blacklisted, because the API isn't even available
-				return $.Deferred().resolve( { notBlacklisted: true, unavailable: true } );
-			} );
+				 $.Deferred().resolve( { notBlacklisted: true, unavailable: true } )
+			 );
 		},
 
 		/**
@@ -95,7 +91,7 @@
 		 *  {string} [return.done.href] URL to file description page
 		 */
 		checkUnique: function ( title ) {
-			var checker = this,
+			let checker = this,
 				NS_FILE = mw.config.get( 'wgNamespaceIds' ).file,
 				titleObj, prefix, ext;
 
@@ -112,7 +108,7 @@
 			 * @return {Object}
 			 */
 			function checkUniqueProcessor( data ) {
-				var result, protection, pageId, ntitle, ntitleObj, img;
+				let result, protection, pageId, ntitle, ntitleObj, img;
 
 				result = { isUnique: true };
 
@@ -124,8 +120,8 @@
 					if ( data.query.pages[ -1 ] && !data.query.pages[ -1 ].imageinfo ) {
 						protection = data.query.pages[ -1 ].protection;
 						if ( protection && protection.length > 0 ) {
-							protection.forEach( function ( val ) {
-								if ( mw.config.get( 'wgUserGroups' ).indexOf( val.level ) === -1 ) {
+							protection.forEach( ( val ) => {
+								if ( !mw.config.get( 'wgUserGroups' ).includes( val.level ) ) {
 									result = {
 										isUnique: true,
 										isProtected: true
@@ -211,8 +207,8 @@
 					iiprop: 'url|mime|size',
 					iiurlwidth: 150
 				} ).then( checkUniqueProcessor )
-			).then( function ( exact, fuzzy ) {
-				var result;
+			).then( ( exact, fuzzy ) => {
+				let result;
 				if ( !exact.isUnique || exact.isProtected ) {
 					result = exact;
 				} else if ( !fuzzy.isUnique || fuzzy.isProtected ) {

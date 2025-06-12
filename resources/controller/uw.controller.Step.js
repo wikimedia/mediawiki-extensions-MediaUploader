@@ -26,7 +26,7 @@
 	 * @param {Object} config UploadWizard config object.
 	 */
 	uw.controller.Step = function UWControllerStep( ui, api, config ) {
-		var step = this;
+		const step = this;
 
 		OO.EventEmitter.call( this );
 
@@ -60,11 +60,11 @@
 			'remove-upload': this.removeUpload
 		};
 
-		this.ui.on( 'next-step', function () {
+		this.ui.on( 'next-step', () => {
 			step.moveNext();
 		} );
 
-		this.ui.on( 'previous-step', function () {
+		this.ui.on( 'previous-step', () => {
 			step.movePrevious();
 		} );
 
@@ -109,7 +109,7 @@
 	 * @param {mw.UploadWizardUpload[]} uploads List of uploads being carried forward.
 	 */
 	uw.controller.Step.prototype.load = function ( uploads ) {
-		var step = this;
+		const step = this;
 
 		this.emit( 'load' );
 
@@ -120,7 +120,7 @@
 			test: step.hasData.bind( this )
 		} );
 
-		this.uploads.forEach( function ( upload ) {
+		this.uploads.forEach( ( upload ) => {
 			upload.state = step.stepName;
 
 			step.bindUploadHandlers( upload );
@@ -133,9 +133,9 @@
 	 * Cleanup this step.
 	 */
 	uw.controller.Step.prototype.unload = function () {
-		var step = this;
+		const step = this;
 
-		this.uploads.forEach( function ( upload ) {
+		this.uploads.forEach( ( upload ) => {
 			step.unbindUploadHandlers( upload );
 		} );
 
@@ -173,10 +173,10 @@
 	 * @param {mw.UploadWizardUpload} upload
 	 */
 	uw.controller.Step.prototype.bindUploadHandlers = function ( upload ) {
-		var controller = this;
+		const controller = this;
 
-		Object.keys( this.uploadHandlers ).forEach( function ( event ) {
-			var callback = controller.uploadHandlers[ event ];
+		Object.keys( this.uploadHandlers ).forEach( ( event ) => {
+			const callback = controller.uploadHandlers[ event ];
 			upload.on( event, callback, [ upload ], controller );
 		} );
 	};
@@ -187,10 +187,10 @@
 	 * @param {mw.UploadWizardUpload} upload
 	 */
 	uw.controller.Step.prototype.unbindUploadHandlers = function ( upload ) {
-		var controller = this;
+		const controller = this;
 
-		Object.keys( this.uploadHandlers ).forEach( function ( event ) {
-			var callback = controller.uploadHandlers[ event ];
+		Object.keys( this.uploadHandlers ).forEach( ( event ) => {
+			const callback = controller.uploadHandlers[ event ];
 			upload.off( event, callback, controller );
 		} );
 	};
@@ -220,7 +220,7 @@
 	 * @return {boolean} Whether all of the uploads are in a successful state.
 	 */
 	uw.controller.Step.prototype.showNext = function () {
-		var okCount = this.getUploadStatesCount( this.finishState ),
+		let okCount = this.getUploadStatesCount( this.finishState ),
 			$buttons;
 
 		// abort if all uploads have been removed
@@ -256,13 +256,13 @@
 	 * @return {number}
 	 */
 	uw.controller.Step.prototype.getUploadStatesCount = function ( states ) {
-		var count = 0;
+		let count = 0;
 
 		// normalize to array of states, even though input can be 1 string
 		states = Array.isArray( states ) ? states : [ states ];
 
-		this.uploads.forEach( function ( upload ) {
-			if ( states.indexOf( upload.state ) > -1 ) {
+		this.uploads.forEach( ( upload ) => {
+			if ( states.includes( upload.state ) ) {
 				count++;
 			}
 		} );
@@ -302,7 +302,7 @@
 	 */
 	uw.controller.Step.prototype.removeUpload = function ( upload ) {
 		// remove the upload from the uploads array
-		var index = this.uploads.indexOf( upload );
+		const index = this.uploads.indexOf( upload );
 		if ( index !== -1 ) {
 			this.uploads.splice( index, 1 );
 		}
@@ -317,7 +317,7 @@
 	 * @param {mw.UploadWizardUpload[]} uploads
 	 */
 	uw.controller.Step.prototype.removeUploads = function ( uploads ) {
-		var i,
+		let i,
 			// clone the array of uploads, just to be sure it's not a reference
 			// to this.uploads, which will be modified (and we can't have that
 			// while we're looping it)
@@ -334,8 +334,8 @@
 	uw.controller.Step.prototype.removeErrorUploads = function () {
 		// We must not remove items from an array while iterating over it with $.each (it causes the
 		// next item to be skipped). Find and queue them first, then remove them.
-		var toRemove = [];
-		this.uploads.forEach( function ( upload ) {
+		const toRemove = [];
+		this.uploads.forEach( ( upload ) => {
 			if ( upload.state === 'error' || upload.state === 'recoverable-error' ) {
 				toRemove.push( upload );
 			}

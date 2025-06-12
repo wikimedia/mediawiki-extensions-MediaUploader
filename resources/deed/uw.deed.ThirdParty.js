@@ -26,7 +26,7 @@
 	 * @param {mw.Api} api API object - useful for doing previews
 	 */
 	uw.deed.ThirdParty = function UWDeedThirdParty( config, uploads, api ) {
-		var deed = this;
+		const deed = this;
 
 		uw.deed.Abstract.call( this, 'thirdparty', config );
 
@@ -40,7 +40,7 @@
 		this.sourceInput.$input.attr( 'id', 'mwe-source-' + this.getInstanceCount() );
 		// See uw.DetailsWidget
 		this.sourceInput.getErrors = function () {
-			var
+			const
 				errors = [],
 				minLength = deed.config.minSourceLength,
 				maxLength = deed.config.maxSourceLength,
@@ -74,7 +74,7 @@
 		this.authorInput.$input.attr( 'id', 'mwe-author-' + this.getInstanceCount() );
 		// See uw.DetailsWidget
 		this.authorInput.getErrors = function () {
-			var
+			const
 				errors = [],
 				minLength = deed.config.minAuthorLength,
 				maxLength = deed.config.maxAuthorLength,
@@ -127,7 +127,7 @@
 	};
 
 	uw.deed.ThirdParty.prototype.setFormFields = function ( $selector ) {
-		var $formFields = $( '<div>' ).addClass( 'mediauploader-deed-form-internal' );
+		const $formFields = $( '<div>' ).addClass( 'mediauploader-deed-form-internal' );
 
 		this.$form = $( '<form>' );
 

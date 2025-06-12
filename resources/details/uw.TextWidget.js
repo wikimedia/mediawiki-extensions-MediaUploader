@@ -49,7 +49,7 @@
 	 * @inheritdoc
 	 */
 	uw.TextWidget.prototype.getWarnings = function () {
-		var warnings = [];
+		const warnings = [];
 		this.getEmptyWarning( this.textInput.getValue().trim() === '', warnings );
 
 		return $.Deferred().resolve( warnings ).promise();
@@ -59,7 +59,7 @@
 	 * @inheritdoc
 	 */
 	uw.TextWidget.prototype.getErrors = function () {
-		var
+		const
 			errors = [],
 			text = this.textInput.getValue().trim();
 

@@ -25,7 +25,7 @@
 	 * @param {mw.UploadWizardUpload} upload
 	 */
 	uw.DeedChooserDetailsWidget.prototype.useCustomDeedChooser = function ( upload ) {
-		var $deedDiv;
+		let $deedDiv;
 
 		// Defining own deedChooser for uploads coming from external service
 		if ( upload.file.fromURL ) {
@@ -74,7 +74,7 @@
 	 * @inheritdoc
 	 */
 	uw.DeedChooserDetailsWidget.prototype.getErrors = function () {
-		var errors = [];
+		const errors = [];
 		if ( this.deedChooser ) {
 			if ( !this.deedChooser.deed ) {
 				errors.push( mw.message( 'mediauploader-deeds-need-deed' ) );

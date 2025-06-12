@@ -53,7 +53,7 @@
 	 */
 	uw.ui.Step.prototype.load = function ( uploads ) {
 		// eslint-disable-next-line no-jquery/no-global-selector
-		var offset = $( 'h1' ).first().offset();
+		const offset = $( 'h1' ).first().offset();
 
 		this.movedFrom = false;
 
@@ -88,17 +88,17 @@
 	 * Add a 'next' button to the step's button container
 	 */
 	uw.ui.Step.prototype.addNextButton = function () {
-		var ui = this;
+		const ui = this;
 
 		this.nextButton = new OO.ui.ButtonWidget( {
 			classes: [ 'mediauploader-button-next' ],
 			label: mw.message( 'mediauploader-next' ).text(),
 			flags: [ 'progressive', 'primary' ]
-		} ).on( 'click', function () {
+		} ).on( 'click', () => {
 			ui.emit( 'next-step' );
 		} );
 
-		this.nextButtonPromise.done( function () {
+		this.nextButtonPromise.done( () => {
 			ui.$buttons.append( ui.nextButton.$element );
 		} );
 	};
@@ -107,16 +107,16 @@
 	 * Add a 'previous' button to the step's button container
 	 */
 	uw.ui.Step.prototype.addPreviousButton = function () {
-		var ui = this;
+		const ui = this;
 
 		this.previousButton = new OO.ui.ButtonWidget( {
 			classes: [ 'mediauploader-button-previous' ],
 			label: mw.message( 'mediauploader-previous' ).text()
-		} ).on( 'click', function () {
+		} ).on( 'click', () => {
 			ui.emit( 'previous-step' );
 		} );
 
-		this.previousButtonPromise.done( function () {
+		this.previousButtonPromise.done( () => {
 			ui.$buttons.append( ui.previousButton.$element );
 		} );
 	};

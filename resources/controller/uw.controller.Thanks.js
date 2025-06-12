@@ -38,7 +38,7 @@
 	OO.inheritClass( uw.controller.Thanks, uw.controller.Step );
 
 	uw.controller.Thanks.prototype.load = function ( uploads ) {
-		var thanks = this;
+		const thanks = this;
 
 		uw.controller.Step.prototype.load.call( this, uploads );
 
@@ -48,7 +48,7 @@
 			return;
 		}
 
-		uploads.forEach( function ( upload ) {
+		uploads.forEach( ( upload ) => {
 			thanks.ui.addUpload( upload );
 		} );
 	};

@@ -51,15 +51,15 @@
 	 * @param {mw.UploadWizardUpload[]} uploads List of uploads being carried forward.
 	 */
 	uw.controller.Details.prototype.load = function ( uploads ) {
-		var controller = this;
+		const controller = this;
 
 		uw.controller.Step.prototype.load.call( this, uploads );
 
 		// make sure queue is empty before starting this step
 		this.queue.abortExecuting();
 
-		this.uploads.forEach( function ( upload ) {
-			var serialized;
+		this.uploads.forEach( ( upload ) => {
+			let serialized;
 
 			// get existing details
 			serialized = upload.details ? upload.details.getSerialized() : null;
@@ -90,7 +90,7 @@
 	};
 
 	uw.controller.Details.prototype.addCopyMetadataFeature = function () {
-		var first,
+		let first,
 			// uploads can only be edited when they're in a certain state:
 			// a flat out upload failure or a completed upload can not be edited
 			invalidStates = [ 'aborted', 'error', 'complete' ],
@@ -107,8 +107,8 @@
 		// rest failed because of abusefilter (or another recoverable error), in
 		// which case we'll want the "copy" feature to appear below the 2nd
 		// upload (or the first not-yet-completed not flat-out-failed upload)
-		this.uploads.some( function ( upload ) {
-			if ( upload && invalidStates.indexOf( upload.state ) === -1 ) {
+		this.uploads.some( ( upload ) => {
+			if ( upload && !invalidStates.includes( upload.state ) ) {
 				first = upload;
 				return true; // Break Array.some loop
 			}
@@ -148,9 +148,9 @@
 	 * TODO move the rest of the logic here from mw.UploadWizard
 	 */
 	uw.controller.Details.prototype.startDetails = function () {
-		var details = this;
+		const details = this;
 
-		this.valid().done( function ( valid ) {
+		this.valid().done( ( valid ) => {
 			if ( valid ) {
 				details.ui.hideEndButtons();
 				details.submit();
@@ -166,7 +166,7 @@
 	 * @return {jQuery.Promise}
 	 */
 	uw.controller.Details.prototype.valid = function () {
-		var detailsController = this,
+		const detailsController = this,
 			// validityPromises will hold all promises for all uploads;
 			// prefilling with a bogus promise (no warnings & errors) to
 			// ensure $.when always resolves with an array of multiple
@@ -176,14 +176,14 @@
 			validityPromises = [ $.Deferred().resolve( [], [] ).promise() ],
 			titles = [];
 
-		this.uploads.forEach( function ( upload ) {
+		this.uploads.forEach( ( upload ) => {
 			// Update any error/warning messages about all DetailsWidgets
-			var promise = upload.details.checkValidity( true ).then( function () {
-				var warnings = [],
+			const promise = upload.details.checkValidity( true ).then( function () {
+				let warnings = [],
 					errors = [],
 					title;
 
-				Array.prototype.forEach.call( arguments, function ( result ) {
+				Array.prototype.forEach.call( arguments, ( result ) => {
 					warnings = warnings.concat( result[ 0 ] );
 					errors = errors.concat( result[ 1 ] );
 				} );
@@ -211,10 +211,10 @@
 		// validityPromises is an array of promises that each resolve with [warnings, errors]
 		// for each upload - now iterate them all to figure out if we can proceed
 		return $.when.apply( $, validityPromises ).then( function () {
-			var warnings = [],
+			let warnings = [],
 				errors = [];
 
-			Array.prototype.forEach.call( arguments, function ( result ) {
+			Array.prototype.forEach.call( arguments, ( result ) => {
 				warnings = warnings.concat( result[ 0 ] );
 				errors = errors.concat( result[ 1 ] );
 			} );
@@ -234,19 +234,15 @@
 	};
 
 	uw.controller.Details.prototype.confirmationDialog = function ( warnings ) {
-		var i,
+		let i,
 			$message = $( '<p>' ).text( mw.message( 'mediauploader-dialog-warning' ).text() ),
 			$ul = $( '<ul>' );
 
 		// parse warning messages
-		warnings = warnings.map( function ( warning ) {
-			return warning.text();
-		} );
+		warnings = warnings.map( ( warning ) => warning.text() );
 
 		// omit duplicates
-		warnings = warnings.filter( function ( warning, j, warningsOld ) {
-			return warningsOld.indexOf( warning ) === j;
-		} );
+		warnings = warnings.filter( ( warning, j, warningsOld ) => warningsOld.indexOf( warning ) === j );
 
 		for ( i = 0; i < warnings.length; i++ ) {
 			$ul.append( $( '<li>' ).text( warnings[ i ] ) );
@@ -265,9 +261,7 @@
 					label: mw.msg( 'mediauploader-dialog-continue' )
 				}
 			]
-		} ).closed.then( function ( data ) {
-			return !!( data && data.action === 'continue' );
-		} );
+		} ).closed.then( ( data ) => !!( data && data.action === 'continue' ) );
 	};
 
 	uw.controller.Details.prototype.canTransition = function ( upload ) {
@@ -293,11 +287,11 @@
 	 * @return {jQuery.Promise}
 	 */
 	uw.controller.Details.prototype.transitionAll = function () {
-		var
+		const
 			deferred = $.Deferred(),
 			details = this;
 
-		this.uploads.forEach( function ( upload ) {
+		this.uploads.forEach( ( upload ) => {
 			if ( details.canTransition( upload ) ) {
 				details.queue.addItem( upload );
 			}
@@ -315,9 +309,9 @@
 	 * @return {jQuery.Promise}
 	 */
 	uw.controller.Details.prototype.submit = function () {
-		var details = this;
+		const details = this;
 
-		this.uploads.forEach( function ( upload ) {
+		this.uploads.forEach( ( upload ) => {
 			// Clear error state
 			if ( upload.state === 'error' || upload.state === 'recoverable-error' ) {
 				upload.state = details.stepName;
@@ -331,7 +325,7 @@
 		this.ui.disableEdits();
 		this.removeCopyMetadataFeature();
 
-		return this.transitionAll().then( function () {
+		return this.transitionAll().then( () => {
 			details.showErrors();
 
 			if ( details.showNext() ) {

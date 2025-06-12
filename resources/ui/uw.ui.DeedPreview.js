@@ -24,10 +24,10 @@
 	 * @param {mw.UploadWizardUpload} upload
 	 */
 	uw.ui.DeedPreview = function UWUIDeedPreview( upload ) {
-		var $thumbnailDiv = $( '<div>' ).addClass( 'mediauploader-thumbnail' );
+		const $thumbnailDiv = $( '<div>' ).addClass( 'mediauploader-thumbnail' );
 		this.$thumbnailDiv = $thumbnailDiv;
 		// This must match the CSS dimensions of .mediauploader-thumbnail
-		upload.getThumbnail( 120, 120 ).done( function ( thumb ) {
+		upload.getThumbnail( 120, 120 ).done( ( thumb ) => {
 			mw.UploadWizard.placeThumbnail( $thumbnailDiv, thumb );
 		} );
 		// eslint-disable-next-line no-jquery/no-global-selector

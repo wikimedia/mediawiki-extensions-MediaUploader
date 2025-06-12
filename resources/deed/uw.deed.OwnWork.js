@@ -26,7 +26,7 @@
 	 * @param {mw.Api} api API object - useful for doing previews
 	 */
 	uw.deed.OwnWork = function UWDeedOwnWork( config, uploads, api ) {
-		var deed = this,
+		let deed = this,
 			prefAuthName = mw.user.options.get( 'upwiz_licensename' );
 
 		uw.deed.Abstract.call( this, 'ownwork', config );
@@ -49,7 +49,7 @@
 			value: prefAuthName,
 			classes: [ 'mediauploader-sign' ]
 		} );
-		this.authorInput.on( 'change', function () {
+		this.authorInput.on( 'change', () => {
 			deed.fakeAuthorInput.setValue( deed.authorInput.getValue() );
 		} );
 
@@ -80,7 +80,7 @@
 	};
 
 	uw.deed.OwnWork.prototype.setFormFields = function ( $selector ) {
-		var $customDiv, $formFields, $toggler, crossfaderWidget, defaultLicense,
+		let $customDiv, $formFields, $toggler, crossfaderWidget, defaultLicense,
 			defaultLicenseURL, $defaultLicenseLink, $standardDiv, $crossfader,
 			deed, languageCode, defaultLicConfig;
 
@@ -141,7 +141,7 @@
 
 		this.authorInputField = new uw.FieldLayout( crossfaderWidget );
 		// Aggregate 'change' event
-		this.authorInput.on( 'change', OO.ui.debounce( function () {
+		this.authorInput.on( 'change', OO.ui.debounce( () => {
 			crossfaderWidget.emit( 'change' );
 		}, 500 ) );
 
@@ -152,7 +152,7 @@
 		$toggler = $( '<p>' ).addClass( 'mwe-more-options' ).css( 'text-align', 'right' )
 			.append( $( '<a>' )
 				.msg( 'mediauploader-license-show-all' )
-				.on( 'click', function () {
+				.on( 'click', () => {
 					if ( $crossfader.data( 'crossfadeDisplay' ).get( 0 ) === $customDiv.get( 0 ) ) {
 						deed.standardLicense();
 					} else {
@@ -171,8 +171,8 @@
 	};
 
 	uw.deed.OwnWork.prototype.setDefaultLicenses = function () {
-		var defaultLicenses = {};
-		this.getDefaultLicenses().forEach( function ( licName ) {
+		const defaultLicenses = {};
+		this.getDefaultLicenses().forEach( ( licName ) => {
 			defaultLicenses[ licName ] = true;
 		} );
 		this.licenseInput.setValues( defaultLicenses );
@@ -189,10 +189,10 @@
 	 * @inheritdoc
 	 */
 	uw.deed.OwnWork.prototype.getAuthorWikiText = function () {
-		var author = this.authorInput.getValue(),
+		let author = this.authorInput.getValue(),
 			userPageTitle;
 
-		if ( author.indexOf( '[' ) >= 0 || author.indexOf( '{' ) >= 0 ) {
+		if ( author.includes( '[' ) || author.includes( '{' ) ) {
 			return author;
 		}
 
@@ -236,7 +236,7 @@
 	};
 
 	uw.deed.OwnWork.prototype.swapNodes = function ( a, b ) {
-		var
+		const
 			parentA = a.parentNode,
 			parentB = b.parentNode,
 			nextA = a.nextSibling,
@@ -252,7 +252,7 @@
 	 * @return {string[]}
 	 */
 	uw.deed.OwnWork.prototype.getDefaultLicenses = function () {
-		var license, ownWork = this.config.licensing.ownWork;
+		let license, ownWork = this.config.licensing.ownWork;
 
 		if ( this.config.licensing.defaultType === 'ownWork' ) {
 			license = ownWork.defaults;
@@ -267,7 +267,7 @@
 	};
 
 	uw.deed.OwnWork.prototype.standardLicense = function () {
-		var deed = this,
+		const deed = this,
 			$crossfader = this.$selector.find( '.mediauploader-crossfader' ),
 			$standardDiv = this.$selector.find( '.mediauploader-standard' ),
 			$toggler = this.$selector.find( '.mwe-more-options a' );
@@ -275,7 +275,7 @@
 		this.setDefaultLicenses();
 
 		$crossfader.morphCrossfade( $standardDiv )
-			.promise().done( function () {
+			.promise().done( () => {
 				deed.swapNodes( deed.authorInput.$element[ 0 ], deed.fakeAuthorInput.$element[ 0 ] );
 			} );
 
@@ -289,13 +289,13 @@
 	};
 
 	uw.deed.OwnWork.prototype.customLicense = function () {
-		var deed = this,
+		const deed = this,
 			$crossfader = this.$selector.find( '.mediauploader-crossfader' ),
 			$customDiv = this.$selector.find( '.mediauploader-custom' ),
 			$toggler = this.$selector.find( '.mwe-more-options a' );
 
 		$crossfader.morphCrossfade( $customDiv )
-			.promise().done( function () {
+			.promise().done( () => {
 				deed.swapNodes( deed.authorInput.$element[ 0 ], deed.fakeAuthorInput.$element[ 0 ] );
 			} );
 
@@ -313,7 +313,7 @@
 	 * @return {jQuery.Promise}
 	 */
 	uw.deed.OwnWork.prototype.getAuthorErrors = function ( input ) {
-		var
+		const
 			errors = [],
 			minLength = this.config.minAuthorLength,
 			maxLength = this.config.maxAuthorLength,

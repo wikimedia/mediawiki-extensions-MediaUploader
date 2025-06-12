@@ -81,7 +81,7 @@
 	 * @private
 	 */
 	uw.SingleLanguageInputWidget.prototype.onRemoveClick = function () {
-		var element = this.getElementGroup();
+		const element = this.getElementGroup();
 
 		if ( element && typeof element.removeItems === 'function' ) {
 			element.removeItems( [ this ] );
@@ -120,7 +120,7 @@
 	 * @return {string}
 	 */
 	uw.SingleLanguageInputWidget.prototype.getDefaultLanguage = function () {
-		var defaultLanguage;
+		let defaultLanguage;
 
 		if ( this.defaultLanguage !== undefined ) {
 			return this.defaultLanguage;
@@ -153,7 +153,7 @@
 	 * @inheritdoc
 	 */
 	uw.SingleLanguageInputWidget.prototype.getWarnings = function () {
-		var warnings = [];
+		const warnings = [];
 		this.getEmptyWarning( this.textInput.getValue().trim() === '', warnings );
 
 		return $.Deferred().resolve( warnings ).promise();
@@ -163,7 +163,7 @@
 	 * @inheritdoc
 	 */
 	uw.SingleLanguageInputWidget.prototype.getErrors = function () {
-		var
+		const
 			errors = [],
 			text = this.textInput.getValue().trim();
 
@@ -221,7 +221,7 @@
 	 * @inheritdoc
 	 */
 	uw.SingleLanguageInputWidget.prototype.getWikiText = function () {
-		var
+		let
 			language = this.getLanguage(),
 			text = this.getText();
 

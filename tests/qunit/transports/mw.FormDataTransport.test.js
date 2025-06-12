@@ -19,7 +19,7 @@
 	QUnit.module( 'mw.FormDataTransport', QUnit.newMwEnvironment() );
 
 	function createTransport( chunkSize, api ) {
-		var config;
+		let config;
 
 		chunkSize = chunkSize || 0;
 		api = api || {};
@@ -33,14 +33,14 @@
 		return new mw.FormDataTransport( api, {}, config );
 	}
 
-	QUnit.test( 'Constructor sanity test', function ( assert ) {
-		var transport = createTransport();
+	QUnit.test( 'Constructor sanity test', ( assert ) => {
+		const transport = createTransport();
 
 		assert.true( !!transport );
 	} );
 
 	QUnit.test( 'abort', function ( assert ) {
-		var transport = createTransport( 0 ),
+		const transport = createTransport( 0 ),
 			request = $.Deferred().promise( { abort: this.sandbox.stub() } );
 
 		transport.request = request;
@@ -53,8 +53,8 @@
 		assert.true( transport.aborted );
 	} );
 
-	QUnit.test( 'createParams', function ( assert ) {
-		var transport = createTransport( 10 ),
+	QUnit.test( 'createParams', ( assert ) => {
+		const transport = createTransport( 10 ),
 			params = transport.createParams( 'foobar.jpg', 0 );
 
 		assert.true( !!params );
@@ -64,7 +64,7 @@
 	} );
 
 	QUnit.test( 'post', function ( assert ) {
-		var stub = this.sandbox.stub(),
+		const stub = this.sandbox.stub(),
 			// post() works on a promise and binds .then, so we have to make
 			// sure it actually is a promise, but also that it calls our stub
 			transport = createTransport( 10, { post: function () {
@@ -82,7 +82,7 @@
 	} );
 
 	QUnit.test( 'upload', function ( assert ) {
-		var request,
+		let request,
 			transport = createTransport( 10, new mw.Api() ),
 			fakeFile = {
 				name: 'test file for fdt.jpg',
@@ -103,7 +103,7 @@
 	} );
 
 	QUnit.test( 'uploadChunk', function ( assert ) {
-		var request,
+		let request,
 			transport = createTransport( 10, new mw.Api() ),
 			fakeFile = {
 				name: 'test file for fdt.jpg',
@@ -132,7 +132,7 @@
 
 	// test invalid server response (in missing 'stage' param)
 	QUnit.test( 'checkStatus invalid API response', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			transport = createTransport( 10, new mw.Api() ),
 			tstub = this.sandbox.stub(),
 			poststub = this.sandbox.stub( transport.api, 'post' ),
@@ -143,7 +143,7 @@
 		postd.resolve( { upload: { result: 'Poll' } } );
 
 		// call tstub upon checkStatus failure, and verify it got called correctly
-		transport.checkStatus().fail( tstub, function () {
+		transport.checkStatus().fail( tstub, () => {
 			assert.true( tstub.calledWith( 'server-error', { errors: [ {
 				code: 'server-error',
 				html: mw.message( 'api-clientside-error-invalidresponse' ).parse()
@@ -154,7 +154,7 @@
 
 	// test retry after server responds upload is still incomplete
 	QUnit.test( 'checkStatus retry', function ( assert ) {
-		var transport = createTransport( 10, new mw.Api() ),
+		const transport = createTransport( 10, new mw.Api() ),
 			usstub = this.sandbox.stub(),
 			poststub = this.sandbox.stub( transport.api, 'post' ),
 			postd = $.Deferred(),
@@ -176,14 +176,14 @@
 
 		// confirm that, once second API call was successful, status resolves,
 		// 2 API calls have gone out & the failed call updates stage accordingly
-		return transport.checkStatus().done( function () {
+		return transport.checkStatus().done( () => {
 			assert.true( poststub.calledTwice );
 			assert.true( usstub.firstCall.calledWith( 'queued' ) );
 		} );
 	} );
 
 	QUnit.test( 'checkStatus success', function ( assert ) {
-		var transport = createTransport( 10, new mw.Api() ),
+		const transport = createTransport( 10, new mw.Api() ),
 			tstub = this.sandbox.stub(),
 			usstub = this.sandbox.stub(),
 			poststub = this.sandbox.stub( transport.api, 'post' ),
@@ -195,14 +195,14 @@
 		poststub.returns( postd.promise() );
 		postd.resolve( 'testing' );
 
-		return transport.checkStatus().done( tstub, function () {
+		return transport.checkStatus().done( tstub, () => {
 			assert.true( tstub.calledWith( 'testing' ) );
 			assert.false( usstub.called );
 		} );
 	} );
 
 	QUnit.test( 'checkStatus error API response', function ( assert ) {
-		var done = assert.async(),
+		const done = assert.async(),
 			transport = createTransport( 10, new mw.Api() ),
 			tstub = this.sandbox.stub(),
 			usstub = this.sandbox.stub(),
@@ -215,7 +215,7 @@
 		poststub.returns( postd.promise() );
 		postd.reject( 'testing', { error: 'testing' } );
 
-		transport.checkStatus().fail( tstub, function () {
+		transport.checkStatus().fail( tstub, () => {
 			assert.true( tstub.calledWith( 'testing', { error: 'testing' } ) );
 			assert.false( usstub.called );
 			done();

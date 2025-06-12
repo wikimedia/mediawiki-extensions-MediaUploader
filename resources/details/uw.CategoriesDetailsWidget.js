@@ -1,6 +1,6 @@
 ( function ( uw ) {
 
-	var NS_CATEGORY = mw.config.get( 'wgNamespaceIds' ).category;
+	const NS_CATEGORY = mw.config.get( 'wgNamespaceIds' ).category;
 
 	/**
 	 * A categories field in UploadWizard's "Details" step form.
@@ -9,7 +9,7 @@
 	 * @param {Object} config
 	 */
 	uw.CategoriesDetailsWidget = function UWCategoriesDetailsWidget( config ) {
-		var catDetails = this;
+		const catDetails = this;
 		this.config = config;
 
 		uw.CategoriesDetailsWidget.parent.call( this, this.config );
@@ -19,7 +19,7 @@
 		} );
 
 		this.categoriesWidget.createTagItemWidget = function ( data ) {
-			var widget = this.constructor.prototype.createTagItemWidget.call( this, data );
+			const widget = this.constructor.prototype.createTagItemWidget.call( this, data );
 			if ( !widget ) {
 				return null;
 			}
@@ -43,7 +43,7 @@
 	 * @inheritdoc
 	 */
 	uw.CategoriesDetailsWidget.prototype.getErrors = function () {
-		var errors = [];
+		const errors = [];
 
 		if ( this.config.required && this.categoriesWidget.getItems().length === 0 ) {
 			errors.push( mw.message( 'mediauploader-error-blank' ) );
@@ -56,12 +56,10 @@
 	 * @inheritdoc
 	 */
 	uw.CategoriesDetailsWidget.prototype.getWarnings = function () {
-		var warnings = [];
+		const warnings = [];
 		this.getEmptyWarning( this.categoriesWidget.getItems().length === 0, warnings );
 
-		if ( this.categoriesWidget.getItems().some( function ( item ) {
-			return item.missing;
-		} ) ) {
+		if ( this.categoriesWidget.getItems().some( ( item ) => item.missing ) ) {
 			warnings.push( mw.message( 'mediauploader-categories-missing' ) );
 		}
 		return $.Deferred().resolve( warnings ).promise();
@@ -71,7 +69,7 @@
 	 * @inheritdoc
 	 */
 	uw.CategoriesDetailsWidget.prototype.getWikiText = function () {
-		var hiddenCats, missingCatsWikiText, categories, wikiText;
+		let hiddenCats, missingCatsWikiText, categories, wikiText;
 
 		hiddenCats = [];
 		if ( this.config.hiddenDefault ) {
@@ -84,10 +82,10 @@
 				hiddenCats.push( mw.UploadWizard.config.trackingCategory.campaign );
 			}
 		}
-		hiddenCats = hiddenCats.filter( function ( cat ) {
+		hiddenCats = hiddenCats.filter( ( cat ) =>
 			// Keep only valid titles
-			return !!mw.Title.makeTitle( NS_CATEGORY, cat );
-		} );
+			 !!mw.Title.makeTitle( NS_CATEGORY, cat )
+		 );
 
 		missingCatsWikiText = null;
 		if (
@@ -97,15 +95,11 @@
 			missingCatsWikiText = this.config.missingWikitext;
 		}
 
-		categories = this.categoriesWidget.getItems().map( function ( item ) {
-			return item.data;
-		} );
+		categories = this.categoriesWidget.getItems().map( ( item ) => item.data );
 
 		// add all categories
 		wikiText = categories.concat( hiddenCats )
-			.map( function ( cat ) {
-				return '[[' + mw.Title.makeTitle( NS_CATEGORY, cat ).getPrefixedText() + ']]';
-			} )
+			.map( ( cat ) => '[[' + mw.Title.makeTitle( NS_CATEGORY, cat ).getPrefixedText() + ']]' )
 			.join( '\n' );
 
 		// if so configured, and there are no user-visible categories, add warning
@@ -121,9 +115,7 @@
 	 * @return {Object} See #setSerialized
 	 */
 	uw.CategoriesDetailsWidget.prototype.getSerialized = function () {
-		return this.categoriesWidget.getItems().map( function ( item ) {
-			return item.data;
-		} );
+		return this.categoriesWidget.getItems().map( ( item ) => item.data );
 	};
 
 	/**
@@ -131,10 +123,10 @@
 	 * @param {string[]} serialized List of categories
 	 */
 	uw.CategoriesDetailsWidget.prototype.setSerialized = function ( serialized ) {
-		var categories = ( serialized || [] ).filter( function ( cat ) {
+		const categories = ( serialized || [] ).filter( ( cat ) =>
 			// Keep only valid titles
-			return !!mw.Title.makeTitle( NS_CATEGORY, cat );
-		} );
+			 !!mw.Title.makeTitle( NS_CATEGORY, cat )
+		 );
 		this.categoriesWidget.setValue( categories );
 	};
 

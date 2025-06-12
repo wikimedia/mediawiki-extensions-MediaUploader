@@ -18,15 +18,15 @@
 ( function ( uw ) {
 	QUnit.module( 'uw.controller.Thanks', QUnit.newMwEnvironment() );
 
-	QUnit.test( 'Constructor sanity test', function ( assert ) {
-		var step = new uw.controller.Thanks( new mw.Api(), { display: { thanksLabel: 'Thanks!' } } );
+	QUnit.test( 'Constructor sanity test', ( assert ) => {
+		const step = new uw.controller.Thanks( new mw.Api(), { display: { thanksLabel: 'Thanks!' } } );
 		assert.true( !!step );
 		assert.true( step instanceof uw.controller.Step );
 		assert.true( !!step.ui );
 	} );
 
 	QUnit.test( 'load', function ( assert ) {
-		var step = new uw.controller.Thanks( new mw.Api(), {} ),
+		const step = new uw.controller.Thanks( new mw.Api(), {} ),
 			auStub = this.sandbox.stub( step.ui, 'addUpload' );
 
 		this.sandbox.stub( step.ui, 'load' );
@@ -39,8 +39,8 @@
 		assert.strictEqual( auStub.callCount, 3 );
 	} );
 
-	QUnit.test( 'Custom button configuration', function ( assert ) {
-		var config = {
+	QUnit.test( 'Custom button configuration', ( assert ) => {
+		const config = {
 				display: {
 					homeButton: {
 						label: 'This is just a test',

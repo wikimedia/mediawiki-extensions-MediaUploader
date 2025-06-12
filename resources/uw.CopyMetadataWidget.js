@@ -10,7 +10,7 @@
 	 * @cfg {mw.UploadWizardUpload[]} copyTo Uploads to copy the details to
 	 */
 	uw.CopyMetadataWidget = function UWCopyMetadataWidget( config ) {
-		var metadataType, defaultStatus, copyMetadataMsg,
+		let metadataType, defaultStatus, copyMetadataMsg,
 			checkboxes = [],
 			$copyMetadataWrapperDiv = $( '<div>' ),
 			$copyMetadataDiv = $( '<div>' );
@@ -118,7 +118,7 @@
 	 * @private
 	 */
 	uw.CopyMetadataWidget.prototype.onCopyClick = function () {
-		var metadataTypes = this.checkboxesWidget.findSelectedItemsData();
+		const metadataTypes = this.checkboxesWidget.findSelectedItemsData();
 		this.copyMetadata( metadataTypes );
 
 		this.undoButton.toggle( true );
@@ -153,7 +153,7 @@
 	 * @param {string[]} metadataTypes Types to copy, as defined in the copyMetadataTypes property
 	 */
 	uw.CopyMetadataWidget.prototype.copyMetadata = function ( metadataTypes ) {
-		var titleZero, matches, i,
+		let titleZero, matches, i,
 			uploads = this.copyTo,
 			sourceUpload = this.copyFrom,
 			serialized = sourceUpload.details.getSerialized(),
@@ -164,7 +164,7 @@
 			copyingOther = false;
 
 		// Filter serialized data to only the types we want to copy
-		metadataTypes.forEach( function ( type ) {
+		metadataTypes.forEach( ( type ) => {
 			sourceValue[ type ] = serialized[ type ];
 			copyingTitle = copyingTitle || type === 'title';
 			copyingOther = copyingOther || type === 'other';
@@ -193,8 +193,8 @@
 				// numbers.
 				sourceValue.title.title = titleZero.replace( /(\D+)(\d{1,3})(\D*)$/,
 					// eslint-disable-next-line no-loop-func
-					function ( str, m1, m2, m3 ) {
-						var newstr = String( +m2 + i );
+					( str, m1, m2, m3 ) => {
+						const newstr = String( +m2 + i );
 						return m1 + new Array( m2.length + 1 - newstr.length )
 							.join( '0' ) + newstr + m3;
 					}
@@ -210,7 +210,7 @@
 	 * Restore previously saved metadata that we backed up when copying.
 	 */
 	uw.CopyMetadataWidget.prototype.restoreMetadata = function () {
-		var i,
+		let i,
 			uploads = this.copyTo;
 
 		for ( i = 0; i < uploads.length; i++ ) {

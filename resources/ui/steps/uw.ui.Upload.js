@@ -25,7 +25,7 @@
 	 * @param {Object} config UploadWizard config object.
 	 */
 	uw.ui.Upload = function UWUIUpload( config ) {
-		var upload = this;
+		const upload = this;
 
 		this.config = config;
 
@@ -58,14 +58,14 @@
 		this.nextStepButtonAllOk = new OO.ui.ButtonWidget( {
 			label: mw.message( 'mediauploader-next-file' ).text(),
 			flags: [ 'progressive', 'primary' ]
-		} ).on( 'click', function () {
+		} ).on( 'click', () => {
 			upload.emit( 'next-step' );
 		} );
 
 		this.retryButtonSomeFailed = new OO.ui.ButtonWidget( {
 			label: mw.message( 'mediauploader-file-retry' ).text(),
 			flags: [ 'progressive' ]
-		} ).on( 'click', function () {
+		} ).on( 'click', () => {
 			upload.hideEndButtons();
 			upload.emit( 'retry' );
 		} );
@@ -73,14 +73,14 @@
 		this.nextStepButtonSomeFailed = new OO.ui.ButtonWidget( {
 			label: mw.message( 'mediauploader-next-file-despite-failures' ).text(),
 			flags: [ 'progressive', 'primary' ]
-		} ).on( 'click', function () {
+		} ).on( 'click', () => {
 			upload.emit( 'next-step' );
 		} );
 
 		this.retryButtonAllFailed = new OO.ui.ButtonWidget( {
 			label: mw.message( 'mediauploader-file-retry' ).text(),
 			flags: [ 'progressive' ]
-		} ).on( 'click', function () {
+		} ).on( 'click', () => {
 			upload.hideEndButtons();
 			upload.emit( 'retry' );
 		} );
@@ -145,7 +145,7 @@
 	 * @param {boolean} more
 	 */
 	uw.ui.Upload.prototype.setAddButtonText = function ( more ) {
-		var msg = 'mediauploader-add-file-';
+		let msg = 'mediauploader-add-file-';
 
 		if ( more ) {
 			msg += 'n';
@@ -160,7 +160,7 @@
 	};
 
 	uw.ui.Upload.prototype.load = function ( uploads ) {
-		var ui = this;
+		const ui = this;
 
 		uw.ui.Step.prototype.load.call( this, uploads );
 
@@ -177,17 +177,17 @@
 				)
 		);
 
-		this.addFile.on( 'change', function ( files ) {
+		this.addFile.on( 'change', ( files ) => {
 			ui.emit( 'files-added', files );
 			ui.addFile.setValue( null );
 		} );
 	};
 
 	uw.ui.Upload.prototype.displayUploads = function ( uploads ) {
-		var thumbPromise,
+		let thumbPromise,
 			$uploadInterfaceDivs = $( [] );
 
-		uploads.forEach( function ( upload ) {
+		uploads.forEach( ( upload ) => {
 			// We'll attach all interfaces to the DOM at once rather than one-by-one, for better
 			// performance
 			$uploadInterfaceDivs = $uploadInterfaceDivs.add( upload.ui.$div );
@@ -199,15 +199,15 @@
 		// Display thumbnails, but not all at once because they're somewhat expensive to generate.
 		// This will wait for each thumbnail to be complete before starting the next one.
 		thumbPromise = $.Deferred().resolve();
-		uploads.forEach( function ( upload ) {
-			thumbPromise = thumbPromise.then( function () {
-				var deferred = $.Deferred();
+		uploads.forEach( ( upload ) => {
+			thumbPromise = thumbPromise.then( () => {
+				const deferred = $.Deferred();
 				setTimeout( function () {
 					if ( this.movedFrom ) {
 						// We're no longer displaying any of these thumbnails, stop
 						deferred.reject();
 					}
-					upload.ui.showThumbnail().done( function () {
+					upload.ui.showThumbnail().done( () => {
 						deferred.resolve();
 					} );
 				} );
@@ -217,9 +217,9 @@
 	};
 
 	uw.ui.Upload.prototype.addNextButton = function () {
-		var ui = this;
+		const ui = this;
 
-		this.nextButtonPromise.done( function () {
+		this.nextButtonPromise.done( () => {
 			ui.$buttons.append(
 				$( '<div>' )
 					.addClass( 'mediauploader-file-next-all-ok mediauploader-file-endchoice' )
@@ -319,12 +319,12 @@
 	 * @param {string} extension
 	 */
 	uw.ui.Upload.prototype.showBadExtensionError = function ( filename, extension ) {
-		var $errorMessage = $( '<p>' ).msg( 'mediauploader-upload-error-bad-filename-extension', extension );
+		const $errorMessage = $( '<p>' ).msg( 'mediauploader-upload-error-bad-filename-extension', extension );
 		this.showFilenameError( $errorMessage );
 	};
 
 	uw.ui.Upload.prototype.showMissingExtensionError = function () {
-		var $errorMessage = $( '<p>' ).msg( 'mediauploader-upload-error-bad-filename-no-extension' );
+		const $errorMessage = $( '<p>' ).msg( 'mediauploader-upload-error-bad-filename-no-extension' );
 		this.showFilenameError(
 			$( '<div>' ).append(
 				$errorMessage,

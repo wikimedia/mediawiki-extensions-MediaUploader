@@ -24,7 +24,7 @@
 	 * @constructor
 	 */
 	uw.ui.Details = function UWUIDetails() {
-		var details = this;
+		const details = this;
 
 		function startDetails() {
 			details.emit( 'start-details' );
@@ -48,7 +48,7 @@
 		this.nextButtonDespiteFailures = new OO.ui.ButtonWidget( {
 			label: mw.message( 'mediauploader-next-file-despite-failures' ).text(),
 			flags: [ 'progressive' ]
-		} ).on( 'click', function () {
+		} ).on( 'click', () => {
 			details.emit( 'finalize-details-after-removal' );
 		} );
 
@@ -85,9 +85,9 @@
 	};
 
 	uw.ui.Details.prototype.addNextButton = function () {
-		var ui = this;
+		const ui = this;
 
-		this.nextButtonPromise.done( function () {
+		this.nextButtonPromise.done( () => {
 			ui.$buttons.append(
 				$( '<div>' )
 					.addClass( 'mediauploader-file-next-all-ok mediauploader-file-endchoice' )
@@ -164,14 +164,14 @@
 	 * This method also opens up "more info" if the form has errors.
 	 */
 	uw.ui.Details.prototype.showErrors = function () {
-		var $errorElements = this.$div
+		const $errorElements = this.$div
 				// TODO Evil
 				.find( '.oo-ui-fieldLayout-messages-error' ),
 			errorCount = $errorElements.length;
 
 		// Open "more info" if that part of the form has errors
 		$errorElements.each( function () {
-			var $collapsibleWrapper = $( this ).closest( '.mwe-more-details' );
+			const $collapsibleWrapper = $( this ).closest( '.mwe-more-details' );
 			if ( $collapsibleWrapper.length ) {
 				$collapsibleWrapper.data( 'mw-collapsible' ).expand();
 			}
@@ -199,14 +199,14 @@
 	 * See #showErrors for details.
 	 */
 	uw.ui.Details.prototype.showWarnings = function () {
-		var $warningElements = this.$div
+		const $warningElements = this.$div
 				// TODO Evil
 				.find( '.oo-ui-fieldLayout-messages-notice' ),
 			warningCount = $warningElements.length;
 
 		// Open "more info" if that part of the form has warnings
 		$warningElements.each( function () {
-			var $collapsibleWrapper = $( this ).closest( '.mwe-more-details' );
+			const $collapsibleWrapper = $( this ).closest( '.mwe-more-details' );
 			if ( $collapsibleWrapper.length ) {
 				$collapsibleWrapper.data( 'mw-collapsible' ).expand();
 			}

@@ -19,7 +19,7 @@
 	QUnit.module( 'mw.UploadWizardUpload', QUnit.newMwEnvironment() );
 
 	function createUpload( filename ) {
-		var upload,
+		let upload,
 			oldconf = mw.UploadWizard.config;
 
 		mw.UploadWizard.config = {};
@@ -39,14 +39,14 @@
 		return upload;
 	}
 
-	QUnit.test( 'constructor sanity test', function ( assert ) {
-		var upload = createUpload();
+	QUnit.test( 'constructor sanity test', ( assert ) => {
+		const upload = createUpload();
 
 		assert.true( !!upload );
 	} );
 
-	QUnit.test( 'getBasename', function ( assert ) {
-		var upload;
+	QUnit.test( 'getBasename', ( assert ) => {
+		let upload;
 
 		upload = createUpload( 'path/to/filename.png' );
 		assert.strictEqual( upload.getBasename(), 'filename.png', 'Path is stripped' );

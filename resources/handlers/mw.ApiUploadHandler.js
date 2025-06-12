@@ -1,5 +1,5 @@
 ( function () {
-	var NS_FILE = mw.config.get( 'wgNamespaceIds' ).file;
+	const NS_FILE = mw.config.get( 'wgNamespaceIds' ).file;
 
 	/**
 	 * @param {mw.UploadWizardUpload} upload
@@ -51,7 +51,7 @@
 	 * @param {Object} result
 	 */
 	mw.ApiUploadHandler.prototype.setTransported = function ( result ) {
-		var code;
+		let code;
 		if ( result.upload && result.upload.warnings ) {
 			for ( code in result.upload.warnings ) {
 				if ( !this.isIgnoredWarning( code ) ) {
@@ -81,7 +81,7 @@
 	 * @param {Object} result The API result in parsed JSON form
 	 */
 	mw.ApiUploadHandler.prototype.setTransportWarning = function ( code, result ) {
-		var param, duplicates, links;
+		let param, duplicates, links;
 
 		switch ( code ) {
 			case 'duplicate':
@@ -124,7 +124,7 @@
 	 * @param {Object} result The API result in parsed JSON form
 	 */
 	mw.ApiUploadHandler.prototype.setTransportError = function ( code, result ) {
-		var $extra;
+		let $extra;
 
 		if ( code === 'badtoken' ) {
 			this.api.badToken( 'csrf' );
@@ -142,10 +142,10 @@
 				title: mw.message( 'mediauploader-override-upload' ).text(),
 				flags: 'progressive',
 				framed: false
-			} ).on( 'click', function () {
+			} ).on( 'click', () => {
 				// No need to ignore the error, AbuseFilter will only return it once
 				this.start();
-			}.bind( this ) ).$element;
+			} ).$element;
 		}
 
 		this.setError( code, result.errors[ 0 ].html, $extra );
@@ -161,18 +161,18 @@
 	 * @return {jQuery.Promise}
 	 */
 	mw.ApiUploadHandler.prototype.processDuplicateError = function ( code, result, duplicates ) {
-		var files = this.getFileLinks( duplicates ),
+		const files = this.getFileLinks( duplicates ),
 			unknownAmount = duplicates.length - Object.keys( files ).length;
 
 		return this.getDuplicateSource( Object.keys( files ) ).then(
-			function ( data ) {
+			( data ) => {
 				this.setDuplicateError( code, result, data.local, data.foreign, unknownAmount );
-			}.bind( this ),
-			function () {
+			},
+			() => {
 				// if anything goes wrong trying to figure out the source of
 				// duplicates, just move on with local duplicate handling
 				this.setDuplicateError( code, result, files, {}, unknownAmount );
-			}.bind( this )
+			}
 		);
 	};
 
@@ -181,8 +181,8 @@
 	 * @return {jQuery.Promise}
 	 */
 	mw.ApiUploadHandler.prototype.getDuplicateSource = function ( duplicates ) {
-		return this.getImageInfo( duplicates, 'url' ).then( function ( result ) {
-			var local = [],
+		return this.getImageInfo( duplicates, 'url' ).then( ( result ) => {
+			const local = [],
 				foreign = [],
 				normalized = [];
 
@@ -192,13 +192,13 @@
 
 			// map of normalized titles, so we can find original title
 			if ( result.query.normalized ) {
-				result.query.normalized.forEach( function ( data ) {
+				result.query.normalized.forEach( ( data ) => {
 					normalized[ data.to ] = data.from;
 				} );
 			}
 
-			Object.keys( result.query.pages ).forEach( function ( pageId ) {
-				var page = result.query.pages[ pageId ],
+			Object.keys( result.query.pages ).forEach( ( pageId ) => {
+				const page = result.query.pages[ pageId ],
 					title = page.title in normalized ? normalized[ page.title ] : page.title;
 				if ( page.imagerepository === 'local' ) {
 					local[ title ] = page.imageinfo[ 0 ].descriptionurl;
@@ -221,7 +221,7 @@
 	 * @param {number} unknownAmount Amount of unknown filenames (e.g. revdeleted)
 	 */
 	mw.ApiUploadHandler.prototype.setDuplicateError = function ( code, result, localDuplicates, foreignDuplicates, unknownAmount ) {
-		var allDuplicates = Object.assign( {}, localDuplicates, foreignDuplicates ),
+		let allDuplicates = Object.assign( {}, localDuplicates, foreignDuplicates ),
 			$extra = $( '<div>' ),
 			$ul = $( '<ul>' ).appendTo( $extra ),
 			$a,
@@ -230,8 +230,8 @@
 
 		unknownAmount = unknownAmount || 0;
 
-		Object.keys( allDuplicates ).forEach( function ( filename ) {
-			var href = allDuplicates[ filename ];
+		Object.keys( allDuplicates ).forEach( ( filename ) => {
+			const href = allDuplicates[ filename ];
 			$a = $( '<a>' ).text( filename );
 			$a.attr( { href: href, target: '_blank' } );
 			$ul.append( $( '<li>' ).append( $a ) );
@@ -254,11 +254,11 @@
 				title: mw.message( 'mediauploader-override-upload' ).text(),
 				flags: 'progressive',
 				framed: false
-			} ).on( 'click', function () {
+			} ).on( 'click', () => {
 				// mark this warning as ignored & process the API result again
 				this.ignoreWarning( 'duplicate' );
 				this.setTransported( result );
-			}.bind( this ) );
+			} );
 
 			override.$element.appendTo( $extra );
 		}
@@ -274,17 +274,17 @@
 	 * @param {string} duplicate Duplicate filename
 	 */
 	mw.ApiUploadHandler.prototype.setDuplicateArchiveError = function ( code, result, duplicate ) {
-		var filename = mw.Title.makeTitle( NS_FILE, duplicate ).getPrefixedText(),
+		const filename = mw.Title.makeTitle( NS_FILE, duplicate ).getPrefixedText(),
 			uploadDuplicate = new OO.ui.ButtonWidget( {
 				label: mw.message( 'mediauploader-override' ).text(),
 				title: mw.message( 'mediauploader-override-upload' ).text(),
 				flags: 'progressive',
 				framed: false
-			} ).on( 'click', function () {
+			} ).on( 'click', () => {
 				// mark this warning as ignored & process the API result again
 				this.ignoreWarning( 'duplicate-archive' );
 				this.setTransported( result );
-			}.bind( this ) );
+			} );
 
 		this.setError( code, mw.message( 'file-deleted-duplicate', filename ).parse(), uploadDuplicate.$element );
 	};
@@ -310,10 +310,10 @@
 	 * @return {Object} Map of [prefixed filename => url]
 	 */
 	mw.ApiUploadHandler.prototype.getFileLinks = function ( filenames ) {
-		var files = [];
+		const files = [];
 
-		filenames.forEach( function ( filename ) {
-			var title;
+		filenames.forEach( ( filename ) => {
+			let title;
 			try {
 				title = mw.Title.makeTitle( NS_FILE, filename );
 				files[ title.getPrefixedText() ] = title.getUrl( {} );
@@ -357,6 +357,6 @@
 	 * @return {boolean}
 	 */
 	mw.ApiUploadHandler.prototype.isIgnoredWarning = function ( code ) {
-		return this.ignoreWarnings.indexOf( code ) > -1;
+		return this.ignoreWarnings.includes( code );
 	};
 }( mw.uploadWizard ) );

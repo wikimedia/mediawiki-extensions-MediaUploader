@@ -57,7 +57,7 @@
 	 * @param {string} [text]
 	 */
 	uw.MultipleLanguageInputWidget.prototype.addLanguageInput = function ( config, text ) {
-		var allLanguages = this.config.languages,
+		let allLanguages = this.config.languages,
 			unusedLanguages = this.getUnusedLanguages(),
 			languages = {},
 			item;
@@ -97,7 +97,7 @@
 	 * with the updated language selections.
 	 */
 	uw.MultipleLanguageInputWidget.prototype.onChangeLanguages = function () {
-		var allLanguages = this.config.languages,
+		let allLanguages = this.config.languages,
 			unusedLanguages = this.getUnusedLanguages(),
 			items = this.getItems(),
 			languages,
@@ -123,11 +123,11 @@
 	 * @return {Object}
 	 */
 	uw.MultipleLanguageInputWidget.prototype.getUsedLanguages = function () {
-		var allLanguages = this.config.languages,
+		const allLanguages = this.config.languages,
 			items = this.getItems();
 
-		return items.reduce( function ( obj, item ) {
-			var languageCode = item.getLanguage();
+		return items.reduce( ( obj, item ) => {
+			const languageCode = item.getLanguage();
 			obj[ languageCode ] = allLanguages[ languageCode ];
 			return obj;
 		}, {} );
@@ -140,11 +140,11 @@
 	 * @return {Object}
 	 */
 	uw.MultipleLanguageInputWidget.prototype.getUnusedLanguages = function () {
-		var allLanguages = this.config.languages,
+		const allLanguages = this.config.languages,
 			usedLanguageCodes = Object.keys( this.getUsedLanguages() );
 
-		return Object.keys( allLanguages ).reduce( function ( remaining, language ) {
-			if ( usedLanguageCodes.indexOf( language ) < 0 ) {
+		return Object.keys( allLanguages ).reduce( ( remaining, language ) => {
+			if ( !usedLanguageCodes.includes( language ) ) {
 				remaining[ language ] = allLanguages[ language ];
 			}
 			return remaining;
@@ -155,7 +155,7 @@
 	 * Update the button label after adding or removing inputs.
 	 */
 	uw.MultipleLanguageInputWidget.prototype.recount = function () {
-		var text = this.getLabelText(),
+		const text = this.getLabelText(),
 			unusedLanguages = this.getUnusedLanguages();
 
 		this.addButton.setLabel( text );
@@ -174,7 +174,7 @@
 	 * @inheritdoc
 	 */
 	uw.MultipleLanguageInputWidget.prototype.getWarnings = function () {
-		var warnings = [];
+		const warnings = [];
 		this.getEmptyWarning( this.getWikiText() === '', warnings );
 
 		return $.Deferred().resolve( warnings ).promise();
@@ -185,12 +185,10 @@
 	 */
 	uw.MultipleLanguageInputWidget.prototype.getErrors = function () {
 		// Gather errors from each item
-		var errorPromises = this.getItems().map( function ( item ) {
-			return item.getErrors();
-		} );
+		const errorPromises = this.getItems().map( ( item ) => item.getErrors() );
 
 		return $.when.apply( $, errorPromises ).then( function () {
-			var i, errors;
+			let i, errors;
 			errors = [];
 			// Fold all errors into a single one (they are displayed in the UI for each item, but we still
 			// need to return an error here to prevent form submission).
@@ -214,7 +212,7 @@
 	 * @return {Object} Object where the properties are language codes & values are input
 	 */
 	uw.MultipleLanguageInputWidget.prototype.getValues = function () {
-		var values = {},
+		let values = {},
 			widgets = this.getItems(),
 			language,
 			text,
@@ -238,11 +236,7 @@
 	uw.MultipleLanguageInputWidget.prototype.getWikiText = function () {
 		// Some code here and in mw.UploadWizardDetails relies on this function returning an empty
 		// string when there are some inputs, but all are empty.
-		return this.getItems().map( function ( widget ) {
-			return widget.getWikiText();
-		} ).filter( function ( wikiText ) {
-			return !!wikiText;
-		} ).join( '\n' );
+		return this.getItems().map( ( widget ) => widget.getWikiText() ).filter( ( wikiText ) => !!wikiText ).join( '\n' );
 	};
 
 	/**
@@ -250,9 +244,7 @@
 	 * @return {Object} See #setSerialized
 	 */
 	uw.MultipleLanguageInputWidget.prototype.getSerialized = function () {
-		var inputs = this.getItems().map( function ( widget ) {
-			return widget.getSerialized();
-		} );
+		const inputs = this.getItems().map( ( widget ) => widget.getSerialized() );
 		return {
 			inputs: inputs
 		};
@@ -265,7 +257,7 @@
 	 *   see uw.SingleLanguageInputWidget#setSerialized
 	 */
 	uw.MultipleLanguageInputWidget.prototype.setSerialized = function ( serialized ) {
-		var config = this.config,
+		let config = this.config,
 			i;
 
 		if ( typeof serialized === 'string' ) {
@@ -288,7 +280,7 @@
 	 * @return {string}
 	 */
 	uw.MultipleLanguageInputWidget.prototype.getCaption = function () {
-		var items = this.getItems();
+		const items = this.getItems();
 
 		if ( items.length > 0 ) {
 			return items[ 0 ].getCaption();
