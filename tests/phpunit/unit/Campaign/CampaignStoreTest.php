@@ -6,7 +6,6 @@ use MediaWiki\Extension\MediaUploader\Campaign\CampaignRecord;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignStore;
 use MediaWiki\Title\Title;
 use MediaWikiUnitTestCase;
-use stdClass;
 use Wikimedia\Rdbms\IConnectionProvider;
 
 /**
@@ -99,13 +98,14 @@ class CampaignStoreTest extends MediaWikiUnitTestCase {
 		$store = new CampaignStore(
 			$this->createNoOpMock( IConnectionProvider::class )
 		);
-		$row = new stdClass();
-		$row->campaign_page_id = 123;
-		$row->campaign_enabled = $enabled;
-		$row->campaign_validity = CampaignRecord::CONTENT_VALID;
-		$row->campaign_content = $content;
-		$row->page_title = 'aaa';
-		$row->page_namespace = 321;
+		$row = (object)[
+			'campaign_page_id' => 123,
+			'campaign_enabled' => $enabled,
+			'campaign_validity' => CampaignRecord::CONTENT_VALID,
+			'campaign_content' => $content,
+			'page_title' => 'aaa',
+			'page_namespace' => 321,
+		];
 
 		$record = $store->newRecordFromRow( $row, $selectFlags );
 
