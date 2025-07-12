@@ -264,7 +264,7 @@ class CampaignHooks implements
 		}
 		try {
 			$identity->assertWiki( UserIdentity::LOCAL );
-		} catch ( PreconditionException $ex ) {
+		} catch ( PreconditionException ) {
 			return false;
 		}
 		return $identity->isRegistered() && $identity->getName() === 'MediaUploader';

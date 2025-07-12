@@ -43,7 +43,7 @@
 			.addClass( 'mediauploader-file ui-helper-clearfix' )
 			.append( this.$addFileContainer );
 
-		this.addFile = new OO.ui.SelectFileWidget( {
+		this.addFile = new OO.ui.SelectFileInputWidget( {
 			classes: [ 'mediauploader-add-file' ],
 			multiple: true,
 			showDropTarget: true,

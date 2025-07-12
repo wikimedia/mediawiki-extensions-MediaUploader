@@ -49,7 +49,7 @@ class Campaigns extends SpecialPage {
 			$queryBuilder->where( "campaign_page_id > $start" );
 		}
 
-		$this->getOutput()->setPageTitle( $this->msg( 'mediauploader-campaigns-list-title' ) );
+		$this->getOutput()->setPageTitle( $this->msg( 'mediauploader-campaigns-list-title' )->text() );
 		$this->getOutput()->addModules( 'ext.uploadWizard.uploadCampaign.list' );
 		$this->getOutput()->addHTML( '<dl>' );
 
