@@ -130,7 +130,7 @@
 	"mediauploader-deeds-need-license": "請選擇授權條款。",
 	"mediauploader-license-show-all": "使用別的授權條款",
 	"mediauploader-license-show-recommended": "使用網站推薦的授權條款",
-	"mediauploader-label-optional": "選填",
+	"mediauploader-label-optional": "非必填",
 	"mediauploader-error-signature-blank": "您必須在對應的欄位附上您的使用者名稱或真實姓名。",
 	"mediauploader-error-latitude": "緯度的值需介於 -90 到 90 之間。",
 	"mediauploader-error-longitude": "經度的值需介於 -180 到 180 之間。",
