@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"YeBoy371"
+		]
+	},
+	"apihelp-query+allcampaigns-summary": "모든 미디어 업로더 캠페인을 나열합니다.",
+	"apihelp-query+allcampaigns-param-enabledonly": "활성화된 캠페인만 나열하세요."
+}
