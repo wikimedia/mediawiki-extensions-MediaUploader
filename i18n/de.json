@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Mukeber",
 			"TMg",
 			"The Other Karma",
 			"ThisCarthing",
@@ -79,5 +80,6 @@
 	"prefs-mediauploader-licensing": "Lizenzierung",
 	"mediauploader-prefs-def-license-custom-help": "Dieses Feld wird nur verwendet, wenn du oben die letzte Option auswählst.",
 	"mediauploader-campaigns-pagination-next": "Nächste Seite",
+	"mediauploader-upload-comment-third-party": "Werk von $1 aus $2 mit dem Media Uploader hochgeladen",
 	"mediauploader-content-source-ownwork": "eigenes Werk"
 }
