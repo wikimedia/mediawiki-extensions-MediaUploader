@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Justman10000"
+			"Justman10000",
+			"Mukeber"
 		]
 	},
 	"mediauploader-source-ownwork-cc-by-explain": "(Jeder darf {{PLURAL:$1|dieses Werk|diese Werke}} verwenden, weitergeben oder remixen, solange er mich als Urheber nennt).",
@@ -39,7 +40,7 @@
 	"mediauploader-license-cc-by-sa-3.0": "Creative Commons Attribution ShareAlike 3.0 ([$2 Rechtscode])",
 	"mediauploader-license-cc-by-sa-2.5": "Creative Commons Attribution ShareAlike 2.5 ([$2 Rechtscode])",
 	"mediauploader-license-cc-by-sa-2.0": "Creative Commons Attribution ShareAlike 2.0 ([$2 Rechtscode])",
-	"mediauploader-license-custom": "Die Lizenz wird durch den folgenden wikitext beschrieben:",
+	"mediauploader-license-custom": "Die Lizenz wird durch den folgenden Wikitext beschrieben:",
 	"mediauploader-license-fal": "Free Art License",
 	"mediauploader-license-pd-old": "Der Autor starb vor mehr als 70 Jahren",
 	"mediauploader-license-pd-ineligible": "Zu einfach, um urheberrechtlich geschützt zu sein",
