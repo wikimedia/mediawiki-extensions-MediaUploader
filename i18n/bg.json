@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kareyac"
+			"Kareyac",
+			"StanProg"
 		]
 	},
-	"mediauploader-dialog-back": "Назад"
+	"mediauploader-ok": "Добре",
+	"mediauploader-dialog-back": "Назад",
+	"mediauploader-errordialog-ok": "Добре"
 }
