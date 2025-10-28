@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Hedda"
+			"Hedda",
+			"SaldırganSincap"
 		]
 	},
 	"mediauploader": "Medya Yükleyici",
@@ -72,7 +73,7 @@
 	"mediauploader-copy-other": "Diğer bilgiyi kopyala",
 	"mediauploader-description": "Açıklama",
 	"mediauploader-multilang-add": "{{PLURAL:$1|0=Metin ekle|Başka bir dilde metin ekle}}",
-	"mediauploader-title": "Resim başlığı",
+	"mediauploader-title": "Dosya başlığı",
 	"mediauploader-date-created": "Tarih",
 	"mediauploader-select-date": "Bir tarih seç",
 	"mediauploader-location": "Konum",
