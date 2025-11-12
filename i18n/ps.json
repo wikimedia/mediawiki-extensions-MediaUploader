@@ -11,5 +11,19 @@
 	"action-mass-upload": "رسنۍ‌راپورته‌کوونکي سره په يو ځل د ډېرو دوتنو ډليزه-راپورته کول",
 	"right-upwizcampaigns": "رسنۍ‌راپورته‌کوونکي ټاکنيزې‌سيالۍ مهارول",
 	"action-upwizcampaigns": "راپورته‌کولو ټاکنيزې‌سيالۍ مهارول",
-	"group-upwizcampeditors": "رسنۍ‌راپورته‌کوونکي ټاکنيزې‌سيالۍ سمونگران"
+	"group-upwizcampeditors": "رسنۍ‌راپورته‌کوونکي ټاکنيزې‌سيالۍ سمونگران",
+	"mediauploader-api-error-aborted": "راپورته کول وغورځول شو",
+	"mediauploader-step-tutorial": "زده‌کول",
+	"mediauploader-step-file": "راپورته‌کول",
+	"mediauploader-step-deeds": "خپرولو رښتې",
+	"mediauploader-step-details": "څرگندول",
+	"mediauploader-step-thanks": "کارول",
+	"mediauploader-add-file-n": "نورې دوتنې ورگډول",
+	"mediauploader-add-file-0-free": "وېشلو لپاره رسنيزې دوتنې وټاکئ",
+	"mediauploader-transport-started": "پيلېږي...",
+	"mediauploader-uploading": "راپورته کېږي...",
+	"mediauploader-queued": "په کتارېږي...",
+	"mediauploader-assembling": "راغونډېږي...",
+	"mediauploader-publish": "خپرېږي...",
+	"mediauploader-transported": "راپورته‌کول بشپړ شول..."
 }
