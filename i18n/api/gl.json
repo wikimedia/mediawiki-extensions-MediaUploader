@@ -4,7 +4,7 @@
 			"Toliño"
 		]
 	},
-	"apihelp-query+allcampaigns-summary": "Enumerar todas as campañas de MediaUploader.",
+	"apihelp-query+allcampaigns-summary": "Enumerar todas as campañas do asistente de subida de contido multimedia.",
 	"apihelp-query+allcampaigns-param-enabledonly": "Mostrar só as campañas que estean activadas.",
 	"apihelp-query+allcampaigns-param-limit": "Número de campañas que se devolverán.",
 	"apihelp-query+allcampaigns-example-1": "Enumerar as campañas activadas"
