@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Peterxy12"
+		]
+	},
+	"mediauploader-license-cc-by-4.0": "知识共享署名4.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-3.0": "知识共享署名3.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-2.5": "知识共享署名2.5（[$2 法律文件]）",
+	"mediauploader-license-cc-by-2.0": "知识共享署名2.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-4.0": "知识共享署名-非商业性使用4.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-3.0": "知识共享署名-非商业性使用3.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-2.5": "知识共享署名-非商业性使用2.5（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-2.0": "知识共享署名-非商业性使用2.0（[$2 法律文件]）",
+	"mediauploader-license-fal": "自由艺术授权协议",
+	"mediauploader-license-pd-old": "作者在超过70年前去世",
+	"mediauploader-license-pd-ineligible": "过于简单，没有著作权",
+	"mediauploader-license-attribution": "在适当地提供著作权持有人署名的前提下，可以以任何目的使用（包括商业目的）",
+	"mediauploader-license-gfdl": "GNU自由文件授权协议",
+	"mediauploader-license-copyright": "保留所有权利"
+}
