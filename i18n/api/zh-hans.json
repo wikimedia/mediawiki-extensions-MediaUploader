@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"GuoPC",
 			"Peterxy12"
 		]
 	},
 	"apihelp-query+allcampaigns-summary": "列举所有媒体上传器活动。",
 	"apihelp-query+allcampaigns-param-enabledonly": "仅列出已启用的活动",
-	"apihelp-query+allcampaigns-param-limit": "要回传的活动数量。"
+	"apihelp-query+allcampaigns-param-limit": "要回传的活动数量。",
+	"apihelp-query+allcampaigns-example-1": "列举已启用的活动"
 }
