@@ -100,7 +100,7 @@ class Campaigns extends SpecialPage {
 			return Html::rawElement(
 				'dt',
 				[],
-				Html::Element(
+				Html::element(
 					'a',
 					[ 'href' => $title->getLocalURL() ],
 					$ex->getMessage()
