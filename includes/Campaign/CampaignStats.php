@@ -93,9 +93,9 @@ class CampaignStats {
 				$db = $this->dbProvider->getReplicaDatabase();
 				$setOpts += Database::getCacheSetOptions( $db );
 
-				// Construct a tracking category => id map
+				/** @var array<string,int> $catToId */
 				$catToId = [];
-				// id => tracking category or null
+				/** @var array<int,?string> $idToCat */
 				$idToCat = [];
 				foreach ( $ids as $id ) {
 					$catTitle = Title::newFromText(
@@ -103,10 +103,8 @@ class CampaignStats {
 						NS_CATEGORY
 					);
 
-					if ( $catTitle === null ) {
-						$idToCat[$id] = null;
-					} else {
-						$idToCat[$id] = $catTitle->getDBkey();
+					$idToCat[$id] = $catTitle?->getDBkey();
+					if ( $catTitle ) {
 						$catToId[$catTitle->getDBkey()] = $id;
 					}
 				}
@@ -145,19 +143,20 @@ class CampaignStats {
 
 	/**
 	 * @param IReadableDatabase $db
-	 * @param int[] $categories Map: campaign DB key => campaign page ID
+	 * @param array<string,int> $categories Maps campaign DB key to campaign page id
 	 *
-	 * @return string[][] campaign ID => string[], the strings are filenames
+	 * @return array<int,string[]> Maps campaign page ids to file names
 	 */
 	private function getUploadedMedia( IReadableDatabase $db, array $categories ): array {
 		$result = $db->newSelectQueryBuilder()
 			->table( 'categorylinks' )
-			->fields( [ 'cl_to', 'page_namespace', 'page_title' ] )
+			->fields( [ 'lt_title', 'page_title' ] )
 			->where( [
-				'cl_to' => array_keys( $categories ),
+				'lt_title' => array_keys( $categories ),
 				'cl_type' => 'file',
 			] )
 			->join( 'page', null, 'cl_from=page_id' )
+			->join( 'linktarget', null, 'cl_target_id = lt_id' )
 			->orderBy( 'cl_timestamp', 'DESC' )
 			->useIndex( [ 'categorylinks' => 'cl_timestamp' ] )
 			// Old, arbitrary limit. Seems fine.
@@ -166,13 +165,9 @@ class CampaignStats {
 
 		$grouped = [];
 		foreach ( $result as $row ) {
-			$key = $categories[$row->cl_to];
+			$key = $categories[$row->lt_title];
 
-			if ( array_key_exists( $key, $grouped ) ) {
-				$grouped[$key][] = $row->page_title;
-			} else {
-				$grouped[$key] = [ $row->page_title ];
-			}
+			$grouped[$key][] = $row->page_title;
 		}
 
 		return $grouped;
@@ -180,29 +175,30 @@ class CampaignStats {
 
 	/**
 	 * @param IReadableDatabase $db
-	 * @param int[] $categories Map: campaign DB key => campaign page ID
+	 * @param array<string,int> $categories Maps campaign DB key to campaign page id
 	 *
-	 * @return array Map: campaign ID => [ media count, contributor count ]
+	 * @return array<int,array{0: int, 1: int}> Maps campaign page ids to [ media count, contributor count ]
 	 */
 	private function getSummaryCounts( IReadableDatabase $db, array $categories ): array {
 		$result = $db->newSelectQueryBuilder()
 			->table( 'categorylinks' )
-			->field( 'cl_to' )
+			->field( 'lt_title' )
 			->field( 'COUNT(DISTINCT img_actor)', 'contributors' )
 			->field( 'COUNT(cl_from)', 'media' )
 			->where( [
-				'cl_to' => array_keys( $categories ),
+				'lt_title' => array_keys( $categories ),
 				'cl_type' => 'file',
 			] )
 			->join( 'page', null, 'cl_from=page_id' )
+			->join( 'linktarget', null, 'cl_target_id = lt_id' )
 			->join( 'image', null, 'page_title=img_name' )
-			->groupBy( 'cl_to' )
+			->groupBy( 'lt_title' )
 			->useIndex( [ 'categorylinks' => 'cl_timestamp' ] )
 			->fetchResultSet();
 
 		$map = [];
 		foreach ( $result as $row ) {
-			$map[$categories[$row->cl_to]] = [
+			$map[$categories[$row->lt_title]] = [
 				intval( $row->media ),
 				intval( $row->contributors ),
 			];

@@ -4,6 +4,7 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Config;
 
 use MediaWiki\Extension\MediaUploader\Config\ConfigParser;
 use MediaWiki\Title\Title;
+use MediaWiki\Title\TitleValue;
 use MediaWikiUnitTestCase;
 use Parser;
 use ParserFactory;
@@ -72,10 +73,7 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 			->method( 'runOutputPipeline' )
 			->willReturn( $parserOutput );
 		$parserOutput->expects( $this->once() )
-			->method( 'getTemplateIds' )
-			->willReturn( [] );
-		$parserOutput->expects( $this->once() )
-			->method( 'getTemplates' )
+			->method( 'getLinkList' )
 			->willReturn( [] );
 
 		$parser = $this->createMock( Parser::class );
@@ -393,9 +391,7 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 			->willReturn( self::PARSED_TEXT );
 		$parserOutput->method( 'runOutputPipeline' )
 			->willReturn( $parserOutput );
-		$parserOutput->method( 'getTemplateIds' )
-			->willReturn( [] );
-		$parserOutput->method( 'getTemplates' )
+		$parserOutput->method( 'getLinkList' )
 			->willReturn( [] );
 
 		$parser = $this->createMock( Parser::class );
@@ -442,51 +438,45 @@ class ConfigParserTest extends MediaWikiUnitTestCase {
 		$parserOutput->method( 'runOutputPipeline' )
 			->willReturn( $parserOutput );
 
-		$parserOutput->method( 'getTemplates' )
+		$parserOutput->method( 'getLinkList' )
 			->willReturnOnConsecutiveCalls(
 				[],
 				[
-					0 => [
-						'Test page' => 1,
-						'Test 2' => 2
-					]
+					[
+						'link' => new TitleValue( NS_MAIN, 'Test page' ),
+						'pageid' => 1,
+						'revid' => 123,
+					],
+					[
+						'link' => new TitleValue( NS_MAIN, 'Test 2' ),
+						'pageid' => 2,
+						'revid' => 124,
+					],
 				],
 				[
-					0 => [
-						'Test 3' => 3
+					[
+						'link' => new TitleValue( NS_MAIN, 'Test 3' ),
+						'pageid' => 3,
+						'revid' => 125,
 					],
-					1 => [
-						'Test1' => 4,
-						'Test2' => 5
-					]
-				]
-			);
-
-		$parserOutput->method( 'getTemplateIds' )
-			->willReturnOnConsecutiveCalls(
-				[],
-				[
-					0 => [
-						'Test page' => 123,
-						'Test 2' => 124
-					]
-				],
-				[
-					0 => [
-						'Test 3' => 125
+					[
+						'link' => new TitleValue( NS_TALK, 'Test1' ),
+						'pageid' => 4,
+						'revid' => 126,
 					],
-					1 => [
-						'Test1' => 126,
-						'Test2' => 127
-					]
+					[
+						'link' => new TitleValue( NS_TALK, 'Test2' ),
+						'pageid' => 5,
+						'revid' => 127,
+					],
 				]
 			);
 
 		$expectedTemplates = [
 			0 => [
-				'Test page' => [ 1, 123 ],
-				'Test 2' => [ 2, 124 ],
-				'Test 3' => [ 3, 125 ]
+				'Test_page' => [ 1, 123 ],
+				'Test_2' => [ 2, 124 ],
+				'Test_3' => [ 3, 125 ]
 			],
 			1 => [
 				'Test1' => [ 4, 126 ],

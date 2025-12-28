@@ -96,7 +96,7 @@ class CampaignContentHandler extends TextContentHandler {
 			$this->registerTemplates( $config, $output );
 
 			if ( $cpoParams->getGenerateHtml() ) {
-				$output->setText(
+				$output->setContentHolderText(
 					wfMessage( 'mediauploader-global-config-anchor' )->parseAsBlock()
 				);
 			}
@@ -110,7 +110,7 @@ class CampaignContentHandler extends TextContentHandler {
 			// Page ref and content will always be set, no need to check that.
 			$record->assertValid( $cpoParams->getPage()->getDBkey() );
 		} catch ( BaseCampaignException $e ) {
-			$output->setText( Html::errorBox( $e->getMessage() ) );
+			$output->setContentHolderText( Html::errorBox( $e->getMessage() ) );
 			return;
 		}
 

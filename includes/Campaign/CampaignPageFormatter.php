@@ -165,6 +165,6 @@ class CampaignPageFormatter {
 				) .
 				$body
 			);
-		$output->setText( $result );
+		$output->setContentHolderText( $result );
 	}
 }

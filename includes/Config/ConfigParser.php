@@ -3,6 +3,7 @@
 namespace MediaWiki\Extension\MediaUploader\Config;
 
 use MediaWiki\Page\PageReference;
+use MediaWiki\Parser\ParserOutputLinkTypes;
 use MediaWiki\Title\Title;
 use Parser;
 use ParserFactory;
@@ -203,11 +204,12 @@ class ConfigParser {
 	 * @return void
 	 */
 	private function updateTemplates( ParserOutput $parserOutput ): void {
-		$templateIds = $parserOutput->getTemplateIds();
-		foreach ( $parserOutput->getTemplates() as $ns => $templates ) {
-			foreach ( $templates as $dbk => $id ) {
-				$this->templates[$ns][$dbk] = [ $id, $templateIds[$ns][$dbk] ];
-			}
+		$templates = $parserOutput->getLinkList( ParserOutputLinkTypes::TEMPLATE );
+		foreach ( $templates as $template ) {
+			$title = $template['link'];
+			$ns = $title->getNamespace();
+			$dbk = $title->getDBkey();
+			$this->templates[$ns][$dbk] = [ $template['pageid'] ?? 0, $template['revid'] ?? 0 ];
 		}
 	}
 }
