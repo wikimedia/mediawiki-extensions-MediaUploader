@@ -1,9 +1,21 @@
 {
 	"@metadata": {
 		"authors": [
-			"Peterxy12"
+			"Peterxy12",
+			"GuoPC"
 		]
 	},
+	"mediauploader-source-ownwork-cc-by-explain": "（只要注明本人为作者，任何人均可以使用、分享或改编{{PLURAL:$1|此|这些}}作品。）",
+	"mediauploader-source-ownwork-cc-by-nc-explain": "（只要注明本人为作者，任何人均可出于非商业目的使用、分享或改编{{PLURAL:$1|此|这些}}作品。）",
+	"mediauploader-source-ownwork-cc-by-nd-explain": "（只要注明本人为作者，任何人均可在保持原有形式情况下使用、分享或改编{{PLURAL:$1|此|这些}}作品。）",
+	"mediauploader-source-ownwork-cc-by-nc-nd-explain": "（只要注明本人为作者，任何人均可出于非商业目的，在保持原有形式情况下使用、分享或改编{{PLURAL:$1|此|这些}}作品。）",
+	"mediauploader-source-ownwork-cc-by-nc-sa-explain": "（只要注明本人为作者且依照此许可协议来分享衍生作品，任何人均可出于非商业目的使用、分享或改编{{PLURAL:$1|此|这些}}作品。）",
+	"mediauploader-source-ownwork-cc-by-sa-explain": "（只要注明本人为作者且依照此许可协议来分享衍生作品，任何人均可以使用、分享或改编{{PLURAL:$1|此|这些}}作品。）",
+	"mediauploader-source-ownwork-cc-zero-explain": "（任何人均可以不受任何限制地使用、分享或改编{{PLURAL:$1|此|这些}}作品。）",
+	"mediauploader-source-ownwork-beerware-explain": "（只要附上此声明，任何人均可以使用、分享或改编{{PLURAL:$1|此|这些}}作品。如果他们认为这玩意确实不错，有一天他们遇见你时，可以请你喝瓶啤酒作为回报。）",
+	"mediauploader-source-ownwork-wtfpl-explain": "（总之，去他X的任何人想怎样搞{{PLURAL:$1|此|这些}}作品都行。）",
+	"mediauploader-source-ownwork-generic-explain": "（{{PLURAL:$1|此|这些}}作品可上传至此wiki）",
+	"mediauploader-license-cc-zero": "知识共享CC0（放弃所有权利，类似公有领域：[$2 法律文件]）",
 	"mediauploader-license-cc-by-4.0": "知识共享署名4.0（[$2 法律文件]）",
 	"mediauploader-license-cc-by-3.0": "知识共享署名3.0（[$2 法律文件]）",
 	"mediauploader-license-cc-by-2.5": "知识共享署名2.5（[$2 法律文件]）",
@@ -12,10 +24,29 @@
 	"mediauploader-license-cc-by-nc-3.0": "知识共享署名-非商业性使用3.0（[$2 法律文件]）",
 	"mediauploader-license-cc-by-nc-2.5": "知识共享署名-非商业性使用2.5（[$2 法律文件]）",
 	"mediauploader-license-cc-by-nc-2.0": "知识共享署名-非商业性使用2.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nd-4.0": "知识共享署名-禁止演绎4.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nd-3.0": "知识共享署名-禁止演绎3.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nd-2.5": "知识共享署名-禁止演绎2.5（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nd-2.0": "知识共享署名-禁止演绎2.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-nd-4.0": "知识共享署名-非商业性使用-禁止演绎4.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-nd-3.0": "知识共享署名-非商业性使用-禁止演绎3.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-nd-2.5": "知识共享署名-非商业性使用-禁止演绎2.5（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-nd-2.0": "知识共享署名-非商业性使用-禁止演绎2.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-sa-4.0": "知识共享署名-非商业性使用-相同方式共享4.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-sa-3.0": "知识共享署名-非商业性使用-相同方式共享3.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-sa-2.5": "知识共享署名-非商业性使用-相同方式共享2.5（[$2 法律文件]）",
+	"mediauploader-license-cc-by-nc-sa-2.0": "知识共享署名-非商业性使用-相同方式共享2.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-sa-4.0": "知识共享署名-相同方式共享4.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-sa-3.0": "知识共享署名-相同方式共享3.0（[$2 法律文件]）",
+	"mediauploader-license-cc-by-sa-2.5": "知识共享署名-相同方式共享2.5（[$2 法律文件]）",
+	"mediauploader-license-cc-by-sa-2.0": "知识共享署名-相同方式共享2.0（[$2 法律文件]）",
+	"mediauploader-license-custom": "该许可协议由以下wikitext描述：",
 	"mediauploader-license-fal": "自由艺术授权协议",
 	"mediauploader-license-pd-old": "作者在超过70年前去世",
 	"mediauploader-license-pd-ineligible": "过于简单，没有著作权",
 	"mediauploader-license-attribution": "在适当地提供著作权持有人署名的前提下，可以以任何目的使用（包括商业目的）",
 	"mediauploader-license-gfdl": "GNU自由文件授权协议",
+	"mediauploader-license-beerware": "啤酒软件许可协议（[$2 法律（嗝！）文件]）",
+	"mediauploader-license-wtfpl": "你他X的想干嘛就干嘛公开许可协议（[$2 法律文件]）",
 	"mediauploader-license-copyright": "保留所有权利"
 }

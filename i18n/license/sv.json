@@ -1,0 +1,43 @@
+{
+	"@metadata": {
+		"authors": [
+			"Stefan2255"
+		]
+	},
+	"mediauploader-source-ownwork-cc-by-nc-sa-explain": "(Vem som helst får använda, dela eller remixa {{PLURAL:$1|detta verk|dessa verk}} för icke-kommersiella ändamål, så länge de anger mig som källa och delar eventuella härledda verk under denna licens.)",
+	"mediauploader-source-ownwork-cc-by-sa-explain": "(Vem som helst får använda, dela eller remixa {{PLURAL:$1|detta verk|dessa verk}}, så länge de anger mig som källa och delar eventuella härledda verk under denna licens.)",
+	"mediauploader-license-cc-zero": "Creative Commons CC0-avstående (avsägelse av alla rättigheter, motsvarande public domain: [$2 fullständig licens])",
+	"mediauploader-license-cc-by-4.0": "Creative Commons Attribution 4.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-3.0": "Creative Commons Attribution 3.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-2.5": "Creative Commons Erkännande 2.5 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-2.0": "Creative Commons Erkännande 2.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-4.0": "Creative Commons Erkännande-Icke-Kommersiell 4.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-3.0": "Creative Commons Erkännande-IckeKommersiell 3.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-2.5": "Creative Commons Erkännande-IckeKommersiell 2.5 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-2.0": "Creative Commons Erkännande-Icke-Kommersiell 2.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nd-4.0": "Creative Commons Erkännande-IngaBearbetningar 4.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nd-3.0": "Creative Commons Erkännande-IngaBearbetningar 3.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nd-2.5": "Creative Commons Erkännande-IngaBearbetningar 2.5 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nd-2.0": "Creative Commons Erkännande-IngaBearbetningar 2.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-nd-4.0": "Creative Commons Erkännande-Icke-Kommersiell-IngaBearbetningar 4.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-nd-3.0": "Creative Commons Erkännande-Icke-Kommersiell-IngaBearbetningar 3.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-nd-2.5": "Creative Commons Erkännande-Icke-Kommersiell-IngaBearbetningar 2.5 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-nd-2.0": "Creative Commons Erkännande-Icke-Kommersiell-IngaBearbetningar 4.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-sa-4.0": "Creative Commons Erkännande-Icke-Kommersiell-DelaPåSammaVillkor 4.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-sa-3.0": "Creative Commons Erkännande-IckeKommersiell-DelaLika 3.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-sa-2.5": "Creative Commons Erkännande-IckeKommersiell-DelaLika 2.5 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-nc-sa-2.0": "Creative Commons Erkännande-IckeKommersiell-DelaLika 2.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-sa-4.0": "Creative Commons Erkännande-DelaPåSammaVillkor 4.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-sa-3.0": "Creative Commons Erkännande-DelaLika 3.0 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-sa-2.5": "Creative Commons Erkännande-DelaLika 2.5 ([$2 fullständig licens])",
+	"mediauploader-license-cc-by-sa-2.0": "Creative Commons Erkännande-DelaLika 2.0 ([$2 fullständig licens])",
+	"mediauploader-license-custom": "Licensen beskrivs av följande wikitext:",
+	"mediauploader-license-fal": "Free Art License",
+	"mediauploader-license-pd-old": "Upphovspersonen dog för mer än 70 år sedan",
+	"mediauploader-license-pd-ineligible": "Alltför enkelt för att vara upphovsrättsskyddat",
+	"mediauploader-license-attribution": "Får användas för alla syften, inklusive kommersiella, om upphovsrättsinnehavaren är korrekt nämnd",
+	"mediauploader-license-gfdl": "GNU Free Documentation License",
+	"mediauploader-license-beerware": "Beerware-licens ([ $2 juridisk (hic!) kod])",
+	"mediauploader-license-wtfpl": "Gör vad fan du vill med offentlig licens ([ $2 juridisk kod])",
+	"mediauploader-license-copyright": "Alla rättigheter förbehållna"
+}
