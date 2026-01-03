@@ -156,10 +156,12 @@ class QueryAllCampaigns extends ApiQueryBase {
 		$result->addIndexedTagName( [ 'query', $this->getModuleName() ], 'campaign' );
 	}
 
+	/** @inheritDoc */
 	public function getCacheMode( $params ) {
 		return 'public';
 	}
 
+	/** @inheritDoc */
 	public function getAllowedParams() {
 		return [
 			'enabledonly' => false,
@@ -186,6 +188,7 @@ class QueryAllCampaigns extends ApiQueryBase {
 		];
 	}
 
+	/** @inheritDoc */
 	public function getHelpUrls() {
 		// TODO: point to a subpage with API docs when it gets created
 		return 'https://www.mediawiki.org/wiki/Special:MyLanguage/Extension:MediaUploader';

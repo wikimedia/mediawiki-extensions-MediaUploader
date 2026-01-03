@@ -29,7 +29,8 @@ class RawConfigTest extends ConfigUnitTestCase {
 				'maxPhpUploadSize' => UploadBase::getMaxPhpUploadSize(),
 				'maxMwUploadSize' => 1000,
 				'someKey' => 'value',
-				'chunkSize' => 5 * 1024 * 1024, // default setting
+				// Default setting
+				'chunkSize' => 5 * 1024 * 1024,
 			]
 		];
 

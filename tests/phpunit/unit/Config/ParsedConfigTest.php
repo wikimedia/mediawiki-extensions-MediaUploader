@@ -104,12 +104,13 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 		];
 
 		$pConfig = new class ( $params, $this ) extends ParsedConfig {
-			private $invokeCount = 0;
-			private $testCase;
+			private int $invokeCount = 0;
 
-			public function __construct( $params, ConfigUnitTestCase $testCase ) {
+			public function __construct(
+				array $params,
+				private readonly ConfigUnitTestCase $testCase,
+			) {
 				parent::__construct( ...$params );
-				$this->testCase = $testCase;
 			}
 
 			protected function initialize( $noCache ): void {
@@ -153,12 +154,13 @@ class ParsedConfigTest extends ConfigUnitTestCase {
 		];
 
 		$pConfig = new class ( $params, $this ) extends ParsedConfig {
-			private $invokeCount = 0;
-			private $testCase;
+			private int $invokeCount = 0;
 
-			public function __construct( $params, ConfigUnitTestCase $testCase ) {
+			public function __construct(
+				array $params,
+				private readonly ConfigUnitTestCase $testCase,
+			) {
 				parent::__construct( ...$params );
-				$this->testCase = $testCase;
 			}
 
 			protected function initialize( $noCache ): void {
