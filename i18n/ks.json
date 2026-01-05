@@ -1,10 +1,12 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Ayaat123"
+		]
 	},
 	"mediauploader-step-tutorial": "ہیٚچھِو",
 	"mediauploader-step-deeds": "اِجازَتھ نامہٕ",
-	"mediauploader-uploading": "اَپلوڈ چُھ گژھان",
+	"mediauploader-uploading": "اَپلوڈ چھُ گژھان",
 	"mediauploader-file-some-failed": "کینٛہہ اَپلوڈٕس گٕے نامُقمل.",
 	"mediauploader-skip-tutorial-future": "یِنہٕ وٲلس کالس منٛز کٕریٚو یہِ تختی سِکِپ",
 	"mediauploader-upload-count": "$2 وُک $1 {{PLURAL:$2|فیل|فیلہٕ}} اَپلوڈ آمٕژ کرنہٕ",
@@ -29,7 +31,7 @@
 	"mediauploader-campaign-media-count-desc": "{{PLURAL:$1|اَپلوڈ|اَپلوڈٕس}}",
 	"mediauploader-campaign-view-all-media": "وُچھو سٲری اَپلوڈ گۄومُت مِیٖڈِیا",
 	"mediauploader-categories": "زٲژ",
-	"prefs-uploads": "اَپلوڈ چُھ گژھان",
+	"prefs-uploads": "اَپلوڈ چھُ گژھان",
 	"mediauploader-prefs-def-license": "مُقرر اِجازت نامہٕ",
 	"mediauploader-prefs-license-ownwork": "پنٕنی کٲم - $1",
 	"mediauploader-default-content-wikitext": "== تفصیٖل ==\n{{{تفصیٖل}}}\n\n== مِیٖڈِیا معلوٗمات ==\n* '''تٲریٖخ:''' {{{تٲریٖخ|''نامعلوٗم''}}}\n* '''آگُر:''' {{{آگُر|''نامعلوٗم''}}}\n* '''مُصنِف:''' {{{مُصنِف|''نامعلوٗم''}}}\n* '''پتاہ:''' {{{پتاہ|''نامعلوٗم''}}}\n\n{{{باقٕے}}}\n\n== اِجازت نامہٕ ==\n{{{اِجازت نامہٕ}}}\n\n{{{زٲژ}}}"
