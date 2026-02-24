@@ -11,7 +11,7 @@
 	"mediauploader-failed": "Ij oʹnnstam.",
 	"mediauploader-remove": "Jaukkâd",
 	"mediauploader-upload": "Ruõkk",
-	"mediauploader-more-options": "Lââʹzzet sââʹj da jeeʹres teâđaid…",
+	"mediauploader-more-options": "Lââʹzzet sâjjõõzz da jeeʹres teâđaid…",
 	"mediauploader-copy-metadata": "Kopiââʹst teâđaid puk ruõkkâmnalla teâttõõzzid puõʹttinalla:",
 	"mediauploader-copy-metadata-button": "Kopiââʹst",
 	"mediauploader-copy-metadata-button-undo": "Kååʹmet",
@@ -19,7 +19,7 @@
 	"mediauploader-copy-description": "Kopiââʹst deskriiptid",
 	"mediauploader-copy-date": "Kopiââʹst peiʹvvmeäʹr",
 	"mediauploader-copy-categories": "Kopiââʹst kategoriaid",
-	"mediauploader-copy-location": "Kopiââʹst sââʹj",
+	"mediauploader-copy-location": "Kopiââʹst sâjjõõzz",
 	"mediauploader-copy-other": "Kopiââʹst jeeʹres teâđaid",
 	"mediauploader-description": "Deskriptt",
 	"mediauploader-location-button": "Čuäʹjet mäddkaartâst",
@@ -32,8 +32,9 @@
 	"mediauploader-deleted-duplicate-unknown-filename": "Toobdteʹmes teâttõsnõmm",
 	"mediauploader-upload-another": "Ruõkk lââʹzz teâttõõzzid",
 	"mediauploader-tooltip-categories": "Lââʹzzet [{{fullurl:Special:Categories}} kategoriaid] teâttõʹsse , što lij hiâlpab vueʹtted tõn.",
+	"mediauploader-tooltip-more-info": "Lââʹssteâđ",
 	"mediauploader-label-optional": "Vaʹlljeemnallšem",
 	"mediauploader-categories": "Kategoria",
 	"prefs-mediauploader-interface": "Ââʹnnemõhttõs",
-	"mediauploader-default-content-wikitext": "== Deskriptt ==\n{{{description}}}\n\n== Mediateâđ ==\n* '''Peiʹvvmieʹrr:''' {{{date|''toobdtem''}}}\n* '''Käivv:''' {{{source|''toobdtem''}}}\n* '''Raajji:''' {{{author|''toobdtem''}}}\n* '''Sââʹjj:''' {{{location|''toobdtem''}}}\n\n{{{other}}}\n\n== Liseʹnss ==\n{{{license}}}\n\n{{{categories}}}"
+	"mediauploader-default-content-wikitext": "== Deskriptt ==\n{{{description}}}\n\n== Mediateâđ ==\n* '''Peiʹvvmieʹrr:''' {{{date|''toobdtem''}}}\n* '''Käivv:''' {{{source|''toobdtem''}}}\n* '''Raajji:''' {{{author|''toobdtem''}}}\n* '''Sâjjõs:''' {{{location|''toobdtem''}}}\n\n{{{other}}}\n\n== Liseʹnss ==\n{{{license}}}\n\n{{{categories}}}"
 }
