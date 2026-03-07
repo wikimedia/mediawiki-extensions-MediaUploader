@@ -4,7 +4,6 @@ namespace MediaWiki\Extension\MediaUploader\Config;
 
 use MediaWiki\Page\PageReference;
 use MediaWiki\Parser\ParserOutputLinkTypes;
-use MediaWiki\Title\Title;
 use Parser;
 use ParserFactory;
 use ParserOptions;
@@ -22,7 +21,7 @@ class ConfigParser {
 	/** @var ParserOptions */
 	private $parserOptions;
 
-	/** @var Title */
+	/** @var PageReference */
 	private $pageRef;
 
 	/** @var array */
