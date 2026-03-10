@@ -4,5 +4,8 @@
 			"Ucukor"
 		]
 	},
-	"mediauploader-location": "Лякацыя"
+	"mediauploader-override": "Даслаць так ці інакш",
+	"mediauploader-next-file-despite-failures": "Працягнуць так ці інакш",
+	"mediauploader-location": "Лякацыя",
+	"mediauploader-upload-error-stashed-anyway": "Даслаць так ці інакш?"
 }
