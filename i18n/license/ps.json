@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"شاه زمان پټان"
+		]
+	},
+	"mediauploader-source-ownwork-cc-by-explain": "(هرڅوک کولی شي {{PLURAL:$1|دا کار|دا کارونه}}، تر هغې چې دوی يې ماته ځانگړی‌کونگ وکړي، وکاروي، شريک يې کړي يا يې يوځای کړي.)",
+	"mediauploader-source-ownwork-cc-by-nc-explain": "(هرڅوک کولی شي {{PLURAL:$1|دا کار|دا کارونه}}، تر هغې چې دوی يې ماته ځانگړی‌کونگ وکړي، د ناسوداگريزو چارو لپاره وکاروي، شريک يې کړي يا يې يوځای کړي.)",
+	"mediauploader-source-ownwork-cc-by-nd-explain": "(هرڅوک کولی شي {{PLURAL:$1|دا کار د دې|دا کارونه د دوی}} په اره بڼه، تر هغې چې دوی يې ماته ځانگړی‌کونگ وکړي، وکاروي يا يې شريک کړي.)",
+	"mediauploader-source-ownwork-cc-by-nc-nd-explain": "(هرڅوک کولی شي {{PLURAL:$1|دا کار د دې|دا کارونه د دوی}} په اره بڼه، تر هغې چې دوی يې ماته ځانگړی‌کونگ وکړي، د ناسوداگريزو چارو لپاره وکاروي، شريک يې کړي يا يې يوځای کړي.)",
+	"mediauploader-source-ownwork-cc-by-nc-sa-explain": "(هرڅوک کولی شي {{PLURAL:$1|دا کار |دا کارونه}}، تر هغې چې دوی يې ماته ځانگړی‌کونگ وکړي او د دې منښتليک لاندې مشتق کار شريک کړي، د ناسوداگريزو چارو لپاره وکاروي، شريک يې کړي يا يې يوځای کړي.)",
+	"mediauploader-license-fal": "د وړيا هنر منښتليک",
+	"mediauploader-license-pd-old": "ليکوال له ۷۰ کالو دمخه مړ شوی",
+	"mediauploader-license-pd-ineligible": "د لمېسل‌رښتو لپاره ډېر ساده دی",
+	"mediauploader-license-gfdl": "د جي‌اېن‌يو وړيا لاسوند منښتليک",
+	"mediauploader-license-copyright": "ټولې رښتې خوندي دي"
+}
