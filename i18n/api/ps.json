@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"شاه زمان پټان"
+		]
+	},
+	"apihelp-query+allcampaigns-summary": "د رسنۍ‌راپورته‌کوونکي ټولې ټاکنيزې‌سيالۍ شمېرل.",
+	"apihelp-query+allcampaigns-param-enabledonly": "يوازې هغه ټاکنيزې‌سيالۍ لړليکوي چې چارن‌شوې وي.",
+	"apihelp-query+allcampaigns-param-limit": "د بېرته‌راستنېدونکو ټاکنيزو سياليو شمېر.",
+	"apihelp-query+allcampaigns-example-1": "چارن‌شوې ټاکنيزې‌سيالۍ شمېرل"
+}
