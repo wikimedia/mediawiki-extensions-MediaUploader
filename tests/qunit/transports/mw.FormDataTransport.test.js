@@ -30,7 +30,7 @@
 			maxPhpUploadSize: chunkSize
 		};
 
-		return new mw.FormDataTransport( api, {}, config );
+		return new mw.FormDataTransport( api, { action: 'upload' }, config );
 	}
 
 	QUnit.test( 'Constructor sanity test', ( assert ) => {
@@ -96,7 +96,7 @@
 		assert.strictEqual( this.sandbox.server.requests.length, 1 );
 		request = this.sandbox.server.requests[ 0 ];
 		assert.strictEqual( request.method, 'POST' );
-		assert.strictEqual( request.url, mw.util.wikiScript( 'api' ) );
+		assert.strictEqual( request.url, mw.util.wikiScript( 'api' ) + '?action=upload' );
 		assert.true( request.async );
 
 		transport.abort();
@@ -124,7 +124,7 @@
 		assert.strictEqual( this.sandbox.server.requests.length, 1 );
 		request = this.sandbox.server.requests[ 0 ];
 		assert.strictEqual( request.method, 'POST' );
-		assert.strictEqual( request.url, mw.util.wikiScript( 'api' ) );
+		assert.strictEqual( request.url, mw.util.wikiScript( 'api' ) + '?action=upload' );
 		assert.true( request.async );
 
 		transport.abort();

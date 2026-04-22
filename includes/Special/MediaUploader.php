@@ -60,12 +60,21 @@ class MediaUploader extends SpecialPage {
 		CampaignStore $campaignStore,
 		UserOptionsLookup $userOptionsLookup
 	) {
-		parent::__construct( 'MediaUploader', 'upload' );
+		if ( version_compare( MW_VERSION, '1.46', '>=' ) ) {
+			parent::__construct( 'MediaUploader' );
+		} else {
+			parent::__construct( 'MediaUploader', 'upload' );
+		}
 
 		$this->configFactory = $configFactory;
 		$this->rawConfig = $rawConfig;
 		$this->campaignStore = $campaignStore;
 		$this->userOptionsLookup = $userOptionsLookup;
+	}
+
+	/** @inheritDoc */
+	public function getRestriction(): string {
+		return 'upload';
 	}
 
 	/**
