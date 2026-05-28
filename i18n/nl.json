@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"McDutchie"
+			"McDutchie",
+			"Siebrand"
 		]
 	},
 	"mediauploader": "Media-uploader",
@@ -15,7 +16,7 @@
 	"group-upwizcampeditors": "Media Uploader-campagne-redacteuren",
 	"group-upwizcampeditors-member": "Media Uploader-campagne-redact{{GENDER:$1|eur|rice}}",
 	"grouppage-upwizcampeditors": "{{ns:project}}:Media Uploader-campagne-redacteuren",
-	"mediauploader-api-error-parsererror": "De server heeft gereageerd met een ongeldig JSON-document. Dit kan een probleem zijn met de API, of anders gebruikt u wellicht een proxyserver die verhindert dat u bestanden uploadt.",
+	"mediauploader-api-error-parsererror": "De server heeft gereageerd met een incorrect JSON-document. Dit kan een probleem zijn met de API, of anders gebruikt u wellicht een proxyserver die verhindert dat u bestanden uploadt.",
 	"mediauploader-api-error-aborted": "Upload afgebroken.",
 	"mediauploader-api-error-noimageinfo": "Het uploaden is gelukt, maar de server heeft geen gegevens over het bestand verstrekt.",
 	"mediauploader-api-error-unknown-warning": "Onbekende waarschuwing: “$1”.",
@@ -185,7 +186,7 @@
 	"mediauploader-categories-missing": "Een van de categorieën heeft geen beschrijvingspagina. Weet u zeker dat u de naam correct hebt ingetypt?",
 	"mediauploader-thumbnail-failed": "De upload is afgerond, maar de server kon geen miniatuurafbeelding weergeven.",
 	"mediauploader-unparseable-filename": "De bestandsnaam “$1” kon niet verwerkt worden.",
-	"mediauploader-error-title-invalid": "Deze titel is ongeldig. Zorg ervoor dat tekens als vierkante haken, dubbele punten, schuine strepen, vergelijkingstekens, sluistekens en accolades niet aanwezig zijn.",
+	"mediauploader-error-title-invalid": "Deze titel is incorrect. Zorg ervoor dat tekens als vierkante haken, dubbele punten, schuine strepen, vergelijkingstekens, sluistekens en accolades niet aanwezig zijn.",
 	"mediauploader-subhead-alt-upload": "Terug naar het oude formulier",
 	"mediauploader-subhead-alternatives": "Alternatieve uploadmethoden",
 	"mediauploader-errordialog-title": "Er is een fout opgetreden in uw inzending",
@@ -216,7 +217,7 @@
 	"mediauploader-global-config-anchor": "'''Deze pagina dient als anker voor de algemene Media Uploader-configuratie.'''\n\nDit is nodig zodat de configuratie correct wordt bijgewerkt wanneer een van de daarin gebruikte sjablonen wordt gewijzigd. Gelieve deze pagina niet te hernoemen of te verwijderen.",
 	"mediauploader-default-tutorial-text": "=== Dit is het vooraf ingestelde tutorialbericht ===\nDe tutorialstap is een goede plek om de regels voor het uploaden van bestanden uit te leggen aan de gebruikers van uw wiki.\n* U kunt de tutorial volledig uitschakelen door <code>$wgMediaUploader['tutorial']['enabled'] = false;</code> in te stellen. Dit is waarschijnlijk de beste keuze voor interne wiki’s.\n* Of u kunt de wikitekst van de tutorial wijzigen met deze instelling: <code>$wgMediaUploader['tutorial']['wikitext'] = 'some wikitext';</code>.\nRaadpleeg [https://www.mediawiki.org/wiki/Extension:MediaUploader/Configuration de documentatie] voor meer informatie.",
 	"mediauploader-yaml-parse-error": "Het verwerken van YAML is mislukt met het volgende bericht: $1",
-	"mediauploader-invalid-campaign-format": "De inhoud van de campagne “$1” heeft een ongeldig formaat. Probeer eventuele validatiefouten erin te herstellen.",
+	"mediauploader-invalid-campaign-format": "De inhoud van de campagne “$1” heeft een incorrect formaat. Probeer eventuele validatiefouten erin te herstellen.",
 	"mediauploader-invalid-campaign-schema": "De inhoud van campagne “$1” laat zich niet valideren op basis van het campagneschema. Probeer eventuele validatiefouten erin te herstellen.",
 	"mediauploader-fix-campaign-comment-prettified": "Campagnedefinitie opnieuw geformatteerd",
 	"mediauploader-incomplete-campaign-record": "In het record voor campagne “$1” ontbreken de volgende elementen: $2",

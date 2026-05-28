@@ -56,7 +56,7 @@
 	"mediauploader-file-all-ok": "모든 파일을 성공적으로 업로드했습니다!",
 	"mediauploader-file-some-failed": "일부 파일을 올리는 데 실패했습니다.",
 	"mediauploader-file-retry": "실패한 파일 다시 올리기",
-	"mediauploader-next-file-despite-failures": "어쨌든 계속하기",
+	"mediauploader-next-file-despite-failures": "그래도 계속하기",
 	"mediauploader-skip-tutorial-future": "나중에는 이 과정을 생략하기",
 	"mediauploader-file-all-failed": "모든 파일을 올리는 데 실패했습니다.",
 	"mediauploader-upload-count": "{{PLURAL:$2|파일}} $2개 중 $1개를 올렸습니다",
