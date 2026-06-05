@@ -32,35 +32,32 @@ class CampaignStoreTest extends MediaWikiIntegrationTestCase {
 		);
 
 		// Ensure the row is in the DB
-		$this->assertSelect(
-			'mu_campaign',
-			'campaign_page_id',
-			[ 'campaign_page_id' => 123 ],
-			[ [ 123 ] ]
-		);
+		$this->newSelectQueryBuilder()
+			->select( 'campaign_page_id' )
+			->from( 'mu_campaign' )
+			->where( [ 'campaign_page_id' => 123 ] )
+			->assertFieldValue( '123' );
 
 		$store = MediaUploaderServices::getCampaignStore();
 		$store->deleteCampaignByPageId( 123 );
 
 		// The result set should be empty now
-		$this->assertSelect(
-			'mu_campaign',
-			'campaign_page_id',
-			[ 'campaign_page_id' => 123 ],
-			[]
-		);
+		$this->newSelectQueryBuilder()
+			->select( 'campaign_page_id' )
+			->from( 'mu_campaign' )
+			->where( [ 'campaign_page_id' => 123 ] )
+			->assertEmptyResult();
 	}
 
 	public function testUpsertCampaign() {
 		$store = MediaUploaderServices::getCampaignStore();
 
 		// Ensure the record is not there
-		$this->assertSelect(
-			'mu_campaign',
-			'campaign_page_id',
-			[ 'campaign_page_id' => 124 ],
-			[]
-		);
+		$this->newSelectQueryBuilder()
+			->select( 'campaign_page_id' )
+			->from( 'mu_campaign' )
+			->where( [ 'campaign_page_id' => 124 ] )
+			->assertEmptyResult();
 
 		// Insert a new record
 		$record = new CampaignRecord(
@@ -71,12 +68,11 @@ class CampaignStoreTest extends MediaWikiIntegrationTestCase {
 		);
 		$store->upsertCampaign( $record );
 
-		$this->assertSelect(
-			'mu_campaign',
-			$store->getSelectFields( CampaignStore::SELECT_CONTENT ),
-			[ 'campaign_page_id' => 124 ],
-			[ [ 124, 0, CampaignRecord::CONTENT_INVALID_FORMAT, null ] ]
-		);
+		$this->newSelectQueryBuilder()
+			->select( $store->getSelectFields( CampaignStore::SELECT_CONTENT ) )
+			->from( 'mu_campaign' )
+			->where( [ 'campaign_page_id' => 124 ] )
+			->assertRowValue( [ 124, 0, CampaignRecord::CONTENT_INVALID_FORMAT, null ] );
 
 		// Update the record
 		$content = [ 'enabled' => true ];
@@ -88,17 +84,16 @@ class CampaignStoreTest extends MediaWikiIntegrationTestCase {
 		);
 		$store->upsertCampaign( $record );
 
-		$this->assertSelect(
-			'mu_campaign',
-			$store->getSelectFields( CampaignStore::SELECT_CONTENT ),
-			[ 'campaign_page_id' => 124 ],
-			[ [
+		$this->newSelectQueryBuilder()
+			->select( $store->getSelectFields( CampaignStore::SELECT_CONTENT ) )
+			->from( 'mu_campaign' )
+			->where( [ 'campaign_page_id' => 124 ] )
+			->assertRowValue( [
 				124,
 				1,
 				CampaignRecord::CONTENT_VALID,
 				FormatJson::encode( $content )
-			] ]
-		);
+			] );
 	}
 
 	public function testSelectQueryBuilder() {
