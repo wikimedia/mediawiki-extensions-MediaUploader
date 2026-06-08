@@ -161,7 +161,7 @@ class CampaignStatsTest extends MediaWikiIntegrationTestCase {
 		);
 
 		// B: multiple uploads, multiple users
-		$this->assertArraySubmapSame(
+		$this->assertArrayContains(
 			[
 				'trackingCategory' => 'B',
 				'uploadedMediaCount' => 3,

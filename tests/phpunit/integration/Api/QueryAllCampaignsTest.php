@@ -73,7 +73,7 @@ class QueryAllCampaignsTest extends ApiTestCase {
 
 	private function assertCampaignError( array $data, int $id, string $name ): void {
 		$this->assertArrayHasKey( $id, $data, 'campaign present in result' );
-		$this->assertArraySubmapSame(
+		$this->assertArrayContains(
 			[
 				'name' => $name,
 				'enabled' => false,
