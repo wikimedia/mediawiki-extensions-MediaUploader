@@ -93,6 +93,7 @@
 	"mediauploader-license-custom-head": "بل لامل چې پورته يې يادونه نه ده شوې",
 	"mediauploader-license-custom-preview": "مخکتنه",
 	"mediauploader-license-none-head": "دا مې په اينټرنېټ کې وموند - ډاډه نه يم",
+	"mediauploader-license-none": "زه باور لرم چې دا {{PLURAL:$1|کار|کارونه}} د پرانېستې منښتليک لاندې يا په قانوني ډول ټولگړې واک‌سيمه کې خپاره شوې دي. زه پوهېږم که زه په وخت د منښتليک اړين مالومات ورگډ نه‌کړم؛ نو دا {{PLURAL:$1|دوتنه به ړنگه شي|دوتنې به ړنگې شي}}.",
 	"mediauploader-license-confirm-remove-title": "لرې‌کول تاييدول",
 	"mediauploader-categories": "وېشنيزې",
 	"mediauploader-subhead-alt-upload": "بېرته زړې بڼې ته",
