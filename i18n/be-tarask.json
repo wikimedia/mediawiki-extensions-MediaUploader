@@ -9,5 +9,6 @@
 	"mediauploader-next-file-despite-failures": "Працягнуць так ці інакш",
 	"mediauploader-copy-metadata-button": "Капіяваць",
 	"mediauploader-location": "Лякацыя",
-	"mediauploader-upload-error-stashed-anyway": "Даслаць так ці інакш?"
+	"mediauploader-upload-error-stashed-anyway": "Даслаць так ці інакш?",
+	"mediauploader-too-many-files": "Забагата файлаў."
 }
