@@ -100,7 +100,6 @@
 
 		this.$form = $( '<form>' );
 
-		/* eslint-disable mediawiki/msg-doc */
 		$standardDiv = $( '<div>' ).addClass( 'mediauploader-standard' ).append(
 			$( '<p>' ).msg(
 				'mediauploader-source-ownwork-assert',
@@ -123,7 +122,6 @@
 		}
 
 		$crossfader = $( '<div>' ).addClass( 'mediauploader-crossfader' ).append( $standardDiv );
-		/* eslint-enable mediawiki/msg-doc */
 
 		$customDiv = $( '<div>' ).addClass( 'mediauploader-custom' ).append(
 			$( '<p>' ).msg( 'mediauploader-source-ownwork-assert',

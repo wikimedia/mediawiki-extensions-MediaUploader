@@ -97,7 +97,6 @@
 	mw.UploadWizardUploadInterface.prototype.setStatus = function ( msgKey, args ) {
 		// get the status line for our upload
 		const $status = this.$div.find( '.mediauploader-file-status' );
-		// eslint-disable-next-line mediawiki/msg-doc
 		$status.msg( msgKey, args || [] ).show();
 	};
 

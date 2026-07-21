@@ -208,7 +208,6 @@
 			let errors = $.Deferred().resolve( [] ).promise(),
 				addError = function ( message ) {
 					errors = errors.then( ( errorsCopy ) => {
-						// eslint-disable-next-line mediawiki/msg-doc
 						errorsCopy.push( mw.message( message ) );
 						return errorsCopy;
 					} );

@@ -13,7 +13,6 @@
 
 		// The following classes are used here:
 		// * mediauploader-singleLanguageInputWidget-language
-		// eslint-disable-next-line mediawiki/class-doc
 		this.languageDropdown = new OO.ui.DropdownWidget( {
 			menu: { items: this.getLanguageMenuOptionWidgets( config.languages ) },
 			classes: config.classes,

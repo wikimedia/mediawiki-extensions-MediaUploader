@@ -208,7 +208,6 @@
 				'mediauploader-blacklisted-details',
 				titleString,
 				function () {
-					// eslint-disable-next-line mediawiki/msg-doc
 					mw.errorDialog( $( '<div>' ).msg( result.blacklist.blacklistMessage ) );
 				}
 			];
