@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ostrzyciel"
+			"Ostrzyciel",
+			"PanWor"
 		]
 	},
 	"mediauploader": "Kreator przesyłania",
@@ -154,9 +155,9 @@
 	"mediauploader-error-title-extension": "Nie musisz dodawać rozszerzenia pliku. Wystarczy tytuł zrozumiały dla człowieka, a my zajmiemy się resztą.",
 	"mediauploader-error-title-protected": "Ten tytuł odnosi się do chronionej strony na tej wiki. Wybierz inny tytuł.",
 	"mediauploader-error-title-duplicate": "Ten tytuł został podany dla więcej niż jednego z plików, które chcesz przesłać. Podkreślenia są traktowane jak spacje, rozszerzenie pliku jest dodawane automatycznie.",
-	"mediauploader-error-license-wikitext-missing": "Wybrano opcję która wymaga wprowadzenia wikitekstu.",
-	"mediauploader-error-license-wikitext-too-short": "Ten wikitekst jest za krótki, aby mógł stanowić licencję.",
-	"mediauploader-error-license-wikitext-too-long": "Ten wikitekst jest za długi.",
+	"mediauploader-error-license-wikitext-missing": "Wybrano opcję, która wymaga wprowadzenia wikikodu.",
+	"mediauploader-error-license-wikitext-too-short": "Ten wikikod jest za krótki, aby mógł stanowić licencję.",
+	"mediauploader-error-license-wikitext-too-long": "Ten wikikod jest za długi.",
 	"mediauploader-warning-value-missing": "Zaleca się wypełnienie pola „$1”.",
 	"mediauploader-warning-postdate": "Wybrano datę, która jest w przyszłości.",
 	"mediauploader-details-error-count": "W {{PLURAL:$2|tym formularzu|tych formularzach}} znaleziono {{PLURAL:$1|błąd|$1 błędy|$1 błędów}}. Popraw {{PLURAL:$1|błąd|błędy}} i spróbuj przesyłać ponownie.",
@@ -216,7 +217,7 @@
 	"mediauploader-upload-comment-own-work": "Przesłano własną pracę za pomocą kreatora przesyłania",
 	"mediauploader-upload-comment-third-party": "Przesłano pracę autorstwa $1 z $2 przy pomocy kreatora przesyłania",
 	"mediauploader-global-config-anchor": "'''Ta strona służy jako kotwica dla globalnej konfiguracji kreatora przesyłania.'''\n\nJest ona potrzebna do poprawnego aktualizowania konfiguracji, gdy którykolwiek z użytych w niej szablonów zostanie zmieniony. Nie przenoś ani nie usuwaj tej strony.",
-	"mediauploader-default-tutorial-text": "=== To jest domyślny komunikat samouczka ===\nPierwszy krok kreatora przesyłania jest dobrym miejscem do wyjaśnienia zasad przesyłania plików użytkownikom twojej wiki.\n* Samouczek można całkowicie wyłączyć, ustawiając <code>$wgMediaUploader['tutorial']['enabled'] = false;</code>. Jest to zwykle najlepszy wybór dla wewnętrznych wiki.\n* Możesz też zmienić wikitekst samouczka za pomocą tego ustawienia: <code>$wgMediaUploader['tutorial']['wikitext'] = 'jakiś wikitekst';</code>.\nWięcej informacji znajdziesz w [https://www.mediawiki.org/wiki/Extension:MediaUploader/Configuration dokumentacji].",
+	"mediauploader-default-tutorial-text": "=== To jest domyślny komunikat samouczka ===\nPierwszy krok kreatora przesyłania jest dobrym miejscem do wyjaśnienia zasad przesyłania plików użytkownikom Twojej wiki.\n* Samouczek można całkowicie wyłączyć, ustawiając <code>$wgMediaUploader['tutorial']['enabled'] = false;</code>. Jest to zwykle najlepszy wybór dla wewnętrznych wiki.\n* Możesz też zmienić wikikod samouczka za pomocą tego ustawienia: <code>$wgMediaUploader['tutorial']['wikitext'] = 'jakiś wikikod';</code>.\nWięcej informacji znajdziesz w [https://www.mediawiki.org/wiki/Extension:MediaUploader/Configuration dokumentacji].",
 	"mediauploader-yaml-parse-error": "Parsowanie pliku YAML nie powiodło się: $1",
 	"mediauploader-invalid-campaign-format": "Treść inicjatywy „$1” ma nieprawidłowy format. Spróbuj ją edytować, aby naprawić błędy.",
 	"mediauploader-invalid-campaign-schema": "Treść inicjatywy „$1” nie pasuje do schematu inicjatyw. Spróbuj ją edytować, aby naprawić błędy.",
