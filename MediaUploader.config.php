@@ -210,9 +210,7 @@ return [
 				$ccLicenses["cc-$ccType-$ccVer"] = [
 					'msg' => "mediauploader-license-cc-$ccType-$ccVer",
 					'icons' => array_map(
-						static function ( $t ) {
-							return "cc-$t";
-						},
+						static fn ( $t ) => "cc-$t",
 						explode( '-', $ccType )
 					),
 					'url' => "//creativecommons.org/licenses/$ccType/$ccVer/",

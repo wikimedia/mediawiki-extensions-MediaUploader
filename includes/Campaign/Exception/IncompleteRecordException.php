@@ -8,8 +8,6 @@ namespace MediaWiki\Extension\MediaUploader\Campaign\Exception;
 class IncompleteRecordException extends BaseCampaignException {
 
 	/**
-	 * IncompleteRecordException constructor.
-	 *
 	 * @param string $campaignName
 	 * @param string $missing What is missing from the record.
 	 */

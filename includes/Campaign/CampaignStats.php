@@ -23,8 +23,6 @@ class CampaignStats {
 	private $rawConfig;
 
 	/**
-	 * CampaignStats constructor.
-	 *
 	 * @param IConnectionProvider $dbProvider
 	 * @param WANObjectCache $cache
 	 * @param RawConfig $rawConfig

@@ -51,8 +51,6 @@ class CampaignContent extends TextContent {
 	private $initializedServices = false;
 
 	/**
-	 * CampaignContent constructor.
-	 *
 	 * See CampaignContentHandler::preSaveTransform for a usage of the second and
 	 * third arguments.
 	 *

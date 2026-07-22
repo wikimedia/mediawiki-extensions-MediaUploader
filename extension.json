@@ -62,7 +62,6 @@
 		"upwizcampaigns",
 		"mass-upload"
 	],
-	"callback": "MediaWiki\\Extension\\MediaUploader\\Hooks\\RegistrationHooks::registerExtension",
 	"ContentHandlers": {
 		"Campaign": {
 			"class": "MediaWiki\\Extension\\MediaUploader\\Campaign\\CampaignContentHandler",
@@ -110,6 +109,7 @@
 	"ServiceWiringFiles": [
 		"includes/ServiceWiring.php"
 	],
+	"load_composer_autoloader": true,
 	"AutoloadNamespaces": {
 		"MediaWiki\\Extension\\MediaUploader\\": "includes/",
 		"MediaWiki\\Extension\\MediaUploader\\Maintenance\\": "maintenance/"
@@ -485,6 +485,7 @@
 			"ext.uploadWizard"
 		]
 	},
+	"callback": "MediaWiki\\Extension\\MediaUploader\\Hooks\\RegistrationHooks::registerExtension",
 	"Hooks": {
 		"PageDelete": "campaign",
 		"PageDeleteComplete": "campaign",
@@ -549,6 +550,5 @@
 			"value": []
 		}
 	},
-	"load_composer_autoloader": true,
 	"manifest_version": 2
 }

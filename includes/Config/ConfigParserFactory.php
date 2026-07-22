@@ -16,8 +16,6 @@ class ConfigParserFactory {
 	private $parserFactory;
 
 	/**
-	 * ConfigParserFactory constructor.
-	 *
 	 * @param ParserFactory $parserFactory
 	 *
 	 * @internal Only for use by ServiceWiring
