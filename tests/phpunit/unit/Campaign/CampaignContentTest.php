@@ -178,7 +178,7 @@ class CampaignContentTest extends MediaWikiUnitTestCase {
 	 * @param int $expectedValidity
 	 * @param array|null $expectedContent
 	 *
-	 * @covers       \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::newCampaignRecord
+	 * @covers \MediaWiki\Extension\MediaUploader\Campaign\CampaignContent::newCampaignRecord
 	 * @dataProvider provideNewCampaignRecord
 	 */
 	public function testNewCampaignRecord(

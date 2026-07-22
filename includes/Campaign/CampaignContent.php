@@ -5,8 +5,8 @@ namespace MediaWiki\Extension\MediaUploader\Campaign;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
 use MediaWiki\Linker\LinkTarget;
 use MediaWiki\Page\PageReference;
-use MediaWiki\Status\Status;
 use MWException;
+use StatusValue;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 use TextContent;
@@ -35,16 +35,16 @@ class CampaignContent extends TextContent {
 	/** @var Validator */
 	private $validator;
 
-	/** @var Status */
+	/** @var StatusValue|null */
 	private $yamlParse;
 
-	/** @var Status */
+	/** @var StatusValue|null */
 	private $realYamlParse;
 
-	/** @var Status */
+	/** @var StatusValue|null */
 	private $validationStatus;
 
-	/** @var Status */
+	/** @var StatusValue|null */
 	private $realValidationStatus;
 
 	/** @var bool Whether the services were initialized */
@@ -92,7 +92,7 @@ class CampaignContent extends TextContent {
 	public function overrideValidationStatus() {
 		$this->realValidationStatus = $this->getValidationStatus();
 		$this->realYamlParse = $this->getData();
-		$this->yamlParse = Status::newGood();
+		$this->yamlParse = StatusValue::newGood();
 		$this->validationStatus = $this->yamlParse;
 	}
 
@@ -122,7 +122,7 @@ class CampaignContent extends TextContent {
 	/**
 	 * Checks user input YAML to make sure that it produces a valid campaign object.
 	 */
-	public function getValidationStatus(): Status {
+	public function getValidationStatus(): StatusValue {
 		$this->initServices();
 
 		if ( $this->validationStatus ) {
@@ -157,7 +157,7 @@ class CampaignContent extends TextContent {
 	 * The data is guaranteed to come from a syntactically valid YAML, but may
 	 * not validate against the schema. Use isValid() to check if it does.
 	 */
-	public function getData(): Status {
+	public function getData(): StatusValue {
 		if ( $this->yamlParse ) {
 			return $this->yamlParse;
 		}
@@ -168,16 +168,16 @@ class CampaignContent extends TextContent {
 				Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE
 			);
 			if ( is_array( $data ) ) {
-				$this->yamlParse = Status::newGood( $data );
+				$this->yamlParse = StatusValue::newGood( $data );
 			} else {
-				$this->yamlParse = Status::newFatal(
+				$this->yamlParse = StatusValue::newFatal(
 					'mediauploader-yaml-parse-error',
 					'unknown error'
 				);
 			}
 			return $this->yamlParse;
 		} catch ( ParseException $e ) {
-			return Status::newFatal(
+			return StatusValue::newFatal(
 				'mediauploader-yaml-parse-error',
 				$e->getMessage()
 			);

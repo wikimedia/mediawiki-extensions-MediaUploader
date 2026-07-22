@@ -4,7 +4,7 @@ namespace MediaWiki\Extension\MediaUploader\Campaign;
 
 use BagOStuff;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
-use MediaWiki\Status\Status;
+use StatusValue;
 use stdClass;
 use Symfony\Component\Yaml\Yaml;
 
@@ -32,9 +32,9 @@ class Validator {
 	 *
 	 * @param array $object The campaign to validate. Must be in an associative array form.
 	 *
-	 * @return Status with validation errors (if any)
+	 * @return StatusValue with validation errors (if any)
 	 */
-	public function validate( array $object ): Status {
+	public function validate( array $object ): StatusValue {
 		$cacheKey = $this->localServerCache->makeKey(
 			'mediauploader',
 			'campaign-schema'
@@ -67,13 +67,8 @@ class Validator {
 
 	/**
 	 * Does the actual validation work.
-	 *
-	 * @param array $array
-	 * @param stdClass $schema
-	 *
-	 * @return Status
 	 */
-	private function doValidate( array $array, stdClass $schema ): Status {
+	private function doValidate( array $array, stdClass $schema ): StatusValue {
 		$validator = new \JsonSchema\Validator();
 		$objectStatus = self::arrayToObject( $array );
 
@@ -85,10 +80,10 @@ class Validator {
 		$validator->validate( $object, $schema );
 
 		if ( $validator->isValid() ) {
-			return Status::newGood();
+			return StatusValue::newGood();
 		}
 
-		$status = new Status();
+		$status = new StatusValue();
 		foreach ( $validator->getErrors() as $error ) {
 			$status->fatal(
 				'mediauploader-schema-validation-error',
@@ -105,23 +100,19 @@ class Validator {
 	/**
 	 * Converts an array to PHP object, while restricting the array's
 	 * maximum depth to 8.
-	 *
-	 * @param array $array
-	 *
-	 * @return Status
 	 */
-	private static function arrayToObject( array $array ): Status {
+	private static function arrayToObject( array $array ): StatusValue {
 		// Encode with max depth of 8
 		// This should be enough for campaign configs.
 		$json = json_encode( $array, 0, 8 );
 
 		$code = json_last_error();
 		if ( $code === JSON_ERROR_NONE ) {
-			return Status::newGood( (object)json_decode( $json ) );
+			return StatusValue::newGood( (object)json_decode( $json ) );
 		} elseif ( $code === JSON_ERROR_DEPTH ) {
-			return Status::newFatal( 'json-error-depth' );
+			return StatusValue::newFatal( 'json-error-depth' );
 		} else {
-			return Status::newFatal( 'json-error-unknown', $code );
+			return StatusValue::newFatal( 'json-error-unknown', $code );
 		}
 	}
 }
