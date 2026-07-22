@@ -4,6 +4,7 @@ namespace MediaWiki\Extension\MediaUploader\Tests\Unit\Config;
 
 use MediaWiki\Config\ServiceOptions;
 use MediaWiki\Extension\MediaUploader\Config\RawConfig;
+use MediaWiki\MainConfigNames;
 use UploadBase;
 
 /**
@@ -15,8 +16,8 @@ class RawConfigTest extends ConfigUnitTestCase {
 	public static function provideConfig(): iterable {
 		yield 'no overrides' => [
 			[
-				'CheckFileExtensions' => true,
-				'FileExtensions' => [ 'dummy' ],
+				MainConfigNames::CheckFileExtensions => true,
+				MainConfigNames::FileExtensions => [ 'dummy' ],
 				'MediaUploaderConfig' => [
 					'someKey' => 'value'
 				],
@@ -36,8 +37,8 @@ class RawConfigTest extends ConfigUnitTestCase {
 
 		yield 'with overrides' => [
 			[
-				'CheckFileExtensions' => true,
-				'FileExtensions' => [ 'dummy' ],
+				MainConfigNames::CheckFileExtensions => true,
+				MainConfigNames::FileExtensions => [ 'dummy' ],
 				'MediaUploaderConfig' => [
 					'someKey' => 'value',
 					'maxMwUploadSize' => 123,
@@ -58,8 +59,8 @@ class RawConfigTest extends ConfigUnitTestCase {
 
 		yield 'with legacy overrides' => [
 			[
-				'CheckFileExtensions' => true,
-				'FileExtensions' => [ 'dummy' ],
+				MainConfigNames::CheckFileExtensions => true,
+				MainConfigNames::FileExtensions => [ 'dummy' ],
 				'MediaUploaderConfig' => [],
 				'UploadWizardConfig' => [
 					'maxMwUploadSize' => 123,
@@ -80,8 +81,8 @@ class RawConfigTest extends ConfigUnitTestCase {
 
 		yield 'with mixed overrides' => [
 			[
-				'CheckFileExtensions' => true,
-				'FileExtensions' => [ 'dummy' ],
+				MainConfigNames::CheckFileExtensions => true,
+				MainConfigNames::FileExtensions => [ 'dummy' ],
 				'MediaUploaderConfig' => [
 					'someKey' => 'value',
 					'maxMwUploadSize' => 123,
@@ -128,8 +129,8 @@ class RawConfigTest extends ConfigUnitTestCase {
 		$options = new ServiceOptions(
 			RawConfig::CONSTRUCTOR_OPTIONS,
 			[
-				'CheckFileExtensions' => true,
-				'FileExtensions' => [ 'dummy' ],
+				MainConfigNames::CheckFileExtensions => true,
+				MainConfigNames::FileExtensions => [ 'dummy' ],
 				'MediaUploaderConfig' => [
 					'someKey' => 'value',
 					'chunkSize' => 1024 * 1024,
@@ -166,8 +167,8 @@ class RawConfigTest extends ConfigUnitTestCase {
 		$options = new ServiceOptions(
 			RawConfig::CONSTRUCTOR_OPTIONS,
 			[
-				'CheckFileExtensions' => false,
-				'FileExtensions' => null,
+				MainConfigNames::CheckFileExtensions => false,
+				MainConfigNames::FileExtensions => null,
 				'MediaUploaderConfig' => [],
 				'UploadWizardConfig' => [],
 				'PersistDuringRequest' => false,

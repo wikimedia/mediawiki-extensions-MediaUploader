@@ -3,6 +3,7 @@
 namespace MediaWiki\Extension\MediaUploader\Config;
 
 use MediaWiki\Config\ServiceOptions;
+use MediaWiki\MainConfigNames;
 use UploadBase;
 
 /**
@@ -22,8 +23,8 @@ class RawConfig extends ConfigBase {
 	 * @internal For use by ServiceWiring
 	 */
 	public const CONSTRUCTOR_OPTIONS = [
-		'CheckFileExtensions',
-		'FileExtensions',
+		MainConfigNames::CheckFileExtensions,
+		MainConfigNames::FileExtensions,
 		'MediaUploaderConfig',
 		// For backwards compatibility
 		'UploadWizardConfig',
@@ -67,8 +68,8 @@ class RawConfig extends ConfigBase {
 		// Initialize settings dependent on other config variables
 		return [
 			'fileExtensions' =>
-				$this->options->get( 'CheckFileExtensions' ) ?
-					$this->options->get( 'FileExtensions' ) :
+				$this->options->get( MainConfigNames::CheckFileExtensions ) ?
+					$this->options->get( MainConfigNames::FileExtensions ) :
 					null,
 			'maxPhpUploadSize' => UploadBase::getMaxPhpUploadSize(),
 			'maxMwUploadSize' => $this->options->get( 'FileMaxUploadSize' ),
