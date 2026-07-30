@@ -6,6 +6,7 @@
 		]
 	},
 	"mediauploader-api-error-aborted": "Eroplueden ofgebrach.",
+	"mediauploader-api-error-unknown-warning": "Onbekannt Warnung: „$1“.",
 	"mediauploader-step-tutorial": "Léieren",
 	"mediauploader-step-file": "Eroplueden",
 	"mediauploader-step-details": "Beschreiwen",
@@ -67,6 +68,7 @@
 	"mediauploader-dialog-continue": "Virufueren",
 	"mediauploader-dialog-back": "Zeréck goen",
 	"mediauploader-campaign-upload-button": "Eroplueden!",
+	"mediauploader-campaign-contributors-count-desc": "{{PLURAL:$1|Contributeur|Contributeuren}}",
 	"mediauploader-categories": "Kategorien",
 	"mediauploader-errordialog-ok": "OK",
 	"mediauploader-error-nosuchcampaign": "Et gëtt keng Campagne mam Numm „$1“.",
