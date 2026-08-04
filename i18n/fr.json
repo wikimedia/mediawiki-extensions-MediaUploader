@@ -5,7 +5,8 @@
 			"SleaY",
 			"Thibaut120094",
 			"Verdy p",
-			"Wladek92"
+			"Wladek92",
+			"Framawiki"
 		]
 	},
 	"mediauploader": "Assistant de téléversement de médias",
@@ -152,7 +153,7 @@
 	"mediauploader-error-title-too-long": "Ce titre est trop long.\nVeuillez vous assurer qu’il ne dépasse pas $1 octet{{PLURAL:$1||s}}.",
 	"mediauploader-error-title-too-short": "Ce titre est trop court.\nVeuillez faire en sorte qu’elle comporte au moins $1 caractère{{PLURAL:$1||s}}.",
 	"mediauploader-error-bad-multilang": "Il y a des problèmes avec certaines valeurs.",
-	"mediauploader-error-title-blacklisted": "Ce titre contient du texte indésirable. Veuillez le réviser.",
+	"mediauploader-error-title-blacklisted": "Ce titre contient du texte indésirable. Veuillez le modifier.",
 	"mediauploader-error-title-senselessimagename": "Merci de rendre ce titre plus significatif.",
 	"mediauploader-error-title-thumbnail": "Cela ressemble à un titre de vignette (« thumbnail »). Veuillez ne plus téléverser aucune vignette sur le même wiki. Sinon, veuillez corriger le nom du fichier de sorte qu’il soit plus significatif et n’aie pas le préfixe « thumbnail ».",
 	"mediauploader-error-title-extension": "Vous n’avez pas besoin d’ajouter une extension de fichier. Il suffit de donner un titre compréhensible par un humain et l’application se chargera du reste.",
