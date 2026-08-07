@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Jeeputer"
+			"Jeeputer",
+			"Mohammad ebz"
 		]
 	},
 	"mediauploader-api-error-aborted": "بارگذاری متوقف شد",
@@ -13,6 +14,7 @@
 	"mediauploader-file-retry": "تلاش برای انجام دوبارهٔ بارگذاری‌های ناموفق",
 	"mediauploader-file-all-failed": "هیچ‌یک از بارگذاری‌ها موفق نبودند.",
 	"mediauploader-upload-count": "$1 {{PLURAL:$2|پرونده}} از $2 {{PLURAL:$2|پرونده}} بارگذاری شد",
+	"mediauploader-copy-metadata-button": "رونوشت",
 	"mediauploader-copy-metadata-button-undo": "واگردانی",
 	"mediauploader-copy-location": "رونویسی مکان",
 	"mediauploader-copy-other": "رونویسی اطلاعات دیگر",
