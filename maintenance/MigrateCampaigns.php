@@ -6,7 +6,6 @@ use CommentStoreComment;
 use LoggedUpdateMaintenance;
 use MediaWiki\Extension\MediaUploader\Campaign\CampaignContent;
 use MediaWiki\Extension\MediaUploader\MediaUploaderServices;
-use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\ExistingPageRecord;
 use MediaWiki\Revision\SlotRecord;
 use Message;
@@ -38,7 +37,7 @@ class MigrateCampaigns extends LoggedUpdateMaintenance {
 	 * @inheritDoc
 	 */
 	protected function doDBUpdates() {
-		$services = MediaWikiServices::getInstance();
+		$services = $this->getServiceContainer();
 		$pageStore = $services->getPageStore();
 		$wikiPageFactory = $services->getWikiPageFactory();
 
