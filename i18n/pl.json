@@ -62,7 +62,7 @@
 	"mediauploader-progressbar-uploading": "przesyłanie",
 	"mediauploader-almost-finished": "Przetwarzam pliki…",
 	"mediauploader-finished": "Gotowe!",
-	"mediauploader-deeds-macro-prompt": "Ta wiki wymaga od {{GENDER:$2|ciebie}} informacji o prawach autorskich do {{PLURAL:$1|tej pracy|tych prac}}, aby upewnić się, że każdy może używać {{PLURAL:$1|jej|ich}} zgodnie z prawem.",
+	"mediauploader-deeds-macro-prompt": "Ta wiki wymaga od {{GENDER:$2|Ciebie}} informacji o prawach autorskich do {{PLURAL:$1|tej pracy|tych prac}}, aby upewnić się, że każdy może używać {{PLURAL:$1|jej|ich}} zgodnie z prawem.",
 	"mediauploader-source-ownwork": "Jestem autorem {{PLURAL:$1|tej pracy|tych prac}}.",
 	"mediauploader-source-ownwork-assert": "Ja, $2, {{GENDER:$4|właściciel|właścicielka}} praw autorskich do {{PLURAL:$1|tej pracy|tych prac}}, niniejszym publikuję {{PLURAL:$1|ją|je}} na poniższej licencji (poniższych licencjach):",
 	"mediauploader-source-thirdparty": "{{PLURAL:$1|Ta praca nie jest|Te prace nie są}} mojego autorstwa.",
