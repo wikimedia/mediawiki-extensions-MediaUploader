@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wizzard"
+		]
+	},
+	"apihelp-query+allcampaigns-summary": "Vypísať všetky kampane rozšírenia MediaUploader.",
+	"apihelp-query+allcampaigns-param-enabledonly": "Vypísať len zapnuté kampane.",
+	"apihelp-query+allcampaigns-param-limit": "Počet kampaní, ktoré sa majú vrátiť.",
+	"apihelp-query+allcampaigns-example-1": "Vypísať zapnuté kampane"
+}
