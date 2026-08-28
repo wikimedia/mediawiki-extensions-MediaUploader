@@ -185,7 +185,7 @@
 	"mediauploader-license-confirm-remove": "Czy na pewno chcesz usunąć {{PLURAL:$1|ten przesłany plik|te przesłane pliki}}?",
 	"mediauploader-license-confirm-remove-title": "Potwierdź usunięcie",
 	"mediauploader-categories": "Kategorie",
-	"mediauploader-categories-missing": "Jedna z kategorii nie ma strony opisu. Czy na pewno {{GENDER:|podałeś|podałaś}} poprawną nazwę?",
+	"mediauploader-categories-missing": "Jedna z kategorii nie ma strony opisu. Czy na pewno {{GENDER:|podałeś poprawną nazwę|podałaś poprawną nazwę|podana przez Ciebie nazwa jest poprawna}}?",
 	"mediauploader-thumbnail-failed": "Plik przesłano, ale serwer nie zwrócił miniaturki",
 	"mediauploader-unparseable-filename": "Niezrozumiała nazwa pliku „$1”",
 	"mediauploader-error-title-invalid": "Ten tytuł jest nieprawidłowy. Usuń znaki takie jak nawiasy kwadratowe i klamrowe, dwukropki, ukośniki, znaki nierówności i kreski pionowe.",
