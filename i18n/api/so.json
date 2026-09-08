@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"AhmedG612"
+		]
+	},
+	"apihelp-query+allcampaigns-summary": "Tiri dhammaan ololayaasha MediaUploader.",
+	"apihelp-query+allcampaigns-param-enabledonly": "Kaliya liis garee ololayaasha la hawlgeliyay.",
+	"apihelp-query+allcampaigns-param-limit": "Tirada ololayaasha la soo celinayo.",
+	"apihelp-query+allcampaigns-example-1": "Tiri ololayaasha la hawlgeliyay"
+}
