@@ -154,7 +154,7 @@
 	"mediauploader-categories": "Категореш",
 	"mediauploader-thumbnail-failed": "Чуйаккхар кхиамца чекхдаьлла, амма серверан хьалххе хьажаран миниатюра гучуйаккха цало.",
 	"mediauploader-unparseable-filename": "\"$1\" файлан цӀе кхета йиш йац.",
-	"mediauploader-error-title-invalid": "ХӀара нийса йоцу цӀе ю. Хьаьркаш дӀадаха хьажа, масала, квадратан къовларгаш, шиъ тӀадам, дустаран операторш, вертикалан могӀанаш, фигурин къовларгаш.",
+	"mediauploader-error-title-invalid": "ХӀара нийса йоцу цӀе йу. Символаш дӀайаха хьажа, масала, квадратан къовларгаш, шиъ тӀадам, дустаран операторш, вертикалан могӀанаш, фигурин къовларгаш.",
 	"mediauploader-subhead-alt-upload": "Шира агӀоне гӀо",
 	"mediauploader-subhead-alternatives": "Чуйахаран альтернативан методаш",
 	"mediauploader-errordialog-title": "ДӀайохьуьтуш гӀалат делла",
