@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"شاه زمان پټان"
+			"شاه زمان پټان",
+			"باران"
 		]
 	},
 	"mediauploader": "رسنۍ راپورته‌کوونکی",
@@ -222,7 +223,7 @@
 	"mediauploader-invalid-campaign-schema": "د \"$1\" ټاکنيزې سيالۍ منځپانگه د ټاکنيزې سيالۍ له جوړښتي‌گارليک سره سون نه خوري. مهرباني وکړئ د تاييدولو د هر ډول تېروتنو د سمولو لپاره هڅه وکړئ.",
 	"mediauploader-fix-campaign-comment-prettified": "د ټاکنيزې‌سيالۍ پېژندون بيابڼل‌شوی دی",
 	"mediauploader-incomplete-campaign-record": "د \"$1\" ټاکنيزې‌سيالۍ ريکارډ لاندې عناصر نلري: $2",
-	"mediauploader-default-content-wikitext": "== څرگنداوی ==\n{{{description}}}\n\n== Media information ==\n* '''نېټه:''' {{{date|''نامالومه''}}}\n* '''سرچينه:''' {{{source|''نامالومه''}}}\n* '''ليکوال:''' {{{author|''نامالوم''}}}\n* '''ځای:''' {{{location|''نامالوم''}}}\n\n{{{other}}}\n\n== منښتليک ==\n{{{license}}}\n\n{{{categories}}}",
+	"mediauploader-default-content-wikitext": "== څرگنداوی ==\n{{{description}}}\n\n== رسنۍ مالومات ==\n* '''نېټه:''' {{{date|''نامالومه''}}}\n* '''سرچينه:''' {{{source|''نامالومه''}}}\n* '''ليکوال:''' {{{author|''نامالوم''}}}\n* '''ځای:''' {{{location|''نامالوم''}}}\n\n{{{other}}}\n\n== منښتليک ==\n{{{license}}}\n\n{{{categories}}}",
 	"mediauploader-content-source-ownwork": "خپل کار",
 	"mediauploader-content-license-ownwork": "زه د دې کار د خپرولو او لمېسلو د امتياز څښتن، دا د لاندې {{PLURAL:$1|منښتليک|منښتليکونو}} پربنسټ دلته خپروم:",
 	"mediauploader-license-none-text": "هېڅ منښتليک ځانگړی شوی نه دی"
